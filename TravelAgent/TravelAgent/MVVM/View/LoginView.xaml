@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="TravelAgent.MVVM.View.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TravelAgent.MVVM.View"
+             xmlns:core="clr-namespace:TravelAgent.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    MinWidth="300">
+
+            <StackPanel>
+                <TextBlock Text="Username"
+                           Foreground="Black"
+                           FontSize="16"/>
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="16"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Password"
+                           Foreground="Black"
+                           FontSize="16"/>
+                <core:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <Button Content="Login"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    Margin="10"
+                    Padding="40 10"
+                    Command="{Binding LoginCommand}"/>
+
+        </StackPanel>
+            
+    </Grid>
+</UserControl>

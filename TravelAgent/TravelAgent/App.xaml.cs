@@ -37,6 +37,7 @@ namespace TravelAgent
             services.AddTransient<MainViewModel>();
             services.AddTransient<HomeViewModel>();
             services.AddTransient<DeleteLaterViewModel>();
+            services.AddTransient<LoginViewModel>();
 
             // register Service classes for injection here
             services.AddSingleton<Service.NavigationService>();

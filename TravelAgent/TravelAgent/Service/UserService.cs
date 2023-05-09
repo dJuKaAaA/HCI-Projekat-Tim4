@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgent.Core;
+using TravelAgent.MVVM.Model;
 
 namespace TravelAgent.Service
 {
@@ -21,23 +23,41 @@ namespace TravelAgent.Service
             _databaseExcecutionService = databaseExcecutionService;
         }
 
-        public async Task<IEnumerable<object>> GetAll()
+        private UserModel ConvertToUser(SqliteDataReader reader)
+        {
+            return new UserModel()
+            {
+                Id = int.Parse(reader.GetString(0)),
+                Name = reader.GetString(1),
+                Surname = reader.GetString(2),
+                Username = reader.GetString(3),
+            };
+        }
+
+        public async Task<IEnumerable<UserModel>> GetAll()
         {
             string sqlQuery = $"SELECT * FROM {_tableName}";
-            List<object> collection = new List<object>();
+            List<UserModel> collection = new List<UserModel>();
             await _databaseExcecutionService.ExecuteDatabaseCommand(_consts.ConnectionString, sqlQuery, (reader) =>
             {
                 while (reader.Read())
                 {
-                    collection.Add(new
-                    {
-                        Id = reader.GetString(0),
-                        Name = reader.GetString(1),
-                        Surname = reader.GetString(2),
-                    });
+                    UserModel user = ConvertToUser(reader);
+                    collection.Add(user);
                 }
             });
             return collection;
+        }
+
+        public async Task<bool> Login(string username, string password)
+        {
+            string sqlQuery = $"SELECT * FROM {_tableName} WHERE username = '{username}' AND password = '{password}'";
+            bool response = false;
+            await _databaseExcecutionService.ExecuteDatabaseCommand(_consts.ConnectionString, sqlQuery, (reader) =>
+            {
+                response = reader.Read();
+            });
+            return response;
         }
     }
 }

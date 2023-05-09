@@ -21,6 +21,10 @@
                     <view:DeleteLaterView/>
                 </DataTemplate>
 
+                <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
+                    <view:LoginView/>
+                </DataTemplate>
+
             </ContentControl.Resources>
 
         </ContentControl>
