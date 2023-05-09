@@ -30,13 +30,16 @@ namespace TravelAgent.MVVM.ViewModel
 		}
 
 		private readonly UserService _userService;
+		private readonly NavigationService _navigationService;
 
 		public ICommand LoginCommand { get; }
 
         public LoginViewModel(
-			UserService userService)
+			UserService userService,
+			NavigationService navigationService)
         {
 			_userService = userService;
+			_navigationService = navigationService;
 
 			LoginCommand = new RelayCommand(OnLogin, CanLogin);
         }
@@ -52,6 +55,7 @@ namespace TravelAgent.MVVM.ViewModel
 			if (foundUser)
 			{
 				MessageBox.Show("Login successful!");
+				_navigationService.NavigateTo<HomeViewModel>();
 			}
 			else
 			{
