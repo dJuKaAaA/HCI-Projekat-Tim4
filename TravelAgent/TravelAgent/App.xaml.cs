@@ -40,6 +40,8 @@ namespace TravelAgent
 
             // register Service classes for injection here
             services.AddSingleton<Service.NavigationService>();
+            services.AddSingleton<Service.DatabaseExcecutionService>();
+            services.AddSingleton<Service.UserService>();
 
             // setting the SQLite provider
             SQLitePCL.Batteries.Init();
