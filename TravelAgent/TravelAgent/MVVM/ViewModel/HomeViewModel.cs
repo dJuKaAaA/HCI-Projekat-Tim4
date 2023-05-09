@@ -11,14 +11,14 @@ namespace TravelAgent.MVVM.ViewModel
     {
         private readonly Service.NavigationService _navigationService;
 
-        public ICommand GoToDeleteLaterCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         public HomeViewModel(
             Service.NavigationService navigationService)
         {
             _navigationService = navigationService;
 
-            GoToDeleteLaterCommand = new Core.RelayCommand((object o) => _navigationService.NavigateTo<DeleteLaterViewModel>(), (object o) => true);
+            LogoutCommand = new Core.RelayCommand((object o) => _navigationService.NavigateTo<LoginViewModel>(), (object o) => true);
         }
     }
 }

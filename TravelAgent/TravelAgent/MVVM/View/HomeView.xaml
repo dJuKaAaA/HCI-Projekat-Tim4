@@ -16,10 +16,10 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Margin="10"/>
-            <Button Content="Go to Delete later"
+            <Button Content="Log out"
                     Margin="10"
                     Padding="10"
-                    Command="{Binding GoToDeleteLaterCommand}"/>
+                    Command="{Binding LogoutCommand}"/>
 
         </StackPanel>
 

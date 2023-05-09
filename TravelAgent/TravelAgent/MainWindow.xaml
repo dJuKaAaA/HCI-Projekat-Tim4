@@ -17,10 +17,6 @@
                     <view:HomeView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:DeleteLaterViewModel}">
-                    <view:DeleteLaterView/>
-                </DataTemplate>
-
                 <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
                     <view:LoginView/>
                 </DataTemplate>
