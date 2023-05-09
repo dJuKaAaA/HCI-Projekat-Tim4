@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TravelAgent.Core;
+using TravelAgent.MVVM.Model;
 using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel
@@ -35,15 +36,15 @@ namespace TravelAgent.MVVM.ViewModel
 
         private async void LoadAll()
         {
-            TestCollection = new ObservableCollection<object>();
+            TestCollection = new ObservableCollection<UserModel>();
             IEnumerable<object> users = await _userService.GetAll();
-            foreach(object user in users)
+            foreach(UserModel user in users)
             {
                 TestCollection.Add(user);
             }
 
         }
 
-        public ObservableCollection<object> TestCollection { get; set; }
+        public ObservableCollection<UserModel> TestCollection { get; set; }
     }
 }

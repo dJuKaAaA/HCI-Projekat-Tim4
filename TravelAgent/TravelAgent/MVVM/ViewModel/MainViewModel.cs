@@ -17,7 +17,7 @@ namespace TravelAgent.MVVM.ViewModel
         {
             NavigationService = navigationService;
 
-            NavigationService.NavigateTo<HomeViewModel>();
+            NavigationService.NavigateTo<LoginViewModel>();
         }
     }
 }
