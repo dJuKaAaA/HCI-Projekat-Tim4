@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
 using TravelAgent.Core;
+using TravelAgent.Exception;
 using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel
@@ -33,6 +34,7 @@ namespace TravelAgent.MVVM.ViewModel
 		private readonly NavigationService _navigationService;
 
 		public ICommand LoginCommand { get; }
+		public ICommand NavigateToRegisterViewCommand { get; }
 
         public LoginViewModel(
 			UserService userService,
@@ -42,6 +44,7 @@ namespace TravelAgent.MVVM.ViewModel
 			_navigationService = navigationService;
 
 			LoginCommand = new RelayCommand(OnLogin, CanLogin);
+			NavigateToRegisterViewCommand = new RelayCommand(OnNavigateToRegisterView, CanNavigateToRegisterView);
         }
 
 		private bool CanLogin(object o)
@@ -51,18 +54,28 @@ namespace TravelAgent.MVVM.ViewModel
 
 		private async void OnLogin(object o)
 		{
-			bool foundUser = await _userService.Login(Username, Password);
-			if (foundUser)
+			try
 			{
+                await _userService.Login(Username, Password);
 				MessageBox.Show("Login successful!");
 				_navigationService.NavigateTo<HomeViewModel>();
 			}
-			else
+			catch (DatabaseResponseException e)
 			{
-				MessageBox.Show("Invalid credentials!");
+				MessageBox.Show(e.Message);
 				Password = string.Empty;
 				return;
 			}
+		}
+
+		private bool CanNavigateToRegisterView(object o)
+		{
+			return true;
+		}
+
+		private void OnNavigateToRegisterView(object o)
+		{
+			_navigationService.NavigateTo<RegisterViewModel>();
 		}
 
     }
