@@ -8,50 +8,42 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TravelAgent.Core;
+using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel
 {
     public class DeleteLaterViewModel : Core.ViewModel
     {
         private readonly Service.NavigationService _navigationService;
-        private readonly Consts _consts;
+        private readonly UserService _userService;
 
         public ICommand GoToHomeCommand { get; }
 
         public DeleteLaterViewModel(
             Service.NavigationService navigationService,
-            Consts consts)
+            UserService userService)
         {
             _navigationService = navigationService;
-            _consts = consts;
+            _userService = userService;
 
             GoToHomeCommand = new Core.RelayCommand((object o) => _navigationService.NavigateTo<HomeViewModel>(), (object o) => true);
-            FillCollection();
+
+
+            LoadAll();
 
         }
 
-        private void FillCollection()
+        private async void LoadAll()
         {
-            using (SqliteConnection connection = new SqliteConnection(_consts.ConnectionString))
+            TestCollection = new ObservableCollection<object>();
+            IEnumerable<object> users = await _userService.GetAll();
+            foreach(object user in users)
             {
-                connection.Open();
-                string sql = "SELECT * FROM users";
-                SqliteCommand command = new SqliteCommand(sql, connection);
-                SqliteDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    TestCollection.Add(new
-                    {
-                        Id = reader.GetString(0),
-                        Name = reader.GetString(1),
-                        Surname = reader.GetString(2)
-                    });
-                }
-                reader.Close();
+                TestCollection.Add(user);
             }
+
         }
 
-        public ObservableCollection<object> TestCollection { get; set; } = new ObservableCollection<object>();
+        public ObservableCollection<object> TestCollection { get; set; }
     }
 }
