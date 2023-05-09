@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -27,6 +28,7 @@ namespace TravelAgent
             {
                 DataContext = provider.GetRequiredService<MainViewModel>()
             });
+            services.AddSingleton<Consts>();
 
             // makes navigation from one ViewModel to another possible
             services.AddTransient<Func<Type, ViewModel>>(provider => viewModelType => (ViewModel)provider.GetRequiredService(viewModelType));
@@ -39,7 +41,12 @@ namespace TravelAgent
             // register Service classes for injection here
             services.AddSingleton<Service.NavigationService>();
 
+            // setting the SQLite provider
+            SQLitePCL.Batteries.Init();
+            SQLitePCL.raw.SetProvider(new SQLite3Provider_e_sqlite3());
+
             _serviceProvider = services.BuildServiceProvider();
+
         }
 
         protected override void OnStartup(StartupEventArgs e)

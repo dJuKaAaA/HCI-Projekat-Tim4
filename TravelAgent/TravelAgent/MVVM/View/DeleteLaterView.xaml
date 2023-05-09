@@ -9,20 +9,22 @@
     <Grid Background="#555">
 
         <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Grid.Row="0">
             <TextBlock Text="Delete later"
                        FontSize="20"
                        Foreground="White"
                        Margin="10"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
+            <DataGrid ItemsSource="{Binding TestCollection}"/>
             <Button Content="Go to Home"
                     Margin="10"
                     Padding="10"
                     Command="{Binding GoToHomeCommand}"/>
 
         </StackPanel>
-           
-        
+
+
     </Grid>
 </UserControl>
