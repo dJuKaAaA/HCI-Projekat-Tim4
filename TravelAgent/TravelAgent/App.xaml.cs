@@ -33,14 +33,15 @@ namespace TravelAgent
             // makes navigation from one ViewModel to another possible
             services.AddTransient<Func<Type, ViewModel>>(provider => viewModelType => (ViewModel)provider.GetRequiredService(viewModelType));
 
-            // register ViewModel classes for injection here
+            // register ViewModel classes for injection here (use AddTransient)
             services.AddTransient<MainViewModel>();
             services.AddTransient<HomeViewModel>();
             services.AddTransient<LoginViewModel>();
+            services.AddTransient<RegisterViewModel>();
 
-            // register Service classes for injection here
+            // register Service classes for injection here (use AddSingleton)
             services.AddSingleton<Service.NavigationService>();
-            services.AddSingleton<Service.DatabaseExcecutionService>();
+            services.AddSingleton<Service.DatabaseExecutionService>();
             services.AddSingleton<Service.UserService>();
 
             // setting the SQLite provider

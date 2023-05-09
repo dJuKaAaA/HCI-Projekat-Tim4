@@ -10,30 +10,41 @@
     <Grid>
 
         <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    MinWidth="300">
+                    HorizontalAlignment="Stretch"
+                    Margin="20 10">
 
-            <StackPanel>
+            <StackPanel Margin="20 10">
                 <TextBlock Text="Username"
-                           Foreground="Black"
-                           FontSize="16"/>
-                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
-                         FontSize="16"/>
+                           Foreground="Black"/>
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <StackPanel>
+            <StackPanel Margin="20 10">
                 <TextBlock Text="Password"
-                           Foreground="Black"
-                           FontSize="16"/>
+                           Foreground="Black"/>
                 <core:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>
 
-            <Button Content="Login"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    FontSize="16"
-                    Margin="10"
-                    Padding="40 10"
-                    Command="{Binding LoginCommand}"/>
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="0 10">
+
+                <Button Content="Login"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="10"
+                        Width="100"
+                        Padding="0 5"
+                        Command="{Binding LoginCommand}"/>
+                <Button Content="Register"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="10"
+                        Width="100"
+                        Padding="0 5"
+                        Command="{Binding NavigateToRegisterViewCommand}"/>
+
+            </StackPanel>
 
         </StackPanel>
             
