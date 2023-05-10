@@ -24,17 +24,6 @@ namespace TravelAgent.Service
             _databaseExcecutionService = databaseExcecutionService;
         }
 
-        private UserModel ConvertToUser(SqliteDataReader reader)
-        {
-            return new UserModel()
-            {
-                Id = int.Parse(reader.GetString(0)),
-                Name = reader.GetString(1),
-                Surname = reader.GetString(2),
-                Username = reader.GetString(3),
-            };
-        }
-
         public async Task<IEnumerable<UserModel>> GetAll()
         {
             string command = $"SELECT * FROM {_tableName}";
@@ -43,7 +32,13 @@ namespace TravelAgent.Service
             {
                 while (reader.Read())
                 {
-                    UserModel user = ConvertToUser(reader);
+                    UserModel user = new UserModel() 
+                    { 
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1), 
+                        Surname = reader.GetString(2), 
+                        Username = reader.GetString(3)
+                    };
                     collection.Add(user);
                 }
             });
@@ -79,9 +74,9 @@ namespace TravelAgent.Service
                 throw new DatabaseResponseException("Username is taken!");
             }
             
-            string insertCommand = $"INSERT INTO {_tableName} (name, surname, username, password) " +
+            string command = $"INSERT INTO {_tableName} (name, surname, username, password) " +
                 $"VALUES ('{user.Name}', '{user.Surname}', '{user.Username}', '{password}')";
-            await _databaseExcecutionService.ExecuteNonQueryCommand(_consts.ConnectionString, insertCommand);
+            await _databaseExcecutionService.ExecuteNonQueryCommand(_consts.ConnectionString, command);
 
         }
     }
