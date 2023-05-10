@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Font\WorkSans-VariableFont_wght.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Database\" />
   </ItemGroup>
 
@@ -15,6 +19,10 @@
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Font\WorkSans-VariableFont_wght.ttf" />
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TravelAgent.MVVM.View"
-             xmlns:core="clr-namespace:TravelAgent.Core"
+             xmlns:customComponent="clr-namespace:TravelAgent.CustomComponent"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -21,7 +21,7 @@
             <StackPanel Margin="20 10">
                 <TextBlock Text="Password"
                            Foreground="Black"/>
-                <core:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <customComponent:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal"
