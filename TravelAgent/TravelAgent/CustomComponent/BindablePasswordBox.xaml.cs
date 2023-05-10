@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TravelAgent.Core
+namespace TravelAgent.CustomComponent
 {
     /// <summary>
     /// Interaction logic for BindablePasswordBox.xaml
