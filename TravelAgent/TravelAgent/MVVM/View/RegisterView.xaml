@@ -17,35 +17,40 @@
                         HorizontalAlignment="Stretch"
                         Margin="20 10">
                 <TextBlock Text="Name"/>
-                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource RegisterTextBoxTheme}"/>
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Stretch"
                         Margin="20 10">
                 <TextBlock Text="Surname"/>
-                <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource RegisterTextBoxTheme}"/>
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Stretch"
                         Margin="20 10">
                 <TextBlock Text="Username"/>
-                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource RegisterTextBoxTheme}"/>
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Stretch"
                         Margin="20 10">
                 <TextBlock Text="Password"/>
-                <core:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <core:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                          PasswordBoxStyle="{StaticResource RegisterPasswordBoxTheme}"/>
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Stretch"
                         Margin="20 10">
                 <TextBlock Text="Confirm password"/>
-                <core:BindablePasswordBox Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <core:BindablePasswordBox Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                          PasswordBoxStyle="{StaticResource RegisterPasswordBoxTheme}"/>
             </StackPanel>
 
 

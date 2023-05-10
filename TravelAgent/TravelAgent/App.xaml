@@ -6,13 +6,26 @@
 
         <ResourceDictionary>
 
+            <!-- Global styles -->
             <Style TargetType="TextBlock">
                 <Setter Property="FontSize" Value="16"/>
             </Style>
-
             <Style TargetType="TextBox">
                 <Setter Property="FontSize" Value="16"/>
             </Style>
+
+            <!-- Colors -->
+            <Color x:Key="NotFocusedTextBoxColor">#ccc</Color>
+            <Color x:Key="FocusedTextBoxColor">#19d</Color>
+
+            <!-- Solid brushes -->
+            <SolidColorBrush x:Key="NotFocusedTextBoxBrush" Color="{StaticResource NotFocusedTextBoxColor}"/>
+            <SolidColorBrush x:Key="FocusedTextBoxBrush" Color="{StaticResource FocusedTextBoxColor}"/>
+
+            <!-- Registered themes from the 'Theme' folder -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./Theme/RegisterTextBoxTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
          

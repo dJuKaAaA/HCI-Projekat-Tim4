@@ -53,7 +53,7 @@ namespace TravelAgent.Service
         public async Task Login(string username, string password)
         {
             string command = $"SELECT * FROM {_tableName} WHERE username = '{username}' AND password = '{password}'";
-            bool exists = false;
+            bool exists = true;
             await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
             {
                 exists = reader.Read();
@@ -68,13 +68,13 @@ namespace TravelAgent.Service
         public async Task Create(UserModel user, string password)
         {
             string validationQuery = $"SELECT * FROM {_tableName} WHERE username = '{user.Username}'";
-            bool valid = false;
+            bool taken = false;
             await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, validationQuery, (reader) =>
             {
-                valid = !reader.Read();
+                taken = reader.Read();
             });
 
-            if (!valid)
+            if (taken)
             {
                 throw new DatabaseResponseException("Username is taken!");
             }
