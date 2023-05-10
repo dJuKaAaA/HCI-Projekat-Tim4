@@ -58,7 +58,7 @@ namespace TravelAgent.MVVM.ViewModel
 			{
                 await _userService.Login(Username, Password);
 				MessageBox.Show("Login successful!");
-				_navigationService.NavigateTo<HomeViewModel>();
+				_navigationService.NavigateTo<AllFlightsViewModel>();
 			}
 			catch (DatabaseResponseException e)
 			{

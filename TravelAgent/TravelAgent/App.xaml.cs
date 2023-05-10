@@ -35,7 +35,7 @@ namespace TravelAgent
 
             // register ViewModel classes for injection here (use AddTransient)
             services.AddTransient<MainViewModel>();
-            services.AddTransient<HomeViewModel>();
+            services.AddTransient<AllFlightsViewModel>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<RegisterViewModel>();
 
@@ -43,6 +43,7 @@ namespace TravelAgent
             services.AddSingleton<Service.NavigationService>();
             services.AddSingleton<Service.DatabaseExecutionService>();
             services.AddSingleton<Service.UserService>();
+            services.AddSingleton<Service.FlightService>();
 
             // setting the SQLite provider
             SQLitePCL.Batteries.Init();
