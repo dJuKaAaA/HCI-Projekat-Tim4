@@ -17,14 +17,14 @@
                         <Border x:Name="CUSTOM_PART_Border"
                                 CornerRadius="20"
                                 BorderThickness="1"
-                                BorderBrush="{DynamicResource NotFocusedTextBoxBrush}">
+                                BorderBrush="{DynamicResource TextBoxNotInFocusBrush}">
                             <Decorator x:Name="PART_ContentHost"
                                        Margin="15 5"/>
                         </Border>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource FocusedTextBoxBrush}"/>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
                                 <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="3"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -49,14 +49,14 @@
                         <Border x:Name="CUSTOM_PART_Border"
                                 CornerRadius="20"
                                 BorderThickness="1"
-                                BorderBrush="{DynamicResource NotFocusedTextBoxBrush}">
+                                BorderBrush="{DynamicResource TextBoxNotInFocusBrush}">
                             <Decorator x:Name="PART_ContentHost"
                                        Margin="15 5"/>
                         </Border>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource FocusedTextBoxBrush}"/>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
                                 <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="3"/>
                             </Trigger>
                         </ControlTemplate.Triggers>

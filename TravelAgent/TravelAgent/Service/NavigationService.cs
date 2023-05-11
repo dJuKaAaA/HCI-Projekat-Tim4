@@ -24,6 +24,8 @@ namespace TravelAgent.Service
 
         private Func<Type, ViewModel> _viewModelFactory;
 
+        public event EventHandler<Type> NavigationCompleted;
+
         public NavigationService(Func<Type, ViewModel> viewModelFactory)
         {
             _viewModelFactory = viewModelFactory;
@@ -32,6 +34,7 @@ namespace TravelAgent.Service
         public void NavigateTo<TViewModel>() where TViewModel : ViewModel
         {
             CurrentViewModel = _viewModelFactory.Invoke(typeof(TViewModel));
+            NavigationCompleted?.Invoke(this, typeof(TViewModel));
         }
     }
 }
