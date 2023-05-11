@@ -8,7 +8,8 @@
         xmlns:view="clr-namespace:TravelAgent.MVVM.View"
         xmlns:viewModel="clr-namespace:TravelAgent.MVVM.ViewModel"
         Title="Travel Agent" Height="600" Width="1000"
-        ResizeMode="CanResizeWithGrip">
+        Background="#fff"
+        WindowStartupLocation="CenterScreen">
     <Grid>
 
         <Grid.RowDefinitions>

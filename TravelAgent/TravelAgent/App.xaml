@@ -42,7 +42,7 @@
 
             <!-- Themes from the 'Theme' folder -->
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="./Theme/RegisterTextBoxTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/FormTextBoxTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/FlightsDataGridTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/FlightsListViewTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/CustomScrollbarTheme.xaml"/>

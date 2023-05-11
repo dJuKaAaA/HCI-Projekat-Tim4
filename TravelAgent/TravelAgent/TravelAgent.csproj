@@ -27,4 +27,8 @@
     <Resource Include="Icon\dubai.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="Microsoft.VCRTForwarders.140" Version="1.0.7" />
+  </ItemGroup>
+
 </Project>
