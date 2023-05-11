@@ -17,19 +17,14 @@
 
         <Menu Grid.Row="0"
               Visibility="{Binding MenuVisibility}">
-            <MenuItem Header="File">
+            <MenuItem Header="View">
                 <MenuItem Header="Flights"/>
                 <MenuItem Header="Tourist attractions"/>
                 <MenuItem Header="Restoraunts"/>
                 <MenuItem Header="Accomodations"/>
                 <MenuItem Header="Purchased flights"/>
             </MenuItem>
-            <MenuItem Header="Map">
-                <MenuItem Header="Flights"/>
-                <MenuItem Header="Tourist attractions"/>
-                <MenuItem Header="Restoraunts"/>
-                <MenuItem Header="Accomodations"/>
-            </MenuItem>
+            <MenuItem Header="Map"/>
             <MenuItem Header="Help"
                       Command="{Binding OpenHelpCommand}"/>
             <MenuItem Header="Logout"
