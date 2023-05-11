@@ -20,6 +20,7 @@
             </Style>
             <Style TargetType="MenuItem">
                 <Setter Property="Padding" Value="10 5"/>
+                <!--<Setter Property="Foreground" Value="#000"/>-->
             </Style>
 
             <!-- Colors -->
@@ -27,12 +28,14 @@
             <Color x:Key="TextBoxInFocusColor">#19d</Color>
             <Color x:Key="TextBoxFontColor">#111</Color>
             <Color x:Key="DataGridRowSelectedColor">LightCyan</Color>
+            <Color x:Key="MainTextColor">#000</Color>
 
             <!-- Solid brushes -->
             <SolidColorBrush x:Key="TextBoxNotInFocusBrush" Color="{StaticResource TextBoxNotInFocusColor}"/>
             <SolidColorBrush x:Key="TextBoxInFocusBrush" Color="{StaticResource TextBoxInFocusColor}"/>
             <SolidColorBrush x:Key="TextBoxFontBrush" Color="{StaticResource TextBoxFontColor}"/>
             <SolidColorBrush x:Key="DataGridRowSelectedBrush" Color="{StaticResource DataGridRowSelectedColor}"/>
+            <SolidColorBrush x:Key="MainTextBrush" Color="{StaticResource MainTextColor}"/>
 
             <!-- Value converters -->
             <valueConverter:LocationValueConverter x:Key="LocationValueConverter"/>
