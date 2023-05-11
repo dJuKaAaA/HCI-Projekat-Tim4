@@ -15,12 +15,12 @@
 
             <StackPanel Margin="20 10">
                 <TextBlock Text="Username"
-                           Foreground="Black"/>
+                           Foreground="{StaticResource MainTextBrush}"/>
                 <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <StackPanel Margin="20 10">
                 <TextBlock Text="Password"
-                           Foreground="Black"/>
+                           Foreground="{StaticResource MainTextBrush}"/>
                 <customComponent:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>
 
