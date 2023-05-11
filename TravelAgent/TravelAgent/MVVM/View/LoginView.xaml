@@ -10,8 +10,9 @@
     <Grid>
 
         <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Stretch"
-                    Margin="20 10">
+                    HorizontalAlignment="Center"
+                    Margin="20 10"
+                    MinWidth="500">
 
             <StackPanel Margin="20 10">
                 <TextBlock Text="Username"
