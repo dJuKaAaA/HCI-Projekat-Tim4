@@ -9,7 +9,35 @@
         xmlns:viewModel="clr-namespace:TravelAgent.MVVM.ViewModel"
         Title="Travel Agent" Height="600" Width="1000">
     <Grid>
-        <ContentControl IsTabStop="False"
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0"
+              Visibility="{Binding MenuVisibility}">
+            <MenuItem Header="File">
+                <MenuItem Header="Flights"/>
+                <MenuItem Header="Tourist attractions"/>
+                <MenuItem Header="Restoraunts"/>
+                <MenuItem Header="Accomodations"/>
+                <MenuItem Header="Purchased flights"/>
+            </MenuItem>
+            <MenuItem Header="Map">
+                <MenuItem Header="Flights"/>
+                <MenuItem Header="Tourist attractions"/>
+                <MenuItem Header="Restoraunts"/>
+                <MenuItem Header="Accomodations"/>
+            </MenuItem>
+            <MenuItem Header="Help"
+                      Command="{Binding OpenHelpCommand}"/>
+            <MenuItem Header="Logout"
+                      Command="{Binding LogoutCommand}"/>
+        </Menu>
+        
+        <ContentControl Grid.Row="1"
+                        IsTabStop="False"
                         Content="{Binding NavigationService.CurrentViewModel}">
             <ContentControl.Resources>
 

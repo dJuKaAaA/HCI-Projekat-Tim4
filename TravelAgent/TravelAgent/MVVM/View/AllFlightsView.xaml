@@ -8,23 +8,36 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
-        <DataGrid Margin="20"
-                  ItemsSource="{Binding AllFlights}">
+        <!--<DataGrid Margin="20"
+                  ItemsSource="{Binding AllFlights}"
+                  AutoGenerateColumns="False"
+                  Style="{StaticResource FlightsDataGridTheme}">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Departure"
-                                    Binding="{Binding Departure, Converter={StaticResource LocationValueConverter}}"/>
+                                    Binding="{Binding Departure, Converter={StaticResource LocationValueConverter}}"
+                                    Width="*"/>
                 <DataGridTextColumn Header="Destination"
-                                    Binding="{Binding Destination, Converter={StaticResource LocationValueConverter}}"/>
+                                    Binding="{Binding Destination, Converter={StaticResource LocationValueConverter}}"
+                                    Width="*"/>
                 <DataGridTextColumn Header="Takeoff"
-                                    Binding="{Binding TakeoffDateTime}"/>
+                                    Binding="{Binding TakeoffDateTime}"
+                                    Width="*"/>
                 <DataGridTextColumn Header="Landing"
-                                    Binding="{Binding LandingDateTime}"/>
+                                    Binding="{Binding LandingDateTime}"
+                                    Width="*"/>
                 <DataGridTextColumn Header="Price"
-                                    Binding="{Binding Price}"/>
+                                    Binding="{Binding Price}"
+                                    Width="*"/>
             </DataGrid.Columns>
 
-        </DataGrid>
+        </DataGrid>-->
+        <ListView Style="{StaticResource FlightsListViewTheme}"
+                  ItemsSource="{Binding AllFlights}">
+            <ListView.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource CustomScrollBarTheme}"/>
+            </ListView.Resources>
+        </ListView>
 
     </Grid>
 </UserControl>
