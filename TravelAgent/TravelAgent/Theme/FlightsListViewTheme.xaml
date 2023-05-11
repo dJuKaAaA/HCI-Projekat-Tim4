@@ -19,8 +19,8 @@
                                             x:Name="CUSTOM_PART_Border"
                                             Margin="20 10"
                                             Padding="30 20"
-                                            BorderThickness="1"
-                                            BorderBrush="#999">
+                                            BorderThickness="2"
+                                            BorderBrush="#bbb">
                                             
                                         <Grid>
                                             <Grid.ColumnDefinitions>

@@ -10,15 +10,16 @@
     <Grid>
 
         <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Stretch"
-                    Margin="20 0">
+                    HorizontalAlignment="Center"
+                    Margin="20 0"
+                    MinWidth="700">
             
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Stretch"
                         Margin="20 10">
                 <TextBlock Text="Name"/>
                 <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource RegisterTextBoxTheme}"/>
+                         Style="{StaticResource FormTextBoxTheme}"/>
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
@@ -26,7 +27,7 @@
                         Margin="20 10">
                 <TextBlock Text="Surname"/>
                 <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource RegisterTextBoxTheme}"/>
+                         Style="{StaticResource FormTextBoxTheme}"/>
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
@@ -34,7 +35,7 @@
                         Margin="20 10">
                 <TextBlock Text="Username"/>
                 <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource RegisterTextBoxTheme}"/>
+                         Style="{StaticResource FormTextBoxTheme}"/>
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
@@ -42,7 +43,7 @@
                         Margin="20 10">
                 <TextBlock Text="Password"/>
                 <customComponent:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                          PasswordBoxStyle="{StaticResource RegisterPasswordBoxTheme}"/>
+                                          PasswordBoxStyle="{StaticResource FormPasswordBoxTheme}"/>
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center"
@@ -50,7 +51,7 @@
                         Margin="20 10">
                 <TextBlock Text="Confirm password"/>
                 <customComponent:BindablePasswordBox Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                          PasswordBoxStyle="{StaticResource RegisterPasswordBoxTheme}"/>
+                                          PasswordBoxStyle="{StaticResource FormPasswordBoxTheme}"/>
             </StackPanel>
 
 
