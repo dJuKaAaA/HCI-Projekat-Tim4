@@ -14,32 +14,43 @@
                                 <ControlTemplate TargetType="ListViewItem">
                                     <Border HorizontalAlignment="Stretch"
                                             CornerRadius="30"
+                                            x:Name="CUSTOM_PART_Border"
                                             Margin="20 10"
                                             Padding="30 20"
                                             BorderThickness="1"
                                             BorderBrush="#999">
+                                            
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="3*"/>
                                             </Grid.ColumnDefinitions>
 
                                             <StackPanel Orientation="Vertical"
                                                         Grid.Column="0"
                                                         HorizontalAlignment="Left"
-                                                        VerticalAlignment="Center">
+                                                        VerticalAlignment="Center"
+                                                        Margin="10 0">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Takeoff"
                                                                Margin="0 0 20 0"
-                                                               FontWeight="Bold"/>
-                                                    <TextBlock Text="{Binding TakeoffDateTime}"/>
+                                                               FontWeight="Bold"
+                                                               FontSize="22"
+                                                               VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding TakeoffDateTime}"
+                                                               FontSize="18"
+                                                               VerticalAlignment="Center"/>
                                                 </StackPanel>
 
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Landing"
                                                                Margin="0 0 20 0"
-                                                               FontWeight="Bold"/>
-                                                    <TextBlock Text="{Binding LandingDateTime}"/>
+                                                               FontWeight="Bold"
+                                                               FontSize="22"
+                                                               VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding LandingDateTime}"
+                                                               FontSize="18"
+                                                               VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </StackPanel>
 
@@ -55,15 +66,46 @@
                                                             VerticalAlignment="Center"
                                                             HorizontalAlignment="Left">
                                                     <TextBlock Text="{Binding Departure.Name}"
-                                                               FontWeight="SemiBold"/>
+                                                               FontWeight="SemiBold"
+                                                               FontSize="26"
+                                                               Margin="10 0 0 0"
+                                                               VerticalAlignment="Center"/>
                                                     <TextBlock Text="→"
-                                                               Margin="10 0"/>
+                                                               Margin="10 0"
+                                                               FontSize="24"
+                                                               VerticalAlignment="Center"/>
                                                     <TextBlock Text="{Binding Destination.Name}"
-                                                               FontWeight="SemiBold"/>
+                                                               FontWeight="SemiBold"
+                                                               FontSize="26"
+                                                               VerticalAlignment="Center"/>
+                                                    <Button>
+                                                        <Button.Style>
+                                                            <Style TargetType="Button">
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="Button">
+                                                                            <TextBlock Text="🌍"
+                                                                                       VerticalAlignment="Center"
+                                                                                       Margin="15 0"
+                                                                                       FontSize="30"/>
+                                                                            <ControlTemplate.Triggers>
+                                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                                    <Setter Property="Opacity" Value="0.75"/>
+                                                                                    <Setter Property="Cursor" Value="Hand"/>
+                                                                                </Trigger>
+                                                                            </ControlTemplate.Triggers>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </Button.Style>
+                                                    </Button>
 
                                                 </StackPanel>
 
-                                                <StackPanel Grid.Column="1">
+                                                <StackPanel Grid.Column="1"
+                                                            HorizontalAlignment="Right"
+                                                            Margin="10 0">
                                                     <TextBlock Text="{Binding Price}"
                                                                HorizontalAlignment="Center"
                                                                Margin="10"
@@ -77,10 +119,12 @@
                                                                             <Border CornerRadius="15"
                                                                                     x:Name="CUSTOM_PART_Border"
                                                                                     Background="Orange"
-                                                                                    Padding="20 10">
+                                                                                    Padding="30 10">
                                                                                 <TextBlock Text="See deal →"
                                                                                            VerticalAlignment="Center"
-                                                                                           HorizontalAlignment="Center"/>
+                                                                                           HorizontalAlignment="Center"
+                                                                                           FontSize="20"
+                                                                                           FontWeight="DemiBold"/>
                                                                             </Border>
                                                                             <ControlTemplate.Triggers>
                                                                                 <Trigger Property="IsMouseOver" Value="True">

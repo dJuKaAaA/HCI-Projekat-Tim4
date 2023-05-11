@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Font\WorkSans-VariableFont_wght.ttf" />
+    <None Remove="Icon\dubai.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <Resource Include="Font\WorkSans-VariableFont_wght.ttf" />
+    <Resource Include="Icon\dubai.png" />
   </ItemGroup>
 
 </Project>
