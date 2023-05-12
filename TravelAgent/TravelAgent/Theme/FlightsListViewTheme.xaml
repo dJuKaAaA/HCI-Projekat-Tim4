@@ -87,7 +87,7 @@
                                                                FontSize="26"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                VerticalAlignment="Center"/>
-                                                    <Button>
+                                                    <Button Command="{Binding DataContext.OpenMapLocationDetailsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                                         <Button.Style>
                                                             <Style TargetType="Button">
                                                                 <Setter Property="Template">
@@ -121,7 +121,8 @@
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                Margin="10"
                                                                FontWeight="Bold"/>
-                                                    <Button Margin="10 5">
+                                                    <Button Margin="10 5"
+                                                            Command="{Binding DataContext.OpenSeeDealPopupCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                                         <Button.Style>
                                                             <Style TargetType="Button">
                                                                 <Setter Property="Template">

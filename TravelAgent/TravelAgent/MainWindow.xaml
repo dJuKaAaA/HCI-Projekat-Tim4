@@ -9,7 +9,8 @@
         xmlns:viewModel="clr-namespace:TravelAgent.MVVM.ViewModel"
         Title="Travel Agent" Height="600" Width="1000"
         Background="#fff"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Closing="MainWindow_Closing">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -71,6 +72,10 @@
 
                 <DataTemplate DataType="{x:Type viewModel:MapViewModel}">
                     <view:MapView/>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewModel:MapLocationDetailsViewModel}">
+                    <view:MapLocationDetailsView/>
                 </DataTemplate>
 
             </ContentControl.Resources>

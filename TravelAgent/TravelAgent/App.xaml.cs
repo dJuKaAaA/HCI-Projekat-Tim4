@@ -42,6 +42,7 @@ namespace TravelAgent
             services.AddTransient<AllRestorauntsViewModel>();
             services.AddTransient<AllAccomodationsViewModel>();
             services.AddTransient<MapViewModel>();
+            services.AddTransient<MapLocationDetailsViewModel>();
 
             // register Service classes for injection here (use AddSingleton)
             services.AddSingleton<Service.NavigationService>();
@@ -63,6 +64,13 @@ namespace TravelAgent
             mainWindow.Show();
 
             base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            // Perform any cleanup or additional logic before the application exits here
+
+            base.OnExit(e);
         }
     }
 }
