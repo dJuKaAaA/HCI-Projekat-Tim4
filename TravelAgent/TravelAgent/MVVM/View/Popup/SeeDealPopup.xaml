@@ -1,0 +1,38 @@
+﻿<Window x:Class="TravelAgent.MVVM.View.Popup.SeeDealPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgent.MVVM.View.Popup"
+        xmlns:popupvm="clr-namespace:TravelAgent.MVVM.ViewModel.Popup"
+        mc:Ignorable="d"
+        Title="SeeDealPopup" Height="300" Width="600"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.DataContext>
+        <popupvm:SeeDealViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+
+        <Border Background="#ccc"
+                CornerRadius="20"
+                BorderThickness="3"
+                BorderBrush="#777"/>
+
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <TextBlock Text="Here's the deal"/>
+            <Button Content="Close"
+                    Padding="40 10"
+                    Command="{Binding CloseCommand}"/>
+            
+        </StackPanel>
+
+
+    </Grid>
+</Window>

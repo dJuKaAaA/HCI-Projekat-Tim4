@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TravelAgent
+namespace TravelAgent.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MapLocationDetailsView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MapLocationDetailsView : UserControl
     {
-        public MainWindow()
+        public MapLocationDetailsView()
         {
             InitializeComponent();
-        }
-
-        private void MainWindow_Closing(object sender, CancelEventArgs e)
-        {
-            Application.Current.Shutdown(); 
         }
     }
 }
