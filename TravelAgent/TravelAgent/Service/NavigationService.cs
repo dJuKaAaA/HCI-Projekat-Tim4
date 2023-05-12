@@ -33,8 +33,11 @@ namespace TravelAgent.Service
 
         public void NavigateTo<TViewModel>() where TViewModel : ViewModel
         {
-            CurrentViewModel = _viewModelFactory.Invoke(typeof(TViewModel));
-            NavigationCompleted?.Invoke(this, typeof(TViewModel));
+            if (typeof(TViewModel) != CurrentViewModel?.GetType())
+            {
+                CurrentViewModel = _viewModelFactory.Invoke(typeof(TViewModel));
+                NavigationCompleted?.Invoke(this, typeof(TViewModel));
+            }
         }
     }
 }

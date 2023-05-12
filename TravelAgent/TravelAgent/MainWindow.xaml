@@ -14,16 +14,22 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0"
+              Grid.RowSpan="2"
               Visibility="{Binding MenuVisibility}">
             <MenuItem Header="View">
-                <MenuItem Header="Flights"/>
-                <MenuItem Header="Tourist attractions"/>
-                <MenuItem Header="Restoraunts"/>
-                <MenuItem Header="Accomodations"/>
+                <MenuItem Header="Flights"
+                          Command="{Binding OpenAllFlightsViewCommand}"/>
+                <MenuItem Header="Tourist attractions"
+                          Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
+                <MenuItem Header="Restoraunts"
+                          Command="{Binding OpenAllRestorauntsViewCommand}"/>
+                <MenuItem Header="Accomodations"
+                          Command="{Binding OpenAllAccomodationsViewCommand}"/>
                 <MenuItem Header="Purchased flights"/>
             </MenuItem>
             <MenuItem Header="Map"
@@ -34,7 +40,7 @@
                       Command="{Binding LogoutCommand}"/>
         </Menu>
         
-        <ContentControl Grid.Row="1"
+        <ContentControl Grid.Row="2"
                         IsTabStop="False"
                         Content="{Binding NavigationService.CurrentViewModel}">
             <ContentControl.Resources>
@@ -49,6 +55,18 @@
 
                 <DataTemplate DataType="{x:Type viewModel:AllFlightsViewModel}">
                     <view:AllFlightsView/>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewModel:AllTouristAttractionsViewModel}">
+                    <view:AllTouristAttractionsView/>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewModel:AllRestorauntsViewModel}">
+                    <view:AllRestorauntsView/>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewModel:AllAccomodationsViewModel}">
+                    <view:AllAccomodationsView/>
                 </DataTemplate>
 
                 <DataTemplate DataType="{x:Type viewModel:MapViewModel}">

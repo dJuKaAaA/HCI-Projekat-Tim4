@@ -25,9 +25,10 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
-                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="5"/>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="3"/>
                                 <Setter TargetName="CUSTOM_PART_Border" Property="CornerRadius" Value="30"/>
-                                <Setter Property="FontSize" Value="30"/>
+                                <Setter TargetName="PART_ContentHost" Property="Margin" Value="20 10"/>
+                                <Setter Property="FontSize" Value="28"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -59,9 +60,10 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
-                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="5"/>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="3"/>
                                 <Setter TargetName="CUSTOM_PART_Border" Property="CornerRadius" Value="30"/>
-                                <Setter Property="FontSize" Value="30"/>
+                                <Setter TargetName="PART_ContentHost" Property="Margin" Value="20 10"/>
+                                <Setter Property="FontSize" Value="28"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
