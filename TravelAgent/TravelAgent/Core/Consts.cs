@@ -12,5 +12,6 @@ namespace TravelAgent.Core
 
         public string ConnectionString { get; } = $"Data Source={_relativePathToDatabase}";
         public string DateTimeFormatString { get; } = "d.M.yyyy. H:m:s";
+        public string BingMapsApiKey { get; } = "AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr";
     }
 }

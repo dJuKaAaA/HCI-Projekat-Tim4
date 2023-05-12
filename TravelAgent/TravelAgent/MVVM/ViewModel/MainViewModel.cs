@@ -23,6 +23,7 @@ namespace TravelAgent.MVVM.ViewModel
 
         public NavigationService NavigationService { get; }
 
+        public ICommand OpenMapsCommand { get; }
         public ICommand OpenHelpCommand { get; }
         public ICommand LogoutCommand { get; }
 
@@ -31,6 +32,7 @@ namespace TravelAgent.MVVM.ViewModel
         {
             NavigationService = navigationService;
 
+            OpenMapsCommand = new RelayCommand(o => NavigationService.NavigateTo<MapViewModel>(), o => true);
             OpenHelpCommand = new RelayCommand(o => MessageBox.Show("Treba pomoc aaaa pickoooo"), o => true);
             LogoutCommand = new RelayCommand(o => NavigationService.NavigateTo<LoginViewModel>(), o => true);
 

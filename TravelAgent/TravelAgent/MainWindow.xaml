@@ -26,7 +26,8 @@
                 <MenuItem Header="Accomodations"/>
                 <MenuItem Header="Purchased flights"/>
             </MenuItem>
-            <MenuItem Header="Map"/>
+            <MenuItem Header="Map"
+                      Command="{Binding OpenMapsCommand}"/>
             <MenuItem Header="Help"
                       Command="{Binding OpenHelpCommand}"/>
             <MenuItem Header="Logout"
@@ -48,6 +49,10 @@
 
                 <DataTemplate DataType="{x:Type viewModel:AllFlightsViewModel}">
                     <view:AllFlightsView/>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewModel:MapViewModel}">
+                    <view:MapView/>
                 </DataTemplate>
 
             </ContentControl.Resources>
