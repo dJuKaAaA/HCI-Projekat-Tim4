@@ -57,7 +57,6 @@ namespace TravelAgent.MVVM.ViewModel
 			try
 			{
                 await _userService.Login(Username, Password);
-				MessageBox.Show("Login successful!");
 				_navigationService.NavigateTo<AllFlightsViewModel>();
 			}
 			catch (DatabaseResponseException e)
