@@ -25,18 +25,23 @@
             </Style>
 
             <!-- Colors -->
-            <Color x:Key="TextBoxNotInFocusColor">#bbb</Color>
+            <Color x:Key="NotHighlightedColor">#aaa</Color>
             <Color x:Key="TextBoxInFocusColor">#19d</Color>
             <Color x:Key="TextBoxFontColor">#111</Color>
             <Color x:Key="DataGridRowSelectedColor">LightCyan</Color>
             <Color x:Key="MainTextColor">#000</Color>
+            <Color x:Key="ButtonNotHighlightedColor"></Color>
 
             <!-- Solid brushes -->
-            <SolidColorBrush x:Key="TextBoxNotInFocusBrush" Color="{StaticResource TextBoxNotInFocusColor}"/>
+            <SolidColorBrush x:Key="NotHighlightedBrush" Color="{StaticResource NotHighlightedColor}"/>
             <SolidColorBrush x:Key="TextBoxInFocusBrush" Color="{StaticResource TextBoxInFocusColor}"/>
             <SolidColorBrush x:Key="TextBoxFontBrush" Color="{StaticResource TextBoxFontColor}"/>
             <SolidColorBrush x:Key="DataGridRowSelectedBrush" Color="{StaticResource DataGridRowSelectedColor}"/>
             <SolidColorBrush x:Key="MainTextBrush" Color="{StaticResource MainTextColor}"/>
+            <LinearGradientBrush x:Key="ButtonHighlightedBrush">
+                <GradientStop Color="BlueViolet" Offset="0.00"/>
+                <GradientStop Color="IndianRed" Offset="0.75"/>
+            </LinearGradientBrush>
 
             <!-- Value converters -->
             <valueConverter:LocationValueConverter x:Key="LocationValueConverter"/>
@@ -53,7 +58,8 @@
                 <ResourceDictionary Source="./Theme/FlightsDataGridTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/FlightsListViewTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/CustomScrollbarTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/SeeDealPopupButtonTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/FancyButtonTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/PurchasedFlightsTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

@@ -36,15 +36,13 @@
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Margin="10"
-                        Width="100"
-                        Padding="0 5"
+                        Style="{StaticResource FancyButtonTheme}"
                         Command="{Binding LoginCommand}"/>
                 <Button Content="Register"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Margin="10"
-                        Width="100"
-                        Padding="0 5"
+                        Style="{StaticResource FancyButtonTheme}"
                         Command="{Binding NavigateToRegisterViewCommand}"/>
 
             </StackPanel>

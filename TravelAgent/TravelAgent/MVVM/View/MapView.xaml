@@ -7,17 +7,14 @@
              xmlns:viewModel="clr-namespace:TravelAgent.MVVM.ViewModel"
              xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-
-    <UserControl.DataContext>
-        <viewModel:MapViewModel/>
-    </UserControl.DataContext>
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
 
     <Grid>
         <m:Map x:Name="mapControl" 
                CredentialsProvider="AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr" 
-               Center="47.6062,-122.3321" 
-               ZoomLevel="12">
+               Center="49.5260, 12.2551" 
+               ZoomLevel="5">
             <!--<m:MapPolyline Stroke="#111" StrokeThickness="2" StrokeDashArray="4">
                 <m:MapPolyline.Locations>
                     <m:LocationCollection>
