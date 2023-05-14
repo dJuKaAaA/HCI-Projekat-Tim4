@@ -31,7 +31,8 @@
                           Command="{Binding OpenAllRestorauntsViewCommand}"/>
                 <MenuItem Header="Accomodations"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
-                <MenuItem Header="Purchased flights"/>
+                <MenuItem Header="Purchased flights"
+                          Command="{Binding OpenPurchasedFlightsViewCommand}"/>
             </MenuItem>
             <MenuItem Header="Map"
                       Command="{Binding OpenMapsCommand}"/>
@@ -76,6 +77,10 @@
 
                 <DataTemplate DataType="{x:Type viewModel:MapLocationDetailsViewModel}">
                     <view:MapLocationDetailsView/>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewModel:PurchasedFlightsViewModel}">
+                    <view:PurchasedFlightsView/>
                 </DataTemplate>
 
             </ContentControl.Resources>

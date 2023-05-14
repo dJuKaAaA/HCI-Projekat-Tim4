@@ -5,19 +5,42 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgent.Core;
 using TravelAgent.MVVM.Model;
+using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel
 {
     public class MapViewModel : Core.ViewModel
     {
-        public Pushpin Pushpin { get; }
+        public ObservableCollection<FlightModel> AllFlights { get; set; }
 
-        public MapViewModel()
+        private readonly FlightService _flightService;
+        public Consts Consts { get; }
+
+        public event EventHandler LoadedFlights;
+
+        public MapViewModel(
+            Service.FlightService flightService,
+            Core.Consts consts)
         {
-            Pushpin = new Pushpin();
-            Pushpin.Location = new Location(47.6097, -122.3331);  // Set the latitude and longitude of the pushpin
-            Pushpin.ToolTip = "Marker 1";  // Optional tooltip for the pushpin
+            _flightService = flightService;
+            Consts = consts;
+            
+            LoadAll();
+        }
+
+        private async void LoadAll()
+        {
+            AllFlights = new ObservableCollection<FlightModel>();
+
+            IEnumerable<FlightModel> allFlights = await _flightService.GetAll();
+            foreach (FlightModel flight in allFlights)
+            {
+                AllFlights.Add(flight);
+            }
+
+            LoadedFlights?.Invoke(this, new EventArgs());
         }
     }
 }

@@ -62,15 +62,13 @@
 
                 <Button Content="Register"
                         Margin="20 10"
-                        Width="100"
-                        Padding="0 5"
                         HorizontalAlignment="Center"
+                        Style="{StaticResource FancyButtonTheme}"
                         Command="{Binding RegisterCommand}"/>
                 <Button Content="Back"
                         Margin="20 10"
-                        Width="100"
-                        Padding="0 5"
                         HorizontalAlignment="Center"
+                        Style="{StaticResource FancyButtonTheme}"
                         Command="{Binding NavigateToLoginViewCommand}"/>
                 
             </StackPanel>

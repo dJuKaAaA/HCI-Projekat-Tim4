@@ -45,19 +45,30 @@ namespace TravelAgent.Service
             return collection;
         }
 
-        public async Task Login(string username, string password)
+        public async Task<UserModel> Login(string username, string password)
         {
             string command = $"SELECT * FROM {_tableName} WHERE username = '{username}' AND password = '{password}'";
-            bool exists = true;
+            UserModel? user = null;
             await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
             {
-                exists = reader.Read();
+                while (reader.Read())
+                {
+                    user = new UserModel() 
+                    { 
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1), 
+                        Surname = reader.GetString(2), 
+                        Username = reader.GetString(3)
+                    };
+                }
             });
 
-            if (!exists)
+            if (user == null)
             {
                 throw new DatabaseResponseException("Invalid credentials!");
             }
+
+            return user;
         }
 
         public async Task Create(UserModel user, string password)

@@ -77,15 +77,15 @@
                         VerticalAlignment="Center">
                 <Button Content="Purchase"
                         Margin="10 20"
-                        Style="{StaticResource SeeDealPopupButtonTheme}"/>
+                        Style="{StaticResource FancyButtonTheme}"/>
                 <Button Content="Reserve"
                         Margin="10 20"
-                        Style="{StaticResource SeeDealPopupButtonTheme}"/>
+                        Style="{StaticResource FancyButtonTheme}"/>
             </StackPanel>
             <Button Content="Close"
                     Margin="10"
                     Command="{Binding CloseCommand}"
-                    Style="{StaticResource SeeDealPopupButtonTheme}"/>
+                    Style="{StaticResource FancyButtonTheme}"/>
         </StackPanel>
 
     </Grid>

@@ -16,8 +16,8 @@
                     <ControlTemplate TargetType="TextBox">
                         <Border x:Name="CUSTOM_PART_Border"
                                 CornerRadius="20"
-                                BorderThickness="1"
-                                BorderBrush="{DynamicResource TextBoxNotInFocusBrush}">
+                                BorderThickness="2"
+                                BorderBrush="{DynamicResource NotHighlightedBrush}">
                             <Decorator x:Name="PART_ContentHost"
                                        Margin="15 5"/>
                         </Border>
@@ -51,8 +51,8 @@
                     <ControlTemplate TargetType="PasswordBox">
                         <Border x:Name="CUSTOM_PART_Border"
                                 CornerRadius="20"
-                                BorderThickness="1"
-                                BorderBrush="{DynamicResource TextBoxNotInFocusBrush}">
+                                BorderThickness="2"
+                                BorderBrush="{DynamicResource NotHighlightedBrush}">
                             <Decorator x:Name="PART_ContentHost"
                                        Margin="15 5"/>
                         </Border>
