@@ -40,6 +40,8 @@
 
             <!-- Value converters -->
             <valueConverter:LocationValueConverter x:Key="LocationValueConverter"/>
+            <valueConverter:DinarValueConverter x:Key="DinarValueConverter"/>
+            <valueConverter:HoursValueConverter x:Key="HoursValueConverter"/>
 
             <!-- Themes from the 'Theme' folder -->
             <ResourceDictionary.MergedDictionaries>
@@ -47,6 +49,7 @@
                 <ResourceDictionary Source="./Theme/FlightsDataGridTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/FlightsListViewTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/CustomScrollbarTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/SeeDealPopupButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

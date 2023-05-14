@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgent.MVVM.View.Popup"
+        xmlns:valueConverter="clr-namespace:TravelAgent.ValueConverter"
         xmlns:popupvm="clr-namespace:TravelAgent.MVVM.ViewModel.Popup"
         mc:Ignorable="d"
-        Title="SeeDealPopup" Height="300" Width="600"
+        Title="SeeDealPopup" Height="450" Width="900"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -19,20 +20,73 @@
 
     <Grid>
 
-        <Border Background="#ccc"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Background="#eee"
                 CornerRadius="20"
                 BorderThickness="3"
-                BorderBrush="#777"/>
+                BorderBrush="#999"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"/>
 
-        <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-            <TextBlock Text="Here's the deal"/>
-            <Button Content="Close"
-                    Padding="40 10"
-                    Command="{Binding CloseCommand}"/>
-            
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Margin="20">
+            <Image Source="{Binding Flight.Destination.Image}"
+                   Width="Auto">
+            </Image>
         </StackPanel>
-
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="20"
+                    Grid.Column="1">
+            <TextBlock Text="{Binding Flight.Destination.Name}"
+                       HorizontalAlignment="Center"
+                       FontSize="40"
+                       Margin="20"
+                       FontWeight="Bold"/>
+            <Grid>
+                <TextBlock Text="Price  →"
+                           HorizontalAlignment="Left"
+                           FontWeight="SemiBold"
+                           FontSize="30"
+                           FontStyle="Italic"/>
+                <TextBlock Text=""
+                           FontSize="30"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Flight.Price, Converter={StaticResource DinarValueConverter}}"
+                           FontSize="30"
+                           HorizontalAlignment="Right"
+                           FontStyle="Italic"/>
+            </Grid>
+            <Grid>
+                <TextBlock Text="Duration →"
+                           FontSize="30"
+                           HorizontalAlignment="Left"
+                           FontWeight="SemiBold"
+                           FontStyle="Italic"/>
+                <TextBlock Text="{Binding FlightDuration, Converter={StaticResource HoursValueConverter}}"
+                           FontSize="30"
+                           HorizontalAlignment="Right"
+                           FontStyle="Italic"/>
+            </Grid>
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <Button Content="Purchase"
+                        Margin="10 20"
+                        Style="{StaticResource SeeDealPopupButtonTheme}"/>
+                <Button Content="Reserve"
+                        Margin="10 20"
+                        Style="{StaticResource SeeDealPopupButtonTheme}"/>
+            </StackPanel>
+            <Button Content="Close"
+                    Margin="10"
+                    Command="{Binding CloseCommand}"
+                    Style="{StaticResource SeeDealPopupButtonTheme}"/>
+        </StackPanel>
 
     </Grid>
 </Window>

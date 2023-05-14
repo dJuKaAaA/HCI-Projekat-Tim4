@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Maps.MapControl.WPF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TravelAgent.MVVM.Model;
+using TravelAgent.MVVM.ViewModel.Popup;
 
 namespace TravelAgent.MVVM.View.Popup
 {
@@ -19,9 +22,15 @@ namespace TravelAgent.MVVM.View.Popup
     /// </summary>
     public partial class SeeDealPopup : Window
     {
-        public SeeDealPopup()
+        public SeeDealPopup(FlightModel flight)
         {
             InitializeComponent();
+
+            ((SeeDealViewModel)DataContext).Flight = flight;
+            DateTime takeoff = ((SeeDealViewModel)DataContext).Flight.TakeoffDateTime;
+            DateTime landing = ((SeeDealViewModel)DataContext).Flight.LandingDateTime;
+            TimeSpan timeDiff = landing - takeoff;
+            ((SeeDealViewModel)DataContext).FlightDuration = timeDiff.Hours;
         }
     }
 }

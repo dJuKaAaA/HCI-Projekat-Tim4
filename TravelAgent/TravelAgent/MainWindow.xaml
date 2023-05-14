@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:view="clr-namespace:TravelAgent.MVVM.View"
         xmlns:viewModel="clr-namespace:TravelAgent.MVVM.ViewModel"
-        Title="Travel Agent" Height="600" Width="1000"
+        Title="Travel Agent" Height="720" Width="1280"
         Background="#fff"
         WindowStartupLocation="CenterScreen"
         Closing="MainWindow_Closing">
