@@ -9,11 +9,23 @@
 
   <ItemGroup>
     <None Remove="Font\WorkSans-VariableFont_wght.ttf" />
-    <None Remove="Icon\dubai.png" />
+    <None Remove="Image\Location\belgrade.jpg" />
+    <None Remove="Image\Location\berlin.jpg" />
+    <None Remove="Image\Location\dubai.jpg" />
+    <None Remove="Image\Location\london.jpg" />
+    <None Remove="Image\Location\loxembourg.jpg" />
+    <None Remove="Image\Location\paris.jpg" />
+    <None Remove="Image\Location\prague.jpg" />
+    <None Remove="Image\Location\rome.jpg" />
+    <None Remove="Image\Location\stockholm.jpg" />
+    <None Remove="Image\Location\vienna.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Database\" />
+    <Folder Include="Image\Accomodation\" />
+    <Folder Include="Image\TouristAttraction\" />
+    <Folder Include="Image\Restoraunt\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +37,16 @@
 
   <ItemGroup>
     <Resource Include="Font\WorkSans-VariableFont_wght.ttf" />
-    <Resource Include="Icon\dubai.png" />
+    <Resource Include="Image\Location\belgrade.jpg" />
+    <Resource Include="Image\Location\berlin.jpg" />
+    <Resource Include="Image\Location\dubai.jpg" />
+    <Resource Include="Image\Location\london.jpg" />
+    <Resource Include="Image\Location\loxembourg.jpg" />
+    <Resource Include="Image\Location\paris.jpg" />
+    <Resource Include="Image\Location\prague.jpg" />
+    <Resource Include="Image\Location\rome.jpg" />
+    <Resource Include="Image\Location\stockholm.jpg" />
+    <Resource Include="Image\Location\vienna.jpg" />
   </ItemGroup>
 
   <ItemGroup>

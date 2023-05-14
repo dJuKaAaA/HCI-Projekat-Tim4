@@ -17,8 +17,7 @@
         <m:Map x:Name="mapControl" 
                CredentialsProvider="AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr" 
                Center="47.6062,-122.3321" 
-               ZoomLevel="12"
-               Margin="10">
+               ZoomLevel="12">
             <!--<m:MapPolyline Stroke="#111" StrokeThickness="2" StrokeDashArray="4">
                 <m:MapPolyline.Locations>
                     <m:LocationCollection>

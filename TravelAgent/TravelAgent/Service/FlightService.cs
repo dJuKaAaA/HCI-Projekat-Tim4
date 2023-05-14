@@ -39,14 +39,16 @@ namespace TravelAgent.Service
                         Id = reader.GetInt32(6),
                         Name = reader.GetString(7),
                         Longitude = reader.GetFloat(8),
-                        Latitude = reader.GetFloat(9)
+                        Latitude = reader.GetFloat(9),
+                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(10)}",
                     };
                     LocationModel destination = new LocationModel()
                     {
-                        Id = reader.GetInt32(10),
-                        Name = reader.GetString(11),
-                        Longitude = reader.GetFloat(12),
-                        Latitude = reader.GetFloat(13)
+                        Id = reader.GetInt32(11),
+                        Name = reader.GetString(12),
+                        Longitude = reader.GetFloat(13),
+                        Latitude = reader.GetFloat(14),
+                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(15)}",
                     };
                     FlightModel flight = new FlightModel()
                     {
