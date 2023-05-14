@@ -25,7 +25,6 @@
     <Folder Include="Database\" />
     <Folder Include="Image\Accomodation\" />
     <Folder Include="Image\TouristAttraction\" />
-    <Folder Include="Image\Restoraunt\" />
   </ItemGroup>
 
   <ItemGroup>

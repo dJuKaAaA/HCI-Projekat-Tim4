@@ -36,8 +36,8 @@
                     HorizontalAlignment="Stretch"
                     Margin="20">
             <Image Source="{Binding Flight.Destination.Image}"
-                   Width="Auto">
-            </Image>
+                   Width="Auto"/>
+
         </StackPanel>
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center"
