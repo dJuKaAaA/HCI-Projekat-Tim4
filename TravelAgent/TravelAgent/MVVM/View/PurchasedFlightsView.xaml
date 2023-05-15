@@ -8,15 +8,16 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
-        <ListView Style="{StaticResource PurchasedFlightsTheme}">
+        <ListView Style="{StaticResource PurchasedFlightsTheme}"
+                  ItemsSource="{Binding AllFlights}">
             <ListView.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource CustomScrollBarTheme}"/>
             </ListView.Resources>
         </ListView>
 
-        <TextBlock Text="Purchased flights"
+        <!--<TextBlock Text="Purchased flights"
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"/>-->
 
     </Grid>
 </UserControl>
