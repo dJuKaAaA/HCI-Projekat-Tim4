@@ -45,66 +45,6 @@ namespace TravelAgent.MVVM.View
             }
         }
 
-        private void MakeTakeoffPin(double latitude, double longitude)
-        {
-            MakePin(latitude, longitude, $"{MapDataContext.Consts.PathToIcons}/airplanetakeoff.png");
-        }
-
-        private void MakeLandingPin(double latitude, double longitude)
-        {
-            MakePin(latitude, longitude, $"{MapDataContext.Consts.PathToIcons}/airplanelanding.png");
-        }
-
-        private void MakePin(double latitude, double longitude, string imagePath)
-        {
-            Pushpin pushpin = new Pushpin();
-            pushpin.Location = new Location(latitude, longitude);
-            pushpin.Width = 50;
-            pushpin.Height = 50;
-
-            // Create a ControlTemplate for the Pushpin
-            ControlTemplate controlTemplate = new ControlTemplate(typeof(Pushpin));
-
-            // Create an Image element and set its properties
-            Image image = new Image();
-            image.Source = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
-
-            // Create an instance of FrameworkElementFactory to create the visual tree of the ControlTemplate
-            FrameworkElementFactory factory = new FrameworkElementFactory(typeof(Image));
-            factory.SetValue(Image.SourceProperty, image.Source);
-            factory.SetValue(Image.WidthProperty, image.Width);
-            factory.SetValue(Image.HeightProperty, image.Height);
-
-            // Set the visual tree of the ControlTemplate to the FrameworkElementFactory
-            controlTemplate.VisualTree = factory;
-
-            // Set the ControlTemplate of the Pushpin
-            pushpin.Template = controlTemplate;
-
-            // Add the Pushpin to the Map
-            mapControl.Children.Add(pushpin);
-        }
-
-        private void MakeFlightLine(LocationModel departure, LocationModel destination)
-        {
-            // Create a new MapPolyline
-            MapPolyline mapPolyline = new MapPolyline();
-            mapPolyline.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 17, 17, 17));
-            mapPolyline.StrokeThickness = 2;
-            mapPolyline.StrokeDashArray = new System.Windows.Media.DoubleCollection() { 4 };
-
-            // Create a new LocationCollection
-            LocationCollection locationCollection = new LocationCollection();
-            locationCollection.Add(new Location(departure.Latitude, departure.Longitude));
-            locationCollection.Add(new Location(destination.Latitude, destination.Longitude));
-
-            // Set the Locations property of the MapPolyline
-            mapPolyline.Locations = locationCollection;
-
-            // Add the MapPolyline to the Children collection of the Map
-            mapControl.Children.Add(mapPolyline);
-        }
-
         private Pushpin CreatePushpin(double latitude, double longitude, string label, int tag)
         {
             // Create a new Pushpin
@@ -146,12 +86,70 @@ namespace TravelAgent.MVVM.View
         {
             Pushpin clickedPushpin = (Pushpin)sender;
 
-            LocationModel location = MapDataContext.AllLocations.FirstOrDefault(l => l.Id == int.Parse(clickedPushpin.Tag.ToString()));
+            LocationModel? location = MapDataContext.AllLocations.FirstOrDefault(l => l.Id == int.Parse(clickedPushpin.Tag.ToString()));
+
+            if (location == null)
+            {
+                return;
+            }
 
             // Set the image and text in the popup
             locationImage.Source = new BitmapImage(new Uri($"{MapDataContext.Consts.PathToLocationImages}/{location.Image}", UriKind.RelativeOrAbsolute));
             locationName.Text = location.Name;
             locationContainer.Visibility = Visibility.Visible;
         }
+
+        private void closePopupButton_Click(object sender, RoutedEventArgs e)
+        {
+            locationContainer.Visibility = Visibility.Collapsed;
+        }
+
+        // !! CODE BELOW DOESN'T WORK !!
+        // dragging the ContentControl which shows the location information
+        //------------------------------------------------------------------------------------
+        private bool isDragging;
+        private Point dragStartPosition;
+        private double originalLeft;
+        private double originalTop;
+
+        private void ContentControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var contentControl = (ContentControl)sender;
+
+            // Capture the mouse and store the initial position
+            contentControl.CaptureMouse();
+            isDragging = true;
+            dragStartPosition = e.GetPosition(contentControl);
+            originalLeft = Canvas.GetLeft(contentControl);
+            originalTop = Canvas.GetTop(contentControl);
+        }
+
+        private void ContentControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                var contentControl = (ContentControl)sender;
+
+                // Calculate the new position based on the mouse movement
+                var currentPosition = e.GetPosition(contentControl);
+                var deltaX = currentPosition.X - dragStartPosition.X;
+                var deltaY = currentPosition.Y - dragStartPosition.Y;
+
+                // Update the position of the ContentControl within the Canvas
+                Canvas.SetLeft(contentControl, originalLeft + deltaX);
+                Canvas.SetTop(contentControl, originalTop + deltaY);
+            }
+        }
+
+        private void ContentControl_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var contentControl = (ContentControl)sender;
+
+            // Release the mouse capture and stop dragging
+            contentControl.ReleaseMouseCapture();
+            isDragging = false;
+        }
+        //------------------------------------------------------------------------------------
+
     }
 }
