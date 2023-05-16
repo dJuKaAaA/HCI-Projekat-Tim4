@@ -14,7 +14,6 @@ namespace TravelAgent.Service
     {
         private readonly Consts _consts;
         private readonly DatabaseExecutionService _databaseExecutionService;
-        private readonly string _tableName = "flights";
 
         public FlightService(
             Consts consts,
@@ -26,9 +25,12 @@ namespace TravelAgent.Service
 
         public async Task<IEnumerable<FlightModel>> GetAll()
         {
-            string joinedTableName = "locations";
-            string command = $"SELECT * FROM {_tableName} t1, {joinedTableName} t2, {joinedTableName} t3 WHERE t1.departure_id = t2.id " +
-                $"AND t1.destination_id = t3.id";
+            string command = $"SELECT flightsTable.id, flightsTable.takeoff_date_time, flightsTable.landing_date_time, flightsTable.price, " +
+                $"departuresTable.id, departuresTable.name, departuresTable.longitude, departuresTable.latitude, departuresTable.image, " +
+                $"destinationsTable.id, destinationsTable.name, destinationsTable.longitude, destinationsTable.latitude, destinationsTable.image " +
+                $" FROM {_consts.FlightsTableName} flightsTable, {_consts.LocationsTableName} departuresTable, " +
+                $"{_consts.LocationsTableName} destinationsTable WHERE flightsTable.departure_id = departuresTable.id " +
+                $"AND flightsTable.destination_id = destinationsTable.id";
             List<FlightModel> results = new List<FlightModel>();
             await _databaseExecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
             {
@@ -36,28 +38,28 @@ namespace TravelAgent.Service
                 {
                     LocationModel departure = new LocationModel()
                     {
-                        Id = reader.GetInt32(6),
-                        Name = reader.GetString(7),
-                        Longitude = reader.GetFloat(8),
-                        Latitude = reader.GetFloat(9),
-                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(10)}",
+                        Id = reader.GetInt32(4),
+                        Name = reader.GetString(5),
+                        Longitude = reader.GetFloat(6),
+                        Latitude = reader.GetFloat(7),
+                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(8)}",
                     };
                     LocationModel destination = new LocationModel()
                     {
-                        Id = reader.GetInt32(11),
-                        Name = reader.GetString(12),
-                        Longitude = reader.GetFloat(13),
-                        Latitude = reader.GetFloat(14),
-                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(15)}",
+                        Id = reader.GetInt32(9),
+                        Name = reader.GetString(10),
+                        Longitude = reader.GetFloat(11),
+                        Latitude = reader.GetFloat(12),
+                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(13)}",
                     };
                     FlightModel flight = new FlightModel()
                     {
                         Id = reader.GetInt32(0),
                         Departure = departure,
                         Destination = destination,
-                        TakeoffDateTime = DateTime.ParseExact(reader.GetString(3), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
-                        LandingDateTime = DateTime.ParseExact(reader.GetString(4), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
-                        Price = reader.GetFloat(5),
+                        TakeoffDateTime = DateTime.ParseExact(reader.GetString(1), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        LandingDateTime = DateTime.ParseExact(reader.GetString(2), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        Price = reader.GetFloat(3),
                     };
                     results.Add(flight);
                 }

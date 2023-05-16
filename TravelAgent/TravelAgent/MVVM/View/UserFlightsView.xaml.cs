@@ -18,9 +18,9 @@ namespace TravelAgent.MVVM.View
     /// <summary>
     /// Interaction logic for PurchasedFlightsView.xaml
     /// </summary>
-    public partial class PurchasedFlightsView : UserControl
+    public partial class UserFlightsView : UserControl
     {
-        public PurchasedFlightsView()
+        public UserFlightsView()
         {
             InitializeComponent();
         }

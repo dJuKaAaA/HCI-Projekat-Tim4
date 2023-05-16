@@ -10,6 +10,7 @@
         Title="Travel Agent" Height="720" Width="1280"
         Background="#fff"
         WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
         Closing="MainWindow_Closing">
     <Grid>
 
@@ -79,8 +80,8 @@
                     <view:MapLocationDetailsView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:PurchasedFlightsViewModel}">
-                    <view:PurchasedFlightsView/>
+                <DataTemplate DataType="{x:Type viewModel:UserFlightsViewModel}">
+                    <view:UserFlightsView/>
                 </DataTemplate>
 
             </ContentControl.Resources>

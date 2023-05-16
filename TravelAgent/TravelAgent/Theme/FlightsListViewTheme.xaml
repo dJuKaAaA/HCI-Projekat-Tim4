@@ -15,12 +15,12 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewItem">
                                     <Border HorizontalAlignment="Stretch"
-                                            CornerRadius="30"
+                                            CornerRadius="50"
                                             x:Name="CUSTOM_PART_Border"
                                             Margin="20 10"
-                                            Padding="30 20"
+                                            Padding="35 25"
                                             BorderThickness="2"
-                                            BorderBrush="#bbb">
+                                            BorderBrush="{DynamicResource DefaultBorderBrush}">
                                             
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -36,12 +36,12 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Takeoff"
                                                                Margin="0 0 20 0"
-                                                               FontWeight="Bold"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                FontSize="26"
                                                                VerticalAlignment="Center"/>
                                                     <TextBlock Text="{Binding TakeoffDateTime}"
-                                                               FontSize="22"
+                                                               FontSize="30"
+                                                               FontWeight="Bold"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                VerticalAlignment="Center"/>
                                                 </StackPanel>
@@ -49,12 +49,12 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Landing"
                                                                Margin="0 0 20 0"
-                                                               FontWeight="Bold"
                                                                FontSize="26"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                VerticalAlignment="Center"/>
                                                     <TextBlock Text="{Binding LandingDateTime}"
-                                                               FontSize="22"
+                                                               FontSize="30"
+                                                               FontWeight="Bold"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                VerticalAlignment="Center"/>
                                                 </StackPanel>
@@ -73,7 +73,7 @@
                                                             HorizontalAlignment="Left">
                                                     <TextBlock Text="{Binding Departure.Name}"
                                                                FontWeight="SemiBold"
-                                                               FontSize="36"
+                                                               FontSize="40"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                Margin="10 0 0 0"
                                                                VerticalAlignment="Center"/>
@@ -84,7 +84,7 @@
                                                                VerticalAlignment="Center"/>
                                                     <TextBlock Text="{Binding Destination.Name}"
                                                                FontWeight="SemiBold"
-                                                               FontSize="36"
+                                                               FontSize="40"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                VerticalAlignment="Center"/>
                                                     <Button Command="{Binding DataContext.OpenMapLocationDetailsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
@@ -97,7 +97,7 @@
                                                                                        VerticalAlignment="Center"
                                                                                        Margin="15 0"
                                                                                        Foreground="{DynamicResource MainTextBrush}"
-                                                                                       FontSize="34"/>
+                                                                                       FontSize="40"/>
                                                                             <ControlTemplate.Triggers>
                                                                                 <Trigger Property="IsMouseOver" Value="True">
                                                                                     <Setter Property="Opacity" Value="0.5"/>
@@ -120,7 +120,7 @@
                                                                HorizontalAlignment="Center"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                Margin="10"
-                                                               FontSize="30"
+                                                               FontSize="32"
                                                                FontWeight="Bold"/>
                                                     <Button Margin="10 5"
                                                             Command="{Binding DataContext.OpenSeeDealPopupCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
@@ -139,7 +139,7 @@
                                                                                 <TextBlock Text="See deal →"
                                                                                            VerticalAlignment="Center"
                                                                                            HorizontalAlignment="Center"
-                                                                                           FontSize="28"
+                                                                                           FontSize="34"
                                                                                            FontWeight="DemiBold"/>
                                                                             </Border>
                                                                             <ControlTemplate.Triggers>

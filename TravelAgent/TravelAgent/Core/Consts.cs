@@ -20,6 +20,15 @@ namespace TravelAgent.Core
         public string DateTimeFormatString { get; }
         public string BingMapsApiKey { get; }
 
+        // table names
+        public string UsersTableName { get; }
+        public string FlightsTableName { get; }
+        public string LocationsTableName { get; }
+        public string RestorauntsTableName { get; }
+        public string AccomodationsTableName { get; }
+        public string TouristAttractionsTableName { get; }
+        public string UsersFlightsTableName { get; }
+
         public Consts()
         {
             RelativePathRoot = "../../..";
@@ -30,6 +39,14 @@ namespace TravelAgent.Core
             ConnectionString = $"Data Source={PathToDatabase}";
             DateTimeFormatString  = "d.M.yyyy. H:m:s";
             BingMapsApiKey  = "AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr";
+
+            UsersTableName = "users";
+            FlightsTableName = "flights";
+            LocationsTableName = "locations";
+            RestorauntsTableName = "restoraunts";
+            AccomodationsTableName = "accomodations";
+            TouristAttractionsTableName = "tourist_attractions";
+            UsersFlightsTableName = "users_flights";
         }
     }
 }
