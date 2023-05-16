@@ -35,8 +35,12 @@
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Stretch"
                     Margin="20">
-            <Image Source="{Binding Trip.Destination.Image}"
-                   Width="Auto"/>
+            <Border Width="Auto"
+                    BorderThickness="10"
+                    BorderBrush="{DynamicResource ImageBorderBrush}">
+                <Image Source="{Binding Trip.Destination.Image}"
+                       Stretch="Fill"/>
+            </Border>
 
         </StackPanel>
         <StackPanel VerticalAlignment="Center"
@@ -47,6 +51,7 @@
                        HorizontalAlignment="Center"
                        FontSize="40"
                        Margin="20"
+                       TextWrapping="Wrap"
                        FontWeight="Bold"/>
             <Grid>
                 <TextBlock Text="Price  →"

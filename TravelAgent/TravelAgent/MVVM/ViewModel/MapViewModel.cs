@@ -30,19 +30,19 @@ namespace TravelAgent.MVVM.ViewModel
             _tripService = tripService;
             _locationService = locationService;
             Consts = consts;
-            
+
             LoadAll();
         }
 
-        private void LoadAll()
+        private async void LoadAll()
         {
-            LoadTrips();
-            LoadLocations();
+            await LoadTrips();
+            await LoadLocations();
 
             LoadFinished?.Invoke(this, new EventArgs());
         }
 
-        private async void LoadTrips()
+        private async Task LoadTrips()
         {
             AllTrips = new ObservableCollection<TripModel>();
 
@@ -53,7 +53,7 @@ namespace TravelAgent.MVVM.ViewModel
             }
         }
 
-        private async void LoadLocations()
+        private async Task LoadLocations()
         {
             AllLocations = new ObservableCollection<LocationModel>();
 

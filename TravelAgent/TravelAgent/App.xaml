@@ -39,9 +39,9 @@
             <Color x:Key="ReservedTripLabelTextColor">Goldenrod</Color>
 
             <!-- Label colors for "Purchased" label-->
-            <Color x:Key="PurchasedTripLabelBorderColor">Blue</Color>
+            <Color x:Key="PurchasedTripLabelBorderColor">#3353de</Color>
             <Color x:Key="PurchasedTripLabelBackgroundColor">Lightblue</Color>
-            <Color x:Key="PurchasedTripLabelTextColor">Blue</Color>
+            <Color x:Key="PurchasedTripLabelTextColor">#3353de</Color>
 
             <!-- Brushes -->
             <SolidColorBrush x:Key="NotHighlightedBrush" Color="{StaticResource NotHighlightedColor}"/>
@@ -61,6 +61,10 @@
                 <GradientStop Color="BlueViolet" Offset="0.00"/>
                 <GradientStop Color="IndianRed" Offset="0.75"/>
             </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ImageBorderBrush">
+                <GradientStop Color="#bbf" Offset="0.00"/>
+                <GradientStop Color="#bb0" Offset="1.00"/>
+            </LinearGradientBrush>
 
             <!-- Value converters -->
             <valueConverter:LocationValueConverter x:Key="LocationValueConverter"/>
@@ -70,6 +74,8 @@
             <!-- Star -->
             <Polygon x:Key="StarPolygon" Fill="Gold" Points="50,0 65,35 100,40 75,65 80,100 50,80 20,100 25,65 0,40 35,35"/>
 
+            <!-- Location map popup content -->
+            
             <!-- Themes from the 'Theme' folder -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="./Theme/FormTextBoxTheme.xaml"/>

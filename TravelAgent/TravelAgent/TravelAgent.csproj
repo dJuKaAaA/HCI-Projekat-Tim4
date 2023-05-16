@@ -10,15 +10,27 @@
   <ItemGroup>
     <None Remove="Font\WorkSans-VariableFont_wght.ttf" />
     <None Remove="Image\Location\belgrade.jpg" />
+    <None Remove="Image\Location\belocrkvanska-jezera.jpg" />
     <None Remove="Image\Location\berlin.jpg" />
+    <None Remove="Image\Location\djavolja-varos.jpg" />
     <None Remove="Image\Location\dubai.jpg" />
+    <None Remove="Image\Location\Felix-Romulijana.jpg" />
+    <None Remove="Image\Location\krupanjsko-vrelo.jpg" />
     <None Remove="Image\Location\london.jpg" />
     <None Remove="Image\Location\loxembourg.jpg" />
+    <None Remove="Image\Location\oplenac.jpg" />
     <None Remove="Image\Location\paris.jpg" />
     <None Remove="Image\Location\prague.jpg" />
+    <None Remove="Image\Location\rajacke-pimnice.jpg" />
     <None Remove="Image\Location\rome.jpg" />
+    <None Remove="Image\Location\Semetesko-jezero.jpg" />
     <None Remove="Image\Location\stockholm.jpg" />
+    <None Remove="Image\Location\studenica.jpg" />
+    <None Remove="Image\Location\UVAC.jpg" />
     <None Remove="Image\Location\vienna.jpg" />
+    <None Remove="Image\Location\vlasinsko-jezero.jpg" />
+    <None Remove="Image\Location\vodopad-jelovarnik-kopaonik.jpg" />
+    <None Remove="Image\Location\vodopadi-prskalo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,15 +49,27 @@
   <ItemGroup>
     <Resource Include="Font\WorkSans-VariableFont_wght.ttf" />
     <Resource Include="Image\Location\belgrade.jpg" />
+    <Resource Include="Image\Location\belocrkvanska-jezera.jpg" />
     <Resource Include="Image\Location\berlin.jpg" />
+    <Resource Include="Image\Location\djavolja-varos.jpg" />
     <Resource Include="Image\Location\dubai.jpg" />
+    <Resource Include="Image\Location\Felix-Romulijana.jpg" />
+    <Resource Include="Image\Location\krupanjsko-vrelo.jpg" />
     <Resource Include="Image\Location\london.jpg" />
     <Resource Include="Image\Location\loxembourg.jpg" />
+    <Resource Include="Image\Location\oplenac.jpg" />
     <Resource Include="Image\Location\paris.jpg" />
     <Resource Include="Image\Location\prague.jpg" />
+    <Resource Include="Image\Location\rajacke-pimnice.jpg" />
     <Resource Include="Image\Location\rome.jpg" />
+    <Resource Include="Image\Location\Semetesko-jezero.jpg" />
     <Resource Include="Image\Location\stockholm.jpg" />
+    <Resource Include="Image\Location\studenica.jpg" />
+    <Resource Include="Image\Location\UVAC.jpg" />
     <Resource Include="Image\Location\vienna.jpg" />
+    <Resource Include="Image\Location\vlasinsko-jezero.jpg" />
+    <Resource Include="Image\Location\vodopad-jelovarnik-kopaonik.jpg" />
+    <Resource Include="Image\Location\vodopadi-prskalo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
