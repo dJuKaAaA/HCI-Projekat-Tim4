@@ -14,7 +14,6 @@ namespace TravelAgent.Service
     {
         private readonly Consts _consts;
         private readonly DatabaseExecutionService _databaseExcecutionService;
-        private readonly string _tableName = "users";
 
         public UserService(
             Consts consts,
@@ -26,7 +25,7 @@ namespace TravelAgent.Service
 
         public async Task<IEnumerable<UserModel>> GetAll()
         {
-            string command = $"SELECT * FROM {_tableName}";
+            string command = $"SELECT * FROM {_consts.UsersTableName}";
             List<UserModel> collection = new List<UserModel>();
             await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
             {
@@ -47,7 +46,7 @@ namespace TravelAgent.Service
 
         public async Task<UserModel> Login(string username, string password)
         {
-            string command = $"SELECT * FROM {_tableName} WHERE username = '{username}' AND password = '{password}'";
+            string command = $"SELECT * FROM {_consts.UsersTableName} WHERE username = '{username}' AND password = '{password}'";
             UserModel? user = null;
             await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
             {
@@ -73,7 +72,7 @@ namespace TravelAgent.Service
 
         public async Task Create(UserModel user, string password)
         {
-            string validationQuery = $"SELECT * FROM {_tableName} WHERE username = '{user.Username}'";
+            string validationQuery = $"SELECT * FROM {_consts.UsersTableName} WHERE username = '{user.Username}'";
             bool taken = false;
             await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, validationQuery, (reader) =>
             {
@@ -85,7 +84,7 @@ namespace TravelAgent.Service
                 throw new DatabaseResponseException("Username is taken!");
             }
             
-            string command = $"INSERT INTO {_tableName} (name, surname, username, password) " +
+            string command = $"INSERT INTO {_consts.UsersTableName} (name, surname, username, password) " +
                 $"VALUES ('{user.Name}', '{user.Surname}', '{user.Username}', '{password}')";
             await _databaseExcecutionService.ExecuteNonQueryCommand(_consts.ConnectionString, command);
 
