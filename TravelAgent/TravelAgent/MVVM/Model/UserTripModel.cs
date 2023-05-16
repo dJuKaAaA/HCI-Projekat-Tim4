@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace TravelAgent.MVVM.Model
 {
-    public class UserFlightModel
+    public class UserTripModel
     {
         public UserModel? User { get; set; }
-        public FlightModel? Flight { get; set; }
-        public Core.FlightInvoiceType Type { get; set; }
+        public TripModel? Trip { get; set; }
+        public Core.TripInvoiceType Type { get; set; }
     }
 }

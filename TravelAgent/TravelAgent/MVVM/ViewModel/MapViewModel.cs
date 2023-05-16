@@ -13,34 +13,55 @@ namespace TravelAgent.MVVM.ViewModel
 {
     public class MapViewModel : Core.ViewModel
     {
-        public ObservableCollection<FlightModel> AllFlights { get; set; }
+        public ObservableCollection<TripModel> AllTrips { get; set; }
+        public ObservableCollection<LocationModel> AllLocations { get; set; }
 
-        private readonly FlightService _flightService;
+        private readonly TripService _tripService;
+        private readonly LocationService _locationService;
         public Consts Consts { get; }
 
-        public event EventHandler LoadedFlights;
+        public event EventHandler LoadFinished;
 
         public MapViewModel(
-            Service.FlightService flightService,
+            Service.TripService tripService,
+            LocationService locationService,
             Core.Consts consts)
         {
-            _flightService = flightService;
+            _tripService = tripService;
+            _locationService = locationService;
             Consts = consts;
             
             LoadAll();
         }
 
-        private async void LoadAll()
+        private void LoadAll()
         {
-            AllFlights = new ObservableCollection<FlightModel>();
+            LoadTrips();
+            LoadLocations();
 
-            IEnumerable<FlightModel> allFlights = await _flightService.GetAll();
-            foreach (FlightModel flight in allFlights)
+            LoadFinished?.Invoke(this, new EventArgs());
+        }
+
+        private async void LoadTrips()
+        {
+            AllTrips = new ObservableCollection<TripModel>();
+
+            IEnumerable<TripModel> allTrips = await _tripService.GetAll();
+            foreach (TripModel trip in allTrips)
             {
-                AllFlights.Add(flight);
+                AllTrips.Add(trip);
             }
+        }
 
-            LoadedFlights?.Invoke(this, new EventArgs());
+        private async void LoadLocations()
+        {
+            AllLocations = new ObservableCollection<LocationModel>();
+
+            IEnumerable<LocationModel> allLocations = await _locationService.GetAll();
+            foreach (LocationModel location in allLocations)
+            {
+                AllLocations.Add(location);
+            }
         }
     }
 }

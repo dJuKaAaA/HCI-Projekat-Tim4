@@ -24,16 +24,16 @@
               Grid.RowSpan="2"
               Visibility="{Binding MenuVisibility}">
             <MenuItem Header="View">
-                <MenuItem Header="Flights"
-                          Command="{Binding OpenAllFlightsViewCommand}"/>
+                <MenuItem Header="Trips"
+                          Command="{Binding OpenAllTripsViewCommand}"/>
                 <MenuItem Header="Tourist attractions"
                           Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
                 <MenuItem Header="Restoraunts"
                           Command="{Binding OpenAllRestorauntsViewCommand}"/>
                 <MenuItem Header="Accomodations"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
-                <MenuItem Header="Purchased flights"
-                          Command="{Binding OpenPurchasedFlightsViewCommand}"/>
+                <MenuItem Header="Acquired trips"
+                          Command="{Binding OpenUserTripsViewCommand}"/>
             </MenuItem>
             <MenuItem Header="Map"
                       Command="{Binding OpenMapsCommand}"/>
@@ -56,8 +56,8 @@
                     <view:RegisterView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:AllFlightsViewModel}">
-                    <view:AllFlightsView/>
+                <DataTemplate DataType="{x:Type viewModel:AllTripsViewModel}">
+                    <view:AllTripsView/>
                 </DataTemplate>
 
                 <DataTemplate DataType="{x:Type viewModel:AllTouristAttractionsViewModel}">
@@ -80,8 +80,8 @@
                     <view:MapLocationDetailsView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:UserFlightsViewModel}">
-                    <view:UserFlightsView/>
+                <DataTemplate DataType="{x:Type viewModel:UserTripsViewModel}">
+                    <view:UserTripsView/>
                 </DataTemplate>
 
             </ContentControl.Resources>

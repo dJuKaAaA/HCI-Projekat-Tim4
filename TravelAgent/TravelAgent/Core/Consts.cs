@@ -22,12 +22,12 @@ namespace TravelAgent.Core
 
         // table names
         public string UsersTableName { get; }
-        public string FlightsTableName { get; }
+        public string TripsTableName { get; }
         public string LocationsTableName { get; }
         public string RestorauntsTableName { get; }
         public string AccomodationsTableName { get; }
         public string TouristAttractionsTableName { get; }
-        public string UsersFlightsTableName { get; }
+        public string UsersTripsTableName { get; }
 
         public Consts()
         {
@@ -41,12 +41,12 @@ namespace TravelAgent.Core
             BingMapsApiKey  = "AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr";
 
             UsersTableName = "users";
-            FlightsTableName = "flights";
+            TripsTableName = "trips";
             LocationsTableName = "locations";
             RestorauntsTableName = "restoraunts";
             AccomodationsTableName = "accomodations";
             TouristAttractionsTableName = "tourist_attractions";
-            UsersFlightsTableName = "users_flights";
+            UsersTripsTableName = "users_trips";
         }
     }
 }

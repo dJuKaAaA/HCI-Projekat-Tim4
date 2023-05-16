@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TravelAgent.Core
 {
-    public enum FlightInvoiceType
+    public enum TripInvoiceType
     {
         Purchased,
         Reserved

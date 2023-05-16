@@ -10,12 +10,12 @@ using TravelAgent.MVVM.Model;
 
 namespace TravelAgent.Service
 {
-    public class UserFlightService
+    public class UserTripService
     {
         private readonly Consts _consts;
         private readonly DatabaseExecutionService _databaseExecutionService;
 
-        public UserFlightService(
+        public UserTripService(
             Consts consts,
             DatabaseExecutionService databaseExecutionService)
         {
@@ -23,20 +23,20 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
-        public async Task<IEnumerable<UserFlightModel>> GetForUser(int userId)
+        public async Task<IEnumerable<UserTripModel>> GetForUser(int userId)
         {
             string command = $"SELECT usersTable.id, usersTable.name, usersTable.surname, usersTable.username, " +
-                $"flightsTable.id, flightsTable.takeoff_date_time, flightsTable.landing_date_time, flightsTable.price, " +
+                $"tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +
                 $"departuresTable.id, departuresTable.name, departuresTable.longitude, departuresTable.latitude, departuresTable.image, " +
                 $"destinationsTable.id, destinationsTable.name, destinationsTable.longitude, destinationsTable.latitude, destinationsTable.image, " +
-                $"usersFlightsTable.type " +
-                $"FROM {_consts.UsersTableName} usersTable, {_consts.FlightsTableName} flightsTable, " +
-                $"{_consts.UsersFlightsTableName} usersFlightsTable, {_consts.LocationsTableName} departuresTable, " +
+                $"usersTripsTable.type " +
+                $"FROM {_consts.UsersTableName} usersTable, {_consts.TripsTableName} tripsTable, " +
+                $"{_consts.UsersTripsTableName} usersTripsTable, {_consts.LocationsTableName} departuresTable, " +
                 $"{_consts.LocationsTableName} destinationsTable " +
-                $"WHERE usersFlightsTable.user_id = {userId} AND usersFlightsTable.flight_id = flightsTable.id " +
-                $"AND flightsTable.departure_id = departuresTable.id AND flightsTable.destination_id = destinationsTable.id " +
+                $"WHERE usersTripsTable.user_id = {userId} AND usersTripsTable.trip_id = tripsTable.id " +
+                $"AND tripsTable.departure_id = departuresTable.id AND tripsTable.destination_id = destinationsTable.id " +
                 $"AND usersTable.id = {userId}";
-            List<UserFlightModel> results = new List<UserFlightModel>();
+            List<UserTripModel> results = new List<UserTripModel>();
             await _databaseExecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
             {
                 while (reader.Read())
@@ -64,23 +64,23 @@ namespace TravelAgent.Service
                         Latitude = reader.GetFloat(16),
                         Image = $"{_consts.PathToLocationImages}/{reader.GetString(17)}",
                     };
-                    FlightModel flight = new FlightModel()
+                    TripModel trip = new TripModel()
                     {
                         Id = reader.GetInt32(4),
                         Departure = departure,
                         Destination = destination,
-                        TakeoffDateTime = DateTime.ParseExact(reader.GetString(5), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
-                        LandingDateTime = DateTime.ParseExact(reader.GetString(6), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        DepartureDateTime = DateTime.ParseExact(reader.GetString(5), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        ArrivalDateTime = DateTime.ParseExact(reader.GetString(6), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
                         Price = reader.GetFloat(7),
                     };
-                    UserFlightModel userFlight = new UserFlightModel()
+                    UserTripModel userTrip = new UserTripModel()
                     {
                         User = user,
-                        Flight = flight,
-                        Type = (FlightInvoiceType)Enum.Parse(typeof(FlightInvoiceType), reader.GetString(18))
+                        Trip = trip,
+                        Type = (TripInvoiceType)Enum.Parse(typeof(TripInvoiceType), reader.GetString(18))
                     };
 
-                    results.Add(userFlight);
+                    results.Add(userTrip);
                 }
             });
 

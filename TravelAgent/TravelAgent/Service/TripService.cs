@@ -10,12 +10,12 @@ using TravelAgent.MVVM.Model;
 
 namespace TravelAgent.Service
 {
-    public class FlightService
+    public class TripService
     {
         private readonly Consts _consts;
         private readonly DatabaseExecutionService _databaseExecutionService;
 
-        public FlightService(
+        public TripService(
             Consts consts,
             DatabaseExecutionService databaseExecutionService)
         {
@@ -23,15 +23,15 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
-        public async Task<IEnumerable<FlightModel>> GetAll()
+        public async Task<IEnumerable<TripModel>> GetAll()
         {
-            string command = $"SELECT flightsTable.id, flightsTable.takeoff_date_time, flightsTable.landing_date_time, flightsTable.price, " +
+            string command = $"SELECT tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +
                 $"departuresTable.id, departuresTable.name, departuresTable.longitude, departuresTable.latitude, departuresTable.image, " +
                 $"destinationsTable.id, destinationsTable.name, destinationsTable.longitude, destinationsTable.latitude, destinationsTable.image " +
-                $" FROM {_consts.FlightsTableName} flightsTable, {_consts.LocationsTableName} departuresTable, " +
-                $"{_consts.LocationsTableName} destinationsTable WHERE flightsTable.departure_id = departuresTable.id " +
-                $"AND flightsTable.destination_id = destinationsTable.id";
-            List<FlightModel> results = new List<FlightModel>();
+                $" FROM {_consts.TripsTableName} tripsTable, {_consts.LocationsTableName} departuresTable, " +
+                $"{_consts.LocationsTableName} destinationsTable WHERE tripsTable.departure_id = departuresTable.id " +
+                $"AND tripsTable.destination_id = destinationsTable.id";
+            List<TripModel> results = new List<TripModel>();
             await _databaseExecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
             {
                 while (reader.Read())
@@ -52,16 +52,16 @@ namespace TravelAgent.Service
                         Latitude = reader.GetFloat(12),
                         Image = $"{_consts.PathToLocationImages}/{reader.GetString(13)}",
                     };
-                    FlightModel flight = new FlightModel()
+                    TripModel trip = new TripModel()
                     {
                         Id = reader.GetInt32(0),
                         Departure = departure,
                         Destination = destination,
-                        TakeoffDateTime = DateTime.ParseExact(reader.GetString(1), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
-                        LandingDateTime = DateTime.ParseExact(reader.GetString(2), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        DepartureDateTime = DateTime.ParseExact(reader.GetString(1), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        ArrivalDateTime = DateTime.ParseExact(reader.GetString(2), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
                         Price = reader.GetFloat(3),
                     };
-                    results.Add(flight);
+                    results.Add(trip);
                 }
             });
 
