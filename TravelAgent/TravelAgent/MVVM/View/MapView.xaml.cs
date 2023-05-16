@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -38,18 +39,9 @@ namespace TravelAgent.MVVM.View
 
         private void OnLoadFinished(object? sender, EventArgs e)
         {
-            //foreach (FlightModel flight in MapDataContext.AllFlights)
-            //{
-            //    MakeTakeoffPin(flight.Departure.Latitude, flight.Departure.Longitude);
-            //    MakeLandingPin(flight.Destination.Latitude, flight.Destination.Longitude);
-            //    MakeFlightLine(flight.Departure, flight.Destination);
-            //}
             foreach (LocationModel location in MapDataContext.AllLocations)
             {
-                mapControl.Children.Add(new Pushpin()
-                {
-                    Location = new Location(location.Latitude, location.Longitude),
-                });
+                mapControl.Children.Add(CreatePushpin(location.Latitude, location.Longitude, location.Name, location.Id));
             }
         }
 
@@ -113,5 +105,53 @@ namespace TravelAgent.MVVM.View
             mapControl.Children.Add(mapPolyline);
         }
 
+        private Pushpin CreatePushpin(double latitude, double longitude, string label, int tag)
+        {
+            // Create a new Pushpin
+            Pushpin pushpin = new Pushpin();
+            pushpin.Width = 50;
+            pushpin.Height = 50;
+            pushpin.ToolTip = label;
+            pushpin.Tag = tag;
+
+            pushpin.MouseLeftButtonDown += Pushpin_Click;
+
+            // Set the Location of the Pushpin
+            pushpin.Location = new Location(latitude, longitude);
+
+            // Create the custom style for the pushpin
+            Style style = new Style(typeof(Pushpin));
+
+            // Create the triggers for mouse enter and leave events
+            Trigger mouseEnterTrigger = new Trigger { Property = UIElement.IsMouseOverProperty, Value = true };
+            mouseEnterTrigger.Setters.Add(new Setter(RenderTransformProperty, new ScaleTransform(1.2, 1.2)));
+            mouseEnterTrigger.Setters.Add(new Setter(Panel.ZIndexProperty, 1));
+            mouseEnterTrigger.Setters.Add(new Setter(Control.CursorProperty, Cursors.Hand));
+
+            Trigger mouseLeaveTrigger = new Trigger { Property = UIElement.IsMouseOverProperty, Value = false };
+            mouseLeaveTrigger.Setters.Add(new Setter(RenderTransformProperty, new ScaleTransform(1, 1)));
+            mouseLeaveTrigger.Setters.Add(new Setter(Panel.ZIndexProperty, 0));
+
+            // Add the triggers to the style
+            style.Triggers.Add(mouseEnterTrigger);
+            style.Triggers.Add(mouseLeaveTrigger);
+
+            // Apply the style to the pushpin
+            pushpin.Style = style;
+
+            return pushpin;
+        }
+
+        private void Pushpin_Click(object sender, MouseButtonEventArgs e)
+        {
+            Pushpin clickedPushpin = (Pushpin)sender;
+
+            LocationModel location = MapDataContext.AllLocations.FirstOrDefault(l => l.Id == int.Parse(clickedPushpin.Tag.ToString()));
+
+            // Set the image and text in the popup
+            locationImage.Source = new BitmapImage(new Uri($"{MapDataContext.Consts.PathToLocationImages}/{location.Image}", UriKind.RelativeOrAbsolute));
+            locationName.Text = location.Name;
+            locationContainer.Visibility = Visibility.Visible;
+        }
     }
 }

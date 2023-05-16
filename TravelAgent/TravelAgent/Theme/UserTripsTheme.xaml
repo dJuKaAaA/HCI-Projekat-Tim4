@@ -14,64 +14,59 @@
                                         <Border CornerRadius="50"
                                                 BorderThickness="2"
                                                 BorderBrush="{DynamicResource DefaultBorderBrush}"
-                                                Padding="50 30"
+                                                Padding="50 40"
                                                 Margin="20">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="2*"/>
+                                                    <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
 
                                                 <StackPanel VerticalAlignment="Center"
+                                                            Orientation="Horizontal"
                                                             Margin="15 0">
-                                                    <Grid Margin="0 20">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                        </Grid.ColumnDefinitions>
 
-                                                        <StackPanel Grid.Column="0">
+                                                    <StackPanel Margin="0 0 20 0">
+                                                        <StackPanel Margin="0 0 0 5">
                                                             <TextBlock FontSize="24"
-                                                                       Text="Your trip from"/>
+                                                                       Text="Trip departure"/>
                                                             <TextBlock Text="{Binding Trip.Departure.Name}"
+                                                                       HorizontalAlignment="Left"
                                                                        FontWeight="SemiBold"
-                                                                       FontSize="38"/>
+                                                                       TextWrapping="Wrap"
+                                                                       FontSize="34"/>
                                                         </StackPanel>
-
-                                                        <StackPanel Grid.Column="1"
-                                                                    Margin="50 0">
+                                                        <StackPanel Margin="0 5 0 0">
                                                             <TextBlock FontSize="24"
                                                                        Text="Departs at"/>
                                                             <TextBlock Text="{Binding Trip.DepartureDateTime}"
-                                                                       FontSize="38"
+                                                                       FontSize="34"
+                                                                       TextWrapping="Wrap"
                                                                        FontWeight="SemiBold"/>
                                                         </StackPanel>
+                                                    </StackPanel>
 
-                                                    </Grid>
-                                                    <Grid Margin="0 20">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition/>
-                                                        </Grid.ColumnDefinitions>
 
-                                                        <StackPanel Grid.Column="0">
+                                                    <StackPanel Margin="20 0">
+                                                        <StackPanel Margin="0 0 0 5">
                                                             <TextBlock FontSize="24"
-                                                                       Text="Your trip to"/>
+                                                                       Text="Trip destination"/>
                                                             <TextBlock Text="{Binding Trip.Destination.Name}"
+                                                                       TextWrapping="Wrap"
                                                                        FontWeight="SemiBold"
-                                                                       FontSize="38"/>
+                                                                       FontSize="34"/>
                                                         </StackPanel>
-                                                        <StackPanel Grid.Column="1"
-                                                                    Margin="100 0">
+                                                        <StackPanel Margin="0 5 0 0">
                                                             <TextBlock FontSize="24"
                                                                        Text="Arrives at"/>
                                                             <TextBlock Text="{Binding Trip.ArrivalDateTime}"
-                                                                       FontSize="38"
+                                                                       FontSize="34"
+                                                                       TextWrapping="Wrap"
                                                                        FontWeight="SemiBold"/>
                                                         </StackPanel>
+                                                    </StackPanel>
                                                         
-                                                    </Grid>
                                                 </StackPanel>
 
                                                 <StackPanel Grid.Column="1"
@@ -80,17 +75,14 @@
 
                                                     <Border Padding="30 20"
                                                             BorderThickness="5"
-                                                            BorderBrush="{DynamicResource PurchasedTripLabelBorderBrush}"
                                                             CornerRadius="50"
-                                                            x:Name="CUSTOM_PART_BorderInvoiceLabel"
-                                                            Background="{DynamicResource PurchasedTripLabelBackgroundBrush}">
+                                                            x:Name="CUSTOM_PART_BorderInvoiceLabel">
                                                         <TextBlock Text="{Binding Type}"
                                                                    FontSize="46"
                                                                    FontWeight="SemiBold"
                                                                    x:Name="CUSTOM_PART_TextBlockInvoiceLabel"
-                                                                   HorizontalAlignment="Center"
-                                                                   Foreground="{DynamicResource PurchasedTripLabelTextBrush}"/>
-                                                        
+                                                                   HorizontalAlignment="Center"/>
+
                                                     </Border>
                                                     <TextBlock Text="{Binding Trip.Price}"
                                                                FontSize="30"
@@ -119,6 +111,7 @@
                                         <ControlTemplate.Triggers>
                                             <DataTrigger Binding="{Binding Type}" Value="{x:Static core:TripInvoiceType.Reserved}">
                                                 <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="BorderBrush" Value="{DynamicResource ReservedTripLabelBorderBrush}"/>
+                                                <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Margin" Value="30 0"/>
                                                 <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Background" Value="{DynamicResource ReservedTripLabelBackgroundBrush}"/>
                                                 <Setter TargetName="CUSTOM_PART_TextBlockInvoiceLabel" Property="Foreground" Value="{DynamicResource ReservedTripLabelTextBrush}"/>
                                             </DataTrigger>

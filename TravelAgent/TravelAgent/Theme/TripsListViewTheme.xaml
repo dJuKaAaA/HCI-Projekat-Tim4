@@ -68,26 +68,26 @@
                                                 </Grid.ColumnDefinitions>
                                                 
                                                 <StackPanel Grid.Column="0"
-                                                            Orientation="Horizontal"
+                                                            Orientation="Vertical"
                                                             VerticalAlignment="Center"
-                                                            HorizontalAlignment="Left">
+                                                            HorizontalAlignment="Center">
                                                     <TextBlock Text="{Binding Departure.Name}"
                                                                FontWeight="SemiBold"
+                                                               HorizontalAlignment="Center"
                                                                FontSize="40"
                                                                Foreground="{DynamicResource MainTextBrush}"
-                                                               Margin="10 0 0 0"
-                                                               VerticalAlignment="Center"/>
-                                                    <TextBlock Text="→"
+                                                               Margin="10 0 0 0"/>
+                                                    <TextBlock Text="↓"
                                                                Margin="10 0"
+                                                               HorizontalAlignment="Center"
                                                                FontSize="34"
-                                                               Foreground="{DynamicResource MainTextBrush}"
-                                                               VerticalAlignment="Center"/>
+                                                               Foreground="{DynamicResource MainTextBrush}"/>
                                                     <TextBlock Text="{Binding Destination.Name}"
                                                                FontWeight="SemiBold"
                                                                FontSize="40"
-                                                               Foreground="{DynamicResource MainTextBrush}"
-                                                               VerticalAlignment="Center"/>
-                                                    <Button Command="{Binding DataContext.OpenMapLocationDetailsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                                               HorizontalAlignment="Center"
+                                                               Foreground="{DynamicResource MainTextBrush}"/>
+                                                    <!--<Button Command="{Binding DataContext.OpenMapLocationDetailsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                                         <Button.Style>
                                                             <Style TargetType="Button">
                                                                 <Setter Property="Template">
@@ -109,7 +109,7 @@
                                                                 </Setter>
                                                             </Style>
                                                         </Button.Style>
-                                                    </Button>
+                                                    </Button>-->
 
                                                 </StackPanel>
 
