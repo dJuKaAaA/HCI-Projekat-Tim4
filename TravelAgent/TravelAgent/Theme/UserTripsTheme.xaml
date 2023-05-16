@@ -19,7 +19,7 @@
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
 
@@ -71,7 +71,8 @@
 
                                                 <StackPanel Grid.Column="1"
                                                             HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center">
+                                                            VerticalAlignment="Center"
+                                                            Margin="30 0">
 
                                                     <Border Padding="30 20"
                                                             BorderThickness="5"
