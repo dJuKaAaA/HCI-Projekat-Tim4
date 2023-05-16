@@ -34,28 +34,28 @@
             <Color x:Key="DefaultBorderColor">#aaa</Color>
 
             <!-- Label colors for "Reserved" label-->
-            <Color x:Key="ReservedFlightLabelBorderColor">Goldenrod</Color>
-            <Color x:Key="ReservedFlightLabelBackgroundColor">Lightyellow</Color>
-            <Color x:Key="ReservedFlightLabelTextColor">Goldenrod</Color>
+            <Color x:Key="ReservedTripLabelBorderColor">Goldenrod</Color>
+            <Color x:Key="ReservedTripLabelBackgroundColor">Lightyellow</Color>
+            <Color x:Key="ReservedTripLabelTextColor">Goldenrod</Color>
 
             <!-- Label colors for "Purchased" label-->
-            <Color x:Key="PurchasedFlightLabelBorderColor">Blue</Color>
-            <Color x:Key="PurchasedFlightLabelBackgroundColor">Lightblue</Color>
-            <Color x:Key="PurchasedFlightLabelTextColor">Blue</Color>
+            <Color x:Key="PurchasedTripLabelBorderColor">Blue</Color>
+            <Color x:Key="PurchasedTripLabelBackgroundColor">Lightblue</Color>
+            <Color x:Key="PurchasedTripLabelTextColor">Blue</Color>
 
-            <!-- Solid brushes -->
+            <!-- Brushes -->
             <SolidColorBrush x:Key="NotHighlightedBrush" Color="{StaticResource NotHighlightedColor}"/>
             <SolidColorBrush x:Key="TextBoxInFocusBrush" Color="{StaticResource TextBoxInFocusColor}"/>
             <SolidColorBrush x:Key="TextBoxFontBrush" Color="{StaticResource TextBoxFontColor}"/>
             <SolidColorBrush x:Key="DataGridRowSelectedBrush" Color="{StaticResource DataGridRowSelectedColor}"/>
             <SolidColorBrush x:Key="MainTextBrush" Color="{StaticResource MainTextColor}"/>
             <SolidColorBrush x:Key="DefaultBorderBrush" Color="{StaticResource DefaultBorderColor}"/>
-            <SolidColorBrush x:Key="ReservedFlightLabelBorderBrush" Color="{StaticResource ReservedFlightLabelBorderColor}"/>
-            <SolidColorBrush x:Key="ReservedFlightLabelBackgroundBrush" Color="{StaticResource ReservedFlightLabelBackgroundColor}"/>
-            <SolidColorBrush x:Key="ReservedFlightLabelTextBrush" Color="{StaticResource ReservedFlightLabelTextColor}"/>
-            <SolidColorBrush x:Key="PurchasedFlightLabelBorderBrush" Color="{StaticResource PurchasedFlightLabelBorderColor}"/>
-            <SolidColorBrush x:Key="PurchasedFlightLabelBackgroundBrush" Color="{StaticResource PurchasedFlightLabelBackgroundColor}"/>
-            <SolidColorBrush x:Key="PurchasedFlightLabelTextBrush" Color="{StaticResource PurchasedFlightLabelTextColor}"/>
+            <SolidColorBrush x:Key="ReservedTripLabelBorderBrush" Color="{StaticResource ReservedTripLabelBorderColor}"/>
+            <SolidColorBrush x:Key="ReservedTripLabelBackgroundBrush" Color="{StaticResource ReservedTripLabelBackgroundColor}"/>
+            <SolidColorBrush x:Key="ReservedTripLabelTextBrush" Color="{StaticResource ReservedTripLabelTextColor}"/>
+            <SolidColorBrush x:Key="PurchasedTripLabelBorderBrush" Color="{StaticResource PurchasedTripLabelBorderColor}"/>
+            <SolidColorBrush x:Key="PurchasedTripLabelBackgroundBrush" Color="{StaticResource PurchasedTripLabelBackgroundColor}"/>
+            <SolidColorBrush x:Key="PurchasedTripLabelTextBrush" Color="{StaticResource PurchasedTripLabelTextColor}"/>
 
             <LinearGradientBrush x:Key="ButtonHighlightedBrush">
                 <GradientStop Color="BlueViolet" Offset="0.00"/>
@@ -73,11 +73,10 @@
             <!-- Themes from the 'Theme' folder -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="./Theme/FormTextBoxTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/FlightsDataGridTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/FlightsListViewTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/TripsListViewTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/CustomScrollbarTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/FancyButtonTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/UserFlightsTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/UserTripsTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

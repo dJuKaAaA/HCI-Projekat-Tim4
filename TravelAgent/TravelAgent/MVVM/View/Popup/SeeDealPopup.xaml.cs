@@ -22,15 +22,15 @@ namespace TravelAgent.MVVM.View.Popup
     /// </summary>
     public partial class SeeDealPopup : Window
     {
-        public SeeDealPopup(FlightModel flight)
+        public SeeDealPopup(TripModel trip)
         {
             InitializeComponent();
 
-            ((SeeDealViewModel)DataContext).Flight = flight;
-            DateTime takeoff = ((SeeDealViewModel)DataContext).Flight.TakeoffDateTime;
-            DateTime landing = ((SeeDealViewModel)DataContext).Flight.LandingDateTime;
+            ((SeeDealViewModel)DataContext).Trip = trip;
+            DateTime takeoff = ((SeeDealViewModel)DataContext).Trip.DepartureDateTime;
+            DateTime landing = ((SeeDealViewModel)DataContext).Trip.ArrivalDateTime;
             TimeSpan timeDiff = landing - takeoff;
-            ((SeeDealViewModel)DataContext).FlightDuration = timeDiff.Hours;
+            ((SeeDealViewModel)DataContext).TripDuration = timeDiff.Hours;
         }
     }
 }

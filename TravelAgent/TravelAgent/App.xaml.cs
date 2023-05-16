@@ -37,11 +37,11 @@ namespace TravelAgent
             services.AddTransient<MainViewModel>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<RegisterViewModel>();
-            services.AddTransient<AllFlightsViewModel>();
+            services.AddTransient<AllTripsViewModel>();
             services.AddTransient<AllTouristAttractionsViewModel>();
             services.AddTransient<AllRestorauntsViewModel>();
             services.AddTransient<AllAccomodationsViewModel>();
-            services.AddTransient<UserFlightsViewModel>();
+            services.AddTransient<UserTripsViewModel>();
             services.AddTransient<MapViewModel>();
             services.AddTransient<MapLocationDetailsViewModel>();
 
@@ -49,8 +49,9 @@ namespace TravelAgent
             services.AddSingleton<Service.NavigationService>();
             services.AddSingleton<Service.DatabaseExecutionService>();
             services.AddSingleton<Service.UserService>();
-            services.AddSingleton<Service.FlightService>();
-            services.AddSingleton<Service.UserFlightService>();
+            services.AddSingleton<Service.TripService>();
+            services.AddSingleton<Service.LocationService>();
+            services.AddSingleton<Service.UserTripService>();
 
             // setting the SQLite provider
             SQLitePCL.Batteries.Init();

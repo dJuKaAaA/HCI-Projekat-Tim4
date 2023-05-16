@@ -57,7 +57,7 @@ namespace TravelAgent.MVVM.ViewModel
 			try
 			{
                 MainViewModel.SignedUser = await _userService.Login(Username, Password);
-				_navigationService.NavigateTo<AllFlightsViewModel>();
+				_navigationService.NavigateTo<AllTripsViewModel>();
 			}
 			catch (DatabaseResponseException e)
 			{

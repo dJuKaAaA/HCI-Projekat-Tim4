@@ -33,16 +33,23 @@ namespace TravelAgent.MVVM.View
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            MapDataContext.LoadedFlights += OnLoadedFlights;
+            MapDataContext.LoadFinished += OnLoadFinished;
         }
 
-        private void OnLoadedFlights(object? sender, EventArgs e)
+        private void OnLoadFinished(object? sender, EventArgs e)
         {
-            foreach (FlightModel flight in MapDataContext.AllFlights)
+            //foreach (FlightModel flight in MapDataContext.AllFlights)
+            //{
+            //    MakeTakeoffPin(flight.Departure.Latitude, flight.Departure.Longitude);
+            //    MakeLandingPin(flight.Destination.Latitude, flight.Destination.Longitude);
+            //    MakeFlightLine(flight.Departure, flight.Destination);
+            //}
+            foreach (LocationModel location in MapDataContext.AllLocations)
             {
-                MakeTakeoffPin(flight.Departure.Latitude, flight.Departure.Longitude);
-                MakeLandingPin(flight.Destination.Latitude, flight.Destination.Longitude);
-                MakeFlightLine(flight.Departure, flight.Destination);
+                mapControl.Children.Add(new Pushpin()
+                {
+                    Location = new Location(location.Latitude, location.Longitude),
+                });
             }
         }
 

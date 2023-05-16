@@ -13,20 +13,20 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 {
     public class SeeDealViewModel : Core.ViewModel
     {
-        private FlightModel _flight;
+        private TripModel _trip;
 
-        public FlightModel Flight
+        public TripModel Trip
         {
-            get { return _flight; }
-            set { _flight = value; OnPropertyChanged(); }
+            get { return _trip; }
+            set { _trip = value; OnPropertyChanged(); }
         }
 
-        private int _flightDuration;
+        private int _tripDuration;
 
-        public int FlightDuration
+        public int TripDuration
         {
-            get { return _flightDuration; }
-            set { _flightDuration = value; OnPropertyChanged(); }
+            get { return _tripDuration; }
+            set { _tripDuration = value; OnPropertyChanged(); }
         }
 
         public ICommand CloseCommand { get; set; }

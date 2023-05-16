@@ -35,7 +35,7 @@
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Stretch"
                     Margin="20">
-            <Image Source="{Binding Flight.Destination.Image}"
+            <Image Source="{Binding Trip.Destination.Image}"
                    Width="Auto"/>
 
         </StackPanel>
@@ -43,7 +43,7 @@
                     HorizontalAlignment="Center"
                     Margin="20"
                     Grid.Column="1">
-            <TextBlock Text="{Binding Flight.Destination.Name}"
+            <TextBlock Text="{Binding Trip.Destination.Name}"
                        HorizontalAlignment="Center"
                        FontSize="40"
                        Margin="20"
@@ -57,7 +57,7 @@
                 <TextBlock Text=""
                            FontSize="30"
                            HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding Flight.Price, Converter={StaticResource DinarValueConverter}}"
+                <TextBlock Text="{Binding Trip.Price, Converter={StaticResource DinarValueConverter}}"
                            FontSize="30"
                            HorizontalAlignment="Right"
                            FontStyle="Italic"/>
@@ -68,7 +68,7 @@
                            HorizontalAlignment="Left"
                            FontWeight="SemiBold"
                            FontStyle="Italic"/>
-                <TextBlock Text="{Binding FlightDuration, Converter={StaticResource HoursValueConverter}}"
+                <TextBlock Text="{Binding TripDuration, Converter={StaticResource HoursValueConverter}}"
                            FontSize="30"
                            HorizontalAlignment="Right"
                            FontStyle="Italic"/>

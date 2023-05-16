@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:valueConverter="crl-namespace:TravelAgent.ValueConverter">
 
-    <Style TargetType="ListView" x:Key="FlightsListViewTheme">
+    <Style TargetType="ListView" x:Key="TripsListViewTheme">
 
         <Style.Setters>
 
@@ -34,12 +34,12 @@
                                                         VerticalAlignment="Center"
                                                         Margin="10 0">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Takeoff"
+                                                    <TextBlock Text="Departs at"
                                                                Margin="0 0 20 0"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                FontSize="26"
                                                                VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding TakeoffDateTime}"
+                                                    <TextBlock Text="{Binding DepartureDateTime}"
                                                                FontSize="30"
                                                                FontWeight="Bold"
                                                                Foreground="{DynamicResource MainTextBrush}"
@@ -47,12 +47,12 @@
                                                 </StackPanel>
 
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Landing"
+                                                    <TextBlock Text="Arrives at"
                                                                Margin="0 0 20 0"
                                                                FontSize="26"
                                                                Foreground="{DynamicResource MainTextBrush}"
                                                                VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding LandingDateTime}"
+                                                    <TextBlock Text="{Binding ArrivalDateTime}"
                                                                FontSize="30"
                                                                FontWeight="Bold"
                                                                Foreground="{DynamicResource MainTextBrush}"

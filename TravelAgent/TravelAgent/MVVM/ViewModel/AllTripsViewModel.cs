@@ -12,22 +12,22 @@ using TravelAgent.MVVM.View.Popup;
 
 namespace TravelAgent.MVVM.ViewModel
 {
-    public class AllFlightsViewModel : Core.ViewModel
+    public class AllTripsViewModel : Core.ViewModel
     {
         private readonly Service.NavigationService _navigationService;
-        private readonly Service.FlightService _flightService;
+        private readonly Service.TripService _tripService;
 
-        public ObservableCollection<FlightModel> AllFlights { get; set; }
+        public ObservableCollection<TripModel> AllTrips { get; set; }
 
         public ICommand OpenMapLocationDetailsViewCommand { get; }
         public ICommand OpenSeeDealPopupCommand { get; }
 
-        public AllFlightsViewModel(
+        public AllTripsViewModel(
             Service.NavigationService navigationService, 
-            Service.FlightService flightService)
+            Service.TripService tripService)
         {
             _navigationService = navigationService;
-            _flightService = flightService;
+            _tripService = tripService;
 
             OpenMapLocationDetailsViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<MapLocationDetailsViewModel>(), o => true);
             OpenSeeDealPopupCommand = new Core.RelayCommand(OnOpenSeeDealPopup , o => true);
@@ -39,21 +39,21 @@ namespace TravelAgent.MVVM.ViewModel
         {
             if (o is Button seeDealButton)
             {
-                double flightId = double.Parse(seeDealButton.Tag.ToString());
-                FlightModel flight = AllFlights.FirstOrDefault(f => f.Id == flightId);
-                SeeDealPopup popup = new SeeDealPopup(flight);
+                double tripId = double.Parse(seeDealButton.Tag.ToString());
+                TripModel trip = AllTrips.FirstOrDefault(f => f.Id == tripId);
+                SeeDealPopup popup = new SeeDealPopup(trip);
                 popup.Show();
             }
         }
 
         private async void LoadAll()
         {
-            AllFlights = new ObservableCollection<FlightModel>();
+            AllTrips = new ObservableCollection<TripModel>();
 
-            IEnumerable<FlightModel> allFlights = await _flightService.GetAll();
-            foreach (FlightModel flight in allFlights)
+            IEnumerable<TripModel> allTrip = await _tripService.GetAll();
+            foreach (TripModel trip in allTrip)
             {
-                AllFlights.Add(flight);
+                AllTrips.Add(trip);
             }
         }
 
