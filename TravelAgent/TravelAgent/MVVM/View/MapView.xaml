@@ -12,26 +12,26 @@
 
     <Grid>
 
-            <m:Map x:Name="mapControl" 
-                   CredentialsProvider="AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr" 
-                   Center="44.1871, 20.8572" 
-                   ZoomLevel="8"/>
+        <m:Map x:Name="mapControl" 
+               CredentialsProvider="AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr" 
+               Center="44.1871, 20.8572" 
+               ZoomLevel="8"/>
 
-            <ContentControl Visibility="Collapsed"
-                            x:Name="locationContainer"
-                            HorizontalAlignment="Left"
-                            Width="500"
-                            MouseLeftButtonDown="ContentControl_MouseDown"
-                            MouseMove="ContentControl_MouseMove"
-                            MouseLeftButtonUp="ContentControl_MouseUp"
-                            VerticalAlignment="Top"
-                            Margin="30">
-                <Border BorderThickness="3"
-                        CornerRadius="50"
-                        Padding="10"
-                        BorderBrush="{StaticResource DefaultBorderBrush}"
-                        Background="White">
-                    <StackPanel Margin="20">
+        <ContentControl Visibility="Collapsed"
+                        x:Name="locationContainer"
+                        HorizontalAlignment="Left"
+                        Width="500"
+                        MouseLeftButtonDown="ContentControl_MouseDown"
+                        MouseMove="ContentControl_MouseMove"
+                        MouseLeftButtonUp="ContentControl_MouseUp"
+                        VerticalAlignment="Top"
+                        Margin="30">
+            <Border BorderThickness="3"
+                    CornerRadius="50"
+                    Padding="10"
+                    BorderBrush="{StaticResource DefaultBorderBrush}"
+                    Background="White">
+                <StackPanel Margin="20">
 
                     <Button Content="✖"
                             Foreground="#bbb"
@@ -65,52 +65,52 @@
                         </Button.Style>
                             
                     </Button>
-                        <Border BorderThickness="10"
-                                BorderBrush="{StaticResource ImageBorderBrush}">
-                            <Image x:Name="locationImage"
-                                   Stretch="Uniform"/>
-                        </Border>
-                        <TextBlock x:Name="locationName"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="0 20"
-                                   TextWrapping="Wrap"
-                                   FontSize="30"/>
-                        <Button Content="See points of interest"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="24"
-                                x:Name="seePointsOfInterest">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border Padding="15 10"
-                                                        BorderThickness="3"
-                                                        CornerRadius="25"
-                                                        x:Name="CUSTOM_PART_ButtonBorder"
-                                                        BorderBrush="{StaticResource DefaultBorderBrush}"
-                                                        Background="#eee">
-                                                    <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
-                                                               FontSize="{Binding FontSize, RelativeSource={RelativeSource TemplatedParent}}"
-                                                               x:Name="CUSTOM_PART_ButtonContent"
-                                                               Foreground="{StaticResource TextBoxFontBrush}"
-                                                               FontWeight="SemiBold"/>
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="CUSTOM_PART_ButtonBorder" Property="BorderBrush" Value="#666"/>
-                                                        <Setter TargetName="CUSTOM_PART_ButtonBorder" Property="Background" Value="#ccc"/>
-                                                        <Setter TargetName="CUSTOM_PART_ButtonBorder" Property="Cursor" Value="Hand"/>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Button.Style>
-                        </Button>
+                    <Border BorderThickness="10"
+                            BorderBrush="{StaticResource ImageBorderBrush}">
+                        <Image x:Name="locationImage"
+                               Stretch="Uniform"/>
+                    </Border>
+                    <TextBlock x:Name="locationName"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Margin="0 20"
+                               TextWrapping="Wrap"
+                               FontSize="30"/>
+                    <!--<Button Content="See points of interest"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            x:Name="seePointsOfInterest">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Padding="15 10"
+                                                    BorderThickness="3"
+                                                    CornerRadius="25"
+                                                    x:Name="CUSTOM_PART_ButtonBorder"
+                                                    BorderBrush="{StaticResource DefaultBorderBrush}"
+                                                    Background="#eee">
+                                                <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           FontSize="{Binding FontSize, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           x:Name="CUSTOM_PART_ButtonContent"
+                                                           Foreground="{StaticResource TextBoxFontBrush}"
+                                                           FontWeight="SemiBold"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="CUSTOM_PART_ButtonBorder" Property="BorderBrush" Value="#666"/>
+                                                    <Setter TargetName="CUSTOM_PART_ButtonBorder" Property="Background" Value="#ccc"/>
+                                                    <Setter TargetName="CUSTOM_PART_ButtonBorder" Property="Cursor" Value="Hand"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>-->
                     </StackPanel>
                 </Border>
             </ContentControl>

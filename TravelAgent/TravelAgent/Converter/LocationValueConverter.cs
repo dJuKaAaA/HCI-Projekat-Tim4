@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace TravelAgent.ValueConverter
+namespace TravelAgent.Converter
 {
     public class LocationValueConverter : IValueConverter
     {

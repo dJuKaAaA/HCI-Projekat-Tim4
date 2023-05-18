@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TravelAgent"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:valueConverter="clr-namespace:TravelAgent.ValueConverter">
+             xmlns:converter="clr-namespace:TravelAgent.Converter">
     <Application.Resources>
 
         <ResourceDictionary>
@@ -67,14 +67,16 @@
             </LinearGradientBrush>
 
             <!-- Value converters -->
-            <valueConverter:LocationValueConverter x:Key="LocationValueConverter"/>
-            <valueConverter:DinarValueConverter x:Key="DinarValueConverter"/>
-            <valueConverter:HoursValueConverter x:Key="HoursValueConverter"/>
+            <converter:LocationValueConverter x:Key="LocationValueConverter"/>
+            <converter:DinarValueConverter x:Key="DinarValueConverter"/>
+            <converter:HoursValueConverter x:Key="HoursValueConverter"/>
+            <converter:PricePaidMarkupExtension x:Key="PricePaidMarkupExtension"/>
 
             <!-- Star -->
             <Polygon x:Key="StarPolygon" Fill="Gold" Points="50,0 65,35 100,40 75,65 80,100 50,80 20,100 25,65 0,40 35,35"/>
 
-            <!-- Location map popup content -->
+            <!-- Font sizes -->
+            <sys:Double x:Key="FontSize30">30</sys:Double>
             
             <!-- Themes from the 'Theme' folder -->
             <ResourceDictionary.MergedDictionaries>
