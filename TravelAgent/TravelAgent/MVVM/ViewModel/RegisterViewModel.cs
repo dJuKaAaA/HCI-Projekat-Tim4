@@ -103,6 +103,7 @@ namespace TravelAgent.MVVM.ViewModel
                 Name = Name,
                 Surname = Surname,
                 Username = Username,
+                Type = UserType.Traveler
             };
             try
             {

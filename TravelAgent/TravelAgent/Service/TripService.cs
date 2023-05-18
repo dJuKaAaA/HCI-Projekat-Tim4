@@ -32,7 +32,7 @@ namespace TravelAgent.Service
                 $"{_consts.LocationsTableName} destinationsTable WHERE tripsTable.departure_id = departuresTable.id " +
                 $"AND tripsTable.destination_id = destinationsTable.id";
             List<TripModel> results = new List<TripModel>();
-            await _databaseExecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
+            await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
             {
                 while (reader.Read())
                 {

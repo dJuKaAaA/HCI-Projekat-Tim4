@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
 using TravelAgent.Core;
+using TravelAgent.MVVM.View.Popup;
 using TravelAgent.MVVM.ViewModel;
+using TravelAgent.MVVM.ViewModel.Popup;
 
 namespace TravelAgent
 {
@@ -44,6 +46,7 @@ namespace TravelAgent
             services.AddTransient<UserTripsViewModel>();
             services.AddTransient<MapViewModel>();
             services.AddTransient<MapLocationDetailsViewModel>();
+            services.AddTransient<SeeDealViewModel>();
 
             // register Service classes for injection here (use AddSingleton)
             services.AddSingleton<Service.NavigationService>();

@@ -16,6 +16,7 @@ namespace TravelAgent.MVVM.ViewModel
     {
         private readonly Service.NavigationService _navigationService;
         private readonly Service.TripService _tripService;
+        private readonly Service.UserTripService _userTripService;
 
         public ObservableCollection<TripModel> AllTrips { get; set; }
 
@@ -24,10 +25,12 @@ namespace TravelAgent.MVVM.ViewModel
 
         public AllTripsViewModel(
             Service.NavigationService navigationService, 
-            Service.TripService tripService)
+            Service.TripService tripService,
+            Service.UserTripService userTripService)
         {
             _navigationService = navigationService;
             _tripService = tripService;
+            _userTripService = userTripService;
 
             OpenMapLocationDetailsViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<MapLocationDetailsViewModel>(), o => true);
             OpenSeeDealPopupCommand = new Core.RelayCommand(OnOpenSeeDealPopup , o => true);
@@ -39,9 +42,9 @@ namespace TravelAgent.MVVM.ViewModel
         {
             if (o is Button seeDealButton)
             {
-                double tripId = double.Parse(seeDealButton.Tag.ToString());
+                int tripId = int.Parse(seeDealButton.Tag.ToString());
                 TripModel trip = AllTrips.FirstOrDefault(f => f.Id == tripId);
-                SeeDealPopup popup = new SeeDealPopup(trip);
+                SeeDealPopup popup = new SeeDealPopup(trip, _userTripService);
                 popup.Show();
             }
         }

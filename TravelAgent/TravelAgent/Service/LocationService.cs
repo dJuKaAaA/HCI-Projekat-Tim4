@@ -26,7 +26,7 @@ namespace TravelAgent.Service
         {
             string command = $"SELECT * FROM {_consts.LocationsTableName}";
             List<LocationModel> result = new List<LocationModel>();
-            await _databaseExecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
+            await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
             {
                 while (reader.Read())
                 {
