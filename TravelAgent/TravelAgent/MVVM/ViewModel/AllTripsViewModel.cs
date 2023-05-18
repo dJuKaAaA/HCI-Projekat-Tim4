@@ -30,6 +30,14 @@ namespace TravelAgent.MVVM.ViewModel
             set { _busIconVisibility = value; OnPropertyChanged(); }
         }
 
+        private Visibility _toolbarVisibility;
+
+        public Visibility ToolbarVisibility
+        {
+            get { return _toolbarVisibility; }
+            set { _toolbarVisibility = value; OnPropertyChanged(); }
+        }
+
         private readonly Service.NavigationService _navigationService;
         private readonly Service.TripService _tripService;
         private readonly Service.UserTripService _userTripService;
@@ -46,6 +54,7 @@ namespace TravelAgent.MVVM.ViewModel
         {
             SeeDealVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Visible : Visibility.Collapsed;
             BusIconVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Collapsed : Visibility.Visible;
+            ToolbarVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Collapsed : Visibility.Visible;
 
             _navigationService = navigationService;
             _tripService = tripService;
