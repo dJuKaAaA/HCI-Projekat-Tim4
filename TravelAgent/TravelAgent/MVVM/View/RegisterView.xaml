@@ -4,75 +4,94 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TravelAgent.MVVM.View"
-             xmlns:customComponent="clr-namespace:TravelAgent.CustomComponent"
+             xmlns:component="clr-namespace:TravelAgent.CustomComponent"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Margin="20 0"
-                    MinWidth="700">
-            
-            <StackPanel VerticalAlignment="Center"
-                        HorizontalAlignment="Stretch"
-                        Margin="20 10">
-                <TextBlock Text="Name"/>
-                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource FormTextBoxTheme}"/>
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
 
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Stretch"
-                        Margin="20 10">
-                <TextBlock Text="Surname"/>
-                <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource FormTextBoxTheme}"/>
+                        Grid.Column="1"
+                        MaxWidth="700">
+
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            Margin="20 10">
+                    <component:ScalableTextBlock Text="Name"
+                                                 FontSize="30"
+                                                 ScaleRate="2"/>
+                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            Margin="20 10">
+                    <component:ScalableTextBlock Text="Surname"
+                                                 FontSize="30"
+                                                 ScaleRate="2"/>
+                    <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            Margin="20 10">
+                    <component:ScalableTextBlock Text="Username"
+                                                 FontSize="30"
+                                                 ScaleRate="2"/>
+                    <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            Margin="20 10">
+                    <component:ScalableTextBlock Text="Password"
+                                                 FontSize="30"
+                                                 ScaleRate="2"/>
+                    <component:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              PasswordBoxStyle="{StaticResource FormPasswordBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            Margin="20 10">
+                    <component:ScalableTextBlock Text="Confirm password"
+                                                 FontSize="30"
+                                                 ScaleRate="2"/>
+                    <component:BindablePasswordBox Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              PasswordBoxStyle="{StaticResource FormPasswordBoxTheme}"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="0 10">
+
+                    <Button Content="Register"
+                            Margin="20 10"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource UserFormButton}"
+                            Command="{Binding RegisterCommand}"/>
+                    <Button Content="Back"
+                            Margin="20 10"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource UserFormButton}"
+                            Command="{Binding NavigateToLoginViewCommand}"/>
+
+                </StackPanel>
+
             </StackPanel>
-
-            <StackPanel VerticalAlignment="Center"
-                        HorizontalAlignment="Stretch"
-                        Margin="20 10">
-                <TextBlock Text="Username"/>
-                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource FormTextBoxTheme}"/>
-            </StackPanel>
-
-            <StackPanel VerticalAlignment="Center"
-                        HorizontalAlignment="Stretch"
-                        Margin="20 10">
-                <TextBlock Text="Password"/>
-                <customComponent:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                          PasswordBoxStyle="{StaticResource FormPasswordBoxTheme}"/>
-            </StackPanel>
-
-            <StackPanel VerticalAlignment="Center"
-                        HorizontalAlignment="Stretch"
-                        Margin="20 10">
-                <TextBlock Text="Confirm password"/>
-                <customComponent:BindablePasswordBox Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                          PasswordBoxStyle="{StaticResource FormPasswordBoxTheme}"/>
-            </StackPanel>
-
-
-            <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Margin="0 10">
-
-                <Button Content="Register"
-                        Margin="20 10"
-                        HorizontalAlignment="Center"
-                        Style="{StaticResource FancyButtonTheme}"
-                        Command="{Binding RegisterCommand}"/>
-                <Button Content="Back"
-                        Margin="20 10"
-                        HorizontalAlignment="Center"
-                        Style="{StaticResource FancyButtonTheme}"
-                        Command="{Binding NavigateToLoginViewCommand}"/>
-                
-            </StackPanel>
-
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>
