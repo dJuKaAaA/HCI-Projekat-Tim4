@@ -104,7 +104,7 @@ namespace TravelAgent.MVVM.View
             locationContainer.Visibility = Visibility.Collapsed;
         }
 
-        // !! CODE BELOW DOESN'T WORK !!
+        // !! CODE BELOW DOES NOT WORK !!
         // dragging the ContentControl which shows the location information
         //------------------------------------------------------------------------------------
         private bool isDragging;

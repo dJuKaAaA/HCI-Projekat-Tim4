@@ -14,15 +14,24 @@ namespace TravelAgent.MVVM.ViewModel
 {
     public class MainViewModel : Core.ViewModel
     {
-        private Visibility _menuVisibility;
+        private Visibility _travelerMenuVisibility;
 
-        public Visibility MenuVisibility
+        public Visibility TravelerMenuVisibility
         {
-            get { return _menuVisibility; }
-            set { _menuVisibility = value; OnPropertyChanged(); }
+            get { return _travelerMenuVisibility; }
+            set { _travelerMenuVisibility = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _agentMenuVisibility;
+
+        public Visibility AgentMenuVisibility
+        {
+            get { return _agentMenuVisibility; }
+            set { _agentMenuVisibility = value; OnPropertyChanged(); }
         }
 
         public static UserModel? SignedUser { get; set; }
+        public static UserType? SignedUserType => SignedUser?.Type;
 
         public NavigationService NavigationService { get; }
 
@@ -53,11 +62,21 @@ namespace TravelAgent.MVVM.ViewModel
             {
                 if (viewModelType == typeof(LoginViewModel) || viewModelType == typeof(RegisterViewModel))
                 {
-                    MenuVisibility = Visibility.Collapsed;
+                    TravelerMenuVisibility = Visibility.Collapsed;
+                    AgentMenuVisibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    MenuVisibility = Visibility.Visible;
+                    if (SignedUser?.Type == UserType.Traveler)
+                    {
+                        TravelerMenuVisibility = Visibility.Visible;
+                        AgentMenuVisibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        TravelerMenuVisibility = Visibility.Collapsed;
+                        AgentMenuVisibility = Visibility.Visible;
+                    }
                 }
             };
 
