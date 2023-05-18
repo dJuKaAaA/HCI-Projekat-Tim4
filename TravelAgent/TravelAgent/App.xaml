@@ -85,6 +85,7 @@
                 <ResourceDictionary Source="./Theme/CustomScrollbarTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/FancyButtonTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/UserTripsTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/UserFormButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
