@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:core="clr-namespace:TravelAgent.Core"
+                    xmlns:component="clr-namespace:TravelAgent.CustomComponent"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="UserTripsTheme" TargetType="ListView">
@@ -12,9 +13,9 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListViewItem">
                                         <Border CornerRadius="50"
-                                                BorderThickness="2"
+                                                BorderThickness="3"
                                                 BorderBrush="{DynamicResource DefaultBorderBrush}"
-                                                Padding="50 40"
+                                                Padding="30"
                                                 Margin="20">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -29,41 +30,41 @@
 
                                                     <StackPanel Margin="0 0 20 0">
                                                         <StackPanel Margin="0 0 0 5">
-                                                            <TextBlock FontSize="24"
-                                                                       Text="Trip departure"/>
-                                                            <TextBlock Text="{Binding Trip.Departure.Name}"
-                                                                       HorizontalAlignment="Left"
-                                                                       FontWeight="SemiBold"
-                                                                       TextWrapping="Wrap"
-                                                                       FontSize="34"/>
+                                                            <component:ScalableTextBlock FontSize="24"
+                                                                                         Text="Trip departure"/>
+                                                            <component:ScalableTextBlock Text="{Binding Trip.Departure.Name}"
+                                                                                         HorizontalAlignment="Left"
+                                                                                         FontWeight="SemiBold"
+                                                                                         TextWrapping="Wrap"
+                                                                                         FontSize="34"/>
                                                         </StackPanel>
                                                         <StackPanel Margin="0 5 0 0">
-                                                            <TextBlock FontSize="24"
-                                                                       Text="Departs at"/>
-                                                            <TextBlock Text="{Binding Trip.DepartureDateTime}"
-                                                                       FontSize="34"
-                                                                       TextWrapping="Wrap"
-                                                                       FontWeight="SemiBold"/>
+                                                            <component:ScalableTextBlock FontSize="24"
+                                                                                         Text="Departs at"/>
+                                                            <component:ScalableTextBlock Text="{Binding Trip.DepartureDateTime}"
+                                                                                         FontSize="34"
+                                                                                         TextWrapping="Wrap"
+                                                                                         FontWeight="SemiBold"/>
                                                         </StackPanel>
                                                     </StackPanel>
 
 
-                                                    <StackPanel Margin="20 0">
+                                                    <StackPanel Margin="20 0 0 0">
                                                         <StackPanel Margin="0 0 0 5">
-                                                            <TextBlock FontSize="24"
-                                                                       Text="Trip destination"/>
-                                                            <TextBlock Text="{Binding Trip.Destination.Name}"
-                                                                       TextWrapping="Wrap"
-                                                                       FontWeight="SemiBold"
-                                                                       FontSize="34"/>
+                                                            <component:ScalableTextBlock FontSize="24"
+                                                                                         Text="Trip destination"/>
+                                                            <component:ScalableTextBlock Text="{Binding Trip.Destination.Name}"
+                                                                                         TextWrapping="Wrap"
+                                                                                         FontWeight="SemiBold"
+                                                                                         FontSize="34"/>
                                                         </StackPanel>
                                                         <StackPanel Margin="0 5 0 0">
-                                                            <TextBlock FontSize="24"
-                                                                       Text="Arrives at"/>
-                                                            <TextBlock Text="{Binding Trip.ArrivalDateTime}"
-                                                                       FontSize="34"
-                                                                       TextWrapping="Wrap"
-                                                                       FontWeight="SemiBold"/>
+                                                            <component:ScalableTextBlock FontSize="24"
+                                                                                         Text="Arrives at"/>
+                                                            <component:ScalableTextBlock Text="{Binding Trip.ArrivalDateTime}"
+                                                                                         FontSize="34"
+                                                                                         TextWrapping="Wrap"
+                                                                                         FontWeight="SemiBold"/>
                                                         </StackPanel>
                                                     </StackPanel>
                                                         
@@ -71,26 +72,25 @@
 
                                                 <StackPanel Grid.Column="1"
                                                             HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Margin="30 0">
+                                                            VerticalAlignment="Center">
 
-                                                    <Border Padding="30 20"
+                                                    <Border Padding="30 15"
                                                             BorderThickness="5"
-                                                            CornerRadius="50"
+                                                            CornerRadius="35"
                                                             x:Name="CUSTOM_PART_BorderInvoiceLabel">
-                                                        <TextBlock Text="{Binding Type}"
-                                                                   FontSize="46"
-                                                                   FontWeight="SemiBold"
-                                                                   x:Name="CUSTOM_PART_TextBlockInvoiceLabel"
-                                                                   HorizontalAlignment="Center"/>
+                                                        <component:ScalableTextBlock Text="{Binding Type}"
+                                                                                     FontSize="46"
+                                                                                     FontWeight="SemiBold"
+                                                                                     x:Name="CUSTOM_PART_TextBlockInvoiceLabel"
+                                                                                     HorizontalAlignment="Center"/>
 
                                                     </Border>
-                                                    <TextBlock Text="{Binding Trip.Price}"
-                                                               FontSize="30"
-                                                               FontWeight="SemiBold"
-                                                               Margin="0 10"
-                                                               x:Name="CUSTOM_PART_PaidPriceTextBlock"
-                                                               HorizontalAlignment="Center"/>
+                                                    <component:ScalableTextBlock Text="{Binding Trip.Price}"
+                                                                                 FontSize="30"
+                                                                                 FontWeight="SemiBold"
+                                                                                 Margin="0 10"
+                                                                                 x:Name="CUSTOM_PART_PaidPriceTextBlock"
+                                                                                 HorizontalAlignment="Center"/>
                                                 </StackPanel>
 
                                                 <StackPanel Grid.Column="2"
@@ -140,18 +140,18 @@
                     <ControlTemplate TargetType="Button">
                         <Border BorderThickness="3"
                                 Padding="25 10"
-                                CornerRadius="35"
+                                CornerRadius="25"
                                 x:Name="CUSTOM_PART_Border"
                                 Background="#afa"
                                 BorderBrush="DarkOliveGreen">
                             <Grid>
-                                <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
-                                           FontSize="36"
-                                           x:Name="CUSTOM_PART_Content"
-                                           Foreground="DarkOliveGreen"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontWeight="Normal"/>
+                                <component:ScalableTextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                                             FontSize="36"
+                                                             x:Name="CUSTOM_PART_Content"
+                                                             Foreground="DarkOliveGreen"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"
+                                                             FontWeight="Normal"/>
                             </Grid>
                         </Border>
 
@@ -180,13 +180,13 @@
                                 Background="#f99"
                                 BorderBrush="Red">
                             <Grid>
-                                <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
-                                           FontSize="26"
-                                           x:Name="CUSTOM_PART_Content"
-                                           Foreground="Red"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontWeight="Normal"/>
+                                <component:ScalableTextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                                             FontSize="26"
+                                                             x:Name="CUSTOM_PART_Content"
+                                                             Foreground="Red"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"
+                                                             FontWeight="Normal"/>
                             </Grid>
                         </Border>
 

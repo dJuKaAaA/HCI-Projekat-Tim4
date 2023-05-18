@@ -9,15 +9,7 @@
     <Grid>
 
         <ListView Style="{StaticResource UserTripsTheme}"
-                  ItemsSource="{Binding UserTrips}">
-            <ListView.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource CustomScrollBarTheme}"/>
-            </ListView.Resources>
-        </ListView>
-
-        <!--<TextBlock Text="Purchased flights"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>-->
+                  ItemsSource="{Binding UserTrips}"/>
 
     </Grid>
 </UserControl>

@@ -9,11 +9,7 @@
     <Grid>
 
         <ListView Style="{StaticResource TripsListViewTheme}"
-                  ItemsSource="{Binding AllTrips}">
-            <ListView.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource CustomScrollBarTheme}"/>
-            </ListView.Resources>
-        </ListView>
+                  ItemsSource="{Binding AllTrips}"/>
 
     </Grid>
 </UserControl>
