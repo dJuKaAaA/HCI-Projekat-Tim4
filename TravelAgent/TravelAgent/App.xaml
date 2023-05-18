@@ -25,7 +25,7 @@
             </Style>
 
             <!-- Colors -->
-            <Color x:Key="NotHighlightedColor">#aaa</Color>
+            <Color x:Key="NotHighlightedColor">#bbb</Color>
             <Color x:Key="TextBoxInFocusColor">#19d</Color>
             <Color x:Key="TextBoxFontColor">#111</Color>
             <Color x:Key="DataGridRowSelectedColor">LightCyan</Color>
@@ -62,8 +62,10 @@
                 <GradientStop Color="IndianRed" Offset="0.75"/>
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ImageBorderBrush">
-                <GradientStop Color="#bbf" Offset="0.00"/>
-                <GradientStop Color="#bb0" Offset="1.00"/>
+                <GradientStop Color="BlueViolet" Offset="0.00"/>
+                <GradientStop Color="IndianRed" Offset="0.75"/>
+                <!--<GradientStop Color="#bbf" Offset="0.00"/>
+                <GradientStop Color="#bb0" Offset="1.00"/>-->
             </LinearGradientBrush>
 
             <!-- Value converters -->

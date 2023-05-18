@@ -23,11 +23,11 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="CUSTOM_PART_Border" Property="Cursor" Value="Hand"/>
-                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource ButtonHighlightedBrush}"/>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="CUSTOM_PART_Border" Property="Cursor" Value="Hand"/>
-                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource ButtonHighlightedBrush}"/>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

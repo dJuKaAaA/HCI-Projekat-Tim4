@@ -68,8 +68,8 @@
                     <view:AllRestorauntsView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:AllAccomodationsViewModel}">
-                    <view:AllAccomodationsView/>
+                <DataTemplate DataType="{x:Type viewModel:AllAccommodationsViewModel}">
+                    <view:AllAccommodationsView/>
                 </DataTemplate>
 
                 <DataTemplate DataType="{x:Type viewModel:MapViewModel}">

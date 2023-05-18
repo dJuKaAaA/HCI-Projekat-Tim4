@@ -9,7 +9,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border CornerRadius="25"
-                                BorderThickness="3"
+                                BorderThickness="4"
                                 BorderBrush="{DynamicResource NotHighlightedBrush}"
                                 Background="Transparent"
                                 x:Name="CUSTOM_PART_Border"
