@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Font\WorkSans-VariableFont_wght.ttf" />
+    <None Remove="Image\Icon\bus.png" />
     <None Remove="Image\Icon\star.png" />
     <None Remove="Image\Location\belgrade.jpg" />
     <None Remove="Image\Location\belocrkvanska-jezera.jpg" />
@@ -49,6 +50,7 @@
 
   <ItemGroup>
     <Resource Include="Font\WorkSans-VariableFont_wght.ttf" />
+    <Resource Include="Image\Icon\bus.png" />
     <Resource Include="Image\Icon\star.png" />
     <Resource Include="Image\Location\belgrade.jpg" />
     <Resource Include="Image\Location\belocrkvanska-jezera.jpg" />

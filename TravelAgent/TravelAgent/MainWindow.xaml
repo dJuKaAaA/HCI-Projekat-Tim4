@@ -16,13 +16,12 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Menu for traveler -->
         <Menu Grid.Row="0"
-              Grid.RowSpan="2"
-              Visibility="{Binding MenuVisibility}">
+              Visibility="{Binding TravelerMenuVisibility}">
             <MenuItem Header="View">
                 <MenuItem Header="Trips"
                           Command="{Binding OpenAllTripsViewCommand}"/>
@@ -42,8 +41,27 @@
             <MenuItem Header="Logout"
                       Command="{Binding LogoutCommand}"/>
         </Menu>
+
+        <!-- Menu for agent -->
+        <Menu Grid.Row="0"
+              Visibility="{Binding AgentMenuVisibility}">
+            <MenuItem Header="View">
+                <MenuItem Header="Trips"
+                          Command="{Binding OpenAllTripsViewCommand}"/>
+                <MenuItem Header="Tourist attractions"
+                          Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
+                <MenuItem Header="Restoraunts"
+                          Command="{Binding OpenAllRestorauntsViewCommand}"/>
+                <MenuItem Header="Accomodations"
+                          Command="{Binding OpenAllAccomodationsViewCommand}"/>
+                <MenuItem Header="Sold trips"/>
+            </MenuItem>
+            <MenuItem Header="Help"/>
+            <MenuItem Header="Logout"
+                      Command="{Binding LogoutCommand}"/>
+        </Menu>
         
-        <ContentControl Grid.Row="2"
+        <ContentControl Grid.Row="1"
                         IsTabStop="False"
                         Content="{Binding NavigationService.CurrentViewModel}">
             <ContentControl.Resources>

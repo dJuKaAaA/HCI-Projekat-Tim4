@@ -14,6 +14,22 @@ namespace TravelAgent.MVVM.ViewModel
 {
     public class AllTripsViewModel : Core.ViewModel
     {
+        private Visibility _seeDealVisibility;
+
+        public Visibility SeeDealVisibility
+        {
+            get { return _seeDealVisibility; }
+            set { _seeDealVisibility = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _busIconVisibility ;
+
+        public Visibility BusIconVisibility
+        {
+            get { return _busIconVisibility; }
+            set { _busIconVisibility = value; OnPropertyChanged(); }
+        }
+
         private readonly Service.NavigationService _navigationService;
         private readonly Service.TripService _tripService;
         private readonly Service.UserTripService _userTripService;
@@ -28,6 +44,9 @@ namespace TravelAgent.MVVM.ViewModel
             Service.TripService tripService,
             Service.UserTripService userTripService)
         {
+            SeeDealVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Visible : Visibility.Collapsed;
+            BusIconVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Collapsed : Visibility.Visible;
+
             _navigationService = navigationService;
             _tripService = tripService;
             _userTripService = userTripService;
