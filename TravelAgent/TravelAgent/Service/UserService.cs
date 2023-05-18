@@ -27,7 +27,7 @@ namespace TravelAgent.Service
         {
             string command = $"SELECT * FROM {_consts.UsersTableName}";
             List<UserModel> collection = new List<UserModel>();
-            await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
+            await _databaseExcecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
             {
                 while (reader.Read())
                 {
@@ -48,7 +48,7 @@ namespace TravelAgent.Service
         {
             string command = $"SELECT * FROM {_consts.UsersTableName} WHERE username = '{username}' AND password = '{password}'";
             UserModel? user = null;
-            await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
+            await _databaseExcecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
             {
                 while (reader.Read())
                 {
@@ -57,7 +57,8 @@ namespace TravelAgent.Service
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1), 
                         Surname = reader.GetString(2), 
-                        Username = reader.GetString(3)
+                        Username = reader.GetString(3),
+                        Type = (UserType)Enum.Parse(typeof(UserType), reader.GetString(5))
                     };
                 }
             });
@@ -74,7 +75,7 @@ namespace TravelAgent.Service
         {
             string validationQuery = $"SELECT * FROM {_consts.UsersTableName} WHERE username = '{user.Username}'";
             bool taken = false;
-            await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, validationQuery, (reader) =>
+            await _databaseExcecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, validationQuery, (reader) =>
             {
                 taken = reader.Read();
             });
@@ -86,7 +87,7 @@ namespace TravelAgent.Service
             
             string command = $"INSERT INTO {_consts.UsersTableName} (name, surname, username, password) " +
                 $"VALUES ('{user.Name}', '{user.Surname}', '{user.Username}', '{password}')";
-            await _databaseExcecutionService.ExecuteNonQueryCommand(_consts.ConnectionString, command);
+            await _databaseExcecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
 
         }
     }

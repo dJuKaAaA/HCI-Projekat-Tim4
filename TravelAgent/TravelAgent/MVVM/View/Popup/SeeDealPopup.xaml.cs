@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgent.MVVM.Model;
 using TravelAgent.MVVM.ViewModel.Popup;
+using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.View.Popup
 {
@@ -22,11 +23,12 @@ namespace TravelAgent.MVVM.View.Popup
     /// </summary>
     public partial class SeeDealPopup : Window
     {
-        public SeeDealPopup(TripModel trip)
+        public SeeDealPopup(TripModel trip, UserTripService userTripService)
         {
             InitializeComponent();
 
             ((SeeDealViewModel)DataContext).Trip = trip;
+            ((SeeDealViewModel)DataContext).UserTripService = userTripService;
             DateTime takeoff = ((SeeDealViewModel)DataContext).Trip.DepartureDateTime;
             DateTime landing = ((SeeDealViewModel)DataContext).Trip.ArrivalDateTime;
             TimeSpan timeDiff = landing - takeoff;

@@ -84,10 +84,12 @@
                 <Button Content="Purchase"
                         FontWeight="SemiBold"
                         Margin="10 20"
+                        Command="{Binding PurchaseTripCommand}"
                         Style="{StaticResource FancyButtonTheme}"/>
                 <Button Content="Reserve"
                         FontWeight="SemiBold"
                         Margin="10 20"
+                        Command="{Binding ReserveTripCommand}"
                         Style="{StaticResource FancyButtonTheme}"/>
             </StackPanel>
             <Button Content="Close"

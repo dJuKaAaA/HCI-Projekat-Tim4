@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TravelAgent.Core;
+using TravelAgent.Exception;
 using TravelAgent.MVVM.Model;
 
 namespace TravelAgent.Service
@@ -23,9 +24,67 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
+        public async Task Cancel(int userId, int tripId)
+        {
+            string command = $"SELECT * FROM {_consts.UsersTripsTableName} " +
+                $"WHERE trip_id = {tripId} AND user_id = {userId} AND type = '{TripInvoiceType.Reserved.ToString()}'";
+            bool exists = true;
+            await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
+            {
+                exists = reader.Read();
+            });
+            if (!exists)
+            {
+                throw new DatabaseResponseException("Acquired trip not found or it is already purchased!");
+            }
+
+            command = $"DELETE FROM {_consts.UsersTripsTableName} " +
+                $"WHERE trip_id = {tripId} AND user_id = {userId}";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+        }
+
+        public async Task CreateNew(UserTripModel userTrip)
+        {
+            string command = $"SELECT * FROM {_consts.UsersTripsTableName} " +
+                $"WHERE trip_id = {userTrip.Trip.Id} AND user_id = {userTrip.User.Id}";
+            bool exists = false;
+            await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
+            {
+                exists = reader.Read();
+            });
+            if (exists)
+            {
+                throw new DatabaseResponseException("You already have this trip in your 'Acquired trips'!");
+            }
+
+            command = $"INSERT INTO {_consts.UsersTripsTableName} (user_id, trip_id, type) " +
+                $"VALUES ({userTrip.User.Id}, {userTrip.Trip.Id}, '{userTrip.Type}')";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+        }
+
+        public async Task PurchaseReserved(int userId, int tripId)
+        {
+            string command = $"SELECT * FROM {_consts.UsersTripsTableName} " +
+                $"WHERE trip_id = {tripId} AND user_id = {userId} AND type = '{TripInvoiceType.Reserved.ToString()}'";
+            bool exists = true;
+            await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
+            {
+                exists = reader.Read();
+            });
+            if (!exists)
+            {
+                throw new DatabaseResponseException("Acquired trip not found or it is already purchased!");
+            }
+
+            command = $"UPDATE {_consts.UsersTripsTableName} " +
+                $"SET type = '{TripInvoiceType.Purchased.ToString()}' " +
+                $"WHERE trip_id = {tripId} AND user_id = {userId}";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+        }
+
         public async Task<IEnumerable<UserTripModel>> GetForUser(int userId)
         {
-            string command = $"SELECT usersTable.id, usersTable.name, usersTable.surname, usersTable.username, " +
+            string command = $"SELECT usersTable.id, usersTable.name, usersTable.surname, usersTable.username, usersTable.type, " +
                 $"tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +
                 $"departuresTable.id, departuresTable.name, departuresTable.longitude, departuresTable.latitude, departuresTable.image, " +
                 $"destinationsTable.id, destinationsTable.name, destinationsTable.longitude, destinationsTable.latitude, destinationsTable.image, " +
@@ -37,7 +96,7 @@ namespace TravelAgent.Service
                 $"AND tripsTable.departure_id = departuresTable.id AND tripsTable.destination_id = destinationsTable.id " +
                 $"AND usersTable.id = {userId}";
             List<UserTripModel> results = new List<UserTripModel>();
-            await _databaseExecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
+            await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
             {
                 while (reader.Read())
                 {
@@ -47,37 +106,38 @@ namespace TravelAgent.Service
                         Name = reader.GetString(1),
                         Surname = reader.GetString(2),
                         Username = reader.GetString(3),
+                        Type = (UserType)Enum.Parse(typeof(UserType), reader.GetString(4))
                     };
                     LocationModel departure = new LocationModel()
                     {
-                        Id = reader.GetInt32(8),
-                        Name = reader.GetString(9),
-                        Longitude = reader.GetFloat(10),
-                        Latitude = reader.GetFloat(11),
-                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(12)}",
+                        Id = reader.GetInt32(9),
+                        Name = reader.GetString(10),
+                        Longitude = reader.GetFloat(11),
+                        Latitude = reader.GetFloat(12),
+                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(13)}",
                     };
                     LocationModel destination = new LocationModel()
                     {
-                        Id = reader.GetInt32(13),
-                        Name = reader.GetString(14),
-                        Longitude = reader.GetFloat(15),
-                        Latitude = reader.GetFloat(16),
-                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(17)}",
+                        Id = reader.GetInt32(14),
+                        Name = reader.GetString(15),
+                        Longitude = reader.GetFloat(16),
+                        Latitude = reader.GetFloat(17),
+                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(18)}",
                     };
                     TripModel trip = new TripModel()
                     {
-                        Id = reader.GetInt32(4),
+                        Id = reader.GetInt32(5),
                         Departure = departure,
                         Destination = destination,
-                        DepartureDateTime = DateTime.ParseExact(reader.GetString(5), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
-                        ArrivalDateTime = DateTime.ParseExact(reader.GetString(6), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
-                        Price = reader.GetFloat(7),
+                        DepartureDateTime = DateTime.ParseExact(reader.GetString(6), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        ArrivalDateTime = DateTime.ParseExact(reader.GetString(7), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        Price = reader.GetFloat(8),
                     };
                     UserTripModel userTrip = new UserTripModel()
                     {
                         User = user,
                         Trip = trip,
-                        Type = (TripInvoiceType)Enum.Parse(typeof(TripInvoiceType), reader.GetString(18))
+                        Type = (TripInvoiceType)Enum.Parse(typeof(TripInvoiceType), reader.GetString(19))
                     };
 
                     results.Add(userTrip);
