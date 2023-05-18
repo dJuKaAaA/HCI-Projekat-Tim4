@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TravelAgent.MVVM.View.Popup"
         xmlns:popupvm="clr-namespace:TravelAgent.MVVM.ViewModel.Popup"
         mc:Ignorable="d"
-        Title="SeeDealPopup" Height="450" Width="900"
+        Title="SeeDealPopup" Height="500" Width="1000"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -24,7 +24,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Border Background="#eee"
+        <Border Background="#fff"
                 CornerRadius="20"
                 BorderThickness="3"
                 BorderBrush="#999"
@@ -33,9 +33,10 @@
 
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Stretch"
-                    Margin="20">
+                    Margin="30">
             <Border Width="Auto"
                     BorderThickness="10"
+                    CornerRadius="5"
                     BorderBrush="{DynamicResource ImageBorderBrush}">
                 <Image Source="{Binding Trip.Destination.Image}"
                        Stretch="Fill"/>
@@ -81,14 +82,17 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Button Content="Purchase"
+                        FontWeight="SemiBold"
                         Margin="10 20"
                         Style="{StaticResource FancyButtonTheme}"/>
                 <Button Content="Reserve"
+                        FontWeight="SemiBold"
                         Margin="10 20"
                         Style="{StaticResource FancyButtonTheme}"/>
             </StackPanel>
             <Button Content="Close"
-                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    Margin="30 10"
                     Command="{Binding CloseCommand}"
                     Style="{StaticResource FancyButtonTheme}"/>
         </StackPanel>

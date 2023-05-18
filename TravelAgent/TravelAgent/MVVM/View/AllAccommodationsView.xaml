@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TravelAgent.MVVM.View.AllTouristAttractionsView"
+﻿<UserControl x:Class="TravelAgent.MVVM.View.AllAccommodationsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-
+        
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding AllTouristAttractions}"
+            <ItemsControl ItemsSource="{Binding AllAccommodations}"
                           HorizontalAlignment="Center"
                           Margin="10">
                 <ItemsControl.ItemsPanel>
@@ -26,13 +26,19 @@
                                 BorderBrush="#777">
                             <Grid>
                                 <StackPanel HorizontalAlignment="Stretch"
-                                            MaxWidth="300">
+                                            MaxWidth="400">
                                     <TextBlock Text="{Binding Name}"
                                                HorizontalAlignment="Center"
-                                               FontWeight="Bold"
                                                TextWrapping="Wrap"
+                                               FontWeight="Bold"
                                                FontSize="40"
                                                Margin="20 0"/>
+                                    <TextBlock Text="{Binding Rating}"
+                                               HorizontalAlignment="Center"
+                                               Margin="0 5"/>
+                                    <TextBlock Text="{Binding Address}"
+                                               HorizontalAlignment="Center"
+                                               Margin="0 5"/>
                                     <Image Source="../../../Image/Location/belgrade.jpg"
                                            Margin="0 20"/>
 

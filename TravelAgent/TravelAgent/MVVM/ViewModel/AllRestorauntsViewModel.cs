@@ -20,14 +20,14 @@ namespace TravelAgent.MVVM.ViewModel
                 {
                     Id = 1,
                     Name = "Restoraunt1",
-                    Stars = 5,
+                    Stars = 3,
                     LocationId = 1
                 },
                 new RestorauntModel()
                 {
                     Id = 2,
                     Name = "Restoraunt2",
-                    Stars = 5,
+                    Stars = 4,
                     LocationId = 1
                 },
                 new RestorauntModel()
@@ -41,14 +41,14 @@ namespace TravelAgent.MVVM.ViewModel
                 {
                     Id = 4,
                     Name = "Restoraunt4",
-                    Stars = 5,
+                    Stars = 2,
                     LocationId = 1
                 },
                 new RestorauntModel()
                 {
                     Id = 5,
                     Name = "Restoraunt5",
-                    Stars = 5,
+                    Stars = 1,
                     LocationId = 1
                 },
             };

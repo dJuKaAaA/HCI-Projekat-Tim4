@@ -18,9 +18,9 @@ namespace TravelAgent.MVVM.View
     /// <summary>
     /// Interaction logic for AllAccomodationsView.xaml
     /// </summary>
-    public partial class AllAccomodationsView : UserControl
+    public partial class AllAccommodationsView : UserControl
     {
-        public AllAccomodationsView()
+        public AllAccommodationsView()
         {
             InitializeComponent();
         }
