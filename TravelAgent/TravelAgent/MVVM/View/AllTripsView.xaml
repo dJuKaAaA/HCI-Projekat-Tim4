@@ -8,8 +8,32 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ToolBar Background="Transparent"
+                 Grid.Row="0"
+                 Visibility="{Binding ToolbarVisibility}">
+            <Button Content="+"
+                    Padding="20 5"
+                    Foreground="CadetBlue"
+                    FontWeight="Bold"
+                    Margin="10 5"/>
+            <Button Content="✏️"
+                    Foreground="DarkGoldenrod"
+                    Padding="20 5"
+                    Margin="10 5"/>
+            <Button Content="❌"
+                    Foreground="DarkRed"
+                    Padding="20 5"
+                    Margin="10 5"/>
+        </ToolBar>
+
         <ListView Style="{StaticResource TripsListViewTheme}"
-                  ItemsSource="{Binding AllTrips}"/>
+                  ItemsSource="{Binding AllTrips}"
+                  Grid.Row="1"/>
 
     </Grid>
 </UserControl>

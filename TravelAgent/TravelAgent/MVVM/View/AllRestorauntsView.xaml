@@ -7,7 +7,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ToolBar Background="Transparent"
+                 Grid.Row="0"
+                 Visibility="{Binding ToolbarVisibility}">
+            <Button Content="+"
+                    Padding="20 5"
+                    Foreground="CadetBlue"
+                    FontWeight="Bold"
+                    Margin="10 5"/>
+            <Button Content="✏️"
+                    Foreground="DarkGoldenrod"
+                    Padding="20 5"
+                    Margin="10 5"/>
+            <Button Content="❌"
+                    Foreground="DarkRed"
+                    Padding="20 5"
+                    Margin="10 5"/>
+        </ToolBar>
+        
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="1">
             <ItemsControl ItemsSource="{Binding AllRestoraunts}"
                           HorizontalAlignment="Center"
                           Margin="10">

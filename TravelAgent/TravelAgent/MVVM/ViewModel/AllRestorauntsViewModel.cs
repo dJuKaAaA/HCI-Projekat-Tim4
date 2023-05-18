@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgent.MVVM.Model;
 
 namespace TravelAgent.MVVM.ViewModel
@@ -12,8 +13,18 @@ namespace TravelAgent.MVVM.ViewModel
     {
         public ObservableCollection<RestorauntModel> AllRestoraunts { get; set; }
 
+        private Visibility _toolbarVisibility;
+
+        public Visibility ToolbarVisibility
+        {
+            get { return _toolbarVisibility; }
+            set { _toolbarVisibility = value; OnPropertyChanged(); }
+        }
+
         public AllRestorauntsViewModel()
         {
+            ToolbarVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Collapsed : Visibility.Visible;
+
             AllRestoraunts = new ObservableCollection<RestorauntModel>()
             {
                 new RestorauntModel()
