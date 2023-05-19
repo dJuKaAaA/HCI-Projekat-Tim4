@@ -52,9 +52,12 @@ namespace TravelAgent.MVVM.ViewModel
             Service.TripService tripService,
             Service.UserTripService userTripService)
         {
-            SeeDealVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Visible : Visibility.Collapsed;
-            BusIconVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Collapsed : Visibility.Visible;
-            ToolbarVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Collapsed : Visibility.Visible;
+            SeeDealVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Traveler ?
+                Visibility.Visible : Visibility.Collapsed;
+            BusIconVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Traveler ? 
+                Visibility.Collapsed : Visibility.Visible;
+            ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? 
+                Visibility.Visible : Visibility.Collapsed;
 
             _navigationService = navigationService;
             _tripService = tripService;
