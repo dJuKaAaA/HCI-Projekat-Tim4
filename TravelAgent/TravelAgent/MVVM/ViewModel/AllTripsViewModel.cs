@@ -44,6 +44,8 @@ namespace TravelAgent.MVVM.ViewModel
 
         public ObservableCollection<TripModel> AllTrips { get; set; }
 
+        private SeeDealPopup? _seeDealPopup;
+
         public ICommand OpenMapLocationDetailsViewCommand { get; }
         public ICommand OpenSeeDealPopupCommand { get; }
 
@@ -75,8 +77,13 @@ namespace TravelAgent.MVVM.ViewModel
             {
                 int tripId = int.Parse(seeDealButton.Tag.ToString());
                 TripModel trip = AllTrips.FirstOrDefault(f => f.Id == tripId);
-                SeeDealPopup popup = new SeeDealPopup(trip, _userTripService);
-                popup.Show();
+
+                if (_seeDealPopup != null)
+                {
+                    _seeDealPopup.Close();
+                }
+                _seeDealPopup = new SeeDealPopup(trip, _userTripService);
+                _seeDealPopup.Show();
             }
         }
 

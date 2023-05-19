@@ -18,7 +18,6 @@ namespace TravelAgent.CustomComponent
             set { SetValue(ScaleRateProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ScaleFactor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ScaleRateProperty =
             DependencyProperty.Register("ScaleRate", typeof(double), typeof(ScalableTextBlock), 
                 new PropertyMetadata(1.0));
