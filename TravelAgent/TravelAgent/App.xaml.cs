@@ -26,7 +26,7 @@ namespace TravelAgent
         {
             IServiceCollection services = new ServiceCollection();
 
-            services.AddTransient<MainWindow>(provider => new MainWindow()
+            services.AddSingleton<MainWindow>(provider => new MainWindow()
             {
                 DataContext = provider.GetRequiredService<MainViewModel>()
             });
@@ -56,11 +56,11 @@ namespace TravelAgent
             services.AddSingleton<Service.LocationService>();
             services.AddSingleton<Service.UserTripService>();
 
+            _serviceProvider = services.BuildServiceProvider();
+
             // setting the SQLite provider
             SQLitePCL.Batteries.Init();
             SQLitePCL.raw.SetProvider(new SQLite3Provider_e_sqlite3());
-
-            _serviceProvider = services.BuildServiceProvider();
 
         }
 

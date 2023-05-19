@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace TravelAgent.CustomComponent
 {
-    public class ScalableImage : Image
+    public class ScalableContentControl : ContentControl
     {
         private double _originalWidth;
 
@@ -19,10 +19,10 @@ namespace TravelAgent.CustomComponent
         }
 
         public static readonly DependencyProperty ScaleRateProperty =
-            DependencyProperty.Register("ScaleRate", typeof(double), typeof(ScalableImage), 
+            DependencyProperty.Register("ScaleRate", typeof(double), typeof(ScalableContentControl), 
                 new PropertyMetadata(1.0));
 
-        public ScalableImage()
+        public ScalableContentControl()
         {
             Loaded += OnLoaded;
         }
