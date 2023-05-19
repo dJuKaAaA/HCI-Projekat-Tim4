@@ -44,6 +44,14 @@ namespace TravelAgent.MVVM.ViewModel
 
         public ObservableCollection<TripModel> AllTrips { get; set; }
 
+        private TripModel? _selectedTrip;
+
+        public TripModel? SelectedTrip
+        {
+            get { return _selectedTrip; }
+            set { _selectedTrip = value; OnPropertyChanged(); }
+        }
+
         private SeeDealPopup? _seeDealPopup;
 
         public ICommand OpenMapLocationDetailsViewCommand { get; }
@@ -60,6 +68,8 @@ namespace TravelAgent.MVVM.ViewModel
                 Visibility.Collapsed : Visibility.Visible;
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? 
                 Visibility.Visible : Visibility.Collapsed;
+
+            AllTrips = new ObservableCollection<TripModel>();
 
             _navigationService = navigationService;
             _tripService = tripService;
@@ -78,10 +88,7 @@ namespace TravelAgent.MVVM.ViewModel
                 int tripId = int.Parse(seeDealButton.Tag.ToString());
                 TripModel trip = AllTrips.FirstOrDefault(f => f.Id == tripId);
 
-                if (_seeDealPopup != null)
-                {
-                    _seeDealPopup.Close();
-                }
+                _seeDealPopup?.Close();
                 _seeDealPopup = new SeeDealPopup(trip, _userTripService);
                 _seeDealPopup.Show();
             }

@@ -21,9 +21,10 @@
                                             x:Name="CUSTOM_PART_Border"
                                             Margin="20 10"
                                             Padding="35 25"
+                                            Background="Transparent"
                                             BorderThickness="2"
                                             BorderBrush="{DynamicResource DefaultBorderBrush}">
-                                            
+
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="2*"/>
@@ -39,10 +40,10 @@
                                                     <component:ScalableTextBlock Text="Departs at"
                                                                                  Margin="0 0 20 0"
                                                                                  Foreground="{DynamicResource MainTextBrush}"
-                                                                                 FontSize="26"
+                                                                                 FontSize="30"
                                                                                  VerticalAlignment="Center"/>
                                                     <component:ScalableTextBlock Text="{Binding DepartureDateTime}"
-                                                                                 FontSize="30"
+                                                                                 FontSize="34"
                                                                                  FontWeight="Bold"
                                                                                  Foreground="{DynamicResource MainTextBrush}"
                                                                                  VerticalAlignment="Center"/>
@@ -51,11 +52,11 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <component:ScalableTextBlock Text="Arrives at"
                                                                                  Margin="0 0 20 0"
-                                                                                 FontSize="26"
+                                                                                 FontSize="30"
                                                                                  Foreground="{DynamicResource MainTextBrush}"
                                                                                  VerticalAlignment="Center"/>
                                                     <component:ScalableTextBlock Text="{Binding ArrivalDateTime}"
-                                                                                 FontSize="30"
+                                                                                 FontSize="34"
                                                                                  FontWeight="Bold"
                                                                                  Foreground="{DynamicResource MainTextBrush}"
                                                                                  VerticalAlignment="Center"/>
@@ -76,43 +77,19 @@
                                                     <component:ScalableTextBlock Text="{Binding Departure.Name}"
                                                                                  FontWeight="SemiBold"
                                                                                  HorizontalAlignment="Center"
-                                                                                 FontSize="40"
+                                                                                 FontSize="44"
                                                                                  Foreground="{DynamicResource MainTextBrush}"
                                                                                  Margin="10 0 0 0"/>
                                                     <component:ScalableTextBlock Text="↓"
                                                                                  Margin="10 0"
                                                                                  HorizontalAlignment="Center"
-                                                                                 FontSize="34"
+                                                                                 FontSize="40"
                                                                                  Foreground="{DynamicResource MainTextBrush}"/>
                                                     <component:ScalableTextBlock Text="{Binding Destination.Name}"
                                                                                  FontWeight="SemiBold"
-                                                                                 FontSize="40"
+                                                                                 FontSize="44"
                                                                                  HorizontalAlignment="Center"
                                                                                  Foreground="{DynamicResource MainTextBrush}"/>
-                                                    <!--<Button Command="{Binding DataContext.OpenMapLocationDetailsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                                                        <Button.Style>
-                                                            <Style TargetType="Button">
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="Button">
-                                                                            <TextBlock Text="🌍"
-                                                                                       VerticalAlignment="Center"
-                                                                                       Margin="15 0"
-                                                                                       Foreground="{DynamicResource MainTextBrush}"
-                                                                                       FontSize="40"/>
-                                                                            <ControlTemplate.Triggers>
-                                                                                <Trigger Property="IsMouseOver" Value="True">
-                                                                                    <Setter Property="Opacity" Value="0.5"/>
-                                                                                    <Setter Property="Cursor" Value="Hand"/>
-                                                                                </Trigger>
-                                                                            </ControlTemplate.Triggers>
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Style>
-                                                        </Button.Style>
-                                                    </Button>-->
-
                                                 </StackPanel>
 
 
@@ -121,7 +98,6 @@
                                                                          Grid.Column="1"
                                                                          Visibility="{Binding DataContext.BusIconVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                                                     
-
                                                 <StackPanel Grid.Column="1"
                                                             HorizontalAlignment="Right"
                                                             Margin="10 0"
@@ -130,7 +106,7 @@
                                                                                  HorizontalAlignment="Center"
                                                                                  Foreground="{DynamicResource MainTextBrush}"
                                                                                  Margin="10"
-                                                                                 FontSize="32"
+                                                                                 FontSize="36"
                                                                                  FontWeight="Bold"/>
                                                     <Button Margin="10 5"
                                                             Command="{Binding DataContext.OpenSeeDealPopupCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
@@ -150,7 +126,7 @@
                                                                                 <component:ScalableTextBlock Text="See deal →"
                                                                                                              VerticalAlignment="Center"
                                                                                                              HorizontalAlignment="Center"
-                                                                                                             FontSize="34"
+                                                                                                             FontSize="40"
                                                                                                              FontWeight="DemiBold"/>
                                                                             </Border>
                                                                             <ControlTemplate.Triggers>
@@ -171,6 +147,19 @@
 
                                         </Grid>
                                     </Border>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible">
+                                            <Setter Property="Cursor" Value="Hand" />
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                                <Condition Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource ListViewItemSelectedBrush}"/>
+                                            <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="10"/>
+                                        </MultiDataTrigger>
+                                    </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>

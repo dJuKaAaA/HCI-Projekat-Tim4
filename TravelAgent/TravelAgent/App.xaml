@@ -58,14 +58,16 @@
             <SolidColorBrush x:Key="PurchasedTripLabelTextBrush" Color="{StaticResource PurchasedTripLabelTextColor}"/>
 
             <LinearGradientBrush x:Key="ButtonHighlightedBrush">
-                <GradientStop Color="BlueViolet" Offset="0.00"/>
-                <GradientStop Color="IndianRed" Offset="0.75"/>
+                <GradientStop Color="Red" Offset="0.00"/>
+                <GradientStop Color="Blue" Offset="1.00"/>
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ImageBorderBrush">
-                <GradientStop Color="BlueViolet" Offset="0.00"/>
-                <GradientStop Color="IndianRed" Offset="0.75"/>
-                <!--<GradientStop Color="#bbf" Offset="0.00"/>
-                <GradientStop Color="#bb0" Offset="1.00"/>-->
+                <GradientStop Color="Red" Offset="0.00"/>
+                <GradientStop Color="Blue" Offset="1.00"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ListViewItemSelectedBrush">
+                <GradientStop Color="Red" Offset="0.00"/>
+                <GradientStop Color="Blue" Offset="1.00"/>
             </LinearGradientBrush>
 
             <!-- Value converters -->
