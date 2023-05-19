@@ -23,7 +23,7 @@ namespace TravelAgent.MVVM.ViewModel
 
         public AllAccommodationsViewModel()
         {
-            ToolbarVisibility = MainViewModel.SignedUser.Type == Core.UserType.Traveler ? Visibility.Collapsed : Visibility.Visible;
+            ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
 
             AllAccommodations = new ObservableCollection<AccommodationModel>()
             {

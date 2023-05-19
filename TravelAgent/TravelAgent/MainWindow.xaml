@@ -56,9 +56,30 @@
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
                 <MenuItem Header="Sold trips"/>
             </MenuItem>
-            <MenuItem Header="Help"/>
+            <MenuItem Header="Help"
+                      Command="{Binding OpenHelpCommand}"/>
             <MenuItem Header="Logout"
                       Command="{Binding LogoutCommand}"/>
+        </Menu>
+        
+        <!-- Menu for unregistered user -->
+        <Menu Grid.Row="0"
+              Visibility="{Binding UnregisteredUserMenuVisibility}">
+            <MenuItem Header="Login"
+                      Command="{Binding OpenLoginViewCommand}"/>
+            <MenuItem Header="View">
+                <MenuItem Header="Trips"
+                          Command="{Binding OpenAllTripsViewCommand}"/>
+                <MenuItem Header="Tourist attractions"
+                          Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
+                <MenuItem Header="Restoraunts"
+                          Command="{Binding OpenAllRestorauntsViewCommand}"/>
+                <MenuItem Header="Accomodations"
+                          Command="{Binding OpenAllAccomodationsViewCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Map"
+                      Command="{Binding OpenMapsCommand}"/>
+            <MenuItem Header="Help"/>
         </Menu>
         
         <ContentControl Grid.Row="1"
