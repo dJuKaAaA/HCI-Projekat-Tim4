@@ -33,6 +33,7 @@
 
         <ListView Style="{StaticResource TripsListViewTheme}"
                   ItemsSource="{Binding AllTrips}"
+                  SelectedItem="{Binding SelectedTrip}"
                   Grid.Row="1"/>
 
     </Grid>
