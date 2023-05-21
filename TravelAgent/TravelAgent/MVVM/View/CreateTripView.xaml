@@ -26,14 +26,36 @@
                     <component:ScalableTextBlock Text="Departure"
                                                  FontSize="32"
                                                  ScaleRate="2"/>
-                    <ComboBox Style="{StaticResource LocationComboBoxTheme}"/>
+                    <ComboBox Style="{StaticResource LocationComboBoxTheme}"
+                              ItemsSource="{Binding Locations}"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Center"
+                              SelectedItem="{Binding SelectedDepartureLocation}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"
+                                           FontSize="24"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
                 </StackPanel>
                 <StackPanel Margin="0 10">
                     <component:ScalableTextBlock Text="Destination"
                                                  FontSize="32"
                                                  ScaleRate="2"/>
-                    <ComboBox Style="{StaticResource LocationComboBoxTheme}"/>
+                    <ComboBox Style="{StaticResource LocationComboBoxTheme}"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Center"
+                              ItemsSource="{Binding Locations}"
+                              SelectedItem="{Binding SelectedDestinationLocation}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"
+                                           FontSize="24"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
 
                 <StackPanel Margin="0 10">
@@ -42,21 +64,27 @@
                                                  ScaleRate="2"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="4*"/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
                         <DatePicker Grid.Column="0"
                                     Style="{StaticResource CustomDatePickerTheme}"
-                                    Margin="5 0"/>
+                                    Margin="5 0"
+                                    SelectedDate="{Binding DepartureDate}"/>
                         <ComboBox Grid.Column="1"
-                                  Margin="5 0"/>
+                                  Margin="5 0"
+                                  ItemsSource="{Binding Hours}"
+                                  VerticalContentAlignment="Center"
+                                  HorizontalContentAlignment="Center"
+                                  SelectedItem="{Binding DepartureTimeHours}"/>
                         <ComboBox Grid.Column="2"
-                                  Margin="5 0"/>
-                        <ComboBox Grid.Column="3"
-                                  Margin="5 0"/>
+                                  Margin="5 0"
+                                  VerticalContentAlignment="Center"
+                                  HorizontalContentAlignment="Center"
+                                  ItemsSource="{Binding Minutes}"
+                                  SelectedValue="{Binding DepartureTimeMinutes}"/>
                     </Grid>
                 </StackPanel>
 
@@ -66,28 +94,36 @@
                                                  ScaleRate="2"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="4*"/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
                         <DatePicker Grid.Column="0"
                                     Style="{StaticResource CustomDatePickerTheme}"
-                                    Margin="5 0"/>
+                                    Margin="5 0"
+                                    SelectedDate="{Binding ArrivalDate}"/>
                         <ComboBox Grid.Column="1"
-                                  Margin="5 0"/>
+                                  Margin="5 0"
+                                  VerticalContentAlignment="Center"
+                                  HorizontalContentAlignment="Center"
+                                  ItemsSource="{Binding Hours}"
+                                  SelectedItem="{Binding ArrivalTimeHours}"/>
                         <ComboBox Grid.Column="2"
-                                  Margin="5 0"/>
-                        <ComboBox Grid.Column="3"
-                                  Margin="5 0"/>
+                                  Margin="5 0"
+                                  VerticalContentAlignment="Center"
+                                  HorizontalContentAlignment="Center"
+                                  ItemsSource="{Binding Minutes}"
+                                  SelectedItem="{Binding ArrivalTimeMinutes}"/>
                     </Grid>
                 </StackPanel>
                 <StackPanel Margin="0 10">
                     <component:ScalableTextBlock Text="Price"
                                                  FontSize="32"
                                                  ScaleRate="2"/>
-                    <TextBox Style="{StaticResource FormTextBoxTheme}"/>
+                    <TextBox Style="{StaticResource FormTextBoxTheme}"
+                             Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal"
@@ -96,11 +132,12 @@
                             Margin="0 20">
                     <Button Content="Create"
                             Style="{StaticResource FormButtonTheme}"
-                            Margin="10 0"/>
-                    <Button Content="Back"
-                            Command="{Binding OpenCreateLocationPopupCommand}"
                             Margin="10 0"
-                            Style="{StaticResource FormButtonTheme}"/>
+                            Command="{Binding CreateTripCommand}"/>
+                    <Button Content="Back"
+                            Margin="10 0"
+                            Style="{StaticResource FormButtonTheme}"
+                            Command="{Binding BackToAllTripsViewCommand}"/>
                 </StackPanel>
                     <Button Content="Add location"
                             Command="{Binding OpenCreateLocationPopupCommand}"

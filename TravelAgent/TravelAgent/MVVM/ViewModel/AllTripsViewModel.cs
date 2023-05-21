@@ -76,11 +76,18 @@ namespace TravelAgent.MVVM.ViewModel
             _tripService = tripService;
             _userTripService = userTripService;
 
+            _navigationService.NavigationCompleted += OnNavigationCompleted;
+
             OpenMapLocationDetailsViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<MapLocationDetailsViewModel>(), o => true);
             OpenSeeDealPopupCommand = new Core.RelayCommand(OnOpenSeeDealPopup , o => true);
             OpenCreateTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(), o => true);
 
             LoadAll();
+        }
+
+        private void OnNavigationCompleted(object? sender, Type e)
+        {
+            _seeDealPopup?.Close();
         }
 
         private void OnOpenSeeDealPopup(object o)
