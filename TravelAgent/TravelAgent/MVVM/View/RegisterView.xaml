@@ -10,17 +10,18 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Stretch"
-                        Grid.Column="1"
+                        Margin="20 0"
                         MaxWidth="700">
+                <component:ScalableTextBlock Text="Create your account"
+                                             VerticalAlignment="Center"
+                                             Grid.Column="1"
+                                             FontSize="54"
+                                             Margin="0 0 0 20"
+                                             ScaleRate="2"
+                                             HorizontalAlignment="Center"
+                                             FontWeight="SemiBold"/>
 
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Stretch"
@@ -81,12 +82,12 @@
                     <Button Content="Register"
                             Margin="20 10"
                             HorizontalAlignment="Center"
-                            Style="{StaticResource UserFormButton}"
+                            Style="{StaticResource FormButtonTheme}"
                             Command="{Binding RegisterCommand}"/>
                     <Button Content="Back"
                             Margin="20 10"
                             HorizontalAlignment="Center"
-                            Style="{StaticResource UserFormButton}"
+                            Style="{StaticResource FormButtonTheme}"
                             Command="{Binding NavigateToLoginViewCommand}"/>
 
                 </StackPanel>

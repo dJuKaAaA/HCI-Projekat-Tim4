@@ -1,0 +1,107 @@
+﻿<Window x:Class="TravelAgent.MVVM.View.Popup.CreateLocationPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgent.MVVM.ViewModel.Popup"
+        xmlns:popupvm="clr-namespace:TravelAgent.MVVM.ViewModel.Popup"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="CreateLocationPopup" Height="750" Width="800">
+
+    <Window.DataContext>
+        <popupvm:CreateLocationViewModel/>
+    </Window.DataContext>
+
+    <Grid Background="Transparent">
+
+        <Border Background="#fff"
+                CornerRadius="20"
+                BorderThickness="3"
+                BorderBrush="#999"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Background="Transparent"
+                      Grid.Column="1"
+                      Margin="20">
+
+            <StackPanel HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Margin="20">
+
+                <Button Style="{StaticResource CloseButtonTheme}"
+                        Margin="0 0 20 20"
+                        x:Name="closePopupButton"
+                        Command="{Binding CloseCommand}"/>
+
+                <TextBlock Text="Create location"
+                           FontSize="40"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center"
+                           Margin="0 0 0 20"/>
+                           
+                <StackPanel Width="300"
+                            Margin="0 10">
+                    <TextBlock Text="Choose image"
+                               FontSize="24"
+                               HorizontalAlignment="Center"/>
+                    
+                    <Button BorderThickness="0"
+                            Background="Transparent">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border CornerRadius="5"
+                                                    BorderBrush="{StaticResource ImageBorderBrush}"
+                                                    BorderThickness="7">
+                                                <Image Source="../../../Image/Location/belgrade.jpg"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="Opacity" Value="0.8"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Margin="0 10">
+                    <TextBlock Text="Name"
+                               FontSize="24"/>
+                    <TextBox Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="0 10">
+                    <TextBlock Text="Latitude"
+                               FontSize="24"/>
+                    <TextBox Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="0 10">
+                    <TextBlock Text="Longitude"
+                               FontSize="24"/>
+                    <TextBox Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <Button Style="{StaticResource FancyButtonTheme}"
+                        Content="Create"
+                        HorizontalAlignment="Stretch"
+                        Margin="100 20"/>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

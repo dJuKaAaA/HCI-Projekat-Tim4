@@ -37,38 +37,11 @@
                           HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Margin="20">
 
-                        <Button Content="✖"
-                                Foreground="#bbb"
+                        <Button Style="{StaticResource CloseButtonTheme}"
                                 Margin="0 0 20 20"
                                 x:Name="closePopupButton"
-                                Click="closePopupButton_Click">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="Button">
-                                                <Grid>
-                                                    <TextBlock VerticalAlignment="Center"
-                                                               HorizontalAlignment="Right"
-                                                               Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
-                                                               FontSize="22"
-                                                               x:Name="CUSTOM_PART_CloseButtonContent"
-                                                               Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                                </Grid>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="CUSTOM_PART_CloseButtonContent" Property="Foreground" Value="#777"/>
-                                                        <Setter Property="Cursor" Value="Hand"/>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
+                                Click="closePopupButton_Click"/>
 
-                            </Button.Style>
-
-                        </Button>
                         <Border BorderThickness="10"
                                 CornerRadius="5"
                                 BorderBrush="{StaticResource ImageBorderBrush}">
