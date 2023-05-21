@@ -115,10 +115,6 @@
                     <view:MapView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:MapLocationDetailsViewModel}">
-                    <view:MapLocationDetailsView/>
-                </DataTemplate>
-
                 <DataTemplate DataType="{x:Type viewModel:UserTripsViewModel}">
                     <view:UserTripsView/>
                 </DataTemplate>

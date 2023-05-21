@@ -20,7 +20,7 @@
                                     <Border HorizontalAlignment="Stretch"
                                             CornerRadius="50"
                                             x:Name="CUSTOM_PART_Border"
-                                            Margin="20 10"
+                                            Margin="20 15"
                                             Padding="35 25"
                                             Background="Transparent"
                                             BorderThickness="2"
@@ -93,25 +93,25 @@
                                                                                  Foreground="{DynamicResource MainTextBrush}"/>
                                                 </StackPanel>
 
-
-                                                <component:ScalableImage Source="../../../Image/Icon/bus.png"
-                                                                         Width="250"
-                                                                         Grid.Column="1"
-                                                                         Visibility="{Binding DataContext.BusIconVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                                                    
                                                 <StackPanel Grid.Column="1"
                                                             HorizontalAlignment="Right"
-                                                            Margin="10 0"
-                                                            Visibility="{Binding DataContext.SeeDealVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                                            Margin="10 0">
+
                                                     <component:ScalableTextBlock Text="{Binding Price}"
                                                                                  HorizontalAlignment="Center"
                                                                                  Foreground="{DynamicResource MainTextBrush}"
                                                                                  Margin="10"
                                                                                  FontSize="36"
                                                                                  FontWeight="Bold"/>
+
+                                                    <component:ScalableImage Source="../../../Image/Icon/bus.png"
+                                                                             Width="250"
+                                                                             Grid.Column="1"
+                                                                             Visibility="{Binding DataContext.BusIconVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                                                     <Button Margin="10 5"
                                                             Command="{Binding DataContext.OpenSeeDealPopupCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                            Visibility="{Binding DataContext.SeeDealVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                             Tag="{Binding Id}">
 
                                                         <Button.Style>
@@ -268,22 +268,22 @@
                                                 </StackPanel>
 
 
-                                                <component:ScalableImage Source="../../../Image/Icon/bus.png"
-                                                                         Width="700"
-                                                                         Margin="0 30 0 0"
-                                                                         Grid.Row="1"
-                                                                         Visibility="{Binding DataContext.BusIconVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 
 
                                                 <StackPanel Grid.Row="1"
                                                             HorizontalAlignment="Center"
-                                                            Margin="0 30 0 0"
-                                                            Visibility="{Binding DataContext.SeeDealVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                                            Margin="0 30 0 0">
 
+                                                    <component:ScalableImage Source="../../../Image/Icon/bus.png"
+                                                                             Width="700"
+                                                                             Margin="0 20"
+                                                                             Grid.Row="1"
+                                                                             Visibility="{Binding DataContext.BusIconVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
 
                                                     <Button Command="{Binding DataContext.OpenSeeDealPopupCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                                                             HorizontalAlignment="Center"
+                                                            Visibility="{Binding DataContext.SeeDealVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                             Tag="{Binding Id}">
 
                                                         <Button.Style>
