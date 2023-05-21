@@ -79,10 +79,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         {
             Window currentWindow = Application.Current.Windows.OfType<SeeDealPopup>().SingleOrDefault(w => w.IsActive);
 
-            if (currentWindow != null)
-            {
-                currentWindow.Close();
-            }
+            currentWindow?.Close();
         }
     }
 }

@@ -9,121 +9,107 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Margin="20 0"
+                        MaxWidth="700">
+                <component:ScalableTextBlock Text="Create trip"
+                                             VerticalAlignment="Center"
+                                             Grid.Column="1"
+                                             FontSize="54"
+                                             ScaleRate="2"
+                                             HorizontalAlignment="Center"
+                                             FontWeight="SemiBold"/>
 
-        <Grid Grid.Column="0"
-              Margin="10">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Margin="20 0">
-                    <component:ScalableTextBlock Text="Create location"
-                                                 FontSize="30"
-                                                 HorizontalAlignment="Center"/>
-                    <StackPanel Width="300">
-                        <component:ScalableTextBlock Text="Choose image"
-                                                     FontSize="24"/>
-                        <Border CornerRadius="5"
-                                BorderBrush="{StaticResource ImageBorderBrush}"
-                                BorderThickness="7">
-                            <component:ScalableImage Source="../../../Image/Location/belgrade.jpg"/>
-                        </Border>
-                    </StackPanel>
-                    <StackPanel>
-                        <component:ScalableTextBlock Text="Name"
-                                                     FontSize="24"/>
-                        <TextBox Style="{StaticResource FormTextBoxTheme}"/>
-                    </StackPanel>
-                    <StackPanel>
-                        <component:ScalableTextBlock Text="Latitude"
-                                                     FontSize="24"/>
-                        <TextBox Style="{StaticResource FormTextBoxTheme}"/>
-                    </StackPanel>
-                    <StackPanel>
-                        <component:ScalableTextBlock Text="Longitude"
-                                                     FontSize="24"/>
-                        <TextBox Style="{StaticResource FormTextBoxTheme}"/>
-                    </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
-            
-        </Grid>
-
-        <Grid Grid.Column="1"
-              Margin="10">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Margin="20 0">
-                    <component:ScalableTextBlock Text="Create trip"
-                                                 FontSize="34"
-                                                 HorizontalAlignment="Center"/>
-
-                    <StackPanel>
-                        <component:ScalableTextBlock Text="Departure"
-                                                     FontSize="24"/>
-                        <ComboBox Style="{StaticResource LocationComboBoxTheme}">
-                            <ComboBox.Items>
-                                <ComboBoxItem Content="Nesto1"/>
-                                <ComboBoxItem Content="Nesto2"/>
-                                <ComboBoxItem Content="Nesto3"/>
-                            </ComboBox.Items>
-                        </ComboBox>
-                    </StackPanel>
-                    <StackPanel>
-                        <component:ScalableTextBlock Text="Destination"
-                                                     FontSize="24"/>
-                        <ComboBox Style="{StaticResource LocationComboBoxTheme}"/>
-                    </StackPanel>
-
-                    <StackPanel>
-                        <component:ScalableTextBlock Text="Departure date and time"
-                                                     FontSize="24"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-
-                            <DatePicker Grid.Column="0"/>
-                            <ComboBox Grid.Column="1"/>
-                            <ComboBox Grid.Column="2"/>
-                            <ComboBox Grid.Column="3"/>
-                        </Grid>
-                    </StackPanel>
-
-                    <StackPanel>
-                        <component:ScalableTextBlock Text="Destination date and time"
-                                                     FontSize="24"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-
-                            <DatePicker Grid.Column="0"/>
-                            <ComboBox Grid.Column="1"/>
-                            <ComboBox Grid.Column="2"/>
-                            <ComboBox Grid.Column="3"/>
-                        </Grid>
-                    </StackPanel>
-                    <StackPanel>
-                        <component:ScalableTextBlock Text="Price"
-                                                     FontSize="24"/>
-                        <TextBox Style="{StaticResource FormTextBoxTheme}"/>
-                    </StackPanel>
+                <StackPanel Margin="0 10">
+                    <component:ScalableTextBlock Text="Departure"
+                                                 FontSize="32"
+                                                 ScaleRate="2"/>
+                    <ComboBox Style="{StaticResource LocationComboBoxTheme}"/>
 
                 </StackPanel>
-            </ScrollViewer>
+                <StackPanel Margin="0 10">
+                    <component:ScalableTextBlock Text="Destination"
+                                                 FontSize="32"
+                                                 ScaleRate="2"/>
+                    <ComboBox Style="{StaticResource LocationComboBoxTheme}"/>
+                </StackPanel>
 
-        </Grid>
+                <StackPanel Margin="0 10">
+                    <component:ScalableTextBlock Text="Departure date and time"
+                                                 FontSize="32"
+                                                 ScaleRate="2"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <DatePicker Grid.Column="0"
+                                    Style="{StaticResource CustomDatePickerTheme}"
+                                    Margin="5 0"/>
+                        <ComboBox Grid.Column="1"
+                                  Margin="5 0"/>
+                        <ComboBox Grid.Column="2"
+                                  Margin="5 0"/>
+                        <ComboBox Grid.Column="3"
+                                  Margin="5 0"/>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Margin="0 10">
+                    <component:ScalableTextBlock Text="Destination date and time"
+                                                 FontSize="32"
+                                                 ScaleRate="2"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <DatePicker Grid.Column="0"
+                                    Style="{StaticResource CustomDatePickerTheme}"
+                                    Margin="5 0"/>
+                        <ComboBox Grid.Column="1"
+                                  Margin="5 0"/>
+                        <ComboBox Grid.Column="2"
+                                  Margin="5 0"/>
+                        <ComboBox Grid.Column="3"
+                                  Margin="5 0"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0 10">
+                    <component:ScalableTextBlock Text="Price"
+                                                 FontSize="32"
+                                                 ScaleRate="2"/>
+                    <TextBox Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="0 20">
+                    <Button Content="Create"
+                            Style="{StaticResource FormButtonTheme}"
+                            Margin="10 0"/>
+                    <Button Content="Back"
+                            Command="{Binding OpenCreateLocationPopupCommand}"
+                            Margin="10 0"
+                            Style="{StaticResource FormButtonTheme}"/>
+                </StackPanel>
+                    <Button Content="Add location"
+                            Command="{Binding OpenCreateLocationPopupCommand}"
+                            HorizontalAlignment="Center"
+                            Margin="10 0"
+                            Style="{StaticResource FormButtonTheme}"/>
+                
+            </StackPanel>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>
