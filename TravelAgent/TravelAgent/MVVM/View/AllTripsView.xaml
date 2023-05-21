@@ -20,7 +20,8 @@
                     Padding="20 5"
                     Foreground="CadetBlue"
                     FontWeight="Bold"
-                    Margin="10 5"/>
+                    Margin="10 5"
+                    Command="{Binding OpenCreateTripViewCommand}"/>
             <Button Content="✏️"
                     Foreground="DarkGoldenrod"
                     Padding="20 5"
@@ -31,10 +32,44 @@
                     Margin="10 5"/>
         </ToolBar>
 
-        <ListView Style="{StaticResource TripsListViewTheme}"
+        <!--<ListView Style="{StaticResource WideTripsListViewTheme}"
                   ItemsSource="{Binding AllTrips}"
                   SelectedItem="{Binding SelectedTrip}"
-                  Grid.Row="1"/>
+                  Grid.Row="1"/>-->
+
+        <ContentControl Grid.Row="1">
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                    <Setter Property="Content">
+                        <Setter.Value>
+                            <ListView Style="{StaticResource WideTripsListViewTheme}"
+                                      ItemsSource="{Binding AllTrips}"
+                                      SelectedItem="{Binding SelectedTrip}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=950}" Value="False">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <ListView Style="{StaticResource NarrowTripsListViewTheme}"
+                                              ItemsSource="{Binding AllTrips}"
+                                              SelectedItem="{Binding SelectedTrip}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="Maximized">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <ListView Style="{StaticResource WideTripsListViewTheme}"
+                                              ItemsSource="{Binding AllTrips}"
+                                              SelectedItem="{Binding SelectedTrip}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
 
     </Grid>
 </UserControl>

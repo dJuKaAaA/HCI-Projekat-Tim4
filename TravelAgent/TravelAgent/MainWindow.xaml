@@ -123,6 +123,10 @@
                     <view:UserTripsView/>
                 </DataTemplate>
 
+                <DataTemplate DataType="{x:Type viewModel:CreateTripViewModel}">
+                    <view:CreateTripView/>
+                </DataTemplate>
+
             </ContentControl.Resources>
 
         </ContentControl>

@@ -56,6 +56,7 @@ namespace TravelAgent.MVVM.ViewModel
 
         public ICommand OpenMapLocationDetailsViewCommand { get; }
         public ICommand OpenSeeDealPopupCommand { get; }
+        public ICommand OpenCreateTripViewCommand { get; }
 
         public AllTripsViewModel(
             Service.NavigationService navigationService, 
@@ -77,6 +78,7 @@ namespace TravelAgent.MVVM.ViewModel
 
             OpenMapLocationDetailsViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<MapLocationDetailsViewModel>(), o => true);
             OpenSeeDealPopupCommand = new Core.RelayCommand(OnOpenSeeDealPopup , o => true);
+            OpenCreateTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(), o => true);
 
             LoadAll();
         }

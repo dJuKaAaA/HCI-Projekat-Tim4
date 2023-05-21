@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="TravelAgent.MVVM.View.CreateTripView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TravelAgent.MVVM.View"
+             xmlns:component="clr-namespace:TravelAgent.CustomComponent"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0"
+              Margin="10">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="20 0">
+                    <component:ScalableTextBlock Text="Create location"
+                                                 FontSize="30"
+                                                 HorizontalAlignment="Center"/>
+                    <StackPanel Width="300">
+                        <component:ScalableTextBlock Text="Choose image"
+                                                     FontSize="24"/>
+                        <Border CornerRadius="5"
+                                BorderBrush="{StaticResource ImageBorderBrush}"
+                                BorderThickness="7">
+                            <component:ScalableImage Source="../../../Image/Location/belgrade.jpg"/>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel>
+                        <component:ScalableTextBlock Text="Name"
+                                                     FontSize="24"/>
+                        <TextBox Style="{StaticResource FormTextBoxTheme}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <component:ScalableTextBlock Text="Latitude"
+                                                     FontSize="24"/>
+                        <TextBox Style="{StaticResource FormTextBoxTheme}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <component:ScalableTextBlock Text="Longitude"
+                                                     FontSize="24"/>
+                        <TextBox Style="{StaticResource FormTextBoxTheme}"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+            
+        </Grid>
+
+        <Grid Grid.Column="1"
+              Margin="10">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="20 0">
+                    <component:ScalableTextBlock Text="Create trip"
+                                                 FontSize="34"
+                                                 HorizontalAlignment="Center"/>
+
+                    <StackPanel>
+                        <component:ScalableTextBlock Text="Departure"
+                                                     FontSize="24"/>
+                        <ComboBox Style="{StaticResource LocationComboBoxTheme}">
+                            <ComboBox.Items>
+                                <ComboBoxItem Content="Nesto1"/>
+                                <ComboBoxItem Content="Nesto2"/>
+                                <ComboBoxItem Content="Nesto3"/>
+                            </ComboBox.Items>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <component:ScalableTextBlock Text="Destination"
+                                                     FontSize="24"/>
+                        <ComboBox Style="{StaticResource LocationComboBoxTheme}"/>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <component:ScalableTextBlock Text="Departure date and time"
+                                                     FontSize="24"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <DatePicker Grid.Column="0"/>
+                            <ComboBox Grid.Column="1"/>
+                            <ComboBox Grid.Column="2"/>
+                            <ComboBox Grid.Column="3"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <component:ScalableTextBlock Text="Destination date and time"
+                                                     FontSize="24"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <DatePicker Grid.Column="0"/>
+                            <ComboBox Grid.Column="1"/>
+                            <ComboBox Grid.Column="2"/>
+                            <ComboBox Grid.Column="3"/>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel>
+                        <component:ScalableTextBlock Text="Price"
+                                                     FontSize="24"/>
+                        <TextBox Style="{StaticResource FormTextBoxTheme}"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+
+    </Grid>
+</UserControl>
