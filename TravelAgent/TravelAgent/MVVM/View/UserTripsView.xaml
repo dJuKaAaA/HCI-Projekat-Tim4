@@ -8,8 +8,37 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
-        <ListView Style="{StaticResource UserTripsTheme}"
-                  ItemsSource="{Binding UserTrips}"/>
+        <ContentControl>
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                    <Setter Property="Content">
+                        <Setter.Value>
+                            <ListView Style="{StaticResource WideUserTripsTheme}"
+                                      ItemsSource="{Binding UserTrips}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=950}" Value="False">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <ListView Style="{StaticResource NarrowUserTripsTheme}"
+                                              ItemsSource="{Binding UserTrips}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="Maximized">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <ListView Style="{StaticResource WideUserTripsTheme}"
+                                              ItemsSource="{Binding UserTrips}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
 
     </Grid>
 </UserControl>

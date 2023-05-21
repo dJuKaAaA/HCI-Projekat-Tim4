@@ -8,6 +8,7 @@
 
         <Style.Setters>
 
+            <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
             <Setter Property="Background" Value="Transparent"/>
 
             <Setter Property="ItemContainerStyle">
@@ -174,6 +175,7 @@
 
         <Style.Setters>
 
+            <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
             <Setter Property="Background" Value="Transparent"/>
 
             <Setter Property="ItemContainerStyle">
