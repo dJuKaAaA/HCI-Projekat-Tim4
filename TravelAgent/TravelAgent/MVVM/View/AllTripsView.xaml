@@ -24,18 +24,15 @@
                     Command="{Binding OpenCreateTripViewCommand}"/>
             <Button Content="✏️"
                     Foreground="DarkGoldenrod"
+                    Command="{Binding OpenModifyTripViewCommand}"
                     Padding="20 5"
                     Margin="10 5"/>
             <Button Content="❌"
                     Foreground="DarkRed"
+                    Command="{Binding DeleteTripCommand}"
                     Padding="20 5"
                     Margin="10 5"/>
         </ToolBar>
-
-        <!--<ListView Style="{StaticResource WideTripsListViewTheme}"
-                  ItemsSource="{Binding AllTrips}"
-                  SelectedItem="{Binding SelectedTrip}"
-                  Grid.Row="1"/>-->
 
         <ContentControl Grid.Row="1">
             <ContentControl.Style>

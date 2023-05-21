@@ -68,9 +68,9 @@ namespace TravelAgent.MVVM.ViewModel
             OpenLoginViewCommand = new RelayCommand(o => NavigationService.NavigateTo<LoginViewModel>(), o => true);
             LogoutCommand = new RelayCommand(OnLogout, o => true);
 
-            NavigationService.NavigationCompleted += (object? sender, Type viewModelType) =>
+            NavigationService.NavigationCompleted += (object? sender, NavigationEventArgs e) =>
             {
-                if (viewModelType == typeof(LoginViewModel) || viewModelType == typeof(RegisterViewModel))
+                if (e.ViewModelType == typeof(LoginViewModel) || e.ViewModelType == typeof(RegisterViewModel))
                 {
                     TravelerMenuVisibility = Visibility.Collapsed;
                     AgentMenuVisibility = Visibility.Collapsed;

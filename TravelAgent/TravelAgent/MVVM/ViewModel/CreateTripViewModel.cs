@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,16 @@ namespace TravelAgent.MVVM.ViewModel
 {
     public class CreateTripViewModel : Core.ViewModel
     {
+        private TripModel? _tripForModification;
+
+        private bool _modifying;
+
+        public bool Modifying
+        {
+            get { return _modifying; }
+            set { _modifying = value; OnPropertyChanged(); }
+        }
+
         private CreateLocationPopup? _createLocationPopup;
 
         public ObservableCollection<LocationModel> Locations { get; set; }
@@ -147,7 +158,7 @@ namespace TravelAgent.MVVM.ViewModel
             BackToAllTripsViewCommand = new RelayCommand(o => _navigationService.NavigateTo<AllTripsViewModel>(), o => true);
             OpenCreateLocationPopupCommand = new Core.RelayCommand(OnOpenCreateLocationPopup, o => true);
 
-            SetUp();
+            SetUpForCreation();
         }
 
         private async void OnCreateTrip(object o)
@@ -184,9 +195,24 @@ namespace TravelAgent.MVVM.ViewModel
                 Price = double.Parse(Price),
             };
 
-            await _tripService.Create(trip);
-            MessageBox.Show("Trip created successfully!");
-            SetValuesToDefault();
+            if (_tripForModification == null)
+            {
+                await _tripService.Create(trip);
+                MessageBox.Show("Trip created successfully!");
+                SetValuesToDefault();
+            }
+            else
+            {
+                await _tripService.Modify(_tripForModification.Id, trip);
+                MessageBox.Show("Trip modified successfully!");
+                _navigationService.NavigateTo<AllTripsViewModel>();
+            }
+
+        }
+
+        private bool CanCreateTrip(object o)
+        {
+            return DepartureDate != null && ArrivalDate != null;
         }
 
         private void SetValuesToDefault()
@@ -200,22 +226,44 @@ namespace TravelAgent.MVVM.ViewModel
             ArrivalTimeMinutes = Minutes[0];
             Price = "0";
         }
-
-        private bool CanCreateTrip(object o)
+        
+        private void SetValuesFromTrip()
         {
-            return DepartureDate != null && ArrivalDate != null;
+            SelectedDepartureLocation = Locations.FirstOrDefault(l => l.Id == _tripForModification.Departure.Id);
+            SelectedDestinationLocation = Locations.FirstOrDefault(l => l.Id == _tripForModification.Destination.Id);
+            DepartureDate = _tripForModification.DepartureDateTime;
+            ArrivalDate = _tripForModification.ArrivalDateTime;
+            DepartureTimeHours = Hours.FirstOrDefault(h => int.Parse(h) == _tripForModification.DepartureDateTime.Hour);
+            DepartureTimeMinutes = Minutes.FirstOrDefault(m => int.Parse(m) == _tripForModification.DepartureDateTime.Minute);
+            ArrivalTimeHours = Hours.FirstOrDefault(h => int.Parse(h) == _tripForModification.ArrivalDateTime.Hour);
+            ArrivalTimeMinutes = Minutes.FirstOrDefault(m => int.Parse(m) == _tripForModification.ArrivalDateTime.Minute);
+            Price = _tripForModification.Price.ToString();
         }
 
-        private void OnNavigationCompleted(object? sender, Type type)
+        private void OnNavigationCompleted(object? sender, Core.NavigationEventArgs e)
         {
+            if (e.Extra is TripModel trip)
+            {
+                _tripForModification = trip;
+                Modifying = true;
+                SetUpForModification();
+            }
+
             _createLocationPopup?.Close();
         }
 
-        private async void SetUp()
+        private async void SetUpForCreation()
         {
             SetUpTimeComboBoxes();
             await LoadLocations();
             SetValuesToDefault();
+        }
+
+        private async void SetUpForModification()
+        {
+            SetUpTimeComboBoxes();
+            await LoadLocations();
+            SetValuesFromTrip();
         }
 
         private async Task LoadLocations()

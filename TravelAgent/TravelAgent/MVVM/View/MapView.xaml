@@ -55,6 +55,13 @@
                                                      ScaleRate="2"
                                                      TextWrapping="Wrap"
                                                      FontSize="34"/>
+                        <component:ScalableTextBlock x:Name="locationPlace"
+                                                     VerticalAlignment="Center"
+                                                     HorizontalAlignment="Center"
+                                                     ScaleRate="2"
+                                                     TextWrapping="Wrap"
+                                                     Foreground="#999"
+                                                     FontSize="28"/>
                     </StackPanel>
                 </ScrollViewer>
             </Border>

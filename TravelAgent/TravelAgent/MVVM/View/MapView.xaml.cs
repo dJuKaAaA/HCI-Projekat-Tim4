@@ -45,8 +45,8 @@ namespace TravelAgent.MVVM.View
             //}
             foreach (TripModel trip in MapDataContext.AllTrips)
             {
-                Pushpin startPushpin = CreatePushpin(trip.Departure.Latitude, trip.Departure.Longitude, trip.Departure.Name, trip.Departure.Id);
-                Pushpin endPushpin = CreatePushpin(trip.Destination.Latitude, trip.Destination.Longitude, trip.Destination.Name, trip.Destination.Id);
+                Pushpin startPushpin = CreatePushpin(trip.Departure.Latitude, trip.Departure.Longitude, trip.Departure.Name, $"Departure_{trip.Departure.Id}");
+                Pushpin endPushpin = CreatePushpin(trip.Destination.Latitude, trip.Destination.Longitude, trip.Destination.Name, $"Destination_{trip.Destination.Id}");
 
                 mapControl.Children.Add(startPushpin);
                 mapControl.Children.Add(endPushpin);
@@ -54,7 +54,7 @@ namespace TravelAgent.MVVM.View
             }
         }
 
-        private Pushpin CreatePushpin(double latitude, double longitude, string label, int tag)
+        private Pushpin CreatePushpin(double latitude, double longitude, string label, string tag)
         {
             // Create a new Pushpin
             Pushpin pushpin = new Pushpin();
@@ -120,7 +120,9 @@ namespace TravelAgent.MVVM.View
         {
             Pushpin clickedPushpin = (Pushpin)sender;
 
-            LocationModel? location = MapDataContext.AllLocations.FirstOrDefault(l => l.Id == int.Parse(clickedPushpin.Tag.ToString()));
+            int locationId = int.Parse(clickedPushpin.Tag.ToString().Split("_")[1]);
+            string locationPlaceValue = clickedPushpin.Tag.ToString().Split("_")[0];  // indicates whether the location is the departure or destination
+            LocationModel? location = MapDataContext.AllLocations.FirstOrDefault(l => l.Id == locationId);
 
             if (location == null)
             {
@@ -130,6 +132,7 @@ namespace TravelAgent.MVVM.View
             // Set the image and text in the popup
             locationImage.Source = new BitmapImage(new Uri($"{MapDataContext.Consts.PathToLocationImages}/{location.Image}", UriKind.RelativeOrAbsolute));
             locationName.Text = location.Name;
+            locationPlace.Text = locationPlaceValue;
             locationContainer.Visibility = Visibility.Visible;
         }
 

@@ -23,6 +23,27 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
+        public async Task Delete(int id)
+        {
+            string command = $"DELETE FROM {_consts.UsersTripsTableName} " +
+                $"WHERE trip_id = {id}";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+            command = $"DELETE FROM {_consts.TripsTableName} " +
+                $"WHERE id = {id}";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+        }
+
+        public async Task Modify(int id, TripModel trip)
+        {
+            string departureDateFormat = trip.DepartureDateTime.ToString($"{_consts.DateTimeFormatString}");
+            string arrivalDateFormat = trip.ArrivalDateTime.ToString($"{_consts.DateTimeFormatString}");
+            string command = $"UPDATE {_consts.TripsTableName} " +
+                $"SET departure_id = {trip.Departure.Id}, destination_id = {trip.Destination.Id}, departure_date_time = '{departureDateFormat}', " +
+                $"arrival_date_time = '{arrivalDateFormat}', price = {trip.Price} " +
+                $"WHERE id = {id}";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+        }
+
         public async Task Create(TripModel trip)
         {
             string departureDateFormat = trip.DepartureDateTime.ToString($"{_consts.DateTimeFormatString}");
