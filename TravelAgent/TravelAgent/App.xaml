@@ -89,9 +89,10 @@
                 <ResourceDictionary Source="./Theme/TripsListViewTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/CustomScrollbarTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/FancyButtonTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/UserTripsTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/WideUserTripsTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/UserFormButton.xaml"/>
                 <ResourceDictionary Source="./Theme/LocationComboBoxTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/NarrowUserTripsTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
