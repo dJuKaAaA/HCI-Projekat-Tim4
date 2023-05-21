@@ -23,6 +23,15 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
+        public async Task Create(TripModel trip)
+        {
+            string departureDateFormat = trip.DepartureDateTime.ToString($"{_consts.DateTimeFormatString}");
+            string arrivalDateFormat = trip.ArrivalDateTime.ToString($"{_consts.DateTimeFormatString}");
+            string command = $"INSERT INTO {_consts.TripsTableName} (departure_id, destination_id, departure_date_time, arrival_date_time, price)" +
+                $"VALUES ({trip.Departure.Id}, {trip.Destination.Id}, '{departureDateFormat}', '{arrivalDateFormat}', {trip.Price})";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+        }
+
         public async Task<IEnumerable<TripModel>> GetAll()
         {
             string command = $"SELECT tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +
