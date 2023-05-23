@@ -98,6 +98,7 @@
                 <ResourceDictionary Source="./Theme/BackButtonTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/WideSoldTripsTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/NarrowSoldTripsTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/LocationSearchTextBoxTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

@@ -25,8 +25,24 @@ namespace TravelAgent.MVVM.ViewModel
             set { _modifying = value; OnPropertyChanged(); }
         }
 
-        private CreateLocationPopup? _createLocationPopup;
+        private string _departureAddress;
 
+        public string DepartureAddress
+        {
+            get { return _departureAddress; }
+            set { _departureAddress = value; OnPropertyChanged(); }
+        }
+
+        private string _destinationAddress;
+
+        public string DestinationAddress
+        {
+            get { return _destinationAddress; }
+            set { _destinationAddress = value; OnPropertyChanged(); }
+        }
+
+        // TODO: Delete these location properties
+        //------------------------------------------------------------
         public ObservableCollection<LocationModel> Locations { get; set; }
 
         private LocationModel? _selectedDepartureLocation;
@@ -44,6 +60,7 @@ namespace TravelAgent.MVVM.ViewModel
             get { return _selectedDestinationLocation; }
             set { _selectedDestinationLocation = value; OnPropertyChanged(); }
         }
+        //------------------------------------------------------------
 
         public ObservableCollection<string> Hours { get; set; }
 
@@ -134,15 +151,18 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.TripService _tripService;
         private readonly Service.LocationService _locationService;
         private readonly Service.NavigationService _navigationService;
+        private readonly Service.MapService _mapService;
 
         public ICommand CreateTripCommand { get; }
+        public ICommand SearchDepartureFromAddressCommand { get; }
+        public ICommand SearchDestinationFromAddressCommand { get; }
         public ICommand BackToAllTripsViewCommand { get; }
-        public ICommand OpenCreateLocationPopupCommand { get; }
 
         public CreateTripViewModel(
             Service.TripService tripService,
             Service.LocationService locationService,
-            Service.NavigationService navigationService)
+            Service.NavigationService navigationService,
+            Service.MapService mapService)
         {
             Hours = new ObservableCollection<string>();
             Minutes = new ObservableCollection<string>();
@@ -151,14 +171,28 @@ namespace TravelAgent.MVVM.ViewModel
             _tripService = tripService;
             _locationService = locationService;
             _navigationService = navigationService;
+            _mapService = mapService;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
             CreateTripCommand = new RelayCommand(OnCreateTrip, CanCreateTrip);
+            SearchDepartureFromAddressCommand = new RelayCommand(OnSearchDepartureFromAddress, o => !string.IsNullOrWhiteSpace(DepartureAddress));
+            SearchDestinationFromAddressCommand = new RelayCommand(OnSearchDestinationFromAddress, o => !string.IsNullOrWhiteSpace(DestinationAddress));
             BackToAllTripsViewCommand = new RelayCommand(o => _navigationService.NavigateTo<AllTripsViewModel>(), o => true);
-            OpenCreateLocationPopupCommand = new Core.RelayCommand(OnOpenCreateLocationPopup, o => true);
 
             SetUpForCreation();
+        }
+
+        private async void OnSearchDepartureFromAddress(object o)
+        {
+            double[] coords = await _mapService.Geocode(DepartureAddress);
+            MessageBox.Show($"latitude: {coords[0]}, longitude: {coords[1]}");
+        }
+
+        private async void OnSearchDestinationFromAddress(object o)
+        {
+            double[] coords = await _mapService.Geocode(DestinationAddress);
+            MessageBox.Show($"latitude: {coords[0]}, longitude: {coords[1]}");
         }
 
         private async void OnCreateTrip(object o)
@@ -248,8 +282,6 @@ namespace TravelAgent.MVVM.ViewModel
                 Modifying = true;
                 SetUpForModification();
             }
-
-            _createLocationPopup?.Close();
         }
 
         private async void SetUpForCreation()
@@ -300,13 +332,6 @@ namespace TravelAgent.MVVM.ViewModel
                 }
                 Minutes.Add(i < 10 ? $"0{i}" : $"{i}");
             }
-        }
-
-        private void OnOpenCreateLocationPopup(object o)
-        {
-            _createLocationPopup?.Close();
-            _createLocationPopup = new CreateLocationPopup();
-            _createLocationPopup.Show();
         }
 
     }

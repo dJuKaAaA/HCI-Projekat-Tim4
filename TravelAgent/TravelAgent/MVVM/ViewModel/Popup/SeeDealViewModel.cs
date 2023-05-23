@@ -36,6 +36,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 
         public Service.UserTripService UserTripService { get; set; }
         public Service.TouristAttractionService TouristAttractionService { get; set; }
+        public Service.MapService MapService { get; set; }
 
         public ICommand PurchaseTripCommand { get; }
         public ICommand ReserveTripCommand { get; }
