@@ -18,14 +18,17 @@
                  Visibility="{Binding ToolbarVisibility}">
             <Button Content="+"
                     Padding="20 5"
+                    ToolTip="Add restoraunt"
                     Foreground="CadetBlue"
                     FontWeight="Bold"
                     Margin="10 5"/>
             <Button Content="✏️"
+                    ToolTip="Modify restoraunt"
                     Foreground="DarkGoldenrod"
                     Padding="20 5"
                     Margin="10 5"/>
             <Button Content="❌"
+                    ToolTip="Delete restoraunt"
                     Foreground="DarkRed"
                     Padding="20 5"
                     Margin="10 5"/>

@@ -8,7 +8,7 @@ namespace TravelAgent.Core
 {
     public class Consts
     {
-        public string RelativePathRoot { get; }
+        public string ProjectRootRelativePath { get; }
         public string PathToDatabase { get; }
 
         // path to images
@@ -31,11 +31,11 @@ namespace TravelAgent.Core
 
         public Consts()
         {
-            RelativePathRoot = "../../..";
-            PathToDatabase = $"{RelativePathRoot}/Database/database.db";
-            PathToLocationImages = $"{RelativePathRoot}/Image/Location";
-            PathToRestorauntImages = $"{RelativePathRoot}/Image/Restoraunt";
-            PathToIcons = $"{RelativePathRoot}/Image/Icon";
+            ProjectRootRelativePath = "../../..";
+            PathToDatabase = $"{ProjectRootRelativePath}/Database/database.db";
+            PathToLocationImages = $"{ProjectRootRelativePath}/Image/Location";
+            PathToRestorauntImages = $"{ProjectRootRelativePath}/Image/Restoraunt";
+            PathToIcons = $"{ProjectRootRelativePath}/Image/Icon";
             SqliteConnectionString = $"Data Source={PathToDatabase}";
             DateTimeFormatString  = "d.M.yyyy. H:m:s";
             BingMapsApiKey  = "AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr";

@@ -21,16 +21,19 @@
                     Foreground="CadetBlue"
                     FontWeight="Bold"
                     Margin="10 5"
+                    ToolTip="Add trip"
                     Command="{Binding OpenCreateTripViewCommand}"/>
             <Button Content="✏️"
                     Foreground="DarkGoldenrod"
                     Command="{Binding OpenModifyTripViewCommand}"
                     Padding="20 5"
+                    ToolTip="Modify trip"
                     Margin="10 5"/>
             <Button Content="❌"
                     Foreground="DarkRed"
                     Command="{Binding DeleteTripCommand}"
                     Padding="20 5"
+                    ToolTip="Delete trip"
                     Margin="10 5"/>
         </ToolBar>
 

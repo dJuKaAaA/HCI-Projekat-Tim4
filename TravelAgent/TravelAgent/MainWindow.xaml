@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TravelAgent"
         mc:Ignorable="d"
         xmlns:view="clr-namespace:TravelAgent.MVVM.View"
-        xmlns:viewModel="clr-namespace:TravelAgent.MVVM.ViewModel"
+        xmlns:vm="clr-namespace:TravelAgent.MVVM.ViewModel"
         Title="Travel Agent" Height="720" Width="1280"
         Background="#fff"
         WindowStartupLocation="CenterScreen"
@@ -22,64 +22,124 @@
         <!-- Menu for traveler -->
         <Menu Grid.Row="0"
               Visibility="{Binding TravelerMenuVisibility}">
-            <MenuItem Header="View">
+              
+            <Menu.InputBindings>
+                <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding OpenAllTripsViewCommand}" />
+                <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding OpenAllTouristAttractionsViewCommand}" />
+                <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestorauntsViewCommand}" />
+                <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding OpenAllAccomodationsViewCommand}" />
+                <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding OpenUserTripsViewCommand}" />
+                <KeyBinding Key="M" Modifiers="Ctrl" Command="{Binding OpenMapsCommand}" />
+                <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding OpenHelpCommand}" />
+                <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding LogoutCommand}" />
+            </Menu.InputBindings>
+
+            <MenuItem Header="View"
+                      IsTabStop="False">
                 <MenuItem Header="Trips"
+                          InputGestureText="Ctrl+T"
                           Command="{Binding OpenAllTripsViewCommand}"/>
                 <MenuItem Header="Tourist attractions"
+                          InputGestureText="Ctrl+X"
                           Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
                 <MenuItem Header="Restoraunts"
+                          InputGestureText="Ctrl+R"
                           Command="{Binding OpenAllRestorauntsViewCommand}"/>
                 <MenuItem Header="Accomodations"
+                          InputGestureText="Ctrl+A"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
                 <MenuItem Header="Acquired trips"
+                          InputGestureText="Ctrl+U"
                           Command="{Binding OpenUserTripsViewCommand}"/>
             </MenuItem>
             <MenuItem Header="Map"
+                      IsTabStop="False"
+                      InputGestureText="Ctrl+M"
                       Command="{Binding OpenMapsCommand}"/>
             <MenuItem Header="Help"
+                      IsTabStop="False"
+                      InputGestureText="Ctrl+H"
                       Command="{Binding OpenHelpCommand}"/>
             <MenuItem Header="Logout"
+                      IsTabStop="False"
+                      InputGestureText="Ctrl+L"
                       Command="{Binding LogoutCommand}"/>
         </Menu>
 
         <!-- Menu for agent -->
         <Menu Grid.Row="0"
               Visibility="{Binding AgentMenuVisibility}">
-            <MenuItem Header="View">
+
+            <Menu.InputBindings>
+                <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding OpenAllTripsViewCommand}" />
+                <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding OpenAllTouristAttractionsViewCommand}" />
+                <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestorauntsViewCommand}" />
+                <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding OpenAllAccomodationsViewCommand}" />
+                <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding OpenHelpCommand}" />
+                <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding LogoutCommand}" />
+            </Menu.InputBindings>
+
+            <MenuItem Header="View"
+                      IsTabStop="False">
                 <MenuItem Header="Trips"
+                          InputGestureText="Ctrl+T"
                           Command="{Binding OpenAllTripsViewCommand}"/>
                 <MenuItem Header="Tourist attractions"
+                          InputGestureText="Ctrl+X"
                           Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
                 <MenuItem Header="Restoraunts"
+                          InputGestureText="Ctrl+R"
                           Command="{Binding OpenAllRestorauntsViewCommand}"/>
                 <MenuItem Header="Accomodations"
+                          InputGestureText="Ctrl+A"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
                 <MenuItem Header="Sold trips"/>
             </MenuItem>
             <MenuItem Header="Help"
+                      IsTabStop="False"
+                      InputGestureText="Ctrl+H"
                       Command="{Binding OpenHelpCommand}"/>
             <MenuItem Header="Logout"
+                      IsTabStop="False"
+                      InputGestureText="Ctrl+L"
                       Command="{Binding LogoutCommand}"/>
         </Menu>
         
         <!-- Menu for unregistered user -->
         <Menu Grid.Row="0"
               Visibility="{Binding UnregisteredUserMenuVisibility}">
+            <Menu.InputBindings>
+                <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding OpenLoginViewCommand}" />
+                <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding OpenAllTripsViewCommand}" />
+                <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding OpenAllTouristAttractionsViewCommand}" />
+                <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestorauntsViewCommand}" />
+                <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding OpenAllAccomodationsViewCommand}" />
+                <KeyBinding Key="M" Modifiers="Ctrl" Command="{Binding OpenMapsCommand}" />
+            </Menu.InputBindings>
+
             <MenuItem Header="Login"
+                      IsTabStop="False"
+                      InputGestureText="Ctrl+L"
                       Command="{Binding OpenLoginViewCommand}"/>
-            <MenuItem Header="View">
+            <MenuItem Header="View"
+                      IsTabStop="False">
                 <MenuItem Header="Trips"
+                          InputGestureText="Ctrl+T"
                           Command="{Binding OpenAllTripsViewCommand}"/>
                 <MenuItem Header="Tourist attractions"
+                          InputGestureText="Ctrl+X"
                           Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
                 <MenuItem Header="Restoraunts"
+                          InputGestureText="Ctrl+R"
                           Command="{Binding OpenAllRestorauntsViewCommand}"/>
                 <MenuItem Header="Accomodations"
+                          InputGestureText="Ctrl+A"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
             </MenuItem>
-            <MenuItem Header="Map"
+            <MenuItem Header="Map" 
+                      InputGestureText="Ctrl+M"
+                      IsTabStop="False"
                       Command="{Binding OpenMapsCommand}"/>
-            <MenuItem Header="Help"/>
         </Menu>
         
         <ContentControl Grid.Row="1"
@@ -87,39 +147,39 @@
                         Content="{Binding NavigationService.CurrentViewModel}">
             <ContentControl.Resources>
 
-                <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
+                <DataTemplate DataType="{x:Type vm:LoginViewModel}">
                     <view:LoginView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:RegisterViewModel}">
+                <DataTemplate DataType="{x:Type vm:RegisterViewModel}">
                     <view:RegisterView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:AllTripsViewModel}">
+                <DataTemplate DataType="{x:Type vm:AllTripsViewModel}">
                     <view:AllTripsView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:AllTouristAttractionsViewModel}">
+                <DataTemplate DataType="{x:Type vm:AllTouristAttractionsViewModel}">
                     <view:AllTouristAttractionsView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:AllRestorauntsViewModel}">
+                <DataTemplate DataType="{x:Type vm:AllRestorauntsViewModel}">
                     <view:AllRestorauntsView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:AllAccommodationsViewModel}">
+                <DataTemplate DataType="{x:Type vm:AllAccommodationsViewModel}">
                     <view:AllAccommodationsView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:MapViewModel}">
+                <DataTemplate DataType="{x:Type vm:MapViewModel}">
                     <view:MapView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:UserTripsViewModel}">
+                <DataTemplate DataType="{x:Type vm:UserTripsViewModel}">
                     <view:UserTripsView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type viewModel:CreateTripViewModel}">
+                <DataTemplate DataType="{x:Type vm:CreateTripViewModel}">
                     <view:CreateTripView/>
                 </DataTemplate>
 

@@ -38,7 +38,7 @@
                                                  ScaleRate="2"
                                                  Foreground="{StaticResource MainTextBrush}"/>
                     <component:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                         PasswordBoxStyle="{StaticResource FormPasswordBoxTheme}"/>
+                                                   PasswordBoxStyle="{StaticResource FormPasswordBoxTheme}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal"

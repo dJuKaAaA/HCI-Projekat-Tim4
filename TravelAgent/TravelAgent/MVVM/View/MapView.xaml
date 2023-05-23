@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TravelAgent.MVVM.View"
+             xmlns:core="clr-namespace:TravelAgent.Core"
              xmlns:component="clr-namespace:TravelAgent.CustomComponent"
              xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
              mc:Ignorable="d" 
@@ -19,7 +20,7 @@
 
         <component:ScalableContentControl Visibility="Collapsed"
                                           x:Name="locationContainer"
-                                           HorizontalAlignment="Left"
+                                          HorizontalAlignment="Left"
                                           ScaleRate="2"
                                           MouseLeftButtonDown="ContentControl_MouseDown"
                                           MouseMove="ContentControl_MouseMove"

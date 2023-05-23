@@ -18,15 +18,18 @@
                  Visibility="{Binding ToolbarVisibility}">
             <Button Content="+"
                     Padding="20 5"
+                    ToolTip="Add accomodation"
                     Foreground="CadetBlue"
                     FontWeight="Bold"
                     Margin="10 5"/>
             <Button Content="✏️"
                     Foreground="DarkGoldenrod"
+                    ToolTip="Modify accomodation"
                     Padding="20 5"
                     Margin="10 5"/>
             <Button Content="❌"
                     Foreground="DarkRed"
+                    ToolTip="Delete accomodation"
                     Padding="20 5"
                     Margin="10 5"/>
         </ToolBar>
