@@ -103,8 +103,12 @@ namespace TravelAgent.MVVM.ViewModel
 
         private void OnLogout(object o)
         {
-            SignedUser = null;
-            NavigationService.NavigateTo<LoginViewModel>();
+            MessageBoxResult result = MessageBox.Show("Log out?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                SignedUser = null;
+                NavigationService.NavigateTo<LoginViewModel>();
+            }
         }
     }
 
