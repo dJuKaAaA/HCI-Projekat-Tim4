@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using TravelAgent.MVVM.Model;
 
 namespace TravelAgent.Service
 {
@@ -40,7 +41,7 @@ namespace TravelAgent.Service
             };
         }
 
-        public async Task<string> ReverseGeocode(double latitude, double longitude)
+        public async Task<LocationModel> ReverseGeocode(double latitude, double longitude)
         {
             string apiEndpoint = $"REST/v1/Locations/{latitude},{longitude}?key={_consts.BingMapsApiKey}";
 
@@ -54,18 +55,14 @@ namespace TravelAgent.Service
 
             if (response.IsSuccessStatusCode)
             {
-                JObject jsonObject = JObject.Parse(responseBodyStringified);
-                string name = jsonObject["resourceSets"][0]["resources"][0]["name"].ToString();
-
-                return name;
+                return GetLocationFromResponse(responseBodyStringified);
             }
 
-            // TODO: Make an actual error response exception
-            throw new DatabaseResponseException("Placeholder exception");
+            throw new LocationNotFoundException();
 
         }
         
-        public async Task<double[]> Geocode(string address)
+        public async Task<LocationModel> Geocode(string address)
         {
             string apiEndpoint = $"REST/v1/Locations?q={address}&key={_consts.BingMapsApiKey}";
 
@@ -79,7 +76,20 @@ namespace TravelAgent.Service
 
             if (response.IsSuccessStatusCode)
             {
-                JObject json = JObject.Parse(responseBodyStringified);
+                return GetLocationFromResponse(responseBodyStringified);
+            }
+
+            throw new LocationNotFoundException();
+        }
+
+        private LocationModel GetLocationFromResponse(string response)
+        {
+            try
+            {
+                JObject jsonObject = JObject.Parse(response);
+                string address = jsonObject["resourceSets"][0]["resources"][0]["name"].ToString();
+
+                JObject json = JObject.Parse(response);
 
                 JArray geocodePoints = json["resourceSets"][0]["resources"][0]["geocodePoints"] as JArray;
                 if (geocodePoints != null && geocodePoints.Count > 0)
@@ -90,25 +100,29 @@ namespace TravelAgent.Service
                         double latitude = (double)coordinates[0];
                         double longitude = (double)coordinates[1];
 
-                        return new double[] { latitude, longitude };
+                        return new LocationModel()
+                        {
+                            Latitude = latitude,
+                            Longitude = longitude,
+                            Address = address
+                        };
                     }
                     else
                     {
-                        // TODO: Make an actual error response exception
-                        throw new DatabaseResponseException("Placeholder exception");
+                        throw new LocationNotFoundException();
                     }
                 }
                 else
                 {
-                    // TODO: Make an actual error response exception
-                    throw new DatabaseResponseException("Placeholder exception");
+                    throw new LocationNotFoundException();
                 }
             }
-
-            // TODO: Make an actual error response exception
-            throw new DatabaseResponseException("Placeholder exception");
-
+            catch
+            {
+                throw new LocationNotFoundException();
+            }
         }
+
         public MapPolyline CreatePushpinLine(Location startLocation, Location endLocation)
         {
             // Create a MapPolyline object

@@ -7,6 +7,7 @@
              xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
              xmlns:component="clr-namespace:TravelAgent.CustomComponent"
              mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
              d:DesignHeight="720" d:DesignWidth="1280">
     <Grid>
 
@@ -21,7 +22,7 @@
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
 
-                    
+
                     <Border Width="Auto"
                             BorderThickness="5"
                             Margin="20"
@@ -29,6 +30,7 @@
                             CornerRadius="3"
                             BorderBrush="{DynamicResource DefaultBorderBrush}">
                         <m:Map x:Name="mapControl" 
+                               MouseDoubleClick="Map_MouseDoubleClick"
                                CredentialsProvider="AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr" 
                                Center="44.1871, 20.8572"
                                IsTabStop="False"
@@ -36,68 +38,77 @@
 
                     </Border>
 
-                    <StackPanel Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center">
-                        <component:ScalableTextBlock Text="Choose the Departure and Destination"
-                                                     FontSize="44"
-                                                     ScaleRate="2"
-                                                     TextWrapping="Wrap"
-                                                     HorizontalAlignment="Center"
-                                                     Margin="10 30"/>
-                        <StackPanel Margin="10 20">
-                            <component:ScalableTextBlock Text="Departure"
-                                                         ScaleRate="2"
-                                                         FontSize="30"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Style="{StaticResource LocationSearchTextBoxTheme}"
-                                         Grid.Column="0"
-                                         Text="{Binding DepartureAddress, UpdateSourceTrigger=PropertyChanged}">
-                                    <TextBox.InputBindings>
-                                        <KeyBinding Command="{Binding SearchDepartureFromAddressCommand}" Key="Return"/>
-                                    </TextBox.InputBindings>
-                                </TextBox>
+                    <ScrollViewer Grid.Column="1"
+                                  VerticalScrollBarVisibility="Auto">
 
-                                <Button Content="→"
-                                        Grid.Column="1"
-                                        Command="{Binding SearchDepartureFromAddressCommand}"
-                                        Margin="20 0"
-                                        Style="{DynamicResource LocationSearchButtonTheme}"/>
 
-                            </Grid>
-                        </StackPanel>
-                        <StackPanel Margin="10 20">
-                            <component:ScalableTextBlock Text="Destination"
+                        <StackPanel Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center">
+                            <component:ScalableTextBlock Text="Choose the Departure and Destination"
+                                                         FontSize="44"
                                                          ScaleRate="2"
-                                                         FontSize="30"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox Style="{StaticResource LocationSearchTextBoxTheme}"
-                                         Grid.Column="0"
-                                         Text="{Binding DestinationAddress, UpdateSourceTrigger=PropertyChanged}">
-                                    <TextBox.InputBindings>
-                                        <KeyBinding Command="{Binding SearchDestinationFromAddressCommand}" Key="Return"/>
-                                    </TextBox.InputBindings>
-                                </TextBox>
-                                
-                                <Button Content="→"
-                                        Grid.Column="1"
-                                        Margin="20 0"
-                                        Command="{Binding SearchDestinationFromAddressCommand}"
-                                        Style="{DynamicResource LocationSearchButtonTheme}"/>
-                            </Grid>
+                                                         TextWrapping="Wrap"
+                                                         HorizontalAlignment="Center"
+                                                         Margin="10 30"/>
+                            <StackPanel Margin="10 20">
+                                <component:ScalableTextBlock Text="Departure"
+                                                             ScaleRate="2"
+                                                             FontSize="30"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Style="{StaticResource LocationSearchTextBoxTheme}"
+                                             Grid.Column="0"
+                                             TextWrapping="Wrap"
+                                             Text="{Binding DepartureAddress, UpdateSourceTrigger=PropertyChanged}">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Command="{Binding SearchDepartureFromAddressCommand}" Key="Return"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+
+                                    <Button Content="→"
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding SearchDepartureFromAddressCommand}"
+                                            Margin="20 0"
+                                            Style="{DynamicResource LocationSearchButtonTheme}"/>
+
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Margin="10 20">
+                                <component:ScalableTextBlock Text="Destination"
+                                                             ScaleRate="2"
+                                                             FontSize="30"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Style="{StaticResource LocationSearchTextBoxTheme}"
+                                             Grid.Column="0"
+                                             TextWrapping="Wrap"
+                                             Text="{Binding DestinationAddress, UpdateSourceTrigger=PropertyChanged}">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Command="{Binding SearchDestinationFromAddressCommand}" Key="Return"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+
+                                    <Button Content="→"
+                                            Grid.Column="1"
+                                            Margin="20 0"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding SearchDestinationFromAddressCommand}"
+                                            Style="{DynamicResource LocationSearchButtonTheme}"/>
+                                </Grid>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
+                    </ScrollViewer>
 
                 </Grid>
-                
+
             </TabItem>
 
             <TabItem Header="Restoraunts"
@@ -113,7 +124,7 @@
             <TabItem Header="Accomodations"
                      IsTabStop="False"
                      Padding="10">
-                
+
             </TabItem>
             <TabItem Header="Finalize"
                      IsTabStop="False"
@@ -124,7 +135,7 @@
                                 Margin="20 0"
                                 MaxWidth="700">
 
-                        <ContentControl>
+                        <ContentControl Margin="0 25">
                             <ContentControl.Style>
                                 <Style TargetType="ContentControl">
                                     <Setter Property="Content">
@@ -155,42 +166,6 @@
                                 </Style>
                             </ContentControl.Style>
                         </ContentControl>
-
-                        <StackPanel Margin="0 10">
-                            <component:ScalableTextBlock Text="Departure"
-                                                         FontSize="32"
-                                                         ScaleRate="2"/>
-                            <ComboBox Style="{StaticResource LocationComboBoxTheme}"
-                                      ItemsSource="{Binding Locations}"
-                                      VerticalContentAlignment="Center"
-                                      HorizontalContentAlignment="Center"
-                                      SelectedItem="{Binding SelectedDepartureLocation}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}"
-                                                   FontSize="24"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-
-                        </StackPanel>
-                        <StackPanel Margin="0 10">
-                            <component:ScalableTextBlock Text="Destination"
-                                                         FontSize="32"
-                                                         ScaleRate="2"/>
-                            <ComboBox Style="{StaticResource LocationComboBoxTheme}"
-                                      VerticalContentAlignment="Center"
-                                      HorizontalContentAlignment="Center"
-                                      ItemsSource="{Binding Locations}"
-                                      SelectedItem="{Binding SelectedDestinationLocation}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}"
-                                                   FontSize="24"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </StackPanel>
 
                         <StackPanel Margin="0 10">
                             <component:ScalableTextBlock Text="Departure date and time"
@@ -264,41 +239,15 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
                                     Margin="0 20">
-                            <ContentControl>
-                                <ContentControl.Style>
-                                    <Style TargetType="ContentControl">
-                                        <Setter Property="Content">
-                                            <Setter.Value>
-                                                <Button Margin="10 0"
-                                                        Content="Create"
-                                                        Style="{StaticResource FormButtonTheme}"
-                                                        Command="{Binding CreateTripCommand}"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding DataContext.Modifying, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True">
-                                                <Setter Property="Content">
-                                                    <Setter.Value>
-                                                        <Button Margin="10 0"
-                                                                Content="Modify"
-                                                                Style="{StaticResource FormButtonTheme}"
-                                                                Command="{Binding CreateTripCommand}"/>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ContentControl.Style>
-                            </ContentControl>
-                            <Button Content="Back"
-                                    Margin="10 0"
+                            <Button Margin="10 0"
+                                    Content="Finish"
                                     Style="{StaticResource FormButtonTheme}"
-                                    Command="{Binding BackToAllTripsViewCommand}"/>
+                                    Command="{Binding CreateTripCommand}"/>
                         </StackPanel>
-                        
+
                     </StackPanel>
                 </ScrollViewer>
-                
+
             </TabItem>
         </TabControl>
 
