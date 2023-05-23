@@ -57,6 +57,7 @@ namespace TravelAgent
             services.AddSingleton<Service.LocationService>();
             services.AddSingleton<Service.UserTripService>();
             services.AddSingleton<Service.TouristAttractionService>();
+            services.AddSingleton<Service.MapService>();
 
             _serviceProvider = services.BuildServiceProvider();
 

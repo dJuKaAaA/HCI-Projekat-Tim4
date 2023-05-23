@@ -42,6 +42,7 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.TripService _tripService;
         private readonly Service.UserTripService _userTripService;
         private readonly Service.TouristAttractionService _touristAttractionService;
+        private readonly Service.MapService _mapService;
 
         public ObservableCollection<TripModel> AllTrips { get; set; }
 
@@ -64,7 +65,8 @@ namespace TravelAgent.MVVM.ViewModel
             Service.NavigationService navigationService, 
             Service.TripService tripService,
             Service.UserTripService userTripService,
-            Service.TouristAttractionService touristAttractionService)
+            Service.TouristAttractionService touristAttractionService,
+            Service.MapService mapService)
         {
             SeeDealVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Traveler ?
                 Visibility.Visible : Visibility.Collapsed;
@@ -79,6 +81,7 @@ namespace TravelAgent.MVVM.ViewModel
             _tripService = tripService;
             _userTripService = userTripService;
             _touristAttractionService = touristAttractionService;
+            _mapService = mapService;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
@@ -103,7 +106,11 @@ namespace TravelAgent.MVVM.ViewModel
                 TripModel trip = AllTrips.FirstOrDefault(f => f.Id == tripId);
 
                 _seeDealPopup?.Close();
-                _seeDealPopup = new SeeDealPopup(trip, _userTripService, _touristAttractionService);
+                _seeDealPopup = new SeeDealPopup(
+                    trip, 
+                    _userTripService, 
+                    _touristAttractionService,
+                    _mapService);
                 _seeDealPopup.Show();
             }
         }
