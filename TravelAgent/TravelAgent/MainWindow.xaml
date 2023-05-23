@@ -48,7 +48,7 @@
                 <MenuItem Header="Accomodations"
                           InputGestureText="Ctrl+A"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
-                <MenuItem Header="Acquired trips"
+                <MenuItem Header="My trips"
                           InputGestureText="Ctrl+U"
                           Command="{Binding OpenUserTripsViewCommand}"/>
             </MenuItem>
@@ -75,6 +75,7 @@
                 <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding OpenAllTouristAttractionsViewCommand}" />
                 <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestorauntsViewCommand}" />
                 <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding OpenAllAccomodationsViewCommand}" />
+                <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding OpenSoldTripsViewCommand}" />
                 <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding OpenHelpCommand}" />
                 <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding LogoutCommand}" />
             </Menu.InputBindings>
@@ -93,7 +94,9 @@
                 <MenuItem Header="Accomodations"
                           InputGestureText="Ctrl+A"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
-                <MenuItem Header="Sold trips"/>
+                <MenuItem Header="Sold trips"
+                          InputGestureText="Ctrl+U"
+                          Command="{Binding OpenSoldTripsViewCommand}"/>
             </MenuItem>
             <MenuItem Header="Help"
                       IsTabStop="False"
@@ -181,6 +184,10 @@
 
                 <DataTemplate DataType="{x:Type vm:CreateTripViewModel}">
                     <view:CreateTripView/>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type vm:SoldTripsViewModel}">
+                    <view:SoldTripsView/>
                 </DataTemplate>
 
             </ContentControl.Resources>

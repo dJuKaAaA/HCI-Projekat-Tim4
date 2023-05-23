@@ -12,7 +12,7 @@ namespace TravelAgent.Core
         public string PathToDatabase { get; }
 
         // path to images
-        public string PathToLocationImages { get; }
+        public string PathToTouristAttractionsImages { get; }
         public string PathToRestorauntImages { get; }
         public string PathToIcons { get; }
         
@@ -28,12 +28,13 @@ namespace TravelAgent.Core
         public string AccomodationsTableName { get; }
         public string TouristAttractionsTableName { get; }
         public string UsersTripsTableName { get; }
+        public string TripsTouristAttractionsTableName { get; }
 
         public Consts()
         {
             ProjectRootRelativePath = "../../..";
             PathToDatabase = $"{ProjectRootRelativePath}/Database/database.db";
-            PathToLocationImages = $"{ProjectRootRelativePath}/Image/Location";
+            PathToTouristAttractionsImages = $"{ProjectRootRelativePath}/Image/TouristAttraction";
             PathToRestorauntImages = $"{ProjectRootRelativePath}/Image/Restoraunt";
             PathToIcons = $"{ProjectRootRelativePath}/Image/Icon";
             SqliteConnectionString = $"Data Source={PathToDatabase}";
@@ -47,6 +48,7 @@ namespace TravelAgent.Core
             AccomodationsTableName = "accomodations";
             TouristAttractionsTableName = "tourist_attractions";
             UsersTripsTableName = "users_trips";
+            TripsTouristAttractionsTableName = "trips_tourist_attractions";
         }
     }
 }

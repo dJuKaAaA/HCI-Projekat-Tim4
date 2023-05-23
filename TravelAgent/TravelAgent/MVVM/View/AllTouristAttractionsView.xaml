@@ -38,6 +38,7 @@
                   Grid.Row="1"
                   BorderThickness="0"
                   Background="Transparent"
+                  Padding="30 0"
                   HorizontalAlignment="Center"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemContainerStyle>

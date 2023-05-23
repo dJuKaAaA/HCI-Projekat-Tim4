@@ -12,7 +12,7 @@ namespace TravelAgent.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((MVVM.Model.LocationModel)value).Name;
+            return ((MVVM.Model.LocationModel)value).Address;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

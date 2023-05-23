@@ -33,12 +33,23 @@
     <None Remove="Image\Location\vlasinsko-jezero.jpg" />
     <None Remove="Image\Location\vodopad-jelovarnik-kopaonik.jpg" />
     <None Remove="Image\Location\vodopadi-prskalo.jpg" />
+    <None Remove="Image\TouristAttraction\belocrkvanska-jezera.jpg" />
+    <None Remove="Image\TouristAttraction\djavolja-varos.jpg" />
+    <None Remove="Image\TouristAttraction\Felix-Romulijana.jpg" />
+    <None Remove="Image\TouristAttraction\krupanjsko-vrelo.jpg" />
+    <None Remove="Image\TouristAttraction\oplenac.jpg" />
+    <None Remove="Image\TouristAttraction\rajacke-pimnice.jpg" />
+    <None Remove="Image\TouristAttraction\Semetesko-jezero.jpg" />
+    <None Remove="Image\TouristAttraction\studenica.jpg" />
+    <None Remove="Image\TouristAttraction\UVAC.jpg" />
+    <None Remove="Image\TouristAttraction\vlasinsko-jezero.jpg" />
+    <None Remove="Image\TouristAttraction\vodopad-jelovarnik-kopaonik.jpg" />
+    <None Remove="Image\TouristAttraction\vodopadi-prskalo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Database\" />
     <Folder Include="Image\Accomodation\" />
-    <Folder Include="Image\TouristAttraction\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,6 +85,18 @@
     <Resource Include="Image\Location\vlasinsko-jezero.jpg" />
     <Resource Include="Image\Location\vodopad-jelovarnik-kopaonik.jpg" />
     <Resource Include="Image\Location\vodopadi-prskalo.jpg" />
+    <Resource Include="Image\TouristAttraction\belocrkvanska-jezera.jpg" />
+    <Resource Include="Image\TouristAttraction\djavolja-varos.jpg" />
+    <Resource Include="Image\TouristAttraction\Felix-Romulijana.jpg" />
+    <Resource Include="Image\TouristAttraction\krupanjsko-vrelo.jpg" />
+    <Resource Include="Image\TouristAttraction\oplenac.jpg" />
+    <Resource Include="Image\TouristAttraction\rajacke-pimnice.jpg" />
+    <Resource Include="Image\TouristAttraction\Semetesko-jezero.jpg" />
+    <Resource Include="Image\TouristAttraction\studenica.jpg" />
+    <Resource Include="Image\TouristAttraction\UVAC.jpg" />
+    <Resource Include="Image\TouristAttraction\vlasinsko-jezero.jpg" />
+    <Resource Include="Image\TouristAttraction\vodopad-jelovarnik-kopaonik.jpg" />
+    <Resource Include="Image\TouristAttraction\vodopadi-prskalo.jpg" />
   </ItemGroup>
 
   <ItemGroup>

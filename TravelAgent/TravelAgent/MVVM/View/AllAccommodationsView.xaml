@@ -37,6 +37,7 @@
 
         <ListView ItemsSource="{Binding AllAccommodations}"
                   Grid.Row="1"
+                  Padding="30 0"
                   BorderThickness="0"
                   Background="Transparent"
                   HorizontalAlignment="Center"
@@ -72,7 +73,7 @@
                                                     CornerRadius="5"
                                                     BorderBrush="{StaticResource ImageBorderBrush}"
                                                     Margin="0 20">
-                                                <Image Source="../../../Image/Location/belgrade.jpg"/>
+                                                <Image Source="../../../Image/Location/dubai.jpg"/>
                                             </Border>
 
                                         </StackPanel>
