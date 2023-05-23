@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TravelAgent.Core;
+using TravelAgent.Exception;
 using TravelAgent.MVVM.Model;
 using TravelAgent.MVVM.View.Popup;
 
@@ -148,10 +149,13 @@ namespace TravelAgent.MVVM.ViewModel
             } 
         }
 
+        public EventHandler<LocationModel> DepartureAddressSearched;
+        public EventHandler<LocationModel> DestinationAddressSearched;
+
         private readonly Service.TripService _tripService;
         private readonly Service.LocationService _locationService;
         private readonly Service.NavigationService _navigationService;
-        private readonly Service.MapService _mapService;
+        public Service.MapService MapService { get; }
 
         public ICommand CreateTripCommand { get; }
         public ICommand SearchDepartureFromAddressCommand { get; }
@@ -171,7 +175,7 @@ namespace TravelAgent.MVVM.ViewModel
             _tripService = tripService;
             _locationService = locationService;
             _navigationService = navigationService;
-            _mapService = mapService;
+            MapService = mapService;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
@@ -185,14 +189,28 @@ namespace TravelAgent.MVVM.ViewModel
 
         private async void OnSearchDepartureFromAddress(object o)
         {
-            double[] coords = await _mapService.Geocode(DepartureAddress);
-            MessageBox.Show($"latitude: {coords[0]}, longitude: {coords[1]}");
+            try
+            {
+                LocationModel location = await MapService.Geocode(DepartureAddress);
+                DepartureAddressSearched?.Invoke(this, location);
+            }
+            catch (LocationNotFoundException e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async void OnSearchDestinationFromAddress(object o)
         {
-            double[] coords = await _mapService.Geocode(DestinationAddress);
-            MessageBox.Show($"latitude: {coords[0]}, longitude: {coords[1]}");
+            try
+            {
+                LocationModel location = await MapService.Geocode(DestinationAddress);
+                DestinationAddressSearched?.Invoke(this, location);
+            }
+            catch (LocationNotFoundException e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async void OnCreateTrip(object o)
