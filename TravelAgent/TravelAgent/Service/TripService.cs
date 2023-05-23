@@ -56,9 +56,9 @@ namespace TravelAgent.Service
         public async Task<IEnumerable<TripModel>> GetAll()
         {
             string command = $"SELECT tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +
-                $"departuresTable.id, departuresTable.name, departuresTable.longitude, departuresTable.latitude, departuresTable.image, " +
-                $"destinationsTable.id, destinationsTable.name, destinationsTable.longitude, destinationsTable.latitude, destinationsTable.image " +
-                $" FROM {_consts.TripsTableName} tripsTable, {_consts.LocationsTableName} departuresTable, " +
+                $"departuresTable.id, departuresTable.address, departuresTable.longitude, departuresTable.latitude, " +
+                $"destinationsTable.id, destinationsTable.address, destinationsTable.longitude, destinationsTable.latitude " +
+                $"FROM {_consts.TripsTableName} tripsTable, {_consts.LocationsTableName} departuresTable, " +
                 $"{_consts.LocationsTableName} destinationsTable WHERE tripsTable.departure_id = departuresTable.id " +
                 $"AND tripsTable.destination_id = destinationsTable.id";
             List<TripModel> results = new List<TripModel>();
@@ -69,18 +69,16 @@ namespace TravelAgent.Service
                     LocationModel departure = new LocationModel()
                     {
                         Id = reader.GetInt32(4),
-                        Name = reader.GetString(5),
+                        Address = reader.GetString(5),
                         Longitude = reader.GetFloat(6),
                         Latitude = reader.GetFloat(7),
-                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(8)}",
                     };
                     LocationModel destination = new LocationModel()
                     {
-                        Id = reader.GetInt32(9),
-                        Name = reader.GetString(10),
-                        Longitude = reader.GetFloat(11),
-                        Latitude = reader.GetFloat(12),
-                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(13)}",
+                        Id = reader.GetInt32(8),
+                        Address = reader.GetString(9),
+                        Longitude = reader.GetFloat(10),
+                        Latitude = reader.GetFloat(11),
                     };
                     TripModel trip = new TripModel()
                     {

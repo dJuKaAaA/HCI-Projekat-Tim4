@@ -75,7 +75,7 @@
                                                             Orientation="Vertical"
                                                             VerticalAlignment="Center"
                                                             HorizontalAlignment="Center">
-                                                    <component:ScalableTextBlock Text="{Binding Departure.Name}"
+                                                    <component:ScalableTextBlock Text="{Binding Departure.Address}"
                                                                                  FontWeight="SemiBold"
                                                                                  HorizontalAlignment="Center"
                                                                                  FontSize="44"
@@ -86,7 +86,7 @@
                                                                                  HorizontalAlignment="Center"
                                                                                  FontSize="40"
                                                                                  Foreground="{DynamicResource MainTextBrush}"/>
-                                                    <component:ScalableTextBlock Text="{Binding Destination.Name}"
+                                                    <component:ScalableTextBlock Text="{Binding Destination.Address}"
                                                                                  FontWeight="SemiBold"
                                                                                  FontSize="44"
                                                                                  HorizontalAlignment="Center"
@@ -246,7 +246,7 @@
                                                     <Border Margin="10 20"
                                                             BorderBrush="{DynamicResource DefaultBorderBrush}"
                                                             BorderThickness="1"/>
-                                                    <component:ScalableTextBlock Text="{Binding Departure.Name}"
+                                                    <component:ScalableTextBlock Text="{Binding Departure.Address}"
                                                                                  FontWeight="SemiBold"
                                                                                  HorizontalAlignment="Center"
                                                                                  FontSize="84"
@@ -255,7 +255,7 @@
                                                                                  HorizontalAlignment="Center"
                                                                                  FontSize="80"
                                                                                  Foreground="{DynamicResource MainTextBrush}"/>
-                                                    <component:ScalableTextBlock Text="{Binding Destination.Name}"
+                                                    <component:ScalableTextBlock Text="{Binding Destination.Address}"
                                                                                  FontWeight="SemiBold"
                                                                                  FontSize="84"
                                                                                  HorizontalAlignment="Center"

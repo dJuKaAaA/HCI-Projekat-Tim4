@@ -86,9 +86,8 @@ namespace TravelAgent.Service
         {
             string command = $"SELECT usersTable.id, usersTable.name, usersTable.surname, usersTable.username, usersTable.type, " +
                 $"tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +
-                $"departuresTable.id, departuresTable.name, departuresTable.longitude, departuresTable.latitude, departuresTable.image, " +
-                $"destinationsTable.id, destinationsTable.name, destinationsTable.longitude, destinationsTable.latitude, destinationsTable.image, " +
-                $"usersTripsTable.type " +
+                $"departuresTable.id, departuresTable.address, departuresTable.longitude, departuresTable.latitude, " +
+                $"destinationsTable.id, destinationsTable.address, destinationsTable.longitude, destinationsTable.latitude, usersTripsTable.type " +
                 $"FROM {_consts.UsersTableName} usersTable, {_consts.TripsTableName} tripsTable, " +
                 $"{_consts.UsersTripsTableName} usersTripsTable, {_consts.LocationsTableName} departuresTable, " +
                 $"{_consts.LocationsTableName} destinationsTable " +
@@ -111,18 +110,16 @@ namespace TravelAgent.Service
                     LocationModel departure = new LocationModel()
                     {
                         Id = reader.GetInt32(9),
-                        Name = reader.GetString(10),
+                        Address = reader.GetString(10),
                         Longitude = reader.GetFloat(11),
                         Latitude = reader.GetFloat(12),
-                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(13)}",
                     };
                     LocationModel destination = new LocationModel()
                     {
-                        Id = reader.GetInt32(14),
-                        Name = reader.GetString(15),
-                        Longitude = reader.GetFloat(16),
-                        Latitude = reader.GetFloat(17),
-                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(18)}",
+                        Id = reader.GetInt32(13),
+                        Address = reader.GetString(14),
+                        Longitude = reader.GetFloat(15),
+                        Latitude = reader.GetFloat(16),
                     };
                     TripModel trip = new TripModel()
                     {
@@ -137,7 +134,7 @@ namespace TravelAgent.Service
                     {
                         User = user,
                         Trip = trip,
-                        Type = (TripInvoiceType)Enum.Parse(typeof(TripInvoiceType), reader.GetString(19))
+                        Type = (TripInvoiceType)Enum.Parse(typeof(TripInvoiceType), reader.GetString(17))
                     };
 
                     results.Add(userTrip);

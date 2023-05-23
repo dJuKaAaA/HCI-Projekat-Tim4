@@ -45,12 +45,13 @@ namespace TravelAgent.MVVM.View
             //}
             foreach (TripModel trip in MapDataContext.AllTrips)
             {
-                Pushpin startPushpin = CreatePushpin(trip.Departure.Latitude, trip.Departure.Longitude, trip.Departure.Name, $"Departure_{trip.Departure.Id}");
-                Pushpin endPushpin = CreatePushpin(trip.Destination.Latitude, trip.Destination.Longitude, trip.Destination.Name, $"Destination_{trip.Destination.Id}");
+                Pushpin startPushpin = CreatePushpin(trip.Departure.Latitude, trip.Departure.Longitude, trip.Departure.Address, $"Departure_{trip.Departure.Id}");
+                Pushpin endPushpin = CreatePushpin(trip.Destination.Latitude, trip.Destination.Longitude, trip.Destination.Address, $"Destination_{trip.Destination.Id}");
+                MapPolyline line = CreatePushpinLine(startPushpin.Location, endPushpin.Location); 
 
                 mapControl.Children.Add(startPushpin);
                 mapControl.Children.Add(endPushpin);
-                DrawLine(startPushpin.Location, endPushpin.Location);
+                mapControl.Children.Add(line);
             }
         }
 
@@ -91,7 +92,7 @@ namespace TravelAgent.MVVM.View
             return pushpin;
         }
 
-        private void DrawLine(Location startLocation, Location endLocation)
+        private MapPolyline CreatePushpinLine(Location startLocation, Location endLocation)
         {
             // Create a MapPolyline object
             var polyline = new MapPolyline();
@@ -112,8 +113,7 @@ namespace TravelAgent.MVVM.View
             // Set the polyline's locations
             polyline.Locations = locations;
 
-            // Add the polyline to the map
-            mapControl.Children.Add(polyline);
+            return polyline;
         }
 
         private void Pushpin_Click(object sender, MouseButtonEventArgs e)
@@ -130,8 +130,8 @@ namespace TravelAgent.MVVM.View
             }
 
             // Set the image and text in the popup
-            locationImage.Source = new BitmapImage(new Uri($"{MapDataContext.Consts.PathToLocationImages}/{location.Image}", UriKind.RelativeOrAbsolute));
-            locationName.Text = location.Name;
+            //locationImage.Source = new BitmapImage(new Uri($"{MapDataContext.Consts.PathToTouristAttractionsImages}/{location.Image}", UriKind.RelativeOrAbsolute));
+            locationName.Text = location.Address;
             locationPlace.Text = locationPlaceValue;
             locationContainer.Visibility = Visibility.Visible;
         }

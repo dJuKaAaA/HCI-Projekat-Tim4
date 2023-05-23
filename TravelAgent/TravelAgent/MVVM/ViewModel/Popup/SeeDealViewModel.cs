@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Maps.MapControl.WPF;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             set { _trip = value; OnPropertyChanged(); }
         }
 
+        public ObservableCollection<TouristAttractionModel> TouristAttractionsForTrip { get; set; }
+
         private int _tripDuration;
 
         public int TripDuration
@@ -31,6 +35,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         }
 
         public Service.UserTripService UserTripService { get; set; }
+        public Service.TouristAttractionService TouristAttractionService { get; set; }
 
         public ICommand PurchaseTripCommand { get; }
         public ICommand ReserveTripCommand { get; }
@@ -38,9 +43,21 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 
         public SeeDealViewModel()
         {
+            TouristAttractionsForTrip = new ObservableCollection<TouristAttractionModel>();
+
             PurchaseTripCommand = new RelayCommand(OnPurchaseTrip, o => true);
             ReserveTripCommand = new RelayCommand(OnReserveTrip, o => true);
             CloseCommand = new RelayCommand(OnClose, o => true);
+        }
+
+        public async Task LoadTouristAttractionsForTrip()
+        {
+            TouristAttractionsForTrip.Clear();
+            IEnumerable<TouristAttractionModel> touristAttractions = await TouristAttractionService.GetForTrip(Trip.Id);
+            foreach (TouristAttractionModel touristAttraction in touristAttractions)
+            {
+                TouristAttractionsForTrip.Add(touristAttraction);
+            }
         }
 
         private async void OnPurchaseTrip(object o)

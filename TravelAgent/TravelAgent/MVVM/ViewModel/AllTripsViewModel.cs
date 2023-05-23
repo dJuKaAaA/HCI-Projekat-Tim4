@@ -41,6 +41,7 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.NavigationService _navigationService;
         private readonly Service.TripService _tripService;
         private readonly Service.UserTripService _userTripService;
+        private readonly Service.TouristAttractionService _touristAttractionService;
 
         public ObservableCollection<TripModel> AllTrips { get; set; }
 
@@ -62,13 +63,14 @@ namespace TravelAgent.MVVM.ViewModel
         public AllTripsViewModel(
             Service.NavigationService navigationService, 
             Service.TripService tripService,
-            Service.UserTripService userTripService)
+            Service.UserTripService userTripService,
+            Service.TouristAttractionService touristAttractionService)
         {
             SeeDealVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Traveler ?
                 Visibility.Visible : Visibility.Collapsed;
-            BusIconVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Traveler ? 
+            BusIconVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Traveler ?
                 Visibility.Collapsed : Visibility.Visible;
-            ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? 
+            ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ?
                 Visibility.Visible : Visibility.Collapsed;
 
             AllTrips = new ObservableCollection<TripModel>();
@@ -76,10 +78,11 @@ namespace TravelAgent.MVVM.ViewModel
             _navigationService = navigationService;
             _tripService = tripService;
             _userTripService = userTripService;
+            _touristAttractionService = touristAttractionService;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
-            OpenSeeDealPopupCommand = new Core.RelayCommand(OnOpenSeeDealPopup , o => true);
+            OpenSeeDealPopupCommand = new Core.RelayCommand(OnOpenSeeDealPopup, o => true);
             OpenCreateTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(), o => true);
             OpenModifyTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(SelectedTrip), o => SelectedTrip != null);
             DeleteTripCommand = new Core.RelayCommand(OnDeleteTrip, o => SelectedTrip != null);
@@ -100,7 +103,7 @@ namespace TravelAgent.MVVM.ViewModel
                 TripModel trip = AllTrips.FirstOrDefault(f => f.Id == tripId);
 
                 _seeDealPopup?.Close();
-                _seeDealPopup = new SeeDealPopup(trip, _userTripService);
+                _seeDealPopup = new SeeDealPopup(trip, _userTripService, _touristAttractionService);
                 _seeDealPopup.Show();
             }
         }

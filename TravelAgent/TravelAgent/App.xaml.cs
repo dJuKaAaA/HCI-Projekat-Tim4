@@ -45,6 +45,7 @@ namespace TravelAgent
             services.AddTransient<AllAccommodationsViewModel>();
             services.AddTransient<CreateTripViewModel>();
             services.AddTransient<UserTripsViewModel>();
+            services.AddTransient<SoldTripsViewModel>();
             services.AddTransient<MapViewModel>();
             services.AddTransient<SeeDealViewModel>();
 
@@ -55,6 +56,7 @@ namespace TravelAgent
             services.AddSingleton<Service.TripService>();
             services.AddSingleton<Service.LocationService>();
             services.AddSingleton<Service.UserTripService>();
+            services.AddSingleton<Service.TouristAttractionService>();
 
             _serviceProvider = services.BuildServiceProvider();
 

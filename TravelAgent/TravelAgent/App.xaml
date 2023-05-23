@@ -96,6 +96,8 @@
                 <ResourceDictionary Source="./Theme/CustomDatePickerTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/CloseButtonTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/BackButtonTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/WideSoldTripsTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/NarrowSoldTripsTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

@@ -48,6 +48,7 @@ namespace TravelAgent.MVVM.ViewModel
         public ICommand OpenAllRestorauntsViewCommand { get; }
         public ICommand OpenAllAccomodationsViewCommand { get; }
         public ICommand OpenUserTripsViewCommand { get; }
+        public ICommand OpenSoldTripsViewCommand { get; }
         public ICommand OpenMapsCommand { get; }
         public ICommand OpenHelpCommand { get; }
         public ICommand OpenLoginViewCommand { get; }
@@ -66,6 +67,7 @@ namespace TravelAgent.MVVM.ViewModel
             OpenMapsCommand = new RelayCommand(o => NavigationService.NavigateTo<MapViewModel>(), o => true);
             OpenHelpCommand = new RelayCommand(o => MessageBox.Show("This is very helpful :)"), o => true);
             OpenLoginViewCommand = new RelayCommand(o => NavigationService.NavigateTo<LoginViewModel>(), o => true);
+            OpenSoldTripsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<SoldTripsViewModel>(), o => true);
             LogoutCommand = new RelayCommand(OnLogout, o => true);
 
             NavigationService.NavigationCompleted += (object? sender, NavigationEventArgs e) =>

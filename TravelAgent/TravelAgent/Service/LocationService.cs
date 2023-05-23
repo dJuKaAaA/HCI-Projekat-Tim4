@@ -33,10 +33,9 @@ namespace TravelAgent.Service
                     LocationModel location = new LocationModel()
                     {
                         Id = reader.GetInt32(0),
-                        Name = reader.GetString(1),
+                        Address = reader.GetString(1),
                         Longitude = reader.GetFloat(2),
                         Latitude = reader.GetFloat(3),
-                        Image = $"{_consts.PathToLocationImages}/{reader.GetString(4)}"
                     };
                     result.Add(location);
                 }
