@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgent.Core;
 using TravelAgent.MVVM.Model;
 using TravelAgent.MVVM.ViewModel;
 using TravelAgent.Service;
@@ -33,6 +34,9 @@ namespace TravelAgent.MVVM.View
         {
             ((CreateTripViewModel)DataContext).DepartureAddressSearched += OnDepartureAddressSearched;
             ((CreateTripViewModel)DataContext).DestinationAddressSearched += OnDestinationAddressSearched;
+            DrawAccomodationsPushpins();
+            DrawRestorauntsPushpins();
+            DrawTouristAttractionPushpins();
         }
 
         private void OnDestinationAddressSearched(object? sender, LocationModel location)
@@ -44,8 +48,8 @@ namespace TravelAgent.MVVM.View
                 _destinationPushpin = mapService.CreatePushpin(
                     location.Latitude,
                     location.Longitude,
-                    "Destination",
-                    "Tag");
+                    location.Address,
+                    "Destination");
                 mapControl.Children.Add(_destinationPushpin);
                 ((CreateTripViewModel)DataContext).SelectedDestinationLocation = location;
                 ((CreateTripViewModel)DataContext).DestinationAddress = location.Address;
@@ -62,8 +66,8 @@ namespace TravelAgent.MVVM.View
                 _destinationPushpin = mapService.CreatePushpin(
                     location.Latitude,
                     location.Longitude,
-                    "Destination",
-                    "Tag");
+                    location.Address,
+                    "Destination");
                 mapControl.Children.Add(_destinationPushpin);
                 ((CreateTripViewModel)DataContext).SelectedDestinationLocation = location;
                 ((CreateTripViewModel)DataContext).DestinationAddress = location.Address;
@@ -76,6 +80,66 @@ namespace TravelAgent.MVVM.View
             mapControl.ZoomLevel = 12;
         }
 
+        private async void DrawRestorauntsPushpins()
+        {
+            Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
+            Consts consts = ((CreateTripViewModel)DataContext).Consts;
+
+            await ((CreateTripViewModel)DataContext).LoadAllRestoraunts();
+
+            foreach (RestorauntModel restoraunt in ((CreateTripViewModel)DataContext).AllRestoraunts)
+            {
+                Pushpin pushpin = mapService.CreatePushpin(
+                    restoraunt.Location.Latitude,
+                    restoraunt.Location.Longitude,
+                    restoraunt.Name,
+                    $"Restoraunt_{restoraunt.Id}",
+                    $"{consts.PathToIcons}/{consts.RestorauntPushpin}");
+                mapControl.Children.Add(pushpin);
+            }
+
+        }
+
+        private async void DrawAccomodationsPushpins()
+        {
+            Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
+            Consts consts = ((CreateTripViewModel)DataContext).Consts;
+
+            await ((CreateTripViewModel)DataContext).LoadAllAccommodations();
+
+            foreach (AccommodationModel accommodation in ((CreateTripViewModel)DataContext).AllAccommodations)
+            {
+                Pushpin pushpin = mapService.CreatePushpin(
+                    accommodation.Location.Latitude,
+                    accommodation.Location.Longitude,
+                    accommodation.Name,
+                    $"Accommodation_{accommodation.Id}",
+                    $"{consts.PathToIcons}/{consts.AccommodationPushpin}");
+                mapControl.Children.Add(pushpin);
+            }
+
+        }
+
+        private async void DrawTouristAttractionPushpins()
+        {
+            Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
+            Consts consts = ((CreateTripViewModel)DataContext).Consts;
+
+            await ((CreateTripViewModel)DataContext).LoadAllTouristAttractions();
+
+            foreach (TouristAttractionModel touristAttraction in ((CreateTripViewModel)DataContext).AllTouristAttractions)
+            {
+                Pushpin pushpin = mapService.CreatePushpin(
+                    touristAttraction.Location.Latitude,
+                    touristAttraction.Location.Longitude,
+                    touristAttraction.Name,
+                    $"TouristAttraction_{touristAttraction.Id}",
+                    $"{consts.PathToIcons}/{consts.TouristAttractionPushpin}");
+                mapControl.Children.Add(pushpin);
+            }
+
+        }
+
         private void OnDepartureAddressSearched(object? sender, LocationModel location)
         {
             Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
@@ -85,8 +149,8 @@ namespace TravelAgent.MVVM.View
                 _departurePushpin = mapService.CreatePushpin(
                     location.Latitude,
                     location.Longitude,
-                    "Destination",
-                    "Tag");
+                    location.Address,
+                    "Departure");
                 mapControl.Children.Add(_departurePushpin);
                 ((CreateTripViewModel)DataContext).SelectedDepartureLocation = location;
                 ((CreateTripViewModel)DataContext).DepartureAddress = location.Address;
@@ -103,8 +167,8 @@ namespace TravelAgent.MVVM.View
                 _departurePushpin = mapService.CreatePushpin(
                     location.Latitude,
                     location.Longitude,
-                    "Destination",
-                    "Tag");
+                    location.Address,
+                    "Departure");
                 mapControl.Children.Add(_departurePushpin);
                 ((CreateTripViewModel)DataContext).SelectedDepartureLocation = location;
                 ((CreateTripViewModel)DataContext).DepartureAddress = location.Address;
@@ -136,8 +200,8 @@ namespace TravelAgent.MVVM.View
                 _departurePushpin = mapService.CreatePushpin(
                     location.Latitude,
                     location.Longitude,
-                    "Departure",
-                    "Tag");
+                    location.Address,
+                    "Departure");
                 mapControl.Children.Add(_departurePushpin);
                 ((CreateTripViewModel)DataContext).SelectedDepartureLocation = location;
                 ((CreateTripViewModel)DataContext).DepartureAddress = location.Address;
@@ -147,8 +211,8 @@ namespace TravelAgent.MVVM.View
                 _destinationPushpin = mapService.CreatePushpin(
                     location.Latitude,
                     location.Longitude,
-                    "Destination",
-                    "Tag");
+                    location.Address,
+                    "Destination");
                 mapControl.Children.Add(_destinationPushpin);
                 ((CreateTripViewModel)DataContext).SelectedDestinationLocation = location;
                 ((CreateTripViewModel)DataContext).DestinationAddress = location.Address;
@@ -165,8 +229,8 @@ namespace TravelAgent.MVVM.View
                 _departurePushpin = mapService.CreatePushpin(
                     location.Latitude,
                     location.Longitude,
-                    "Departure",
-                    "Tag");
+                    location.Address,
+                    "Departure");
                 _destinationPushpin = null;
                 _tripLine = null;
                 ((CreateTripViewModel)DataContext).SelectedDepartureLocation = location;

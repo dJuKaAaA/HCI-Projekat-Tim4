@@ -25,6 +25,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         }
 
         public ObservableCollection<TouristAttractionModel> TouristAttractionsForTrip { get; set; }
+        public ObservableCollection<RestorauntModel> RestorauntsForTrip { get; set; }
+        public ObservableCollection<AccommodationModel> AccommodationsForTrip { get; set; }
 
         private int _tripDuration;
 
@@ -36,7 +38,10 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 
         public Service.UserTripService UserTripService { get; set; }
         public Service.TouristAttractionService TouristAttractionService { get; set; }
+        public Service.RestorauntService RestorauntService { get; set; }
+        public Service.AccommodationService AccommodationsService { get; set; }
         public Service.MapService MapService { get; set; }
+        public Consts Consts { get; set; }
 
         public ICommand PurchaseTripCommand { get; }
         public ICommand ReserveTripCommand { get; }
@@ -45,6 +50,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         public SeeDealViewModel()
         {
             TouristAttractionsForTrip = new ObservableCollection<TouristAttractionModel>();
+            RestorauntsForTrip = new ObservableCollection<RestorauntModel>();
+            AccommodationsForTrip = new ObservableCollection<AccommodationModel>();
 
             PurchaseTripCommand = new RelayCommand(OnPurchaseTrip, o => true);
             ReserveTripCommand = new RelayCommand(OnReserveTrip, o => true);
@@ -58,6 +65,26 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             foreach (TouristAttractionModel touristAttraction in touristAttractions)
             {
                 TouristAttractionsForTrip.Add(touristAttraction);
+            }
+        }
+
+        public async Task LoadRestorauntsForTrip()
+        {
+            RestorauntsForTrip.Clear();
+            IEnumerable<RestorauntModel> restoraunts = await RestorauntService.GetForTrip(Trip.Id);
+            foreach (RestorauntModel restoraunt in restoraunts)
+            {
+                RestorauntsForTrip.Add(restoraunt);
+            }
+        }
+
+        public async Task LoadAccommodationsForTrip()
+        {
+            AccommodationsForTrip.Clear();
+            IEnumerable<AccommodationModel> accommodations = await AccommodationsService.GetForTrip(Trip.Id);
+            foreach (AccommodationModel accommodation in accommodations)
+            {
+                AccommodationsForTrip.Add(accommodation);
             }
         }
 

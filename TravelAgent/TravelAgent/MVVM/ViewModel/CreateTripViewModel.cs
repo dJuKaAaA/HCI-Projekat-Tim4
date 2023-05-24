@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -25,6 +26,14 @@ namespace TravelAgent.MVVM.ViewModel
             get { return _modifying; }
             set { _modifying = value; OnPropertyChanged(); }
         }
+
+        public ObservableCollection<AccommodationModel> AllAccommodations { get; set; }
+        public ObservableCollection<RestorauntModel> AllRestoraunts { get; set; }
+        public ObservableCollection<TouristAttractionModel> AllTouristAttractions { get; set; }
+
+        public ObservableCollection<AccommodationModel> AccommodationsForTrip { get; set; }
+        public ObservableCollection<RestorauntModel> RestorauntsForTrip { get; set; }
+        public ObservableCollection<TouristAttractionModel> TouristAttractionsForTrip { get; set; }
 
         private string _departureAddress;
 
@@ -151,11 +160,18 @@ namespace TravelAgent.MVVM.ViewModel
 
         public EventHandler<LocationModel> DepartureAddressSearched;
         public EventHandler<LocationModel> DestinationAddressSearched;
+        public EventHandler LoadedAllRestoraunts;
+        public EventHandler LoadedAllAccommodations;
+        public EventHandler LoadedAllTouristAttractions;
 
         private readonly Service.TripService _tripService;
         private readonly Service.LocationService _locationService;
         private readonly Service.NavigationService _navigationService;
+        private readonly Service.AccommodationService _accommodationService;
+        private readonly Service.TouristAttractionService _touristAttractionService;
+        private readonly Service.RestorauntService _restorauntService;
         public Service.MapService MapService { get; }
+        public Consts Consts { get; }
 
         public ICommand CreateTripCommand { get; }
         public ICommand SearchDepartureFromAddressCommand { get; }
@@ -166,8 +182,20 @@ namespace TravelAgent.MVVM.ViewModel
             Service.TripService tripService,
             Service.LocationService locationService,
             Service.NavigationService navigationService,
-            Service.MapService mapService)
+            Service.MapService mapService,
+            Service.AccommodationService accommodationService,
+            Service.TouristAttractionService touristAttractionService,
+            Service.RestorauntService restorauntService,
+            Consts consts)
         {
+            AllAccommodations = new ObservableCollection<AccommodationModel>();
+            AllRestoraunts = new ObservableCollection<RestorauntModel>();
+            AllTouristAttractions = new ObservableCollection<TouristAttractionModel>();
+
+            AccommodationsForTrip = new ObservableCollection<AccommodationModel>();
+            RestorauntsForTrip = new ObservableCollection<RestorauntModel>();
+            TouristAttractionsForTrip = new ObservableCollection<TouristAttractionModel>();
+
             Hours = new ObservableCollection<string>();
             Minutes = new ObservableCollection<string>();
             Locations = new ObservableCollection<LocationModel>();
@@ -175,7 +203,11 @@ namespace TravelAgent.MVVM.ViewModel
             _tripService = tripService;
             _locationService = locationService;
             _navigationService = navigationService;
+            _accommodationService = accommodationService;
+            _touristAttractionService = touristAttractionService;
+            _restorauntService = restorauntService;
             MapService = mapService;
+            Consts = consts;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
@@ -185,6 +217,39 @@ namespace TravelAgent.MVVM.ViewModel
             BackToAllTripsViewCommand = new RelayCommand(o => _navigationService.NavigateTo<AllTripsViewModel>(), o => true);
 
             SetUpForCreation();
+            LoadAllRestoraunts();
+            LoadAllAccommodations();
+            LoadAllTouristAttractions();
+        }
+
+        public async Task LoadAllRestoraunts()
+        {
+            AllRestoraunts.Clear();
+            IEnumerable<RestorauntModel> restoraunts = await _restorauntService.GetAll();
+            foreach (RestorauntModel restoraunt in restoraunts)
+            {
+                AllRestoraunts.Add(restoraunt);
+            }
+        }
+
+        public async Task LoadAllTouristAttractions()
+        {
+            AllTouristAttractions.Clear();
+            IEnumerable<TouristAttractionModel> touristAttractions = await _touristAttractionService.GetAll();
+            foreach (TouristAttractionModel touristAttraction in touristAttractions)
+            {
+                AllTouristAttractions.Add(touristAttraction);
+            }
+        }
+
+        public async Task LoadAllAccommodations()
+        {
+            AllAccommodations.Clear();
+            IEnumerable<AccommodationModel> accommodations = await _accommodationService.GetAll();
+            foreach (AccommodationModel accommodation in accommodations)
+            {
+                AllAccommodations.Add(accommodation);
+            }
         }
 
         private async void OnSearchDepartureFromAddress(object o)

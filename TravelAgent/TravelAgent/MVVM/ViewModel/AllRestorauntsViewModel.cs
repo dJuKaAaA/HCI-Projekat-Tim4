@@ -21,48 +21,26 @@ namespace TravelAgent.MVVM.ViewModel
             set { _toolbarVisibility = value; OnPropertyChanged(); }
         }
 
-        public AllRestorauntsViewModel()
+        private readonly Service.RestorauntService _restorauntService;
+
+        public AllRestorauntsViewModel(Service.RestorauntService restorauntService)
         {
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
+            AllRestoraunts = new ObservableCollection<RestorauntModel>();
 
-            AllRestoraunts = new ObservableCollection<RestorauntModel>()
+            _restorauntService = restorauntService;
+
+            LoadAll();
+        }
+
+        private async void LoadAll()
+        {
+            AllRestoraunts.Clear();
+            IEnumerable<RestorauntModel> restoraunts = await _restorauntService.GetAll();
+            foreach (RestorauntModel restoraunt in restoraunts)
             {
-                new RestorauntModel()
-                {
-                    Id = 1,
-                    Name = "Restoraunt1",
-                    Stars = 3,
-                    LocationId = 1
-                },
-                new RestorauntModel()
-                {
-                    Id = 2,
-                    Name = "Restoraunt2",
-                    Stars = 4,
-                    LocationId = 1
-                },
-                new RestorauntModel()
-                {
-                    Id = 3,
-                    Name = "Restoraunt3",
-                    Stars = 5,
-                    LocationId = 1
-                },
-                new RestorauntModel()
-                {
-                    Id = 4,
-                    Name = "Restoraunt4",
-                    Stars = 2,
-                    LocationId = 1
-                },
-                new RestorauntModel()
-                {
-                    Id = 5,
-                    Name = "Restoraunt5",
-                    Stars = 1,
-                    LocationId = 1
-                },
-            };
+                AllRestoraunts.Add(restoraunt);
+            }
         }
     }
 }

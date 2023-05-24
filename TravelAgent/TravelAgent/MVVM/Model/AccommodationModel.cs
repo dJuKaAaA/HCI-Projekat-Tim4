@@ -9,9 +9,9 @@ namespace TravelAgent.MVVM.Model
     public class AccommodationModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
+        public string? Name { get; set; }
         public double Rating { get; set; }
-        public int LocationId { get; set; }
+        public LocationModel? Location { get; set; }
+        public string? Image { get; set; }
     }
 }

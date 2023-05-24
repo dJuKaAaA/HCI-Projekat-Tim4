@@ -9,8 +9,9 @@ namespace TravelAgent.MVVM.Model
     public class RestorauntModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int Stars { get; set; }
-        public int LocationId { get; set; }
+        public LocationModel? Location { get; set; }
+        public string? Image { get; set; }
     }
 }

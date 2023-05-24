@@ -9,8 +9,15 @@
 
   <ItemGroup>
     <None Remove="Font\WorkSans-VariableFont_wght.ttf" />
+    <None Remove="Image\Accomodation\apartment-cuprija.jpg" />
+    <None Remove="Image\Accomodation\plava-laguna.jpg" />
+    <None Remove="Image\Accomodation\rasic.jpg" />
+    <None Remove="Image\Accomodation\vila-nikola-sokobanja.jpg" />
+    <None Remove="Image\Icon\accommodation-pushpin.png" />
     <None Remove="Image\Icon\bus.png" />
+    <None Remove="Image\Icon\restoraunt-pushpin.png" />
     <None Remove="Image\Icon\star.png" />
+    <None Remove="Image\Icon\tourist-attraction-pushpin.png" />
     <None Remove="Image\Location\belgrade.jpg" />
     <None Remove="Image\Location\belocrkvanska-jezera.jpg" />
     <None Remove="Image\Location\berlin.jpg" />
@@ -33,6 +40,10 @@
     <None Remove="Image\Location\vlasinsko-jezero.jpg" />
     <None Remove="Image\Location\vodopad-jelovarnik-kopaonik.jpg" />
     <None Remove="Image\Location\vodopadi-prskalo.jpg" />
+    <None Remove="Image\Restoraunt\kvart25.jpg" />
+    <None Remove="Image\Restoraunt\merak-avlija.jpg" />
+    <None Remove="Image\Restoraunt\picerija-sokobanja.jpg" />
+    <None Remove="Image\Restoraunt\sting-grill.jpg" />
     <None Remove="Image\TouristAttraction\belocrkvanska-jezera.jpg" />
     <None Remove="Image\TouristAttraction\djavolja-varos.jpg" />
     <None Remove="Image\TouristAttraction\Felix-Romulijana.jpg" />
@@ -49,7 +60,6 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
-    <Folder Include="Image\Accomodation\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,8 +72,15 @@
 
   <ItemGroup>
     <Resource Include="Font\WorkSans-VariableFont_wght.ttf" />
+    <Resource Include="Image\Accomodation\apartment-cuprija.jpg" />
+    <Resource Include="Image\Accomodation\plava-laguna.jpg" />
+    <Resource Include="Image\Accomodation\rasic.jpg" />
+    <Resource Include="Image\Accomodation\vila-nikola-sokobanja.jpg" />
+    <Resource Include="Image\Icon\accommodation-pushpin.png" />
     <Resource Include="Image\Icon\bus.png" />
+    <Resource Include="Image\Icon\restoraunt-pushpin.png" />
     <Resource Include="Image\Icon\star.png" />
+    <Resource Include="Image\Icon\tourist-attraction-pushpin.png" />
     <Resource Include="Image\Location\belgrade.jpg" />
     <Resource Include="Image\Location\belocrkvanska-jezera.jpg" />
     <Resource Include="Image\Location\berlin.jpg" />
@@ -86,6 +103,10 @@
     <Resource Include="Image\Location\vlasinsko-jezero.jpg" />
     <Resource Include="Image\Location\vodopad-jelovarnik-kopaonik.jpg" />
     <Resource Include="Image\Location\vodopadi-prskalo.jpg" />
+    <Resource Include="Image\Restoraunt\kvart25.jpg" />
+    <Resource Include="Image\Restoraunt\merak-avlija.jpg" />
+    <Resource Include="Image\Restoraunt\picerija-sokobanja.jpg" />
+    <Resource Include="Image\Restoraunt\sting-grill.jpg" />
     <Resource Include="Image\TouristAttraction\belocrkvanska-jezera.jpg" />
     <Resource Include="Image\TouristAttraction\djavolja-varos.jpg" />
     <Resource Include="Image\TouristAttraction\Felix-Romulijana.jpg" />

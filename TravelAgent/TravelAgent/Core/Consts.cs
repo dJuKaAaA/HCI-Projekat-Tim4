@@ -25,10 +25,17 @@ namespace TravelAgent.Core
         public string TripsTableName { get; }
         public string LocationsTableName { get; }
         public string RestorauntsTableName { get; }
-        public string AccomodationsTableName { get; }
+        public string AccommodationsTableName { get; }
         public string TouristAttractionsTableName { get; }
         public string UsersTripsTableName { get; }
         public string TripsTouristAttractionsTableName { get; }
+        public string TripsRestorauntsTableName { get; }
+        public string TripsAccommodationsTableName { get; }
+
+        // pushpins
+        public string RestorauntPushpin { get; }
+        public string AccommodationPushpin { get; }
+        public string TouristAttractionPushpin { get; }
 
         public Consts()
         {
@@ -45,10 +52,16 @@ namespace TravelAgent.Core
             TripsTableName = "trips";
             LocationsTableName = "locations";
             RestorauntsTableName = "restoraunts";
-            AccomodationsTableName = "accomodations";
+            AccommodationsTableName = "accommodations";
             TouristAttractionsTableName = "tourist_attractions";
             UsersTripsTableName = "users_trips";
             TripsTouristAttractionsTableName = "trips_tourist_attractions";
+            TripsRestorauntsTableName = "trips_restoraunts";
+            TripsAccommodationsTableName = "trips_accommodations";
+
+            RestorauntPushpin = "restoraunt-pushpin.png";
+            AccommodationPushpin = "accommodation-pushpin.png";
+            TouristAttractionPushpin = "tourist-attraction-pushpin.png";
         }
     }
 }
