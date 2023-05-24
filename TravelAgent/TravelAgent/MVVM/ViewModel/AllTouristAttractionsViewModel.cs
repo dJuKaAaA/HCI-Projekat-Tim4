@@ -21,27 +21,26 @@ namespace TravelAgent.MVVM.ViewModel
             set { _toolbarVisibility = value; OnPropertyChanged(); }
         }
 
-        public AllTouristAttractionsViewModel()
+        private readonly Service.TouristAttractionService _touristAttractionService;
+
+        public AllTouristAttractionsViewModel(Service.TouristAttractionService touristAttractionService)
         {
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
+            AllTouristAttractions = new ObservableCollection<TouristAttractionModel>();
 
-            AllTouristAttractions = new ObservableCollection<TouristAttractionModel>()
+            _touristAttractionService = touristAttractionService;
+
+            LoadAll();
+        }
+
+        private async void LoadAll()
+        {
+            AllTouristAttractions.Clear();
+            IEnumerable<TouristAttractionModel> touristAttractions = await _touristAttractionService.GetAll();
+            foreach (TouristAttractionModel touristAttraction in touristAttractions)
             {
-                new TouristAttractionModel{
-                    Id = 1,
-                    Name = "Tourist attraction 1",
-                },
-                new TouristAttractionModel()
-                {
-                    Id = 2,
-                    Name = "Tourist attraction 2",
-                },
-                new TouristAttractionModel()
-                {
-                    Id = 3,
-                    Name = "Tourist attraction 3",
-                },
-            };
+                AllTouristAttractions.Add(touristAttraction);
+            }
         }
 
     }

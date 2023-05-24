@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using TravelAgent.Core;
 using TravelAgent.MVVM.Model;
 using TravelAgent.MVVM.View.Popup;
 
@@ -41,8 +42,11 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.NavigationService _navigationService;
         private readonly Service.TripService _tripService;
         private readonly Service.UserTripService _userTripService;
-        private readonly Service.TouristAttractionService _touristAttractionService;
         private readonly Service.MapService _mapService;
+        private readonly Service.TouristAttractionService _touristAttractionService;
+        private readonly Service.RestorauntService _restorauntService;
+        private readonly Service.AccommodationService _accommodationService;
+        private readonly Consts _consts;
 
         public ObservableCollection<TripModel> AllTrips { get; set; }
 
@@ -65,8 +69,11 @@ namespace TravelAgent.MVVM.ViewModel
             Service.NavigationService navigationService, 
             Service.TripService tripService,
             Service.UserTripService userTripService,
+            Service.MapService mapService,
             Service.TouristAttractionService touristAttractionService,
-            Service.MapService mapService)
+            Service.RestorauntService restorauntService,
+            Service.AccommodationService accommodationService,
+            Consts consts)
         {
             SeeDealVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Traveler ?
                 Visibility.Visible : Visibility.Collapsed;
@@ -80,8 +87,11 @@ namespace TravelAgent.MVVM.ViewModel
             _navigationService = navigationService;
             _tripService = tripService;
             _userTripService = userTripService;
-            _touristAttractionService = touristAttractionService;
             _mapService = mapService;
+            _touristAttractionService = touristAttractionService;
+            _restorauntService = restorauntService;
+            _accommodationService = accommodationService;
+            _consts = consts;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
@@ -109,8 +119,11 @@ namespace TravelAgent.MVVM.ViewModel
                 _seeDealPopup = new SeeDealPopup(
                     trip, 
                     _userTripService, 
+                    _mapService,
                     _touristAttractionService,
-                    _mapService);
+                    _restorauntService,
+                    _accommodationService,
+                    _consts);
                 _seeDealPopup.Show();
             }
         }

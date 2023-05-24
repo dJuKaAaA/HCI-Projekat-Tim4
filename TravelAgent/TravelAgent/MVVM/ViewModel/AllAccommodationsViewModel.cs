@@ -21,48 +21,28 @@ namespace TravelAgent.MVVM.ViewModel
             set { _toolbarVisibility = value; OnPropertyChanged(); }
         }
 
-        public AllAccommodationsViewModel()
+        private readonly Service.AccommodationService _accommodationService;
+
+        public AllAccommodationsViewModel(Service.AccommodationService acccommodationService)
         {
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
 
-            AllAccommodations = new ObservableCollection<AccommodationModel>()
+            AllAccommodations = new ObservableCollection<AccommodationModel>();
+
+            _accommodationService = acccommodationService;
+
+            LoadAll();
+
+        }
+
+        private async void LoadAll()
+        {
+            AllAccommodations.Clear();
+            IEnumerable<AccommodationModel> accommodations = await _accommodationService.GetAll();
+            foreach (AccommodationModel accommodation in accommodations)
             {
-                new AccommodationModel()
-                {
-                    Id = 1,
-                    Name = "Accommodation1",
-                    Address = "Address1",
-                    Rating = 5
-                },
-                new AccommodationModel()
-                {
-                    Id = 2,
-                    Name = "Accommodation2",
-                    Address = "Address2",
-                    Rating = 5
-                },
-                new AccommodationModel()
-                {
-                    Id = 3,
-                    Name = "Accommodation3",
-                    Address = "Address3",
-                    Rating = 5
-                },
-                new AccommodationModel()
-                {
-                    Id = 4,
-                    Name = "Accommodation4",
-                    Address = "Address4",
-                    Rating = 5
-                },
-                new AccommodationModel()
-                {
-                    Id = 5,
-                    Name = "Accommodation5",
-                    Address = "Address5",
-                    Rating = 5
-                },
-            };
+                AllAccommodations.Add(accommodation);
+            }
         }
 
     }

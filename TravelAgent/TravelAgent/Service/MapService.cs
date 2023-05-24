@@ -17,6 +17,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using TravelAgent.MVVM.Model;
+using System.Windows.Media.Imaging;
+using System.IO;
+using System.Windows.Data;
 
 namespace TravelAgent.Service
 {
@@ -155,6 +158,54 @@ namespace TravelAgent.Service
             string? iconPath = null,
             MouseButtonEventHandler? onClick = null)
         {
+            //// Create a new Pushpin
+            //Pushpin pushpin = new Pushpin();
+            //pushpin.Width = 50;
+            //pushpin.Height = 50;
+            //pushpin.ToolTip = toolTipText;
+            //pushpin.Tag = tag;
+
+            //if (onClick != null )
+            //{
+            //    pushpin.MouseLeftButtonDown += onClick;
+            //}
+
+            //// Set the Location of the Pushpin
+            //pushpin.Location = new Location(latitude, longitude);
+
+            //// Create the custom style for the pushpin
+            //Style style = new Style(typeof(Pushpin));
+
+            //// Create the triggers for mouse enter and leave events
+            //Trigger mouseEnterTrigger = new Trigger { Property = UIElement.IsMouseOverProperty, Value = true };
+            //mouseEnterTrigger.Setters.Add(new Setter(FrameworkElement.RenderTransformProperty, new ScaleTransform(1.2, 1.2)));
+            //mouseEnterTrigger.Setters.Add(new Setter(Panel.ZIndexProperty, 1));
+            //mouseEnterTrigger.Setters.Add(new Setter(Control.CursorProperty, Cursors.Hand));
+
+            //Trigger mouseLeaveTrigger = new Trigger { Property = UIElement.IsMouseOverProperty, Value = false };
+            //mouseLeaveTrigger.Setters.Add(new Setter(FrameworkElement.RenderTransformProperty, new ScaleTransform(1, 1)));
+            //mouseLeaveTrigger.Setters.Add(new Setter(Panel.ZIndexProperty, 0));
+
+            //// Add the triggers to the style
+            //style.Triggers.Add(mouseEnterTrigger);
+            //style.Triggers.Add(mouseLeaveTrigger);
+
+            //// Apply the style to the pushpin
+            //pushpin.Style = style;
+
+            //if (iconPath != null)
+            //{
+            //    // Create an Image element as the content of the Pushpin
+            //    Image image = new Image();
+            //    image.Width = 100;
+            //    string fullPath = Path.GetFullPath(iconPath); ;
+            //    image.Source = new BitmapImage(new Uri(fullPath));
+
+            //    // Set the image as the content of the Pushpin
+            //    pushpin.Content = image;
+            //}
+
+            //return pushpin;
             // Create a new Pushpin
             Pushpin pushpin = new Pushpin();
             pushpin.Width = 50;
@@ -162,7 +213,7 @@ namespace TravelAgent.Service
             pushpin.ToolTip = toolTipText;
             pushpin.Tag = tag;
 
-            if (onClick != null )
+            if (onClick != null)
             {
                 pushpin.MouseLeftButtonDown += onClick;
             }
@@ -186,6 +237,26 @@ namespace TravelAgent.Service
             // Add the triggers to the style
             style.Triggers.Add(mouseEnterTrigger);
             style.Triggers.Add(mouseLeaveTrigger);
+
+            if (iconPath != null)
+            {
+                // Create an Image element as the content of the Pushpin
+                Image image = new Image();
+                string fullPath = Path.GetFullPath(iconPath); ;
+                image.Source = new BitmapImage(new Uri(fullPath));
+                // Customize image properties such as Width, Height, etc.
+
+                // Set the custom content template for the pushpin style
+                ControlTemplate template = new ControlTemplate(typeof(Pushpin));
+                FrameworkElementFactory imageFactory = new FrameworkElementFactory(typeof(Image));
+                imageFactory.SetBinding(Image.SourceProperty, new Binding("Source") { Source = image });
+                // Customize other properties or add additional elements if needed
+                template.VisualTree = imageFactory;
+
+                // Apply the custom content template to the pushpin style
+                style.Setters.Add(new Setter(Pushpin.TemplateProperty, template));
+
+            }
 
             // Apply the style to the pushpin
             pushpin.Style = style;
