@@ -7,7 +7,7 @@
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:popupvm="clr-namespace:TravelAgent.MVVM.ViewModel.Popup"
         mc:Ignorable="d"
-        Title="SeeDealPopup" Height="500" Width="1100"
+        Title="SeeDealPopup" Height="600" Width="1100"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -25,12 +25,17 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
         <Border Background="#fff"
                 CornerRadius="20"
                 BorderThickness="3"
                 BorderBrush="#999"
                 Grid.Column="0"
+                Grid.RowSpan="2"
                 Grid.ColumnSpan="2"/>
 
         <Button Style="{StaticResource CloseButtonTheme}"
@@ -38,11 +43,13 @@
                 Margin="30"
                 VerticalAlignment="Top"
                 Grid.Column="1"
+                Grid.Row="0"
                 Command="{Binding CloseCommand}"/>
 
         <Border Width="Auto"
                 BorderThickness="5"
                 Margin="20"
+                Grid.RowSpan="2"
                 CornerRadius="3"
                 BorderBrush="{DynamicResource DefaultBorderBrush}">
             <m:Map x:Name="mapControl" 
@@ -54,26 +61,45 @@
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Margin="20"
+                    Grid.Row="1"
                     Grid.Column="1">
-            <TextBlock Text="{Binding Trip.Destination.Address}"
-                       HorizontalAlignment="Center"
-                       FontSize="44"
-                       Margin="20 40"
-                       TextWrapping="Wrap"
-                       FontWeight="Bold"/>
+
+            <Border Margin="20 40"
+                    BorderBrush="{StaticResource DefaultBorderBrush}"
+                    BorderThickness="2"
+                    Padding="20"
+                    CornerRadius="25">
+                <StackPanel>
+                    <TextBlock Text="{Binding Trip.Departure.Address}"
+                               HorizontalAlignment="Center"
+                               FontSize="28"
+                               TextWrapping="Wrap"
+                               FontWeight="SemiBold"/>
+                    <TextBlock Text="↓"
+                               HorizontalAlignment="Center"
+                               FontSize="28"
+                               TextWrapping="Wrap"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Trip.Destination.Address}"
+                               HorizontalAlignment="Center"
+                               FontSize="28"
+                               TextWrapping="Wrap"
+                               FontWeight="SemiBold"/>
+                    
+                </StackPanel>
+                
+            </Border>
             <Grid>
                 <TextBlock Text="Price  →"
                            HorizontalAlignment="Left"
                            FontWeight="SemiBold"
-                           FontSize="30"
-                           FontStyle="Italic"/>
+                           FontSize="30"/>
                 <TextBlock Text=""
                            FontSize="30"
                            HorizontalAlignment="Center"/>
                 <TextBlock Text="{Binding Trip.Price, Converter={StaticResource DinarValueConverter}}"
                            FontSize="30"
-                           HorizontalAlignment="Right"
-                           FontStyle="Italic"/>
+                           HorizontalAlignment="Right"/>
             </Grid>
             <Grid>
                 <TextBlock Text="Duration →"
