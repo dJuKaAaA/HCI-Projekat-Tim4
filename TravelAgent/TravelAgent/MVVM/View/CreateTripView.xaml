@@ -26,10 +26,11 @@
                                 <StackPanel>
                                     <Border BorderBrush="{StaticResource ImageBorderBrush}"
                                             BorderThickness="5"
-                                            Width="300"
+                                            Width="Auto"
+                                            MaxWidth="400"
                                             Margin="0 10"
                                             CornerRadius="3">
-                                        <component:ScalableImage Source="{Binding Image}"/>
+                                        <Image Source="{Binding Image}"/>
 
                                     </Border>
                                     <component:ScalableTextBlock Text="{Binding Name}"
@@ -138,10 +139,112 @@
             
         </Style>
         <Style TargetType="ListViewItem" x:Key="AccommodationItemTheme">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <Border Padding="10 20"
+                                    Margin="20"
+                                    x:Name="CUSTOM_PART_Border"
+                                    CornerRadius="25"
+                                    Background="Transparent"
+                                    BorderThickness="3"
+                                    BorderBrush="{StaticResource DefaultBorderBrush}">
+                                <StackPanel>
+                                    <Border BorderBrush="{StaticResource ImageBorderBrush}"
+                                            BorderThickness="5"
+                                            MaxWidth="500"
+                                            Width="Auto"
+                                            Margin="0 10"
+                                            CornerRadius="3">
+                                        <Image Source="{Binding Image}"/>
+
+                                    </Border>
+                                    <component:ScalableTextBlock Text="{Binding Name}"
+                                                                 HorizontalAlignment="Center"
+                                                                 Padding="10"
+                                                                 FontWeight="SemiBold"
+                                                                 TextWrapping="Wrap"
+                                                                 FontSize="50"
+                                                                 Margin="0"/>
+                                    <component:ScalableTextBlock Text="{Binding Location.Address}"
+                                                                 HorizontalAlignment="Center"
+                                                                 TextWrapping="Wrap"
+                                                                 Padding="10"
+                                                                 FontSize="34"
+                                                                 Margin="0"/>
+                                    <component:ScalableTextBlock Text="{Binding Rating, Converter={StaticResource RatingValueConverter}}"
+                                                                 HorizontalAlignment="Center"
+                                                                 TextWrapping="Wrap"
+                                                                 Padding="10"
+                                                                 FontWeight="SemiBold"
+                                                                 FontSize="36"
+                                                                 Margin="0"/>
+
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource ListViewItemSelectedBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+
             
         </Style>
         <Style TargetType="ListViewItem" x:Key="TouristAttractionItemTheme">
-            
+
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <Border Padding="10 20"
+                                    Margin="20"
+                                    x:Name="CUSTOM_PART_Border"
+                                    CornerRadius="25"
+                                    Background="Transparent"
+                                    BorderThickness="3"
+                                    BorderBrush="{StaticResource DefaultBorderBrush}">
+                                <StackPanel>
+                                    <Border BorderBrush="{StaticResource ImageBorderBrush}"
+                                            BorderThickness="5"
+                                            MaxWidth="500"
+                                            Width="Auto"
+                                            Margin="0 10"
+                                            CornerRadius="3">
+                                        <Image Source="{Binding Image}"/>
+
+                                    </Border>
+                                    <component:ScalableTextBlock Text="{Binding Name}"
+                                                                 HorizontalAlignment="Center"
+                                                                 Padding="10"
+                                                                 FontWeight="SemiBold"
+                                                                 TextWrapping="Wrap"
+                                                                 FontSize="50"
+                                                                 Margin="0"/>
+                                    <component:ScalableTextBlock Text="{Binding Location.Address}"
+                                                                 HorizontalAlignment="Center"
+                                                                 TextWrapping="Wrap"
+                                                                 Padding="10"
+                                                                 FontSize="34"
+                                                                 Margin="0"/>
+
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource ListViewItemSelectedBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
         </Style>
     </UserControl.Resources>
 
@@ -324,35 +427,27 @@
                     <ListView Grid.Column="0"
                               Grid.Row="1"
                               Margin="20"
+                              Padding="20"
+                              BorderThickness="3"
                               AllowDrop="True"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.CanContentScroll="False"
+                              ItemContainerStyle="{StaticResource TouristAttractionItemTheme}"
                               DragEnter="TouristAttractionListView_DragEnter" 
                               Drop="TouristAttractionListView_Drop"
-                              ItemsSource="{Binding TouristAttractionsForTrip}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"
-                                           HorizontalAlignment="Center"
-                                           Padding="10"
-                                           Margin="10"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                              ItemsSource="{Binding TouristAttractionsForTrip}"/>
 
                     <ListView Grid.Column="1"
                               Margin="20"
+                              Padding="20"
+                              BorderThickness="3"
                               Grid.Row="1"
                               PreviewMouseLeftButtonDown="TouristAttractionListView_PreviewMouseLeftButtonDown"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.CanContentScroll="False"
+                              ItemContainerStyle="{StaticResource TouristAttractionItemTheme}"
                               MouseMove="TouristAttractionListView_MouseMove"
-                              ItemsSource="{Binding AllTouristAttractions}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"
-                                           HorizontalAlignment="Center"
-                                           Padding="10"
-                                           Margin="10"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                              ItemsSource="{Binding AllTouristAttractions}"/>
 
                 </Grid>
 
@@ -383,35 +478,27 @@
                     <ListView Grid.Column="0"
                               Grid.Row="1"
                               Margin="20"
+                              Padding="20"
+                              BorderThickness="3"
                               AllowDrop="True"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.CanContentScroll="False"
+                              ItemContainerStyle="{StaticResource AccommodationItemTheme}"
                               DragEnter="AccommodationsStartPointListView_DragEnter" 
                               Drop="AccommodationListView_Drop"
-                              ItemsSource="{Binding AccommodationsForTrip}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"
-                                           HorizontalAlignment="Center"
-                                           Padding="10"
-                                           Margin="10"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                              ItemsSource="{Binding AccommodationsForTrip}"/>
 
                     <ListView Grid.Column="1"
                               Grid.Row="1"
                               Margin="20"
+                              Padding="20"
+                              BorderThickness="3"
                               PreviewMouseLeftButtonDown="AccommodationListView_PreviewMouseLeftButtonDown"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.CanContentScroll="False"
+                              ItemContainerStyle="{StaticResource AccommodationItemTheme}"
                               MouseMove="AccommodationListView_MouseMove"
-                              ItemsSource="{Binding AllAccommodations}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"
-                                           HorizontalAlignment="Center"
-                                           Padding="10"
-                                           Margin="10"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                              ItemsSource="{Binding AllAccommodations}"/>
 
                 </Grid>
 

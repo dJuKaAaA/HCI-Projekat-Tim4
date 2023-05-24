@@ -38,6 +38,34 @@ namespace TravelAgent.MVVM.View
             _viewModel.DepartureAddressSearched += OnDepartureAddressSearched;
             _viewModel.DestinationAddressSearched += OnDestinationAddressSearched;
             DrawPointsOfInterestPushpins();
+            if (_viewModel.Modifying)
+            {
+                // setting up departure attributes
+                _departurePushpin = _viewModel.MapService.CreatePushpin(
+                    _viewModel.TripForModification.Departure.Latitude,
+                    _viewModel.TripForModification.Departure.Longitude,
+                    _viewModel.TripForModification.Departure.Address,
+                    "Departure");
+                _viewModel.SelectedDepartureLocation = _viewModel.TripForModification.Departure;
+                _viewModel.DepartureAddress = _viewModel.TripForModification.Departure.Address;
+
+                // settings up destination attributes
+                _destinationPushpin = _viewModel.MapService.CreatePushpin(
+                    _viewModel.TripForModification.Destination.Latitude,
+                    _viewModel.TripForModification.Destination.Longitude,
+                    _viewModel.TripForModification.Destination.Address,
+                    "Destination");
+                _viewModel.SelectedDestinationLocation = _viewModel.TripForModification.Destination;
+                _viewModel.DestinationAddress = _viewModel.TripForModification.Destination.Address;
+
+                // creating the line that connects departure and destination
+                _tripLine = _viewModel.MapService.CreatePushpinLine(_departurePushpin.Location, _destinationPushpin.Location);
+
+                mapControl.Children.Add(_departurePushpin);
+                mapControl.Children.Add(_destinationPushpin);
+                mapControl.Children.Add(_tripLine);
+                
+            }
         }
 
         private void OnDestinationAddressSearched(object? sender, LocationModel location)

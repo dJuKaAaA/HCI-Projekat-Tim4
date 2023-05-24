@@ -39,7 +39,7 @@
                                                         <StackPanel Margin="0 0 0 5">
                                                             <component:ScalableTextBlock FontSize="64"
                                                                                          Text="Trip departure"/>
-                                                            <component:ScalableTextBlock Text="{Binding Trip.Departure.Name}"
+                                                            <component:ScalableTextBlock Text="{Binding Trip.Departure.Address}"
                                                                                          HorizontalAlignment="Left"
                                                                                          FontWeight="SemiBold"
                                                                                          TextWrapping="Wrap"
@@ -62,7 +62,7 @@
                                                         <StackPanel Margin="0 0 0 5">
                                                             <component:ScalableTextBlock FontSize="64"
                                                                                          Text="Trip destination"/>
-                                                            <component:ScalableTextBlock Text="{Binding Trip.Destination.Name}"
+                                                            <component:ScalableTextBlock Text="{Binding Trip.Destination.Address}"
                                                                                          TextWrapping="Wrap"
                                                                                          FontWeight="SemiBold"
                                                                                          FontSize="74"/>

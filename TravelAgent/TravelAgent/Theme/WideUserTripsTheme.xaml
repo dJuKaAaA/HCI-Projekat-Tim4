@@ -30,40 +30,40 @@
                                                             Margin="15 0">
 
                                                     <StackPanel Margin="0 0 20 0">
-                                                        <StackPanel Margin="0 0 0 5">
+                                                        <StackPanel Margin="0 0 0 10">
                                                             <component:ScalableTextBlock FontSize="28"
                                                                                          Text="Trip departure"/>
-                                                            <component:ScalableTextBlock Text="{Binding Trip.Departure.Name}"
+                                                            <component:ScalableTextBlock Text="{Binding Trip.Departure.Address}"
                                                                                          HorizontalAlignment="Left"
                                                                                          FontWeight="SemiBold"
                                                                                          TextWrapping="Wrap"
                                                                                          FontSize="34"/>
                                                         </StackPanel>
-                                                        <StackPanel Margin="0 5 0 0">
+                                                        <StackPanel Margin="0 10 0 0">
                                                             <component:ScalableTextBlock FontSize="28"
-                                                                                         Text="Departs at"/>
-                                                            <component:ScalableTextBlock Text="{Binding Trip.DepartureDateTime}"
-                                                                                         FontSize="38"
+                                                                                         Text="Trip destination"/>
+                                                            <component:ScalableTextBlock Text="{Binding Trip.Destination.Address}"
                                                                                          TextWrapping="Wrap"
-                                                                                         FontWeight="SemiBold"/>
+                                                                                         FontWeight="SemiBold"
+                                                                                         FontSize="34"/>
                                                         </StackPanel>
                                                     </StackPanel>
 
 
                                                     <StackPanel Margin="20 0 0 0">
-                                                        <StackPanel Margin="0 0 0 5">
+                                                        <StackPanel Margin="0 0 0 10">
                                                             <component:ScalableTextBlock FontSize="28"
-                                                                                         Text="Trip destination"/>
-                                                            <component:ScalableTextBlock Text="{Binding Trip.Destination.Name}"
+                                                                                         Text="Departs at"/>
+                                                            <component:ScalableTextBlock Text="{Binding Trip.DepartureDateTime}"
+                                                                                         FontSize="34"
                                                                                          TextWrapping="Wrap"
-                                                                                         FontWeight="SemiBold"
-                                                                                         FontSize="38"/>
+                                                                                         FontWeight="SemiBold"/>
                                                         </StackPanel>
-                                                        <StackPanel Margin="0 5 0 0">
+                                                        <StackPanel Margin="0 10 0 0">
                                                             <component:ScalableTextBlock FontSize="28"
                                                                                          Text="Arrives at"/>
                                                             <component:ScalableTextBlock Text="{Binding Trip.ArrivalDateTime}"
-                                                                                         FontSize="38"
+                                                                                         FontSize="34"
                                                                                          TextWrapping="Wrap"
                                                                                          FontWeight="SemiBold"/>
                                                         </StackPanel>
