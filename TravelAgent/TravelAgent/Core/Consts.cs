@@ -11,14 +11,15 @@ namespace TravelAgent.Core
         public string ProjectRootRelativePath { get; }
         public string PathToDatabase { get; }
 
-        // path to images
-        public string PathToTouristAttractionsImages { get; }
-        public string PathToRestorauntImages { get; }
-        public string PathToIcons { get; }
-        
         public string SqliteConnectionString { get; }
         public string DateTimeFormatString { get; }
         public string BingMapsApiKey { get; }
+
+        // path to images
+        public string PathToTouristAttractionsImages { get; }
+        public string PathToRestorauntImages { get; }
+        public string PathToAccommodationImages { get; }
+        public string PathToIcons { get; }
 
         // table names
         public string UsersTableName { get; }
@@ -33,20 +34,22 @@ namespace TravelAgent.Core
         public string TripsAccommodationsTableName { get; }
 
         // pushpins
-        public string RestorauntPushpin { get; }
-        public string AccommodationPushpin { get; }
-        public string TouristAttractionPushpin { get; }
+        public string RestorauntPushpinIcon { get; }
+        public string AccommodationPushpinIcon { get; }
+        public string TouristAttractionPushpinIcon { get; }
 
         public Consts()
         {
             ProjectRootRelativePath = "../../..";
             PathToDatabase = $"{ProjectRootRelativePath}/Database/database.db";
-            PathToTouristAttractionsImages = $"{ProjectRootRelativePath}/Image/TouristAttraction";
-            PathToRestorauntImages = $"{ProjectRootRelativePath}/Image/Restoraunt";
-            PathToIcons = $"{ProjectRootRelativePath}/Image/Icon";
             SqliteConnectionString = $"Data Source={PathToDatabase}";
             DateTimeFormatString  = "d.M.yyyy. H:m:s";
             BingMapsApiKey  = "AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr";
+
+            PathToIcons = $"{ProjectRootRelativePath}/Image/Icon";
+            PathToTouristAttractionsImages = $"{ProjectRootRelativePath}/Image/TouristAttraction";
+            PathToRestorauntImages = $"{ProjectRootRelativePath}/Image/Restoraunt";
+            PathToAccommodationImages = $"{ProjectRootRelativePath}/Image/Accomodation";
 
             UsersTableName = "users";
             TripsTableName = "trips";
@@ -59,9 +62,9 @@ namespace TravelAgent.Core
             TripsRestorauntsTableName = "trips_restoraunts";
             TripsAccommodationsTableName = "trips_accommodations";
 
-            RestorauntPushpin = "restoraunt-pushpin.png";
-            AccommodationPushpin = "accommodation-pushpin.png";
-            TouristAttractionPushpin = "tourist-attraction-pushpin.png";
+            RestorauntPushpinIcon = "restoraunt-pushpin.png";
+            AccommodationPushpinIcon = "accommodation-pushpin.png";
+            TouristAttractionPushpinIcon = "tourist-attraction-pushpin.png";
         }
     }
 }

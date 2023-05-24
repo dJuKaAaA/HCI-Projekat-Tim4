@@ -25,6 +25,8 @@ namespace TravelAgent.MVVM.View
     /// </summary>
     public partial class CreateTripView : UserControl
     {
+        private CreateTripViewModel _viewModel;
+
         public CreateTripView()
         {
             InitializeComponent();
@@ -32,16 +34,15 @@ namespace TravelAgent.MVVM.View
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ((CreateTripViewModel)DataContext).DepartureAddressSearched += OnDepartureAddressSearched;
-            ((CreateTripViewModel)DataContext).DestinationAddressSearched += OnDestinationAddressSearched;
-            DrawAccomodationsPushpins();
-            DrawRestorauntsPushpins();
-            DrawTouristAttractionPushpins();
+            _viewModel = (CreateTripViewModel)DataContext;
+            _viewModel.DepartureAddressSearched += OnDepartureAddressSearched;
+            _viewModel.DestinationAddressSearched += OnDestinationAddressSearched;
+            DrawPointsOfInterestPushpins();
         }
 
         private void OnDestinationAddressSearched(object? sender, LocationModel location)
         {
-            Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
+            Service.MapService mapService = _viewModel.MapService;
 
             if (_departurePushpin == null)
             {
@@ -51,8 +52,8 @@ namespace TravelAgent.MVVM.View
                     location.Address,
                     "Destination");
                 mapControl.Children.Add(_destinationPushpin);
-                ((CreateTripViewModel)DataContext).SelectedDestinationLocation = location;
-                ((CreateTripViewModel)DataContext).DestinationAddress = location.Address;
+                _viewModel.SelectedDestinationLocation = location;
+                _viewModel.DestinationAddress = location.Address;
             }
             else
             {
@@ -69,8 +70,8 @@ namespace TravelAgent.MVVM.View
                     location.Address,
                     "Destination");
                 mapControl.Children.Add(_destinationPushpin);
-                ((CreateTripViewModel)DataContext).SelectedDestinationLocation = location;
-                ((CreateTripViewModel)DataContext).DestinationAddress = location.Address;
+                _viewModel.SelectedDestinationLocation = location;
+                _viewModel.DestinationAddress = location.Address;
 
                 _tripLine = mapService.CreatePushpinLine(_departurePushpin.Location, _destinationPushpin.Location);
                 mapControl.Children.Add(_tripLine);
@@ -80,61 +81,68 @@ namespace TravelAgent.MVVM.View
             mapControl.ZoomLevel = 12;
         }
 
-        private async void DrawRestorauntsPushpins()
+        private async void DrawPointsOfInterestPushpins()
         {
-            Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
-            Consts consts = ((CreateTripViewModel)DataContext).Consts;
+            await DrawAccomodationsPushpins();
+            await DrawRestorauntsPushpins();
+            await DrawTouristAttractionPushpins();
+        }
 
-            await ((CreateTripViewModel)DataContext).LoadAllRestoraunts();
+        private async Task DrawRestorauntsPushpins()
+        {
+            Service.MapService mapService = _viewModel.MapService;
+            Consts consts = _viewModel.Consts;
 
-            foreach (RestorauntModel restoraunt in ((CreateTripViewModel)DataContext).AllRestoraunts)
+            await _viewModel.LoadAllRestoraunts();
+
+            foreach (RestorauntModel restoraunt in _viewModel.AllRestoraunts)
             {
                 Pushpin pushpin = mapService.CreatePushpin(
                     restoraunt.Location.Latitude,
                     restoraunt.Location.Longitude,
                     restoraunt.Name,
                     $"Restoraunt_{restoraunt.Id}",
-                    $"{consts.PathToIcons}/{consts.RestorauntPushpin}");
+                    $"{consts.PathToIcons}/{consts.RestorauntPushpinIcon}");
                 mapControl.Children.Add(pushpin);
             }
 
         }
 
-        private async void DrawAccomodationsPushpins()
+        private async Task DrawAccomodationsPushpins()
         {
-            Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
-            Consts consts = ((CreateTripViewModel)DataContext).Consts;
+            Service.MapService mapService = _viewModel.MapService;
+            Consts consts = _viewModel.Consts;
 
-            await ((CreateTripViewModel)DataContext).LoadAllAccommodations();
+            await _viewModel.LoadAllAccommodations();
 
-            foreach (AccommodationModel accommodation in ((CreateTripViewModel)DataContext).AllAccommodations)
+            foreach (AccommodationModel accommodation in _viewModel.AllAccommodations)
             {
                 Pushpin pushpin = mapService.CreatePushpin(
                     accommodation.Location.Latitude,
                     accommodation.Location.Longitude,
                     accommodation.Name,
                     $"Accommodation_{accommodation.Id}",
-                    $"{consts.PathToIcons}/{consts.AccommodationPushpin}");
+                    $"{consts.PathToIcons}/{consts.AccommodationPushpinIcon}");
                 mapControl.Children.Add(pushpin);
             }
 
         }
 
-        private async void DrawTouristAttractionPushpins()
+        private async Task DrawTouristAttractionPushpins()
         {
-            Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
-            Consts consts = ((CreateTripViewModel)DataContext).Consts;
+            Service.MapService mapService = _viewModel.MapService;
+            Consts consts = _viewModel.Consts;
 
-            await ((CreateTripViewModel)DataContext).LoadAllTouristAttractions();
+            await _viewModel.LoadAllTouristAttractions();
 
-            foreach (TouristAttractionModel touristAttraction in ((CreateTripViewModel)DataContext).AllTouristAttractions)
+            foreach (TouristAttractionModel touristAttraction in _viewModel.AllTouristAttractions)
             {
                 Pushpin pushpin = mapService.CreatePushpin(
                     touristAttraction.Location.Latitude,
                     touristAttraction.Location.Longitude,
                     touristAttraction.Name,
                     $"TouristAttraction_{touristAttraction.Id}",
-                    $"{consts.PathToIcons}/{consts.TouristAttractionPushpin}");
+                    $"{consts.PathToIcons}/{consts.TouristAttractionPushpinIcon}");
                 mapControl.Children.Add(pushpin);
             }
 
@@ -142,7 +150,7 @@ namespace TravelAgent.MVVM.View
 
         private void OnDepartureAddressSearched(object? sender, LocationModel location)
         {
-            Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
+            Service.MapService mapService = _viewModel.MapService;
 
             if (_destinationPushpin == null)
             {
@@ -152,8 +160,8 @@ namespace TravelAgent.MVVM.View
                     location.Address,
                     "Departure");
                 mapControl.Children.Add(_departurePushpin);
-                ((CreateTripViewModel)DataContext).SelectedDepartureLocation = location;
-                ((CreateTripViewModel)DataContext).DepartureAddress = location.Address;
+                _viewModel.SelectedDepartureLocation = location;
+                _viewModel.DepartureAddress = location.Address;
             }
             else
             {
@@ -170,13 +178,13 @@ namespace TravelAgent.MVVM.View
                     location.Address,
                     "Departure");
                 mapControl.Children.Add(_departurePushpin);
-                ((CreateTripViewModel)DataContext).SelectedDepartureLocation = location;
-                ((CreateTripViewModel)DataContext).DepartureAddress = location.Address;
+                _viewModel.SelectedDepartureLocation = location;
+                _viewModel.DepartureAddress = location.Address;
 
                 _tripLine = mapService.CreatePushpinLine(_departurePushpin.Location, _destinationPushpin.Location);
                 mapControl.Children.Add(_tripLine);
             }
-            
+
             mapControl.Center = new Location(location.Latitude, location.Longitude);
             mapControl.ZoomLevel = 12;
         }
@@ -187,7 +195,7 @@ namespace TravelAgent.MVVM.View
 
         private async void Map_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Service.MapService mapService = ((CreateTripViewModel)DataContext).MapService;
+            Service.MapService mapService = _viewModel.MapService;
 
             // Get the clicked location from the event arguments
             Point mousePosition = e.GetPosition((UIElement)sender);
@@ -203,8 +211,8 @@ namespace TravelAgent.MVVM.View
                     location.Address,
                     "Departure");
                 mapControl.Children.Add(_departurePushpin);
-                ((CreateTripViewModel)DataContext).SelectedDepartureLocation = location;
-                ((CreateTripViewModel)DataContext).DepartureAddress = location.Address;
+                _viewModel.SelectedDepartureLocation = location;
+                _viewModel.DepartureAddress = location.Address;
             }
             else if (_destinationPushpin == null)
             {
@@ -214,8 +222,8 @@ namespace TravelAgent.MVVM.View
                     location.Address,
                     "Destination");
                 mapControl.Children.Add(_destinationPushpin);
-                ((CreateTripViewModel)DataContext).SelectedDestinationLocation = location;
-                ((CreateTripViewModel)DataContext).DestinationAddress = location.Address;
+                _viewModel.SelectedDestinationLocation = location;
+                _viewModel.DestinationAddress = location.Address;
 
                 _tripLine = mapService.CreatePushpinLine(_departurePushpin.Location, _destinationPushpin.Location);
                 mapControl.Children.Add(_tripLine);
@@ -233,14 +241,201 @@ namespace TravelAgent.MVVM.View
                     "Departure");
                 _destinationPushpin = null;
                 _tripLine = null;
-                ((CreateTripViewModel)DataContext).SelectedDepartureLocation = location;
-                ((CreateTripViewModel)DataContext).SelectedDestinationLocation = null;
+                _viewModel.SelectedDepartureLocation = location;
+                _viewModel.SelectedDestinationLocation = null;
 
-                ((CreateTripViewModel)DataContext).DepartureAddress = location.Address;
-                ((CreateTripViewModel)DataContext).DestinationAddress = string.Empty;
+                _viewModel.DepartureAddress = location.Address;
+                _viewModel.DestinationAddress = string.Empty;
 
                 mapControl.Children.Add(_departurePushpin);
 
+            }
+        }
+
+        // drag and drop
+        //---
+        private static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            do
+            {
+                if (current is T)
+                {
+                    return (T)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            while (current != null);
+            return null;
+        }
+
+        // restoraunts
+        Point restorauntStartPoint = new Point();
+
+        private void RestorauntListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            restorauntStartPoint = e.GetPosition(null);
+        }
+
+        private void RestorauntListView_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(null);
+            Vector diff = restorauntStartPoint - mousePos;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                // Get the dragged ListViewItem
+                ListView listView = sender as ListView;
+                ListViewItem listViewItem =
+                    FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+
+                if (listViewItem == null)
+                {
+                    return;
+                }
+
+                // Find the data behind the ListViewItem
+                RestorauntModel restoraunt = (RestorauntModel)listView.ItemContainerGenerator.
+                    ItemFromContainer(listViewItem);
+
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject("myFormat", restoraunt);
+                DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private void RestorauntListView_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent("myFormat") || sender == e.Source)
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void RestorauntListView_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("myFormat"))
+            {
+                RestorauntModel restoraunt = e.Data.GetData("myFormat") as RestorauntModel;
+                if (!_viewModel.RestorauntsForTrip.Contains(restoraunt))
+                {
+                    _viewModel.RestorauntsForTrip.Add(restoraunt);
+                }
+            }
+        }
+
+        // accommodations
+        Point accommodationStartPoint = new Point();
+
+        private void AccommodationListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            accommodationStartPoint = e.GetPosition(null);
+        }
+
+        private void AccommodationListView_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(null);
+            Vector diff = accommodationStartPoint - mousePos;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                // Get the dragged ListViewItem
+                ListView listView = sender as ListView;
+                ListViewItem listViewItem =
+                    FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+
+                if (listViewItem == null)
+                {
+                    return;
+                }
+
+                // Find the data behind the ListViewItem
+                AccommodationModel accommodation = (AccommodationModel)listView.ItemContainerGenerator.
+                    ItemFromContainer(listViewItem);
+
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject("myFormat", accommodation);
+                DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private void AccommodationsStartPointListView_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent("myFormat") || sender == e.Source)
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void AccommodationListView_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("myFormat"))
+            {
+                AccommodationModel accommodation = e.Data.GetData("myFormat") as AccommodationModel;
+                if (!_viewModel.AccommodationsForTrip.Contains(accommodation))
+                {
+                    _viewModel.AccommodationsForTrip.Add(accommodation);
+                }
+            }
+        }
+
+        // tourist attractions
+        Point touristAttractionStartingPoint = new Point();
+
+        private void TouristAttractionListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            touristAttractionStartingPoint = e.GetPosition(null);
+        }
+
+        private void TouristAttractionListView_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(null);
+            Vector diff = touristAttractionStartingPoint - mousePos;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                // Get the dragged ListViewItem
+                ListView listView = sender as ListView;
+                ListViewItem listViewItem =
+                    FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+
+                if (listViewItem == null)
+                {
+                    return;
+                }
+
+                // Find the data behind the ListViewItem
+                TouristAttractionModel touristAttraction = (TouristAttractionModel)listView.ItemContainerGenerator.
+                    ItemFromContainer(listViewItem);
+
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject("myFormat", touristAttraction);
+                DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private void TouristAttractionListView_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent("myFormat") || sender == e.Source)
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void TouristAttractionListView_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("myFormat"))
+            {
+                TouristAttractionModel touristAttraction = e.Data.GetData("myFormat") as TouristAttractionModel;
+                if (!_viewModel.TouristAttractionsForTrip.Contains(touristAttraction))
+                {
+                    _viewModel.TouristAttractionsForTrip.Add(touristAttraction);
+                }
             }
         }
 
