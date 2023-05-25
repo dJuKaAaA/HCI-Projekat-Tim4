@@ -12,6 +12,19 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         Closing="MainWindow_Closing">
+
+    <Window.InputBindings>
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding OpenAllTripsViewCommand}" />
+        <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding OpenAllTouristAttractionsViewCommand}" />
+        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestorauntsViewCommand}" />
+        <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding OpenAllAccomodationsViewCommand}" />
+        <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding OpenUserTripsViewCommand}" />
+        <KeyBinding Key="M" Modifiers="Ctrl" Command="{Binding OpenMapsCommand}" />
+        <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding OpenHelpCommand}" />
+        <KeyBinding Key="I" Modifiers="Ctrl" Command="{Binding OpenLoginViewCommand}"/>
+        <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding LogoutCommand}"/>
+    </Window.InputBindings>
+    
     <Grid>
 
         <Grid.RowDefinitions>
@@ -23,17 +36,6 @@
         <Menu Grid.Row="0"
               Visibility="{Binding TravelerMenuVisibility}">
               
-            <Menu.InputBindings>
-                <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding OpenAllTripsViewCommand}" />
-                <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding OpenAllTouristAttractionsViewCommand}" />
-                <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestorauntsViewCommand}" />
-                <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding OpenAllAccomodationsViewCommand}" />
-                <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding OpenUserTripsViewCommand}" />
-                <KeyBinding Key="M" Modifiers="Ctrl" Command="{Binding OpenMapsCommand}" />
-                <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding OpenHelpCommand}" />
-                <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding LogoutCommand}" />
-            </Menu.InputBindings>
-
             <MenuItem Header="View"
                       IsTabStop="False">
                 <MenuItem Header="Trips"
@@ -70,16 +72,6 @@
         <Menu Grid.Row="0"
               Visibility="{Binding AgentMenuVisibility}">
 
-            <Menu.InputBindings>
-                <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding OpenAllTripsViewCommand}" />
-                <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding OpenAllTouristAttractionsViewCommand}" />
-                <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestorauntsViewCommand}" />
-                <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding OpenAllAccomodationsViewCommand}" />
-                <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding OpenSoldTripsViewCommand}" />
-                <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding OpenHelpCommand}" />
-                <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding LogoutCommand}" />
-            </Menu.InputBindings>
-
             <MenuItem Header="View"
                       IsTabStop="False">
                 <MenuItem Header="Trips"
@@ -111,14 +103,6 @@
         <!-- Menu for unregistered user -->
         <Menu Grid.Row="0"
               Visibility="{Binding UnregisteredUserMenuVisibility}">
-            <Menu.InputBindings>
-                <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding OpenLoginViewCommand}" />
-                <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding OpenAllTripsViewCommand}" />
-                <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding OpenAllTouristAttractionsViewCommand}" />
-                <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestorauntsViewCommand}" />
-                <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding OpenAllAccomodationsViewCommand}" />
-                <KeyBinding Key="M" Modifiers="Ctrl" Command="{Binding OpenMapsCommand}" />
-            </Menu.InputBindings>
 
             <MenuItem Header="Login"
                       IsTabStop="False"
