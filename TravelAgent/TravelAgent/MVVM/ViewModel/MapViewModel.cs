@@ -13,55 +13,65 @@ namespace TravelAgent.MVVM.ViewModel
 {
     public class MapViewModel : Core.ViewModel
     {
-        public ObservableCollection<TripModel> AllTrips { get; set; }
-        public ObservableCollection<LocationModel> AllLocations { get; set; }
+        public ObservableCollection<TouristAttractionModel> AllTouristAttractions { get; set; }
+        public ObservableCollection<RestorauntModel> AllRestoraunts { get; set; }
+        public ObservableCollection<AccommodationModel> AllAccommodations { get; set; }
 
-        private readonly TripService _tripService;
-        private readonly LocationService _locationService;
+        private readonly Service.AccommodationService _accommodationService;
+        private readonly Service.TouristAttractionService _touristAttractionService;
+        private readonly Service.RestorauntService _restorauntService;
+        public MapService MapService { get; }
         public Consts Consts { get; }
 
-        public event EventHandler LoadFinished;
-
         public MapViewModel(
-            Service.TripService tripService,
-            LocationService locationService,
+            Service.AccommodationService accommodationService,
+            Service.TouristAttractionService touristAttractionService,
+            Service.RestorauntService restorauntService,
+            MapService mapService,
             Core.Consts consts)
         {
-            _tripService = tripService;
-            _locationService = locationService;
+            AllTouristAttractions = new ObservableCollection<TouristAttractionModel>();
+            AllRestoraunts = new ObservableCollection<RestorauntModel>();
+            AllAccommodations = new ObservableCollection<AccommodationModel>();
+
+            _accommodationService = accommodationService;
+            _touristAttractionService = touristAttractionService;
+            _restorauntService = restorauntService;
+            MapService = mapService;
             Consts = consts;
 
-            LoadAll();
         }
 
-        private async void LoadAll()
+        public async Task LoadTouristAttractions()
         {
-            await LoadTrips();
-            await LoadLocations();
-
-            LoadFinished?.Invoke(this, new EventArgs());
-        }
-
-        private async Task LoadTrips()
-        {
-            AllTrips = new ObservableCollection<TripModel>();
-
-            IEnumerable<TripModel> allTrips = await _tripService.GetAll();
-            foreach (TripModel trip in allTrips)
+            AllTouristAttractions.Clear();
+            IEnumerable<TouristAttractionModel> touristAttractions = await _touristAttractionService.GetAll();
+            foreach (TouristAttractionModel touristAttraction in touristAttractions)
             {
-                AllTrips.Add(trip);
+                AllTouristAttractions.Add(touristAttraction);
             }
         }
 
-        private async Task LoadLocations()
+        public async Task LoadRestoraunts()
         {
-            AllLocations = new ObservableCollection<LocationModel>();
-
-            IEnumerable<LocationModel> allLocations = await _locationService.GetAll();
-            foreach (LocationModel location in allLocations)
+            AllRestoraunts.Clear();
+            IEnumerable<RestorauntModel> restoraunts = await _restorauntService.GetAll();
+            foreach (RestorauntModel restoraunt in restoraunts)
             {
-                AllLocations.Add(location);
+                AllRestoraunts.Add(restoraunt);
             }
         }
+
+        public async Task LoadAccommodations()
+        {
+            AllAccommodations.Clear();
+            IEnumerable<AccommodationModel> accommodations = await _accommodationService.GetAll();
+            foreach (AccommodationModel accommodation in accommodations)
+            {
+                AllAccommodations.Add(accommodation);
+            }
+        }
+
+
     }
 }
