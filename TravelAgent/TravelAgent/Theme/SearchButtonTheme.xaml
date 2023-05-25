@@ -7,7 +7,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="75"
-                            Background="{DynamicResource HighlightedBrush}"
+                            Background="{DynamicResource SearchButtonBackgroundBrush}"
                             x:Name="CUSTOM_PART_Border"
                             Padding="30">
                         <component:ScalableTextBlock Text="🔍"

@@ -63,11 +63,10 @@ namespace TravelAgent.MVVM.ViewModel
             OpenAllTouristAttractionsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllTouristAttractionsViewModel>(), o => true);
             OpenAllRestorauntsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllRestorauntsViewModel>(), o => true);
             OpenAllAccomodationsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllAccommodationsViewModel>(), o => true);
-            OpenUserTripsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<UserTripsViewModel>(), o => SignedUser?.Type == UserType.Traveler);
+            OpenUserTripsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<UserTripsViewModel>(), o => SignedUser != null);
             OpenMapsCommand = new RelayCommand(o => NavigationService.NavigateTo<MapViewModel>(), o => true);
             OpenHelpCommand = new RelayCommand(o => MessageBox.Show("This is very helpful :)"), o => SignedUser != null);
             OpenLoginViewCommand = new RelayCommand(o => NavigationService.NavigateTo<LoginViewModel>(), o => SignedUser == null);
-            OpenSoldTripsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<SoldTripsViewModel>(), o => SignedUser?.Type == UserType.Agent);
             LogoutCommand = new RelayCommand(OnLogout, o => SignedUser != null);
 
             NavigationService.NavigationCompleted += (object? sender, NavigationEventArgs e) =>
