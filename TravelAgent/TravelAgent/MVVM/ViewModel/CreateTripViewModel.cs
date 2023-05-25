@@ -508,6 +508,11 @@ namespace TravelAgent.MVVM.ViewModel
 
         private void OnNavigationCompleted(object? sender, Core.NavigationEventArgs e)
         {
+            if (e.ViewModelType != typeof(CreateTripViewModel))
+            {
+                _navigationService.NavigationCompleted -= OnNavigationCompleted;
+            } 
+
             if (e.Extra is TripModel trip)
             {
                 TripForModification = trip;

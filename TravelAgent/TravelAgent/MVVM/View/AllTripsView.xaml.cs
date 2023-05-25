@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgent.MVVM.ViewModel;
 
 namespace TravelAgent.MVVM.View
 {

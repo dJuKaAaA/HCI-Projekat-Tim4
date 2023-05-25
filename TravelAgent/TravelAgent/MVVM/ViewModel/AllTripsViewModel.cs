@@ -60,6 +60,10 @@ namespace TravelAgent.MVVM.ViewModel
 
         private SeeDealPopup? _seeDealPopup;
 
+        private KeyBinding? _openCreateTripViewKeyBinding;
+        private KeyBinding? _openModifyTripViewKeyBinding;
+        private KeyBinding? _deleteTripKeyBinding;
+
         public ICommand OpenSeeDealPopupCommand { get; }
         public ICommand OpenCreateTripViewCommand { get; }
         public ICommand OpenModifyTripViewCommand { get; } // this is just the CreateTripView with a TripModel passed as parameter
@@ -96,15 +100,35 @@ namespace TravelAgent.MVVM.ViewModel
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
             OpenSeeDealPopupCommand = new Core.RelayCommand(OnOpenSeeDealPopup, o => true);
-            OpenCreateTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(), o => true);
-            OpenModifyTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(SelectedTrip), o => SelectedTrip != null);
-            DeleteTripCommand = new Core.RelayCommand(OnDeleteTrip, o => SelectedTrip != null);
+            OpenCreateTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(), o => MainViewModel.SignedUser?.Type == UserType.Agent);
+            OpenModifyTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(SelectedTrip), o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTrip != null);
+            DeleteTripCommand = new Core.RelayCommand(OnDeleteTrip, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTrip != null);
 
             LoadAll();
         }
 
         private void OnNavigationCompleted(object? sender, Core.NavigationEventArgs e)
         {
+            if (e.ViewModelType != typeof(AllTripsViewModel))
+            {
+                Window window = Application.Current.MainWindow;
+                window.InputBindings.Remove(_openCreateTripViewKeyBinding);
+                window.InputBindings.Remove(_openModifyTripViewKeyBinding);
+                window.InputBindings.Remove(_deleteTripKeyBinding);
+
+                _navigationService.NavigationCompleted -= OnNavigationCompleted;
+            }
+            else
+            {
+                Window window = Application.Current.MainWindow;
+                _openCreateTripViewKeyBinding = new KeyBinding(OpenCreateTripViewCommand, Key.N, ModifierKeys.Control);
+                _openModifyTripViewKeyBinding = new KeyBinding(OpenModifyTripViewCommand, Key.C, ModifierKeys.Control);
+                _deleteTripKeyBinding = new KeyBinding(DeleteTripCommand, Key.D, ModifierKeys.Control);
+                window.InputBindings.Add(_openCreateTripViewKeyBinding);
+                window.InputBindings.Add(_openModifyTripViewKeyBinding);
+                window.InputBindings.Add(_deleteTripKeyBinding);
+            }
+
             _seeDealPopup?.Close();
         }
 
