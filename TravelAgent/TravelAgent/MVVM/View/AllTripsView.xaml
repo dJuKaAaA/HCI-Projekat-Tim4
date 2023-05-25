@@ -103,20 +103,46 @@
 
                                                     <WrapPanel Grid.Column="1"
                                                                Orientation="Vertical"
-                                                                HorizontalAlignment="Right"
-                                                                Margin="10 0">
+                                                               VerticalAlignment="Center"
+                                                               HorizontalAlignment="Right"
+                                                               Margin="10 0">
 
-                                                        <component:ScalableTextBlock Text="{Binding Price}"
+                                                        <component:ScalableTextBlock Text="{Binding Price, Converter={StaticResource DinarValueConverter}}"
                                                                                      HorizontalAlignment="Center"
                                                                                      Foreground="{StaticResource MainTextBrush}"
                                                                                      Margin="10"
                                                                                      FontSize="36"
                                                                                      FontWeight="Bold"/>
 
-                                                        <component:ScalableImage Source="../../../Image/Icon/bus.png"
-                                                                                 Width="250"
-                                                                                 Grid.Column="1"
-                                                                                 Visibility="{Binding DataContext.BusIconVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                                        <Button Grid.Column="1"
+                                                                ToolTip="Trip details"
+                                                                Visibility="{Binding DataContext.BusIconVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                                Command="{Binding DataContext.OpenSeeDealPopupCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                                Tag="{Binding Id}">
+                                                            <Button.Style>
+                                                                <Style TargetType="Button">
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="Button">
+                                                                                <Grid>
+                                                                                    <component:ScalableImage Source="../../../Image/Icon/bus.png"
+                                                                                                             Width="250"/>
+                                                                                    
+                                                                                </Grid>
+                                                                                <ControlTemplate.Triggers>
+                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                                                        <Setter Property="Opacity" Value="0.75"/>
+                                                                                    </Trigger>
+                                                                                </ControlTemplate.Triggers>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
+
                                                         <Button Margin="10 5"
                                                                 Command="{Binding DataContext.OpenSeeDealPopupCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
@@ -257,7 +283,7 @@
                                                                 BorderBrush="{StaticResource DefaultBorderBrush}"
                                                                 BorderThickness="1"/>
                                                                 
-                                                        <component:ScalableTextBlock Text="{Binding Departure.Address}"
+                                                        <component:ScalableTextBlock Text="{Binding Departure.Address, Converter={StaticResource TripAddressValueConverter}}"
                                                                                      FontWeight="SemiBold"
                                                                                      HorizontalAlignment="Center"
                                                                                      FontSize="84"
@@ -266,7 +292,7 @@
                                                                                      HorizontalAlignment="Center"
                                                                                      FontSize="80"
                                                                                      Foreground="{StaticResource MainTextBrush}"/>
-                                                        <component:ScalableTextBlock Text="{Binding Destination.Address}"
+                                                        <component:ScalableTextBlock Text="{Binding Destination.Address, Converter={StaticResource TripAddressValueConverter}}"
                                                                                      FontWeight="SemiBold"
                                                                                      FontSize="84"
                                                                                      HorizontalAlignment="Center"
@@ -280,8 +306,8 @@
 
                                                     <WrapPanel Grid.Row="1"
                                                                Orientation="Vertical"
-                                                                HorizontalAlignment="Center"
-                                                                Margin="0 30 0 0">
+                                                               HorizontalAlignment="Center"
+                                                               Margin="0 30 0 0">
 
                                                         <component:ScalableImage Source="../../../Image/Icon/bus.png"
                                                                                  Width="700"
@@ -323,7 +349,7 @@
                                                                 </Style>
                                                             </Button.Style>
                                                         </Button>
-                                                        <component:ScalableTextBlock Text="{Binding Price}"
+                                                        <component:ScalableTextBlock Text="{Binding Price, Converter={StaticResource DinarValueConverter}}"
                                                                                      HorizontalAlignment="Center"
                                                                                      Foreground="{StaticResource MainTextBrush}"
                                                                                      FontSize="76"

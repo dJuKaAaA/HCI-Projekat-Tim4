@@ -74,10 +74,10 @@
             <converter:LocationValueConverter x:Key="LocationValueConverter"/>
             <converter:DinarValueConverter x:Key="DinarValueConverter"/>
             <converter:HoursValueConverter x:Key="HoursValueConverter"/>
-            <converter:PricePaidMarkupExtension x:Key="PricePaidMarkupExtension"/>
             <converter:GreaterThanValueConverter x:Key="GreaterThanValueConverter"/>
             <converter:RatingValueConverter x:Key="RatingValueConverter"/>
             <converter:TripAddressValueConverter x:Key="TripAddressValueConverter"/>
+            <converter:PricePaidValueConverter x:Key="PricePaidValueConverter"/>
 
             <!-- Star -->
             <Polygon x:Key="StarPolygon" Fill="Gold" Points="50,0 65,35 100,40 75,65 80,100 50,80 20,100 25,65 0,40 35,35"/>
@@ -91,10 +91,10 @@
                 <!--<ResourceDictionary Source="./Theme/TripsListViewTheme.xaml"/>-->
                 <ResourceDictionary Source="./Theme/CustomScrollbarTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/FancyButtonTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/WideUserTripsTheme.xaml"/>
+                <!--<ResourceDictionary Source="./Theme/WideUserTripsTheme.xaml"/>-->
                 <ResourceDictionary Source="./Theme/FormButtonTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/LocationComboBoxTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/NarrowUserTripsTheme.xaml"/>
+                <!--<ResourceDictionary Source="./Theme/NarrowUserTripsTheme.xaml"/>-->
                 <ResourceDictionary Source="./Theme/CustomDatePickerTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/CloseButtonTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/BackButtonTheme.xaml"/>

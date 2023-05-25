@@ -36,6 +36,22 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             set { _tripDuration = value; OnPropertyChanged(); }
         }
 
+        private Visibility _purchaseButtonsVisibility;
+
+        public Visibility PurchaseButtonVisibility
+        {
+            get { return _purchaseButtonsVisibility; }
+            set { _purchaseButtonsVisibility = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _cannotPurchaseTextVisibility;
+
+        public Visibility CannotPurchaseTextVisibility
+        {
+            get { return _cannotPurchaseTextVisibility; }
+            set { _cannotPurchaseTextVisibility = value; OnPropertyChanged(); }
+        }
+
         public Service.UserTripService UserTripService { get; set; }
         public Service.TouristAttractionService TouristAttractionService { get; set; }
         public Service.RestorauntService RestorauntService { get; set; }
@@ -52,6 +68,9 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             TouristAttractionsForTrip = new ObservableCollection<TouristAttractionModel>();
             RestorauntsForTrip = new ObservableCollection<RestorauntModel>();
             AccommodationsForTrip = new ObservableCollection<AccommodationModel>();
+
+            PurchaseButtonVisibility = MainViewModel.SignedUser?.Type == UserType.Traveler ? Visibility.Visible : Visibility.Collapsed;
+            CannotPurchaseTextVisibility = MainViewModel.SignedUser?.Type == UserType.Traveler ? Visibility.Collapsed : Visibility.Visible;
 
             PurchaseTripCommand = new RelayCommand(OnPurchaseTrip, o => true);
             ReserveTripCommand = new RelayCommand(OnReserveTrip, o => true);

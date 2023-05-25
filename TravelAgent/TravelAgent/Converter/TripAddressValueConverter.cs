@@ -8,20 +8,31 @@ using System.Windows.Data;
 
 namespace TravelAgent.Converter
 {
-    // places a limit on how many characters will be shown 
+    // used for text wrapping when the TextWrapping attribute doesn't work
     public class TripAddressValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string address = (string)value;
-            if (address.Length > 30)
+            string wrappedAddress = "";
+            bool wrap = false;
+            for (int i = 0; i < address.Length; ++i)
             {
-                return $"{address[..30]}...";
+                if (i > 0 && i % 25 == 0)
+                {
+                    wrap = true;
+                }
+                if (address[i] == ' ' && wrap)
+                {
+                    wrappedAddress += "\n";
+                    wrap = false;
+                }
+                else
+                {
+                    wrappedAddress += address[i];
+                }
             }
-            else
-            {
-                return address;
-            }
+            return wrappedAddress;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
