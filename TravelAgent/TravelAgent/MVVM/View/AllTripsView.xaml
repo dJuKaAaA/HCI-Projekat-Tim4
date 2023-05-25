@@ -16,6 +16,7 @@
 
                 <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
                 <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
 
                 <Setter Property="ItemContainerStyle">
                     <Setter.Value>
@@ -29,8 +30,8 @@
                                                 Margin="20 15"
                                                 Padding="35 25"
                                                 Background="Transparent"
-                                                BorderThickness="2"
-                                                BorderBrush="{StaticResource DefaultBorderBrush}">
+                                                BorderThickness="3"
+                                                BorderBrush="{StaticResource NotHighlightedBrush}">
 
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -192,8 +193,16 @@
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
                                                     <Condition Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible"/>
                                                 </MultiDataTrigger.Conditions>
-                                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource ListViewItemSelectedBrush}"/>
+                                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HighlightedBrush}"/>
                                                 <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="10"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False"/>
+                                                    <Condition Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HoveredOverBrush}"/>
                                             </MultiDataTrigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -212,6 +221,7 @@
 
                 <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
                 <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
 
                 <Setter Property="ItemContainerStyle">
                     <Setter.Value>
@@ -226,7 +236,7 @@
                                                 Padding="35 25"
                                                 Background="Transparent"
                                                 BorderThickness="2"
-                                                BorderBrush="{StaticResource DefaultBorderBrush}">
+                                                BorderBrush="{StaticResource NotHighlightedBrush}">
 
                                             <Grid>
                                                 <Grid.RowDefinitions>
@@ -309,11 +319,34 @@
                                                                HorizontalAlignment="Center"
                                                                Margin="0 30 0 0">
 
-                                                        <component:ScalableImage Source="../../../Image/Icon/bus.png"
-                                                                                 Width="700"
-                                                                                 Margin="0 20"
-                                                                                 Grid.Row="1"
-                                                                                 Visibility="{Binding DataContext.BusIconVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                                        <Button Grid.Column="1"
+                                                                ToolTip="Trip details"
+                                                                Visibility="{Binding DataContext.BusIconVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                                Command="{Binding DataContext.OpenSeeDealPopupCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                                Tag="{Binding Id}">
+                                                            <Button.Style>
+                                                                <Style TargetType="Button">
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="Button">
+                                                                                <Grid>
+                                                                                    <component:ScalableImage Source="../../../Image/Icon/bus.png"
+                                                                                                             Width="700"/>
+                                                                                    
+                                                                                </Grid>
+                                                                                <ControlTemplate.Triggers>
+                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                                                        <Setter Property="Opacity" Value="0.75"/>
+                                                                                    </Trigger>
+                                                                                </ControlTemplate.Triggers>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
 
                                                         <Button Command="{Binding DataContext.OpenSeeDealPopupCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
@@ -369,8 +402,16 @@
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
                                                     <Condition Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible"/>
                                                 </MultiDataTrigger.Conditions>
-                                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource ListViewItemSelectedBrush}"/>
+                                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HighlightedBrush}"/>
                                                 <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="10"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False"/>
+                                                    <Condition Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HoveredOverBrush}"/>
                                             </MultiDataTrigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -388,6 +429,7 @@
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -416,32 +458,58 @@
                     Margin="10 5"/>
         </ToolBar>
 
-        <ContentControl Grid.Row="1">
+        <component:ScalableTextBlock Text="Trips"
+                                     FontSize="54"
+                                     ScaleRate="2"
+                                     Grid.Row="1"
+                                     Margin="0 20"
+                                     HorizontalAlignment="Center"/>
+
+
+        <ContentControl Grid.Row="2">
             <ContentControl.Style>
                 <Style TargetType="ContentControl">
                     <Setter Property="Content">
                         <Setter.Value>
-                            <ListView Style="{StaticResource WideTripsListViewTheme}"
-                                      ItemsSource="{Binding AllTrips}"
-                                      SelectedItem="{Binding SelectedTrip}"/>
+                            <Grid>
+                                <ListView Style="{StaticResource WideTripsListViewTheme}"
+                                          ItemsSource="{Binding AllTrips}"
+                                          SelectedItem="{Binding SelectedTrip}"/>
+                                    <Button HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Style="{StaticResource SearchButtonTheme}"
+                                            Margin="50"/>
+                            </Grid>
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=950}" Value="False">
                             <Setter Property="Content">
                                 <Setter.Value>
-                                    <ListView Style="{StaticResource NarrowTripsListViewTheme}"
-                                              ItemsSource="{Binding AllTrips}"
-                                              SelectedItem="{Binding SelectedTrip}"/>
+                                    <Grid>
+                                        <ListView Style="{StaticResource NarrowTripsListViewTheme}"
+                                                  ItemsSource="{Binding AllTrips}"
+                                                  SelectedItem="{Binding SelectedTrip}"/>
+                                        <Button HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                Style="{StaticResource SearchButtonTheme}"
+                                                Margin="50"/>
+                                    </Grid>
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="Maximized">
                             <Setter Property="Content">
                                 <Setter.Value>
-                                    <ListView Style="{StaticResource WideTripsListViewTheme}"
-                                              ItemsSource="{Binding AllTrips}"
-                                              SelectedItem="{Binding SelectedTrip}"/>
+                                    <Grid>
+                                        <ListView Style="{StaticResource WideTripsListViewTheme}"
+                                                  ItemsSource="{Binding AllTrips}"
+                                                  SelectedItem="{Binding SelectedTrip}"/>
+                                        <Button HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                Style="{StaticResource SearchButtonTheme}"
+                                                Margin="50"/>
+                                    </Grid>
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>

@@ -39,93 +39,107 @@
         <component:ScalableTextBlock Text="Accommodations"
                                      FontSize="54"
                                      ScaleRate="2"
-                                     Margin="0 10 0 30"
+                                     Margin="0 20"
                                      Grid.Row="1"
                                      HorizontalAlignment="Center"/>
 
+        <Grid Grid.Row="2">
+            <ListView ItemsSource="{Binding AllAccommodations}"
+                      Padding="30 0"
+                      BorderThickness="0"
+                      Background="Transparent"
+                      HorizontalAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border BorderThickness="3"
+                                            Padding="30"
+                                            CornerRadius="25"
+                                            VerticalAlignment="Top"
+                                            x:Name="CUSTOM_PART_Border"
+                                            Margin="20"
+                                            Background="Transparent"
+                                            BorderBrush="{StaticResource NotHighlightedBrush}">
+                                        <Grid>
+                                            <StackPanel HorizontalAlignment="Stretch"
+                                                        MaxWidth="400">
+                                                <TextBlock Text="{Binding Name}"
+                                                           HorizontalAlignment="Center"
+                                                           TextWrapping="Wrap"
+                                                           FontWeight="Bold"
+                                                           FontSize="40"
+                                                           Margin="20 0"/>
+                                                <TextBlock Text="{Binding Address}"
+                                                           HorizontalAlignment="Center"
+                                                           Margin="0 5"/>
+                                                <Border BorderThickness="5"
+                                                        CornerRadius="5"
+                                                        BorderBrush="{StaticResource ImageBorderBrush}"
+                                                        Margin="0 0">
+                                                    <Image Source="{Binding Image}"
+                                                           Stretch="UniformToFill"/>
+                                                </Border>
 
-        <ListView ItemsSource="{Binding AllAccommodations}"
-                  Grid.Row="2"
-                  Padding="30 0"
-                  BorderThickness="0"
-                  Background="Transparent"
-                  HorizontalAlignment="Center"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListViewItem">
-                                <Border BorderThickness="2"
-                                        Padding="30"
-                                        CornerRadius="25"
-                                        VerticalAlignment="Top"
-                                        x:Name="CUSTOM_PART_Border"
-                                        Margin="20"
-                                        Background="Transparent"
-                                        BorderBrush="#777">
-                                    <Grid>
-                                        <StackPanel HorizontalAlignment="Stretch"
-                                                    MaxWidth="400">
-                                            <TextBlock Text="{Binding Name}"
-                                                       HorizontalAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       FontWeight="Bold"
-                                                       FontSize="40"
-                                                       Margin="20 0"/>
-                                            <TextBlock Text="{Binding Address}"
-                                                       HorizontalAlignment="Center"
-                                                       Margin="0 5"/>
-                                            <Border BorderThickness="5"
-                                                    CornerRadius="5"
-                                                    BorderBrush="{StaticResource ImageBorderBrush}"
-                                                    Margin="0 0">
-                                                <Image Source="{Binding Image}"
-                                                       Stretch="UniformToFill"/>
-                                            </Border>
+                                                <TextBlock Text="{Binding Rating, Converter={StaticResource RatingValueConverter}}"
+                                                           FontWeight="SemiBold"
+                                                           FontSize="30"
+                                                           HorizontalAlignment="Center"
+                                                           Margin="0 20"/>
 
-                                            <TextBlock Text="{Binding Rating, Converter={StaticResource RatingValueConverter}}"
-                                                       FontWeight="SemiBold"
-                                                       FontSize="30"
-                                                       HorizontalAlignment="Center"
-                                                       Margin="0 20"/>
+                                                <TextBlock Text="Location:"
+                                                           FontSize="22"/>
+                                                <TextBlock Text="{Binding Location.Address}"
+                                                           HorizontalAlignment="Center"
+                                                           TextWrapping="Wrap"
+                                                           FontSize="30"
+                                                           Margin="0 10"/>
 
-                                            <TextBlock Text="Location:"
-                                                       FontSize="22"/>
-                                            <TextBlock Text="{Binding Location.Address}"
-                                                       HorizontalAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       FontSize="30"
-                                                       Margin="0 10"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible">
+                                            <Setter Property="Cursor" Value="Hand" />
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                                <Condition Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HighlightedBrush}"/>
+                                            <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="10"/>
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False"/>
+                                                <Condition Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HoveredOverBrush}"/>
+                                        </MultiDataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" 
+                                   HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
 
-                                        </StackPanel>
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <DataTrigger Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible">
-                                        <Setter Property="Cursor" Value="Hand" />
-                                    </DataTrigger>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
-                                            <Condition Binding="{Binding DataContext.ToolbarVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="Visible"/>
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource ListViewItemSelectedBrush}"/>
-                                        <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="10"/>
-                                    </MultiDataTrigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-        </ListView>
-
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Style="{StaticResource SearchButtonTheme}"
+                    Margin="50"/>
+            
+        </Grid>
 
     </Grid>
 </UserControl>

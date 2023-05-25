@@ -50,13 +50,13 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Margin="10"
-                            Style="{StaticResource FormButtonTheme}"
+                            Style="{StaticResource ScalingFormButtonTheme}"
                             Command="{Binding LoginCommand}"/>
                     <Button Content="Register"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Margin="10"
-                            Style="{StaticResource FormButtonTheme}"
+                            Style="{StaticResource ScalingFormButtonTheme}"
                             Command="{Binding NavigateToRegisterViewCommand}"/>
 
                 </StackPanel>

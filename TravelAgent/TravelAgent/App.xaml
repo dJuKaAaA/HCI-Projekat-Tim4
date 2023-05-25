@@ -26,7 +26,8 @@
 
             <!-- Colors -->
             <Color x:Key="NotHighlightedColor">#bbb</Color>
-            <Color x:Key="TextBoxInFocusColor">#19d</Color>
+            <Color x:Key="HoveredOverColor">#888</Color>
+            <Color x:Key="HighlightedColor">#19d</Color>
             <Color x:Key="TextBoxFontColor">#111</Color>
             <Color x:Key="DataGridRowSelectedColor">LightCyan</Color>
             <Color x:Key="MainTextColor">#000</Color>
@@ -45,7 +46,8 @@
 
             <!-- Brushes -->
             <SolidColorBrush x:Key="NotHighlightedBrush" Color="{StaticResource NotHighlightedColor}"/>
-            <SolidColorBrush x:Key="TextBoxInFocusBrush" Color="{StaticResource TextBoxInFocusColor}"/>
+            <SolidColorBrush x:Key="HoveredOverBrush" Color="{StaticResource HoveredOverColor}"/>
+            <SolidColorBrush x:Key="HighlightedBrush" Color="{StaticResource HighlightedColor}"/>
             <SolidColorBrush x:Key="TextBoxFontBrush" Color="{StaticResource TextBoxFontColor}"/>
             <SolidColorBrush x:Key="DataGridRowSelectedBrush" Color="{StaticResource DataGridRowSelectedColor}"/>
             <SolidColorBrush x:Key="MainTextBrush" Color="{StaticResource MainTextColor}"/>
@@ -57,10 +59,6 @@
             <SolidColorBrush x:Key="PurchasedTripLabelBackgroundBrush" Color="{StaticResource PurchasedTripLabelBackgroundColor}"/>
             <SolidColorBrush x:Key="PurchasedTripLabelTextBrush" Color="{StaticResource PurchasedTripLabelTextColor}"/>
 
-            <LinearGradientBrush x:Key="ButtonHighlightedBrush">
-                <GradientStop Color="Red" Offset="0.00"/>
-                <GradientStop Color="Blue" Offset="1.00"/>
-            </LinearGradientBrush>
             <LinearGradientBrush x:Key="ImageBorderBrush">
                 <GradientStop Color="Red" Offset="0.00"/>
                 <GradientStop Color="Blue" Offset="1.00"/>
@@ -90,7 +88,7 @@
                 <ResourceDictionary Source="./Theme/FormTextBoxTheme.xaml"/>
                 <!--<ResourceDictionary Source="./Theme/TripsListViewTheme.xaml"/>-->
                 <ResourceDictionary Source="./Theme/CustomScrollbarTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/FancyButtonTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/ScalingFormButtonTheme.xaml"/>
                 <!--<ResourceDictionary Source="./Theme/WideUserTripsTheme.xaml"/>-->
                 <ResourceDictionary Source="./Theme/FormButtonTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/LocationComboBoxTheme.xaml"/>
@@ -100,7 +98,7 @@
                 <ResourceDictionary Source="./Theme/BackButtonTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/WideSoldTripsTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/NarrowSoldTripsTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/LocationSearchTextBoxTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/SearchButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

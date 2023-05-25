@@ -267,7 +267,7 @@
                             Margin="20"
                             Grid.Column="0"
                             CornerRadius="3"
-                            BorderBrush="{DynamicResource DefaultBorderBrush}">
+                            BorderBrush="{StaticResource DefaultBorderBrush}">
                         <m:Map x:Name="mapControl" 
                                MouseDoubleClick="Map_MouseDoubleClick"
                                CredentialsProvider="AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr" 
@@ -299,7 +299,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox Style="{StaticResource LocationSearchTextBoxTheme}"
+                                    <TextBox Style="{StaticResource FormTextBoxTheme}"
                                              Grid.Column="0"
                                              TextWrapping="Wrap"
                                              Text="{Binding DepartureAddress, UpdateSourceTrigger=PropertyChanged}">
@@ -313,7 +313,7 @@
                                             VerticalAlignment="Center"
                                             Command="{Binding SearchDepartureFromAddressCommand}"
                                             Margin="20 0"
-                                            Style="{DynamicResource LocationSearchButtonTheme}"/>
+                                            Style="{StaticResource ScalingFormButtonTheme}"/>
 
                                 </Grid>
                             </StackPanel>
@@ -326,7 +326,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox Style="{StaticResource LocationSearchTextBoxTheme}"
+                                    <TextBox Style="{StaticResource FormTextBoxTheme}"
                                              Grid.Column="0"
                                              TextWrapping="Wrap"
                                              Text="{Binding DestinationAddress, UpdateSourceTrigger=PropertyChanged}">
@@ -340,7 +340,7 @@
                                             Margin="20 0"
                                             VerticalAlignment="Center"
                                             Command="{Binding SearchDestinationFromAddressCommand}"
-                                            Style="{DynamicResource LocationSearchButtonTheme}"/>
+                                            Style="{StaticResource ScalingFormButtonTheme}"/>
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
