@@ -67,6 +67,10 @@
                 <GradientStop Color="Red" Offset="0.00"/>
                 <GradientStop Color="Blue" Offset="1.00"/>
             </LinearGradientBrush>
+            <LinearGradientBrush x:Key="SearchButtonBackgroundBrush">
+                <GradientStop Color="Cyan" Offset="0.00"/>
+                <GradientStop Color="CornflowerBlue" Offset="1.00"/>
+            </LinearGradientBrush>
 
             <!-- Value converters -->
             <converter:LocationValueConverter x:Key="LocationValueConverter"/>
@@ -86,18 +90,13 @@
             <!-- Themes from the 'Theme' folder -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="./Theme/FormTextBoxTheme.xaml"/>
-                <!--<ResourceDictionary Source="./Theme/TripsListViewTheme.xaml"/>-->
                 <ResourceDictionary Source="./Theme/CustomScrollbarTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/ScalingFormButtonTheme.xaml"/>
-                <!--<ResourceDictionary Source="./Theme/WideUserTripsTheme.xaml"/>-->
                 <ResourceDictionary Source="./Theme/FormButtonTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/LocationComboBoxTheme.xaml"/>
-                <!--<ResourceDictionary Source="./Theme/NarrowUserTripsTheme.xaml"/>-->
                 <ResourceDictionary Source="./Theme/CustomDatePickerTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/CloseButtonTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/BackButtonTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/WideSoldTripsTheme.xaml"/>
-                <ResourceDictionary Source="./Theme/NarrowSoldTripsTheme.xaml"/>
                 <ResourceDictionary Source="./Theme/SearchButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 

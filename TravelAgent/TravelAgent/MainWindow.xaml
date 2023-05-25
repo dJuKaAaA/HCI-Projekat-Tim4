@@ -88,7 +88,7 @@
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
                 <MenuItem Header="Sold trips"
                           InputGestureText="Ctrl+U"
-                          Command="{Binding OpenSoldTripsViewCommand}"/>
+                          Command="{Binding OpenUserTripsViewCommand}"/>
             </MenuItem>
             <MenuItem Header="Help"
                       IsTabStop="False"
@@ -168,10 +168,6 @@
 
                 <DataTemplate DataType="{x:Type vm:CreateTripViewModel}">
                     <view:CreateTripView/>
-                </DataTemplate>
-
-                <DataTemplate DataType="{x:Type vm:SoldTripsViewModel}">
-                    <view:SoldTripsView/>
                 </DataTemplate>
 
             </ContentControl.Resources>

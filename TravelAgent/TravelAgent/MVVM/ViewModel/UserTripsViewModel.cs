@@ -18,6 +18,14 @@ namespace TravelAgent.MVVM.ViewModel
     {
         public ObservableCollection<UserTripModel> UserTrips { get; set; }
 
+        private Visibility _travelerVisibility;
+
+        public Visibility TravelerVisibility
+        {
+            get { return _travelerVisibility; }
+            set { _travelerVisibility = value; OnPropertyChanged(); }
+        }
+
         private readonly Service.UserTripService _userTripService;
 
         public ICommand PurchaseTripCommand { get; }
@@ -26,17 +34,37 @@ namespace TravelAgent.MVVM.ViewModel
         public UserTripsViewModel(
             Service.UserTripService userTripService)
         {
+            UserTrips = new ObservableCollection<UserTripModel>();
+            TravelerVisibility = MainViewModel.SignedUser?.Type == UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
+
             _userTripService = userTripService;
 
             PurchaseTripCommand = new RelayCommand(OnPurchaseTrip, o => true);
             CancelTripCommand = new RelayCommand(OnCancelTrip, o => true);
 
-            LoadAll();
+            if (MainViewModel.SignedUser?.Type == UserType.Traveler)
+            {
+                LoadForUser();
+            }
+            else
+            {
+                LoadAll();
+            }
         }
 
         private async void LoadAll()
         {
-            UserTrips = new ObservableCollection<UserTripModel>();
+            UserTrips.Clear();
+            IEnumerable<UserTripModel> userTrips = await _userTripService.GetAll();
+            foreach (UserTripModel userTrip in userTrips)
+            {
+                UserTrips.Add(userTrip);
+            }
+        }
+
+        private async void LoadForUser()
+        {
+            UserTrips.Clear();
             IEnumerable<UserTripModel> userTrips = await _userTripService.GetForUser(MainViewModel.SignedUser.Id);
             foreach (UserTripModel userTrip in userTrips)
             {
