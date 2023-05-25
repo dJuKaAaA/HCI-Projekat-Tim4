@@ -156,6 +156,54 @@ namespace TravelAgent.MVVM.ViewModel
             } 
         }
 
+        private RestorauntModel? _selectedRestorauntFromAll;
+
+        public RestorauntModel? SelectedRestorauntFromAll
+        {
+            get { return _selectedRestorauntFromAll; }
+            set { _selectedRestorauntFromAll = value; OnPropertyChanged(); }
+        }
+
+        private AccommodationModel? _selectedAccommodationFromAll;
+
+        public AccommodationModel? SelectedAccommodationFromAll
+        {
+            get { return _selectedAccommodationFromAll; }
+            set { _selectedAccommodationFromAll = value; OnPropertyChanged(); }
+        }
+
+        private TouristAttractionModel? _selectedTouristAttractionFromAll;
+
+        public TouristAttractionModel? SelectedTouristAttractionFromAll
+        {
+            get { return _selectedTouristAttractionFromAll; }
+            set { _selectedTouristAttractionFromAll = value; OnPropertyChanged(); }
+        }
+
+        private RestorauntModel? _selectedRestorauntForTrip;
+
+        public RestorauntModel? SelectedRestorauntForTrip
+        {
+            get { return _selectedRestorauntForTrip; }
+            set { _selectedRestorauntForTrip = value; OnPropertyChanged(); }
+        }
+
+        private AccommodationModel? _selectedAccommodationForTrip;
+
+        public AccommodationModel? SelectedAccommodationForTrip
+        {
+            get { return _selectedAccommodationForTrip; }
+            set { _selectedAccommodationForTrip = value; OnPropertyChanged(); }
+        }
+
+        private TouristAttractionModel _selectedTouristAttractionForTrip;
+
+        public TouristAttractionModel SelectedTouristAttractionForTrip
+        {
+            get { return _selectedTouristAttractionForTrip; }
+            set { _selectedTouristAttractionForTrip = value; OnPropertyChanged(); }
+        }
+
         public EventHandler<LocationModel> DepartureAddressSearched;
         public EventHandler<LocationModel> DestinationAddressSearched;
 
@@ -171,7 +219,12 @@ namespace TravelAgent.MVVM.ViewModel
         public ICommand CreateTripCommand { get; }
         public ICommand SearchDepartureFromAddressCommand { get; }
         public ICommand SearchDestinationFromAddressCommand { get; }
-        public ICommand BackToAllTripsViewCommand { get; }
+        public ICommand AddRestorauntCommand { get; }
+        public ICommand AddAccommodationCommand { get; }
+        public ICommand AddTouristAttractionCommand { get; }
+        public ICommand RemoveRestorauntCommand { get; }
+        public ICommand RemoveAccommodationCommand { get; }
+        public ICommand RemoveTouristAttractionCommand { get; }
 
         public CreateTripViewModel(
             Service.TripService tripService,
@@ -208,9 +261,62 @@ namespace TravelAgent.MVVM.ViewModel
             CreateTripCommand = new RelayCommand(OnCreateTrip, CanCreateTrip);
             SearchDepartureFromAddressCommand = new RelayCommand(OnSearchDepartureFromAddress, o => !string.IsNullOrWhiteSpace(DepartureAddress));
             SearchDestinationFromAddressCommand = new RelayCommand(OnSearchDestinationFromAddress, o => !string.IsNullOrWhiteSpace(DestinationAddress));
-            BackToAllTripsViewCommand = new RelayCommand(o => _navigationService.NavigateTo<AllTripsViewModel>(), o => true);
+            AddRestorauntCommand = new RelayCommand(OnAddRestoraunt, o => SelectedRestorauntFromAll != null);
+            AddAccommodationCommand = new RelayCommand(OnAddAccommodation, o => SelectedAccommodationFromAll != null);
+            AddTouristAttractionCommand = new RelayCommand(OnAddTouristAttraction, o => SelectedTouristAttractionFromAll != null);
+            RemoveRestorauntCommand = new RelayCommand(OnRemoveRestoraunt, o => SelectedRestorauntForTrip != null);
+            RemoveAccommodationCommand = new RelayCommand(OnRemoveAccommodation, o => SelectedAccommodationForTrip != null);
+            RemoveTouristAttractionCommand = new RelayCommand(OnRemoveTouristAttraction, o => SelectedTouristAttractionForTrip != null);
 
             SetUpForCreation();
+        }
+
+        private void OnRemoveRestoraunt(object o)
+        {
+            if (RestorauntsForTrip.Contains(SelectedRestorauntForTrip))
+            {
+                RestorauntsForTrip.Remove(SelectedRestorauntForTrip);
+            }
+        }
+        private void OnRemoveAccommodation(object o)
+        {
+            if (AccommodationsForTrip.Contains(SelectedAccommodationForTrip))
+            {
+                AccommodationsForTrip.Remove(SelectedAccommodationForTrip);
+            }
+        }
+        
+        private void OnRemoveTouristAttraction(object o)
+        {
+            if (TouristAttractionsForTrip.Contains(SelectedTouristAttractionForTrip))
+            {
+                TouristAttractionsForTrip.Remove(SelectedTouristAttractionForTrip);
+            }
+        }
+
+        private void OnAddRestoraunt(object o)
+        {
+            if (!RestorauntsForTrip.Contains(SelectedRestorauntFromAll))
+            {
+                RestorauntsForTrip.Add(SelectedRestorauntFromAll);
+            }
+        }
+
+        private void OnAddAccommodation(object o)
+        {
+            if (!AccommodationsForTrip.Contains(SelectedAccommodationFromAll))
+            {
+                AccommodationsForTrip.Add(SelectedAccommodationFromAll);
+            }
+        }
+
+        private void OnAddTouristAttraction(object o)
+        {
+            if (!TouristAttractionsForTrip.Contains(SelectedTouristAttractionFromAll))
+            {
+                TouristAttractionsForTrip.Add(SelectedTouristAttractionFromAll);
+            }
+
         }
 
         public async Task LoadAllRestoraunts()

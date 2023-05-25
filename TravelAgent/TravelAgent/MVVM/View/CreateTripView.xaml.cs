@@ -296,6 +296,12 @@ namespace TravelAgent.MVVM.View
             return null;
         }
 
+        private class CustomDragObject
+        {
+            public object? Obj { get; set; }
+            public string? SourceListViewName { get; set; }
+        }
+
         // restoraunts
         Point restorauntStartPoint = new Point();
 
@@ -328,7 +334,12 @@ namespace TravelAgent.MVVM.View
                     ItemFromContainer(listViewItem);
 
                 // Initialize the drag & drop operation
-                DataObject dragData = new DataObject("myFormat", restoraunt);
+                CustomDragObject dragObject = new CustomDragObject()
+                {
+                    Obj = restoraunt,
+                    SourceListViewName = $"{listView.Name}",
+                };
+                DataObject dragData = new DataObject("myFormat", dragObject);
                 DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
             }
         }
@@ -345,10 +356,34 @@ namespace TravelAgent.MVVM.View
         {
             if (e.Data.GetDataPresent("myFormat"))
             {
-                RestorauntModel restoraunt = e.Data.GetData("myFormat") as RestorauntModel;
+                CustomDragObject dragObject = e.Data.GetData("myFormat") as CustomDragObject;
+                RestorauntModel restoraunt = (RestorauntModel)dragObject.Obj;
+                if (dragObject.SourceListViewName != allRestorauntsListView.Name)
+                {
+                    return;
+                }
+
                 if (!_viewModel.RestorauntsForTrip.Contains(restoraunt))
                 {
                     _viewModel.RestorauntsForTrip.Add(restoraunt);
+                }
+            }
+        }
+
+        private void RestorauntListView_DropRemove(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("myFormat"))
+            {
+                CustomDragObject dragObject = e.Data.GetData("myFormat") as CustomDragObject;
+                RestorauntModel restoraunt = (RestorauntModel)dragObject.Obj;
+                if (dragObject.SourceListViewName != restorauntsForTripListView.Name)
+                {
+                    return;
+                }
+
+                if (_viewModel.RestorauntsForTrip.Contains(restoraunt))
+                {
+                    _viewModel.RestorauntsForTrip.Remove(restoraunt);
                 }
             }
         }
@@ -385,7 +420,12 @@ namespace TravelAgent.MVVM.View
                     ItemFromContainer(listViewItem);
 
                 // Initialize the drag & drop operation
-                DataObject dragData = new DataObject("myFormat", accommodation);
+                CustomDragObject dragObject = new CustomDragObject()
+                {
+                    Obj = accommodation,
+                    SourceListViewName = $"{listView.Name}",
+                };
+                DataObject dragData = new DataObject("myFormat", dragObject);
                 DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
             }
         }
@@ -402,10 +442,34 @@ namespace TravelAgent.MVVM.View
         {
             if (e.Data.GetDataPresent("myFormat"))
             {
-                AccommodationModel accommodation = e.Data.GetData("myFormat") as AccommodationModel;
+                CustomDragObject dragObject = e.Data.GetData("myFormat") as CustomDragObject;
+                AccommodationModel accommodation = (AccommodationModel)dragObject.Obj;
+                if (dragObject.SourceListViewName != allAccommodationsListView.Name)
+                {
+                    return;
+                }
+
                 if (!_viewModel.AccommodationsForTrip.Contains(accommodation))
                 {
                     _viewModel.AccommodationsForTrip.Add(accommodation);
+                }
+            }
+        }
+
+        private void AccommodationListView_DropRemove(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("myFormat"))
+            {
+                CustomDragObject dragObject = e.Data.GetData("myFormat") as CustomDragObject;
+                AccommodationModel accommodation = (AccommodationModel)dragObject.Obj;
+                if (dragObject.SourceListViewName != accommodationsForTripListView.Name)
+                {
+                    return;
+                }
+
+                if (_viewModel.AccommodationsForTrip.Contains(accommodation))
+                {
+                    _viewModel.AccommodationsForTrip.Remove(accommodation);
                 }
             }
         }
@@ -442,7 +506,12 @@ namespace TravelAgent.MVVM.View
                     ItemFromContainer(listViewItem);
 
                 // Initialize the drag & drop operation
-                DataObject dragData = new DataObject("myFormat", touristAttraction);
+                CustomDragObject dragObject = new CustomDragObject()
+                {
+                    Obj = touristAttraction,
+                    SourceListViewName = $"{listView.Name}",
+                };
+                DataObject dragData = new DataObject("myFormat", dragObject);
                 DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
             }
         }
@@ -459,10 +528,34 @@ namespace TravelAgent.MVVM.View
         {
             if (e.Data.GetDataPresent("myFormat"))
             {
-                TouristAttractionModel touristAttraction = e.Data.GetData("myFormat") as TouristAttractionModel;
+                CustomDragObject dragObject = e.Data.GetData("myFormat") as CustomDragObject;
+                TouristAttractionModel touristAttraction = (TouristAttractionModel)dragObject.Obj;
+                if (dragObject.SourceListViewName != allTouristAttractionsListView.Name)
+                {
+                    return;
+                }
+
                 if (!_viewModel.TouristAttractionsForTrip.Contains(touristAttraction))
                 {
                     _viewModel.TouristAttractionsForTrip.Add(touristAttraction);
+                }
+            }
+        }
+
+        private void TouristAttractionListView_DropRemove(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("myFormat"))
+            {
+                CustomDragObject dragObject = e.Data.GetData("myFormat") as CustomDragObject;
+                TouristAttractionModel touristAttraction = (TouristAttractionModel)dragObject.Obj;
+                if (dragObject.SourceListViewName != touristAttractionsForTripListView.Name)
+                {
+                    return;
+                }
+
+                if (_viewModel.TouristAttractionsForTrip.Contains(touristAttraction))
+                {
+                    _viewModel.TouristAttractionsForTrip.Remove(touristAttraction);
                 }
             }
         }

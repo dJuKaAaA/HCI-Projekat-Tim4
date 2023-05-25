@@ -88,12 +88,12 @@
                                                         </Border>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsMouseOver" Value="True" SourceName="ButtonBackground">
-                                                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
-                                                                <Setter TargetName="ButtonContent" Property="Foreground" Value="{DynamicResource TextBoxInFocusBrush}"/>
+                                                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource HoveredOverBrush}"/>
+                                                                <Setter TargetName="ButtonContent" Property="Foreground" Value="{DynamicResource HoveredOverBrush}"/>
                                                             </Trigger>
                                                             <Trigger Property="IsFocused" Value="True">
-                                                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
-                                                                <Setter TargetName="ButtonContent" Property="Foreground" Value="{DynamicResource TextBoxInFocusBrush}"/>
+                                                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource HighlightedBrush}"/>
+                                                                <Setter TargetName="ButtonContent" Property="Foreground" Value="{DynamicResource HighlightedBrush}"/>
                                                             </Trigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
