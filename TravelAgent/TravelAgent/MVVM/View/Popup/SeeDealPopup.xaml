@@ -111,7 +111,7 @@
                            HorizontalAlignment="Right"
                            FontStyle="Italic"/>
             </Grid>
-            <TextBlock Text="Only travellers can purchase and reserve trips."
+            <TextBlock Text="Only travelers can purchase and reserve trips."
                        TextWrapping="Wrap"
                        Foreground="#888"
                        FontStyle="Italic"
