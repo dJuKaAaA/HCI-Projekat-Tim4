@@ -98,7 +98,7 @@ namespace TravelAgent.MVVM.View.Popup
                 mapControl.Children.Add(touristAttractionPushpin);
             }
 
-            // Draw restoraunt
+            // Draw restoraunts
             await _viewModel.LoadRestorauntsForTrip();
             foreach (RestorauntModel restoraunt in _viewModel.RestorauntsForTrip)
             {

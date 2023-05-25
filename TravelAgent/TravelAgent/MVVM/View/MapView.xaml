@@ -18,57 +18,5 @@
                Center="44.1871, 20.8572" 
                ZoomLevel="8"/>
 
-        <component:ScalableContentControl Visibility="Collapsed"
-                                          x:Name="locationContainer"
-                                          HorizontalAlignment="Left"
-                                          ScaleRate="2"
-                                          MouseLeftButtonDown="ContentControl_MouseDown"
-                                          MouseMove="ContentControl_MouseMove"
-                                          MouseLeftButtonUp="ContentControl_MouseUp"
-                                          Width="500"
-                                          VerticalAlignment="Top"
-                                          Margin="30">
-
-            <Border BorderThickness="3"
-                    CornerRadius="50"
-                    Padding="25 15"
-                    BorderBrush="{StaticResource DefaultBorderBrush}"
-                    Background="White">
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                          HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel Margin="20">
-
-                        <Button Style="{StaticResource CloseButtonTheme}"
-                                Margin="0 0 20 20"
-                                x:Name="closePopupButton"
-                                Click="closePopupButton_Click"/>
-
-                        <Border BorderThickness="10"
-                                CornerRadius="5"
-                                BorderBrush="{StaticResource ImageBorderBrush}">
-                            <Image x:Name="locationImage"
-                                   Stretch="Uniform"/>
-                        </Border>
-                        <component:ScalableTextBlock x:Name="locationName"
-                                                     VerticalAlignment="Center"
-                                                     HorizontalAlignment="Center"
-                                                     Margin="0 20"
-                                                     ScaleRate="2"
-                                                     TextWrapping="Wrap"
-                                                     FontSize="34"/>
-                        <component:ScalableTextBlock x:Name="locationPlace"
-                                                     VerticalAlignment="Center"
-                                                     HorizontalAlignment="Center"
-                                                     ScaleRate="2"
-                                                     TextWrapping="Wrap"
-                                                     Foreground="#999"
-                                                     FontSize="28"/>
-                    </StackPanel>
-                </ScrollViewer>
-            </Border>
-
-        </component:ScalableContentControl>
-
-
     </Grid>
 </UserControl>
