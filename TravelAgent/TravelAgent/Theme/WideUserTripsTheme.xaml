@@ -72,6 +72,27 @@
                                                 </StackPanel>
 
                                                 <StackPanel Grid.Column="1"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            Margin="10 0 40 0"
+                                                            x:Name="CUSTOM_PART_PurchaseButtons">
+                                                    <Button Content="Purchase"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Center"
+                                                            Tag="{Binding Trip.Id}"
+                                                            Command="{Binding DataContext.PurchaseTripCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                            Style="{DynamicResource WideUserTripsPurchaseButtonTheme}"/>
+                                                    <Button Content="Cancel"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Center"
+                                                            Tag="{Binding Trip.Id}"
+                                                            Command="{Binding DataContext.CancelTripCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                            Style="{DynamicResource WideUserTripsCancelButtonTheme}"/>
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="2"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center">
 
@@ -93,33 +114,13 @@
                                                                                  x:Name="CUSTOM_PART_PaidPriceTextBlock"
                                                                                  HorizontalAlignment="Center"/>
                                                 </StackPanel>
-
-                                                <StackPanel Grid.Column="2"
-                                                            HorizontalAlignment="Right"
-                                                            VerticalAlignment="Center"
-                                                            x:Name="CUSTOM_PART_PurchaseButtons">
-                                                    <Button Content="Purchase"
-                                                            Margin="5"
-                                                            HorizontalAlignment="Center"
-                                                            Tag="{Binding Trip.Id}"
-                                                            Command="{Binding DataContext.PurchaseTripCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                                                            Style="{DynamicResource WideUserTripsPurchaseButtonTheme}"/>
-                                                    <Button Content="Cancel"
-                                                            Margin="5"
-                                                            HorizontalAlignment="Center"
-                                                            Tag="{Binding Trip.Id}"
-                                                            Command="{Binding DataContext.CancelTripCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                                                            Style="{DynamicResource WideUserTripsCancelButtonTheme}"/>
-                                                </StackPanel>
                                             </Grid>
                                         </Border>
 
                                         <ControlTemplate.Triggers>
                                             <DataTrigger Binding="{Binding Type}" Value="{x:Static core:TripInvoiceType.Reserved}">
                                                 <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="BorderBrush" Value="{DynamicResource ReservedTripLabelBorderBrush}"/>
-                                                <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Margin" Value="30 0"/>
+                                                <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Padding" Value="40 15"/>
                                                 <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Background" Value="{DynamicResource ReservedTripLabelBackgroundBrush}"/>
                                                 <Setter TargetName="CUSTOM_PART_TextBlockInvoiceLabel" Property="Foreground" Value="{DynamicResource ReservedTripLabelTextBrush}"/>
                                             </DataTrigger>

@@ -4,8 +4,458 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TravelAgent.MVVM.View"
+             xmlns:core="clr-namespace:TravelAgent.Core"
+             xmlns:component="clr-namespace:TravelAgent.CustomComponent"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style x:Key="WideUserTripsTheme" TargetType="ListView">
+            <Style.Setters>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListViewItem">
+                            <Style.Setters>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border CornerRadius="50"
+                                                    BorderThickness="3"
+                                                    BorderBrush="{DynamicResource DefaultBorderBrush}"
+                                                    Padding="30"
+                                                    Margin="20">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel VerticalAlignment="Center"
+                                                                Orientation="Horizontal"
+                                                                Margin="15 0">
+
+                                                        <StackPanel Margin="0 0 30 0"
+                                                                    VerticalAlignment="Center">
+                                                            <StackPanel Margin="0 0 0 10">
+                                                                <component:ScalableTextBlock FontSize="28"
+                                                                                             Text="Trip departure"/>
+                                                                <component:ScalableTextBlock Text="{Binding Trip.Departure.Address, Converter={StaticResource TripAddressValueConverter}}"
+                                                                                             HorizontalAlignment="Left"
+                                                                                             FontWeight="SemiBold"
+                                                                                             TextWrapping="Wrap"
+                                                                                             FontSize="34"/>
+                                                            </StackPanel>
+                                                            <component:ScalableTextBlock Text="↓"
+                                                                                         HorizontalAlignment="Left"
+                                                                                         FontWeight="SemiBold"
+                                                                                         Margin="10 0 0 0"
+                                                                                         FontSize="32"
+                                                                                         Foreground="{StaticResource MainTextBrush}"/>
+                                                            <StackPanel Margin="0 10 0 0">
+                                                                <component:ScalableTextBlock FontSize="28"
+                                                                                             Text="Departs at"/>
+                                                                <component:ScalableTextBlock Text="{Binding Trip.DepartureDateTime}"
+                                                                                             FontSize="34"
+                                                                                             TextWrapping="Wrap"
+                                                                                             FontWeight="SemiBold"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+
+                                                        <StackPanel Margin="30 0 0 0"
+                                                                    VerticalAlignment="Center">
+                                                            <StackPanel Margin="0 0 0 10">
+                                                                <component:ScalableTextBlock FontSize="28"
+                                                                                             Text="Trip destination"/>
+                                                                <component:ScalableTextBlock Text="{Binding Trip.Destination.Address, Converter={StaticResource TripAddressValueConverter}}"
+                                                                                             TextWrapping="Wrap"
+                                                                                             FontWeight="SemiBold"
+                                                                                             FontSize="34"/>
+                                                            </StackPanel>
+                                                            <component:ScalableTextBlock Text="↓"
+                                                                                         FontWeight="SemiBold"
+                                                                                         Margin="10 0 0 0"
+                                                                                         FontSize="32"
+                                                                                         HorizontalAlignment="Left"
+                                                                                         Foreground="{StaticResource MainTextBrush}"/>
+                                                            <StackPanel Margin="0 10 0 0">
+                                                                <component:ScalableTextBlock FontSize="28"
+                                                                                             Text="Arrives at"/>
+                                                                <component:ScalableTextBlock Text="{Binding Trip.ArrivalDateTime}"
+                                                                                             FontSize="34"
+                                                                                             TextWrapping="Wrap"
+                                                                                             FontWeight="SemiBold"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                            
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Center"
+                                                                Margin="0 0 40 0"
+                                                                x:Name="CUSTOM_PART_PurchaseButtons">
+                                                        <Button Content="Purchase"
+                                                                Margin="5"
+                                                                HorizontalAlignment="Center"
+                                                                Tag="{Binding Trip.Id}"
+                                                                Command="{Binding DataContext.PurchaseTripCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                                Style="{DynamicResource WideUserTripsPurchaseButtonTheme}"/>
+                                                        <Button Content="Cancel"
+                                                                Margin="5"
+                                                                HorizontalAlignment="Center"
+                                                                Tag="{Binding Trip.Id}"
+                                                                Command="{Binding DataContext.CancelTripCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                                Style="{DynamicResource WideUserTripsCancelButtonTheme}"/>
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Column="2"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center">
+
+                                                        <Border Padding="30 15"
+                                                                BorderThickness="5"
+                                                                CornerRadius="35"
+                                                                x:Name="CUSTOM_PART_BorderInvoiceLabel">
+                                                            <component:ScalableTextBlock Text="{Binding Type}"
+                                                                                         FontSize="54"
+                                                                                         FontWeight="SemiBold"
+                                                                                         x:Name="CUSTOM_PART_TextBlockInvoiceLabel"
+                                                                                         HorizontalAlignment="Center"/>
+
+                                                        </Border>
+                                                        <component:ScalableTextBlock Text="{Binding Trip.Price, Converter={StaticResource DinarValueConverter}}"
+                                                                                     FontSize="38"
+                                                                                     FontWeight="SemiBold"
+                                                                                     Margin="0 10"
+                                                                                     x:Name="CUSTOM_PART_PaidPriceTextBlock"
+                                                                                     HorizontalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding Type}" Value="{x:Static core:TripInvoiceType.Reserved}">
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="BorderBrush" Value="{DynamicResource ReservedTripLabelBorderBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Padding" Value="40 15"/>
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Background" Value="{DynamicResource ReservedTripLabelBackgroundBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_TextBlockInvoiceLabel" Property="Foreground" Value="{DynamicResource ReservedTripLabelTextBrush}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Type}" Value="{x:Static core:TripInvoiceType.Purchased}">
+                                                    <Setter TargetName="CUSTOM_PART_PaidPriceTextBlock" Property="Text" Value="{Binding Trip.Price, Converter={StaticResource PricePaidValueConverter}}"/>
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="BorderBrush" Value="{DynamicResource PurchasedTripLabelBorderBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Background" Value="{DynamicResource PurchasedTripLabelBackgroundBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_TextBlockInvoiceLabel" Property="Foreground" Value="{DynamicResource PurchasedTripLabelTextBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_PurchaseButtons" Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style.Setters>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="WideUserTripsPurchaseButtonTheme" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderThickness="3"
+                                    Padding="25 10"
+                                    CornerRadius="25"
+                                    x:Name="CUSTOM_PART_Border"
+                                    Background="#afa"
+                                    BorderBrush="DarkOliveGreen">
+                                <Grid>
+                                    <component:ScalableTextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                 FontSize="42"
+                                                                 x:Name="CUSTOM_PART_Content"
+                                                                 Foreground="DarkOliveGreen"
+                                                                 HorizontalAlignment="Center"
+                                                                 VerticalAlignment="Center"
+                                                                 FontWeight="Normal"/>
+                                </Grid>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="Background" Value="#5d5"/>
+                                    <Setter TargetName="CUSTOM_PART_Content" Property="Foreground" Value="DarkGreen"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="WideUserTripsCancelButtonTheme" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderThickness="3"
+                                    Padding="25 10"
+                                    CornerRadius="25"
+                                    x:Name="CUSTOM_PART_Border"
+                                    Background="#f99"
+                                    BorderBrush="Red">
+                                <Grid>
+                                    <component:ScalableTextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                 FontSize="32"
+                                                                 x:Name="CUSTOM_PART_Content"
+                                                                 Foreground="Red"
+                                                                 HorizontalAlignment="Center"
+                                                                 VerticalAlignment="Center"
+                                                                 FontWeight="Normal"/>
+                                </Grid>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="Background" Value="#f66"/>
+                                    <Setter TargetName="CUSTOM_PART_Content" Property="Foreground" Value="DarkRed"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="NarrowUserTripsTheme" TargetType="ListView">
+            <Style.Setters>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListViewItem">
+                            <Style.Setters>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border CornerRadius="50"
+                                                    BorderThickness="3"
+                                                    BorderBrush="{DynamicResource DefaultBorderBrush}"
+                                                    Padding="30"
+                                                    Margin="20">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <StackPanel VerticalAlignment="Center"
+                                                                Orientation="Vertical"
+                                                                Margin="0 20"
+                                                                HorizontalAlignment="Center"
+                                                                Grid.Row="0">
+
+                                                        <Border BorderBrush="{DynamicResource DefaultBorderBrush}"
+                                                                BorderThickness="1"
+                                                                Margin="10"/>
+
+                                                        <StackPanel Margin="0 20">
+                                                            <StackPanel Margin="0 0 0 5">
+                                                                <component:ScalableTextBlock FontSize="64"
+                                                                                             Text="Trip departure"/>
+                                                                <component:ScalableTextBlock Text="{Binding Trip.Departure.Address, Converter={StaticResource TripAddressValueConverter}}"
+                                                                                             HorizontalAlignment="Left"
+                                                                                             FontWeight="SemiBold"
+                                                                                             TextWrapping="Wrap"
+                                                                                             FontSize="74"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 5 0 0">
+                                                                <component:ScalableTextBlock FontSize="64"
+                                                                                             Text="Departs at"/>
+                                                                <component:ScalableTextBlock Text="{Binding Trip.DepartureDateTime}"
+                                                                                             FontSize="74"
+                                                                                             TextWrapping="Wrap"
+                                                                                             FontWeight="SemiBold"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+
+                                                        <Border BorderBrush="{DynamicResource DefaultBorderBrush}"
+                                                                BorderThickness="1"/>
+
+                                                        <StackPanel Margin="0 20">
+                                                            <StackPanel Margin="0 0 0 5">
+                                                                <component:ScalableTextBlock FontSize="64"
+                                                                                             Text="Trip destination"/>
+                                                                <component:ScalableTextBlock Text="{Binding Trip.Destination.Address, Converter={StaticResource TripAddressValueConverter}}"
+                                                                                             TextWrapping="Wrap"
+                                                                                             FontWeight="SemiBold"
+                                                                                             FontSize="74"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 5 0 0">
+                                                                <component:ScalableTextBlock FontSize="64"
+                                                                                             Text="Arrives at"/>
+                                                                <component:ScalableTextBlock Text="{Binding Trip.ArrivalDateTime}"
+                                                                                             FontSize="74"
+                                                                                             TextWrapping="Wrap"
+                                                                                             FontWeight="SemiBold"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+
+                                                        <Border BorderBrush="{DynamicResource DefaultBorderBrush}"
+                                                                BorderThickness="1"
+                                                                Margin="0 10"/>
+                                                            
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Row="1"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center">
+
+                                                        <Border Padding="30 15"
+                                                                BorderThickness="5"
+                                                                CornerRadius="35"
+                                                                x:Name="CUSTOM_PART_BorderInvoiceLabel">
+                                                            <component:ScalableTextBlock Text="{Binding Type}"
+                                                                                         FontSize="86"
+                                                                                         FontWeight="SemiBold"
+                                                                                         x:Name="CUSTOM_PART_TextBlockInvoiceLabel"
+                                                                                         HorizontalAlignment="Center"/>
+
+                                                        </Border>
+                                                        <component:ScalableTextBlock Text="{Binding Trip.Price, Converter={StaticResource DinarValueConverter}}"
+                                                                                     FontSize="70"
+                                                                                     FontWeight="SemiBold"
+                                                                                     Margin="0 10"
+                                                                                     x:Name="CUSTOM_PART_PaidPriceTextBlock"
+                                                                                     HorizontalAlignment="Center"/>
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Row="2"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                x:Name="CUSTOM_PART_PurchaseButtons"
+                                                                Margin="0 40 0 0">
+                                                        <Button Content="Purchase"
+                                                                Margin="5"
+                                                                HorizontalAlignment="Center"
+                                                                Tag="{Binding Trip.Id}"
+                                                                Command="{Binding DataContext.PurchaseTripCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                                Style="{DynamicResource NarrowUserTripsPurchaseButtonTheme}"/>
+                                                        <Button Content="Cancel"
+                                                                Margin="5"
+                                                                HorizontalAlignment="Center"
+                                                                Tag="{Binding Trip.Id}"
+                                                                Command="{Binding DataContext.CancelTripCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                                                Style="{DynamicResource NarrowUserTripsCancelButtonTheme}"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding Type}" Value="{x:Static core:TripInvoiceType.Reserved}">
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="BorderBrush" Value="{DynamicResource ReservedTripLabelBorderBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Margin" Value="30 0"/>
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Background" Value="{DynamicResource ReservedTripLabelBackgroundBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_TextBlockInvoiceLabel" Property="Foreground" Value="{DynamicResource ReservedTripLabelTextBrush}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Type}" Value="{x:Static core:TripInvoiceType.Purchased}">
+                                                    <Setter TargetName="CUSTOM_PART_PaidPriceTextBlock" Property="Text" Value="{Binding Trip.Price, Converter={StaticResource PricePaidValueConverter}}"/>
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="BorderBrush" Value="{DynamicResource PurchasedTripLabelBorderBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_BorderInvoiceLabel" Property="Background" Value="{DynamicResource PurchasedTripLabelBackgroundBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_TextBlockInvoiceLabel" Property="Foreground" Value="{DynamicResource PurchasedTripLabelTextBrush}"/>
+                                                    <Setter TargetName="CUSTOM_PART_PurchaseButtons" Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style.Setters>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="NarrowUserTripsPurchaseButtonTheme" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderThickness="3"
+                                    Padding="25 10"
+                                    CornerRadius="25"
+                                    x:Name="CUSTOM_PART_Border"
+                                    Background="#afa"
+                                    BorderBrush="DarkOliveGreen">
+                                <Grid>
+                                    <component:ScalableTextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                 FontSize="76"
+                                                                 x:Name="CUSTOM_PART_Content"
+                                                                 Foreground="DarkOliveGreen"
+                                                                 HorizontalAlignment="Center"
+                                                                 VerticalAlignment="Center"
+                                                                 FontWeight="Normal"/>
+                                </Grid>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="Background" Value="#5d5"/>
+                                    <Setter TargetName="CUSTOM_PART_Content" Property="Foreground" Value="DarkGreen"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="NarrowUserTripsCancelButtonTheme" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderThickness="3"
+                                    Padding="25 10"
+                                    CornerRadius="25"
+                                    x:Name="CUSTOM_PART_Border"
+                                    Background="#f99"
+                                    BorderBrush="Red">
+                                <Grid>
+                                    <component:ScalableTextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                 FontSize="76"
+                                                                 x:Name="CUSTOM_PART_Content"
+                                                                 Foreground="Red"
+                                                                 HorizontalAlignment="Center"
+                                                                 VerticalAlignment="Center"
+                                                                 FontWeight="Normal"/>
+                                </Grid>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="Background" Value="#f66"/>
+                                    <Setter TargetName="CUSTOM_PART_Content" Property="Foreground" Value="DarkRed"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+ 
+
+    </UserControl.Resources>
+    
     <Grid>
 
         <ContentControl>
@@ -18,7 +468,7 @@
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=950}" Value="False">
+                        <DataTrigger Binding="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=1120}" Value="False">
                             <Setter Property="Content">
                                 <Setter.Value>
                                     <ListView Style="{StaticResource NarrowUserTripsTheme}"
