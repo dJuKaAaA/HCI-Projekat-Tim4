@@ -47,6 +47,8 @@
             <ListView ItemsSource="{Binding AllAccommodations}"
                       Padding="30 0"
                       BorderThickness="0"
+                      SelectionMode="Single"
+                      KeyboardNavigation.TabIndex="0"
                       Background="Transparent"
                       HorizontalAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled">

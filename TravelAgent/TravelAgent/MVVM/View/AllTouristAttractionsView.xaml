@@ -48,6 +48,8 @@
                       BorderThickness="0"
                       Background="Transparent"
                       Padding="30 0"
+                      SelectionMode="Single"
+                      KeyboardNavigation.TabIndex="0"
                       HorizontalAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemContainerStyle>

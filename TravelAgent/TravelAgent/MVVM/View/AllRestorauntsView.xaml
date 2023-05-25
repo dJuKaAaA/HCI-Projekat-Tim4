@@ -49,7 +49,9 @@
                       Background="Transparent"
                       Padding="30 0"
                       HorizontalAlignment="Stretch"
+                      KeyboardNavigation.TabIndex="0"
                       ScrollViewer.CanContentScroll="False"
+                      SelectionMode="Single"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">

@@ -22,7 +22,7 @@
                                     CornerRadius="25"
                                     Background="Transparent"
                                     BorderThickness="3"
-                                    BorderBrush="{StaticResource DefaultBorderBrush}">
+                                    BorderBrush="{StaticResource NotHighlightedBrush}">
                                 <StackPanel>
                                     <Border BorderBrush="{StaticResource ImageBorderBrush}"
                                             BorderThickness="5"
@@ -127,9 +127,16 @@
                                 </StackPanel>
                             </Border>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                        <Condition Property="IsSelected" Value="False"/>
+                                    </MultiTrigger.Conditions>
                                     <Setter Property="Cursor" Value="Hand"/>
-                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource ListViewItemSelectedBrush}"/>
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HoveredOverBrush}"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HighlightedBrush}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -149,7 +156,7 @@
                                     CornerRadius="25"
                                     Background="Transparent"
                                     BorderThickness="3"
-                                    BorderBrush="{StaticResource DefaultBorderBrush}">
+                                    BorderBrush="{StaticResource NotHighlightedBrush}">
                                 <StackPanel>
                                     <Border BorderBrush="{StaticResource ImageBorderBrush}"
                                             BorderThickness="5"
@@ -184,9 +191,16 @@
                                 </StackPanel>
                             </Border>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                        <Condition Property="IsSelected" Value="False"/>
+                                    </MultiTrigger.Conditions>
                                     <Setter Property="Cursor" Value="Hand"/>
-                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource ListViewItemSelectedBrush}"/>
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HoveredOverBrush}"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HighlightedBrush}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -208,7 +222,7 @@
                                     CornerRadius="25"
                                     Background="Transparent"
                                     BorderThickness="3"
-                                    BorderBrush="{StaticResource DefaultBorderBrush}">
+                                    BorderBrush="{StaticResource NotHighlightedBrush}">
                                 <StackPanel>
                                     <Border BorderBrush="{StaticResource ImageBorderBrush}"
                                             BorderThickness="5"
@@ -236,9 +250,16 @@
                                 </StackPanel>
                             </Border>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                        <Condition Property="IsSelected" Value="False"/>
+                                    </MultiTrigger.Conditions>
                                     <Setter Property="Cursor" Value="Hand"/>
-                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource ListViewItemSelectedBrush}"/>
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HoveredOverBrush}"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{StaticResource HighlightedBrush}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -301,6 +322,7 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBox Style="{StaticResource FormTextBoxTheme}"
                                              Grid.Column="0"
+                                             KeyboardNavigation.TabIndex="0"
                                              TextWrapping="Wrap"
                                              Text="{Binding DepartureAddress, UpdateSourceTrigger=PropertyChanged}">
                                         <TextBox.InputBindings>
@@ -310,6 +332,7 @@
 
                                     <Button Content="→"
                                             Grid.Column="1"
+                                            KeyboardNavigation.TabIndex="1"
                                             VerticalAlignment="Center"
                                             Command="{Binding SearchDepartureFromAddressCommand}"
                                             Margin="20 0"
@@ -328,6 +351,7 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBox Style="{StaticResource FormTextBoxTheme}"
                                              Grid.Column="0"
+                                             KeyboardNavigation.TabIndex="2"
                                              TextWrapping="Wrap"
                                              Text="{Binding DestinationAddress, UpdateSourceTrigger=PropertyChanged}">
                                         <TextBox.InputBindings>
@@ -338,6 +362,7 @@
                                     <Button Content="→"
                                             Grid.Column="1"
                                             Margin="20 0"
+                                            KeyboardNavigation.TabIndex="3"
                                             VerticalAlignment="Center"
                                             Command="{Binding SearchDestinationFromAddressCommand}"
                                             Style="{StaticResource ScalingFormButtonTheme}"/>
@@ -377,26 +402,51 @@
                               Grid.Row="1"
                               Margin="20"
                               Padding="20"
+                              SelectedItem="{Binding SelectedRestorauntForTrip}"
                               BorderThickness="3"
+
+                              x:Name="restorauntsForTripListView"
+
                               AllowDrop="True"
                               DragEnter="RestorauntListView_DragEnter" 
                               Drop="RestorauntListView_Drop"
+
+                              PreviewMouseLeftButtonDown="RestorauntListView_PreviewMouseLeftButtonDown"
+                              MouseMove="RestorauntListView_MouseMove"
+
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.CanContentScroll="False"
                               ItemContainerStyle="{StaticResource RestorauntItemTheme}"
-                              ItemsSource="{Binding RestorauntsForTrip}"/>
+                              ItemsSource="{Binding RestorauntsForTrip}">
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Right" Command="{Binding RemoveRestorauntCommand}"/>
+                        </ListView.InputBindings>
+                    </ListView>
 
                     <ListView Grid.Column="1"
                               Grid.Row="1"
                               Margin="20"
                               Padding="20"
                               BorderThickness="3"
+                              SelectedItem="{Binding SelectedRestorauntFromAll}"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.CanContentScroll="False"
+
+                              x:Name="allRestorauntsListView"
+
+                              AllowDrop="True"
+                              DragEnter="RestorauntListView_DragEnter" 
+                              Drop="RestorauntListView_DropRemove"
+
                               PreviewMouseLeftButtonDown="RestorauntListView_PreviewMouseLeftButtonDown"
                               MouseMove="RestorauntListView_MouseMove"
+
                               ItemContainerStyle="{StaticResource RestorauntItemTheme}"
-                              ItemsSource="{Binding AllRestoraunts}"/>
+                              ItemsSource="{Binding AllRestoraunts}">
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Left" Command="{Binding AddRestorauntCommand}"/>
+                        </ListView.InputBindings>
+                    </ListView>
 
                 </Grid>
 
@@ -429,25 +479,50 @@
                               Margin="20"
                               Padding="20"
                               BorderThickness="3"
+                              SelectedItem="{Binding SelectedTouristAttractionForTrip}"
+
+                              x:Name="touristAttractionsForTripListView"
+
                               AllowDrop="True"
+                              DragEnter="TouristAttractionListView_DragEnter" 
+                              Drop="TouristAttractionListView_Drop"
+
+                              PreviewMouseLeftButtonDown="TouristAttractionListView_PreviewMouseLeftButtonDown"
+                              MouseMove="TouristAttractionListView_MouseMove"
+
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.CanContentScroll="False"
                               ItemContainerStyle="{StaticResource TouristAttractionItemTheme}"
-                              DragEnter="TouristAttractionListView_DragEnter" 
-                              Drop="TouristAttractionListView_Drop"
-                              ItemsSource="{Binding TouristAttractionsForTrip}"/>
+                              ItemsSource="{Binding TouristAttractionsForTrip}">
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Right" Command="{Binding RemoveTouristAttractionCommand}"/>
+                        </ListView.InputBindings>
+                    </ListView>
 
                     <ListView Grid.Column="1"
                               Margin="20"
                               Padding="20"
                               BorderThickness="3"
                               Grid.Row="1"
+                              SelectedItem="{Binding SelectedTouristAttractionFromAll}"
+                              
+                              x:Name="allTouristAttractionsListView"
+
                               PreviewMouseLeftButtonDown="TouristAttractionListView_PreviewMouseLeftButtonDown"
+                              MouseMove="TouristAttractionListView_MouseMove"
+
+                              AllowDrop="True"
+                              DragEnter="TouristAttractionListView_DragEnter" 
+                              Drop="TouristAttractionListView_DropRemove"
+
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.CanContentScroll="False"
                               ItemContainerStyle="{StaticResource TouristAttractionItemTheme}"
-                              MouseMove="TouristAttractionListView_MouseMove"
-                              ItemsSource="{Binding AllTouristAttractions}"/>
+                              ItemsSource="{Binding AllTouristAttractions}">
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Left" Command="{Binding AddTouristAttractionCommand}"/>
+                        </ListView.InputBindings>
+                    </ListView>
 
                 </Grid>
 
@@ -480,25 +555,50 @@
                               Margin="20"
                               Padding="20"
                               BorderThickness="3"
+                              SelectedItem="{Binding SelectedAccommodationForTrip}"
+
+                              x:Name="accommodationsForTripListView"
+
                               AllowDrop="True"
+                              DragEnter="AccommodationsStartPointListView_DragEnter" 
+                              Drop="AccommodationListView_Drop"
+
+                              PreviewMouseLeftButtonDown="AccommodationListView_PreviewMouseLeftButtonDown"
+                              MouseMove="AccommodationListView_MouseMove"
+
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.CanContentScroll="False"
                               ItemContainerStyle="{StaticResource AccommodationItemTheme}"
-                              DragEnter="AccommodationsStartPointListView_DragEnter" 
-                              Drop="AccommodationListView_Drop"
-                              ItemsSource="{Binding AccommodationsForTrip}"/>
+                              ItemsSource="{Binding AccommodationsForTrip}">
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Right" Command="{Binding RemoveAccommodationCommand}"/>
+                        </ListView.InputBindings>
+                    </ListView>
 
                     <ListView Grid.Column="1"
                               Grid.Row="1"
                               Margin="20"
                               Padding="20"
                               BorderThickness="3"
+                              SelectedItem="{Binding SelectedAccommodationFromAll}"
+
+                              x:Name="allAccommodationsListView"
+
                               PreviewMouseLeftButtonDown="AccommodationListView_PreviewMouseLeftButtonDown"
+                              MouseMove="AccommodationListView_MouseMove"
+
+                              AllowDrop="True"
+                              DragEnter="AccommodationsStartPointListView_DragEnter" 
+                              Drop="AccommodationListView_DropRemove"
+
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.CanContentScroll="False"
                               ItemContainerStyle="{StaticResource AccommodationItemTheme}"
-                              MouseMove="AccommodationListView_MouseMove"
-                              ItemsSource="{Binding AllAccommodations}"/>
+                              ItemsSource="{Binding AllAccommodations}">
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Left" Command="{Binding AddAccommodationCommand}"/>
+                        </ListView.InputBindings>
+                    </ListView>
 
                 </Grid>
 
@@ -512,7 +612,8 @@
                                 Margin="20 0"
                                 MaxWidth="700">
 
-                        <ContentControl Margin="0 25">
+                        <ContentControl Margin="0 25"
+                                        IsTabStop="False">
                             <ContentControl.Style>
                                 <Style TargetType="ContentControl">
                                     <Setter Property="Content">
