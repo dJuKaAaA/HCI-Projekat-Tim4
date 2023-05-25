@@ -82,12 +82,12 @@
                     <Button Content="Register"
                             Margin="20 10"
                             HorizontalAlignment="Center"
-                            Style="{StaticResource FormButtonTheme}"
+                            Style="{StaticResource ScalingFormButtonTheme}"
                             Command="{Binding RegisterCommand}"/>
                     <Button Content="Back"
                             Margin="20 10"
                             HorizontalAlignment="Center"
-                            Style="{StaticResource FormButtonTheme}"
+                            Style="{StaticResource ScalingFormButtonTheme}"
                             Command="{Binding NavigateToLoginViewCommand}"/>
 
                 </StackPanel>

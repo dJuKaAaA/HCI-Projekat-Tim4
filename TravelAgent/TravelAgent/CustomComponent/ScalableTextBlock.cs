@@ -22,6 +22,20 @@ namespace TravelAgent.CustomComponent
             DependencyProperty.Register("ScaleRate", typeof(double), typeof(ScalableTextBlock), 
                 new PropertyMetadata(1.0));
 
+
+        // property for debugging
+        //------------------------------
+        public bool Log
+        {
+            get { return (bool)GetValue(LogProperty); }
+            set { SetValue(LogProperty, value); }
+        }
+
+        public static readonly DependencyProperty LogProperty =
+            DependencyProperty.Register("Log", typeof(bool), typeof(ScalableTextBlock), 
+                new PropertyMetadata(false));
+        //------------------------------
+
         public ScalableTextBlock()
         {
             Loaded += OnLoaded;
@@ -29,7 +43,18 @@ namespace TravelAgent.CustomComponent
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _originalFontSize = FontSize;
+            // sets the original font size if it isn't set
+            if (_originalFontSize <= 0.0)
+            {
+                _originalFontSize = FontSize;
+            }
+
+            // debug log
+            if (Log)
+            {
+                MessageBox.Show($"{_originalFontSize}");
+            }
+
             Window window = Application.Current.MainWindow;
             if (window != null)
             {

@@ -16,20 +16,30 @@
                     <ControlTemplate TargetType="TextBox">
                         <Border x:Name="CUSTOM_PART_Border"
                                 CornerRadius="20"
+                                VerticalAlignment="Center"
                                 BorderThickness="2"
                                 BorderBrush="{DynamicResource NotHighlightedBrush}">
                             <Decorator x:Name="PART_ContentHost"
-                                       Margin="15 5"/>
+                                       Margin="15 5"
+                                       VerticalAlignment="Center"/>
                         </Border>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource HighlightedBrush}"/>
                                 <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="3"/>
                                 <Setter TargetName="CUSTOM_PART_Border" Property="CornerRadius" Value="30"/>
                                 <Setter TargetName="PART_ContentHost" Property="Margin" Value="20 10"/>
                                 <Setter Property="FontSize" Value="28"/>
                             </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsFocused" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource HoveredOverBrush}"/>
+                                <Setter Property="Cursor" Value="IBeam"/>
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -59,12 +69,20 @@
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource TextBoxInFocusBrush}"/>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource HighlightedBrush}"/>
                                 <Setter TargetName="CUSTOM_PART_Border" Property="BorderThickness" Value="3"/>
                                 <Setter TargetName="CUSTOM_PART_Border" Property="CornerRadius" Value="30"/>
                                 <Setter TargetName="PART_ContentHost" Property="Margin" Value="20 10"/>
                                 <Setter Property="FontSize" Value="28"/>
                             </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsFocused" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="{DynamicResource HoveredOverBrush}"/>
+                                <Setter Property="Cursor" Value="IBeam"/>
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
