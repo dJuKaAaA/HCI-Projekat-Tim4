@@ -116,6 +116,7 @@ namespace TravelAgent.MVVM.ViewModel
                 window.InputBindings.Remove(_openModifyTripViewKeyBinding);
                 window.InputBindings.Remove(_deleteTripKeyBinding);
 
+                _seeDealPopup?.Close();
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
             }
             else
@@ -129,7 +130,6 @@ namespace TravelAgent.MVVM.ViewModel
                 window.InputBindings.Add(_deleteTripKeyBinding);
             }
 
-            _seeDealPopup?.Close();
         }
 
         private void OnOpenSeeDealPopup(object o)

@@ -47,7 +47,7 @@ namespace TravelAgent.Service
                     {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
-                        Image = $"{_consts.PathToTouristAttractionsImages}/{reader.GetString(2)}",
+                        Image = reader.GetString(2),
                         Location = location
                     };
                     result.Add(touristAttraction);
@@ -87,7 +87,7 @@ namespace TravelAgent.Service
                     {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
-                        Image = $"{_consts.PathToTouristAttractionsImages}/{reader.GetString(2)}",
+                        Image = reader.GetString(2),
                         Location = location
                     };
                     result.Add(touristAttraction);

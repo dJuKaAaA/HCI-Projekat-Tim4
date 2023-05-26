@@ -49,7 +49,7 @@ namespace TravelAgent.Core
             PathToIcons = $"{ProjectRootRelativePath}/Image/Icon";
             PathToTouristAttractionsImages = $"{ProjectRootRelativePath}/Image/TouristAttraction";
             PathToRestorauntImages = $"{ProjectRootRelativePath}/Image/Restoraunt";
-            PathToAccommodationImages = $"{ProjectRootRelativePath}/Image/Accomodation";
+            PathToAccommodationImages = $"{ProjectRootRelativePath}/Image/Accommodation";
 
             UsersTableName = "users";
             TripsTableName = "trips";

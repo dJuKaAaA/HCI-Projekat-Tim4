@@ -31,12 +31,16 @@ namespace TravelAgent.MVVM.ViewModel
             set { _selectedAccommodation = value; OnPropertyChanged(); }
         }
 
+        private KeyBinding? _openCreateAccommodationViewKeyBinding;
+        private KeyBinding? _openModifyAccommodationViewKeyBinding;
+        private KeyBinding? _deleteAccommodationKeyBinding;
+
         private readonly Service.AccommodationService _accommodationService;
         private readonly Service.NavigationService _navigationService;
 
         public ICommand OpenCreateAccommodationViewComand { get; }
         public ICommand OpenModifyAccommodationViewComand { get; }
-        public ICommand DeleteAccommodationViewCommand { get; }
+        public ICommand DeleteAccommodationCommand { get; }
 
         public AllAccommodationsViewModel(
             Service.AccommodationService acccommodationService, 
@@ -49,10 +53,36 @@ namespace TravelAgent.MVVM.ViewModel
             _accommodationService = acccommodationService;
             _navigationService = navigationService;
 
+            _navigationService.NavigationCompleted += OnNavigationCompleted;
+
             OpenCreateAccommodationViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateAccommodationViewModel>(), o => MainViewModel.SignedUser?.Type == UserType.Agent);
             OpenModifyAccommodationViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateAccommodationViewModel>(SelectedAccommodation), o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedAccommodation != null);
-            DeleteAccommodationViewCommand = new Core.RelayCommand(OnDeleteAccommodation, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedAccommodation != null);
+            DeleteAccommodationCommand = new Core.RelayCommand(OnDeleteAccommodation, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedAccommodation != null);
             LoadAll();
+        }
+
+        private void OnNavigationCompleted(object? sender, NavigationEventArgs e)
+        {
+            if (e.ViewModelType != typeof(AllAccommodationsViewModel))
+            {
+                Window window = Application.Current.MainWindow;
+                window.InputBindings.Remove(_openCreateAccommodationViewKeyBinding);
+                window.InputBindings.Remove(_openModifyAccommodationViewKeyBinding);
+                window.InputBindings.Remove(_deleteAccommodationKeyBinding);
+
+                _navigationService.NavigationCompleted -= OnNavigationCompleted;
+            }
+            else
+            {
+                Window window = Application.Current.MainWindow;
+                _openCreateAccommodationViewKeyBinding = new KeyBinding(OpenCreateAccommodationViewComand, Key.N, ModifierKeys.Control);
+                _openModifyAccommodationViewKeyBinding = new KeyBinding(OpenModifyAccommodationViewComand, Key.C, ModifierKeys.Control);
+                _deleteAccommodationKeyBinding = new KeyBinding(DeleteAccommodationCommand, Key.D, ModifierKeys.Control);
+                window.InputBindings.Add(_openCreateAccommodationViewKeyBinding);
+                window.InputBindings.Add(_openModifyAccommodationViewKeyBinding);
+                window.InputBindings.Add(_deleteAccommodationKeyBinding);
+            }
+
         }
 
         private void OnDeleteAccommodation(object o)

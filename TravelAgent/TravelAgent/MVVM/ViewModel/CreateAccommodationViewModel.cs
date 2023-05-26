@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using TravelAgent.Core;
+using TravelAgent.MVVM.Model;
 using TravelAgent.MVVM.View.Popup;
 using TravelAgent.Service;
 
@@ -13,7 +14,31 @@ namespace TravelAgent.MVVM.ViewModel
 {
     public class CreateAccommodationViewModel : Core.CreationViewModel
     {
-		private BitmapImage _image;
+        private AccommodationModel? _accommodationForModification;
+
+        public AccommodationModel? AccommodationForModification
+        {
+            get { return _accommodationForModification; }
+            set { _accommodationForModification = value; OnPropertyChanged(); }
+        }
+
+        private bool _modifying;
+
+        public bool Modifying
+        {
+            get { return _modifying; }
+            set { _modifying = value; OnPropertyChanged(); }
+        }
+
+        private bool _isLocationChanged;
+
+        public bool IsLocationChanged
+        {
+            get { return _isLocationChanged; }
+            set { _isLocationChanged = value; OnPropertyChanged(); }
+        }
+
+        private BitmapImage _image;
 
 		public BitmapImage Image
 		{
@@ -67,22 +92,21 @@ namespace TravelAgent.MVVM.ViewModel
 
         private readonly Consts _consts;
         private readonly NavigationService _navigationService;
+        private readonly ImageService _imageService;
 
         public ICommand OpenLocationPickerCommand { get; }
 
         public CreateAccommodationViewModel(
             Consts consts,
             NavigationService navigationService,
-            MapService mapService) : base(mapService)
+            MapService mapService,
+            ImageService imageService) : base(mapService)
         {
-            string assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            string uriString = $"pack://application:,,,/{assemblyName};component/Image/defaultimg.jpg";
-            Uri imageUri = new Uri(uriString);
-
-            Image = new BitmapImage(imageUri);
+            Image = imageService.GetFromLocalStorage($"{consts.ProjectRootRelativePath}/Image/defaultimg.jpg");
 
             _consts = consts;
             _navigationService = navigationService;
+            _imageService = imageService;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
@@ -91,12 +115,28 @@ namespace TravelAgent.MVVM.ViewModel
 
         }
 
+        private void SetValuesForModification()
+        {
+            Location = AccommodationForModification.Location;
+            Name = AccommodationForModification.Name;
+            Rating = AccommodationForModification.Rating.ToString();
+            Image = _imageService.GetFromLocalStorage(AccommodationForModification.Image);
+            Address = Location.Address;
+        }
+
         private void OnNavigationCompleted(object? sender, NavigationEventArgs e)
         {
             if (e.ViewModelType != typeof(CreateAccommodationViewModel))
             {
                 _pickLocationPopup?.Close();
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
+            }
+
+            if (e.Extra is AccommodationModel accommodation)
+            {
+                AccommodationForModification = accommodation;
+                Modifying = true;
+                SetValuesForModification();
             }
         }
 
@@ -107,6 +147,14 @@ namespace TravelAgent.MVVM.ViewModel
             {
                 DataContext = this
             };
+            if (Location != null)
+            {
+                _pickLocationPopup.PickedLocationPushpin = MapService.CreatePushpin( 
+                    Location.Latitude, 
+                    Location.Longitude, 
+                    Location.Address, 
+                    "PickedLocation");
+            }
             _pickLocationPopup.Show();
         }
 
