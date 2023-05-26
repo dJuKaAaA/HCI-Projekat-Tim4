@@ -60,6 +60,7 @@ namespace TravelAgent
             services.AddSingleton<Service.AccommodationService>();
             services.AddSingleton<Service.UserTripService>();
             services.AddSingleton<Service.MapService>();
+            services.AddSingleton<Service.ImageService>();
 
             _serviceProvider = services.BuildServiceProvider();
 

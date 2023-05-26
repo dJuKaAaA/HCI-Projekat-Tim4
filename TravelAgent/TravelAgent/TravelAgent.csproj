@@ -9,10 +9,10 @@
 
   <ItemGroup>
     <None Remove="Font\WorkSans-VariableFont_wght.ttf" />
-    <None Remove="Image\Accomodation\apartment-cuprija.jpg" />
-    <None Remove="Image\Accomodation\plava-laguna.jpg" />
-    <None Remove="Image\Accomodation\rasic.jpg" />
-    <None Remove="Image\Accomodation\vila-nikola-sokobanja.jpg" />
+    <None Remove="Image\Accommodation\apartment-cuprija.jpg" />
+    <None Remove="Image\Accommodation\plava-laguna.jpg" />
+    <None Remove="Image\Accommodation\rasic.jpg" />
+    <None Remove="Image\Accommodation\vila-nikola-sokobanja.jpg" />
     <None Remove="Image\defaultimg.jpg" />
     <None Remove="Image\Icon\accommodation-pushpin.png" />
     <None Remove="Image\Icon\bus.png" />
@@ -73,10 +73,10 @@
 
   <ItemGroup>
     <Resource Include="Font\WorkSans-VariableFont_wght.ttf" />
-    <Resource Include="Image\Accomodation\apartment-cuprija.jpg" />
-    <Resource Include="Image\Accomodation\plava-laguna.jpg" />
-    <Resource Include="Image\Accomodation\rasic.jpg" />
-    <Resource Include="Image\Accomodation\vila-nikola-sokobanja.jpg" />
+    <Resource Include="Image\Accommodation\apartment-cuprija.jpg" />
+    <Resource Include="Image\Accommodation\plava-laguna.jpg" />
+    <Resource Include="Image\Accommodation\rasic.jpg" />
+    <Resource Include="Image\Accommodation\vila-nikola-sokobanja.jpg" />
     <Resource Include="Image\defaultimg.jpg" />
     <Resource Include="Image\Icon\accommodation-pushpin.png" />
     <Resource Include="Image\Icon\bus.png" />

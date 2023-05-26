@@ -20,7 +20,7 @@ namespace TravelAgent.MVVM.View.Popup
     {
         private Core.CreationViewModel _viewModel;
 
-        private Pushpin _pushpin;
+        public Pushpin PickedLocationPushpin { get; set; }
 
         public PickLocationPopup()
         {
@@ -31,6 +31,12 @@ namespace TravelAgent.MVVM.View.Popup
         {
             _viewModel = (Core.CreationViewModel)DataContext;
             _viewModel.AddressSearched += OnAddressSearched;
+            if (PickedLocationPushpin != null)
+            {
+                DrawPushpin(_viewModel.Location);
+                mapControl.Center = new Location(_viewModel.Location.Latitude, _viewModel.Location.Longitude);
+                mapControl.ZoomLevel = 12;
+            }
         }
 
         private void OnAddressSearched(object? sender, LocationModel location)
@@ -43,18 +49,18 @@ namespace TravelAgent.MVVM.View.Popup
 
         private void DrawPushpin(LocationModel location)
         {
-            if (_pushpin != null)
+            if (PickedLocationPushpin != null)
             {
-                mapControl.Children.Remove(_pushpin);
+                mapControl.Children.Remove(PickedLocationPushpin);
             }
 
-            _pushpin = _viewModel.MapService.CreatePushpin(
+            PickedLocationPushpin = _viewModel.MapService.CreatePushpin(
                 location.Latitude,
                 location.Longitude,
                 location.Address,
                 "PickedLocation");
 
-            mapControl.Children.Add(_pushpin);
+            mapControl.Children.Add(PickedLocationPushpin);
         }
 
         private async void Map_MouseDoubleClick(object sender, MouseButtonEventArgs e)
