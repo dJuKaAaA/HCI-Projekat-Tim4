@@ -280,6 +280,7 @@ namespace TravelAgent.MVVM.View
             }
         }
 
+
         // drag and drop
         //---
         private static T FindAncestor<T>(DependencyObject current) where T : DependencyObject

@@ -12,8 +12,8 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
-        Loaded="Popup_Loaded"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        Loaded="Popup_Loaded">
 
     <Window.DataContext>
         <popupvm:SeeDealViewModel/>

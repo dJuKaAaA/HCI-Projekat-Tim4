@@ -44,6 +44,7 @@ namespace TravelAgent
             services.AddTransient<AllRestorauntsViewModel>();
             services.AddTransient<AllAccommodationsViewModel>();
             services.AddTransient<CreateTripViewModel>();
+            services.AddTransient<CreateAccommodationViewModel>();
             services.AddTransient<UserTripsViewModel>();
             services.AddTransient<MapViewModel>();
             services.AddTransient<SeeDealViewModel>();
