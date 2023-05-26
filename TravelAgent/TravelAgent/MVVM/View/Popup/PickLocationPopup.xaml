@@ -1,0 +1,88 @@
+﻿<Window x:Class="TravelAgent.MVVM.View.Popup.PickLocationPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        xmlns:component="clr-namespace:TravelAgent.CustomComponent"
+        xmlns:local="clr-namespace:TravelAgent.MVVM.ViewModel.Popup"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Loaded="Window_Loaded"
+        Title="PickLocationPopup" Height="700" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#fff"
+                CornerRadius="20"
+                BorderThickness="3"
+                BorderBrush="#999"
+                Grid.RowSpan="4"
+                Grid.ColumnSpan="2"/>
+        <Button Grid.Row="0"
+                Style="{StaticResource CloseButtonTheme}"
+                HorizontalAlignment="Right"
+                Command="{Binding ClosePopupCommand}"
+                VerticalAlignment="Top"
+                Margin="0 20 20 0"/>
+
+
+        <TextBlock Text="Pick location"
+                   FontSize="44"
+                   Margin="0 20"
+                   Grid.Row="1"
+                   HorizontalAlignment="Center"/>
+
+        <Grid Grid.Row="2"
+              Margin="20 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Style="{StaticResource FormTextBoxTheme}"
+                     Grid.Column="0"
+                     Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                     KeyboardNavigation.TabIndex="0"
+                     TextWrapping="Wrap">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding SearchLocationFromAddressCommand}" Key="Return"/>
+                </TextBox.InputBindings>
+            </TextBox>
+
+            <Button Content="→"
+                    Grid.Column="1"
+                    KeyboardNavigation.TabIndex="1"
+                    VerticalAlignment="Center"
+                    Margin="20 0 0 0"
+                    Command="{Binding SearchLocationFromAddressCommand}"
+                    Style="{StaticResource ScalingFormButtonTheme}"/>
+
+        </Grid>
+
+        <Border Width="Auto"
+                BorderThickness="5"
+                Grid.Row="3"
+                Margin="20"
+                Grid.Column="0"
+                CornerRadius="3"
+                BorderBrush="{StaticResource DefaultBorderBrush}">
+            <m:Map x:Name="mapControl" 
+                   CredentialsProvider="AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr" 
+                   Center="44.1871, 20.8572"
+                   MouseDoubleClick="Map_MouseDoubleClick"
+                   IsTabStop="False"
+                   ZoomLevel="8"/>
+
+        </Border>
+        
+    </Grid>
+</Window>

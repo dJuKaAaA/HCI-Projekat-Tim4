@@ -21,17 +21,20 @@
             <Button Content="+"
                     Padding="20 5"
                     ToolTip="Add accomodation"
+                    Command="{Binding OpenCreateAccommodationViewComand}"
                     Foreground="CadetBlue"
                     FontWeight="Bold"
                     Margin="10 5"/>
             <Button Content="✏️"
                     Foreground="DarkGoldenrod"
                     ToolTip="Modify accomodation"
+                    Command="{Binding OpenModifyAccommodationViewComand}"
                     Padding="20 5"
                     Margin="10 5"/>
             <Button Content="❌"
                     Foreground="DarkRed"
                     ToolTip="Delete accomodation"
+                    Command="{Binding DeleteAccommodationViewCommand}"
                     Padding="20 5"
                     Margin="10 5"/>
         </ToolBar>
@@ -48,6 +51,7 @@
                       Padding="30 0"
                       BorderThickness="0"
                       SelectionMode="Single"
+                      SelectedItem="{Binding SelectedAccommodation}"
                       KeyboardNavigation.TabIndex="0"
                       Background="Transparent"
                       HorizontalAlignment="Stretch"

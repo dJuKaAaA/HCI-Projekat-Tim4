@@ -335,7 +335,7 @@
                                             KeyboardNavigation.TabIndex="1"
                                             VerticalAlignment="Center"
                                             Command="{Binding SearchDepartureFromAddressCommand}"
-                                            Margin="20 0"
+                                            Margin="20 0 0 0"
                                             Style="{StaticResource ScalingFormButtonTheme}"/>
 
                                 </Grid>
@@ -361,7 +361,7 @@
 
                                     <Button Content="→"
                                             Grid.Column="1"
-                                            Margin="20 0"
+                                            Margin="20 0 0 0"
                                             KeyboardNavigation.TabIndex="3"
                                             VerticalAlignment="Center"
                                             Command="{Binding SearchDestinationFromAddressCommand}"

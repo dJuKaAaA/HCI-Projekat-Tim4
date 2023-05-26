@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TravelAgent.MVVM.Model;
+using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel
 {
@@ -23,7 +24,8 @@ namespace TravelAgent.MVVM.ViewModel
 
         private readonly Service.RestorauntService _restorauntService;
 
-        public AllRestorauntsViewModel(Service.RestorauntService restorauntService)
+        public AllRestorauntsViewModel(
+            Service.RestorauntService restorauntService)
         {
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
             AllRestoraunts = new ObservableCollection<RestorauntModel>();

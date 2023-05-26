@@ -13,6 +13,7 @@
     <None Remove="Image\Accomodation\plava-laguna.jpg" />
     <None Remove="Image\Accomodation\rasic.jpg" />
     <None Remove="Image\Accomodation\vila-nikola-sokobanja.jpg" />
+    <None Remove="Image\defaultimg.jpg" />
     <None Remove="Image\Icon\accommodation-pushpin.png" />
     <None Remove="Image\Icon\bus.png" />
     <None Remove="Image\Icon\restoraunt-pushpin.png" />
@@ -76,6 +77,7 @@
     <Resource Include="Image\Accomodation\plava-laguna.jpg" />
     <Resource Include="Image\Accomodation\rasic.jpg" />
     <Resource Include="Image\Accomodation\vila-nikola-sokobanja.jpg" />
+    <Resource Include="Image\defaultimg.jpg" />
     <Resource Include="Image\Icon\accommodation-pushpin.png" />
     <Resource Include="Image\Icon\bus.png" />
     <Resource Include="Image\Icon\restoraunt-pushpin.png" />
