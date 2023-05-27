@@ -20,21 +20,21 @@
                  Visibility="{Binding ToolbarVisibility}">
             <Button Content="+"
                     Padding="20 5"
-                    ToolTip="Add accomodation"
+                    ToolTip="Add accomodation (Ctrl+N)"
                     Command="{Binding OpenCreateAccommodationViewComand}"
                     Foreground="CadetBlue"
                     FontWeight="Bold"
                     Margin="10 5"/>
             <Button Content="✏️"
                     Foreground="DarkGoldenrod"
-                    ToolTip="Modify accomodation"
+                    ToolTip="Modify accomodation (Ctrl+C)"
                     Command="{Binding OpenModifyAccommodationViewComand}"
                     Padding="20 5"
                     Margin="10 5"/>
             <Button Content="❌"
                     Foreground="DarkRed"
-                    ToolTip="Delete accomodation"
-                    Command="{Binding DeleteAccommodationViewCommand}"
+                    ToolTip="Delete accomodation (Ctrl+D)"
+                    Command="{Binding DeleteAccommodationCommand}"
                     Padding="20 5"
                     Margin="10 5"/>
         </ToolBar>
