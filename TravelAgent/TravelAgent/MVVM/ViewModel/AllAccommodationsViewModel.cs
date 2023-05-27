@@ -85,9 +85,15 @@ namespace TravelAgent.MVVM.ViewModel
 
         }
 
-        private void OnDeleteAccommodation(object o)
+        private async void OnDeleteAccommodation(object o)
         {
-
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this accommodation?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                await _accommodationService.Delete(SelectedAccommodation.Id);
+                LoadAll();
+                MessageBox.Show("Accommodation deleted successfully!");
+            }
         }
 
         private async void LoadAll()

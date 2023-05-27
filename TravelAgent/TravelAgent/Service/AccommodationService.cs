@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,32 @@ namespace TravelAgent.Service
         {
             _consts = consts;
             _databaseExecutionService = databaseExecutionService;
+        }
+
+        public async Task Delete(int id)
+        {
+            string command = $"DELETE FROM {_consts.TripsAccommodationsTableName} " +
+                $"WHERE accommodation_id = {id}";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+            command = $"DELETE FROM {_consts.AccommodationsTableName} " +
+                $"WHERE id = {id}";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+        }
+
+        public async Task Modify(int id, AccommodationModel accommodation)
+        {
+            string command = $"UPDATE {_consts.AccommodationsTableName} " +
+                $"SET name = '{accommodation.Name}', rating = {accommodation.Rating}, location_id = {accommodation.Location.Id}, " +
+                $"image = '{accommodation.Image}' " +
+                $"WHERE id = {id}";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+        }
+
+        public async Task Create(AccommodationModel accommodation)
+        {
+            string command = $"INSERT INTO {_consts.AccommodationsTableName} (name, rating, location_id, image) " +
+                $"VALUES ('{accommodation.Name}', {accommodation.Rating}, {accommodation.Location.Id}, '{accommodation.Image}')";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
         }
 
         public async Task<IEnumerable<AccommodationModel>> GetAll()

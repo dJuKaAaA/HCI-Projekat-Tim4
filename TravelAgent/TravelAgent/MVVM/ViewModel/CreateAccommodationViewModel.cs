@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json.Bson;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using TravelAgent.Core;
@@ -37,14 +40,6 @@ namespace TravelAgent.MVVM.ViewModel
             get { return _isLocationChanged; }
             set { _isLocationChanged = value; OnPropertyChanged(); }
         }
-
-        private BitmapImage _image;
-
-		public BitmapImage Image
-		{
-			get { return _image; }
-			set { _image = value; OnPropertyChanged(); }
-		}
 
         private string _name;
 
@@ -92,27 +87,97 @@ namespace TravelAgent.MVVM.ViewModel
 
         private readonly Consts _consts;
         private readonly NavigationService _navigationService;
+        private readonly AccommodationService _accommodationService;
+        private readonly LocationService _locationService;
         private readonly ImageService _imageService;
 
         public ICommand OpenLocationPickerCommand { get; }
+        public ICommand CreateAccommodationCommand { get; }
 
         public CreateAccommodationViewModel(
             Consts consts,
             NavigationService navigationService,
+            AccommodationService accommodationService,
+            LocationService locationService,
             MapService mapService,
             ImageService imageService) : base(mapService)
         {
-            Image = imageService.GetFromLocalStorage($"{consts.ProjectRootRelativePath}/Image/defaultimg.jpg");
-
             _consts = consts;
             _navigationService = navigationService;
+            _accommodationService = accommodationService;
+            _locationService = locationService;
             _imageService = imageService;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
             OpenLocationPickerCommand = new RelayCommand(OnOpenLocationPicker, o => true);
+            CreateAccommodationCommand = new RelayCommand(OnCreateAccommodation, CanCreateAccommodation);
             ClosePopupCommand = new RelayCommand(o => _pickLocationPopup?.Close(), o => _pickLocationPopup != null);
 
+
+        }
+
+        private async void OnCreateAccommodation(object o)
+        {
+            double rating = double.Parse(Rating);
+            if (rating < 0 || rating > 5.0)
+            {
+                MessageBox.Show("Rating must be between 0 and 5!", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!Modifying)
+            {
+                LocationModel location = await _locationService.Create(Location);
+
+                AccommodationModel newAccommodation = new AccommodationModel()
+                {
+                    Name = Name,
+                    Rating = rating,
+                    Location = location,
+                    Image = Image.UriSource.LocalPath
+                };
+
+                await _accommodationService.Create(newAccommodation);
+
+                MessageBox.Show("Accommodation created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                SetDefaultValues();
+            }
+            else
+            {
+                LocationModel location = AccommodationForModification.Location;
+                if (Location.Id != AccommodationForModification.Location.Id)
+                {
+                    location = await _locationService.Create(Location);
+                }
+
+                AccommodationModel modifiedAccommdation = new AccommodationModel()
+                {
+                    Name = Name,
+                    Rating = rating,
+                    Location = location,
+                    Image = Image.UriSource.LocalPath
+                };
+
+                await _accommodationService.Modify(AccommodationForModification.Id, modifiedAccommdation);
+                MessageBox.Show("Accommodation modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                _navigationService.NavigateTo<AllAccommodationsViewModel>();
+            }
+        }
+
+        private bool CanCreateAccommodation(object o)
+        {
+            return !string.IsNullOrWhiteSpace(Name) &&
+                Location != null;
+        }
+
+        private void SetDefaultValues()
+        {
+            Address = string.Empty;
+            Location = null;
+            Name = string.Empty;
+            Rating = "0";
+            Image = _imageService.GetFromLocalStorage($"{_consts.ProjectRootRelativePath}/Image/defaultimg.jpg");
         }
 
         private void SetValuesForModification()
@@ -137,6 +202,10 @@ namespace TravelAgent.MVVM.ViewModel
                 AccommodationForModification = accommodation;
                 Modifying = true;
                 SetValuesForModification();
+            }
+            else
+            {
+                SetDefaultValues();
             }
         }
 

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using TravelAgent.Exception;
 using TravelAgent.MVVM.Model;
 using TravelAgent.Service;
@@ -29,11 +31,20 @@ namespace TravelAgent.Core
             set { _address = value; OnPropertyChanged(); }
         }
 
+        private BitmapImage? _image;
+
+		public BitmapImage? Image
+		{
+			get { return _image; }
+			set { _image = value; OnPropertyChanged(); }
+		}
+
         public EventHandler<LocationModel> AddressSearched;
 
         public MapService MapService { get; }
 
         public ICommand SearchLocationFromAddressCommand { get; }
+        public ICommand PickImageCommand { get; }
         public ICommand ClosePopupCommand { get; protected set; }
 
         public CreationViewModel(MapService mapService)
@@ -41,6 +52,22 @@ namespace TravelAgent.Core
             MapService = mapService;
 
             SearchLocationFromAddressCommand = new RelayCommand(OnSearchLocationFromAddress, o => !string.IsNullOrWhiteSpace(Address));
+            PickImageCommand = new RelayCommand(OnPickImage, o => true);
+        }
+
+        public void OnPickImage(object o)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "Image Files (*.jpg; *.jpeg; *.png; *.gif)|*.jpg; *.jpeg; *.png; *.gif|All Files (*.*)|*.*";
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            dialog.Title = "Select an Image";
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                string filename = dialog.FileName;
+                Uri uriSource = new Uri(filename);
+                Image = new BitmapImage(uriSource);
+            }
         }
 
         public async void OnSearchLocationFromAddress(object o)
