@@ -178,6 +178,10 @@
                     <view:CreateRestorauntView/>
                 </DataTemplate>
 
+                <DataTemplate DataType="{x:Type vm:CreateTouristAttractionViewModel}">
+                    <view:CreateTouristAttractionView/>
+                </DataTemplate>
+
             </ContentControl.Resources>
 
         </ContentControl>

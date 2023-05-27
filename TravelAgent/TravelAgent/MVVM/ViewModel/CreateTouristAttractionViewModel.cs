@@ -12,14 +12,14 @@ using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel
 {
-    public class CreateRestorauntViewModel : Core.CreationViewModel
+    public class CreateTouristAttractionViewModel : Core.CreationViewModel
     {
-        private RestorauntModel? _restorauntForModification;
+        private TouristAttractionModel? _touristAttractionForModification;
 
-        public RestorauntModel? RestorauntForModification
+        public TouristAttractionModel? TouristAttractionForModification
         {
-            get { return _restorauntForModification; }
-            set { _restorauntForModification = value; OnPropertyChanged(); }
+            get { return _touristAttractionForModification; }
+            set { _touristAttractionForModification = value; OnPropertyChanged(); }
         }
 
         private bool _modifying;
@@ -46,100 +46,79 @@ namespace TravelAgent.MVVM.ViewModel
             set { _name = value; OnPropertyChanged(); }
         }
 
-        private int _stars = 1;
-
-        public int Stars
-        {
-            get { return _stars; }
-            set { _stars =  value; OnPropertyChanged(); }
-        }
-
         private PickLocationPopup? _pickLocationPopup;
 
         private readonly Consts _consts;
         private readonly NavigationService _navigationService;
-        private readonly RestorauntService _restorauntService;
+        private readonly TouristAttractionService _touristAttractionService;
         private readonly LocationService _locationService;
         private readonly ImageService _imageService;
 
         public ICommand OpenLocationPickerCommand { get; }
-        public ICommand CreateRestorauntCommand { get; }
-        public ICommand SelectStarsCommand { get; }
+        public ICommand CreateTouristAttractionCommand { get; }
 
-        public CreateRestorauntViewModel(
+        public CreateTouristAttractionViewModel(
             Consts consts,
             NavigationService navigationService,
-            RestorauntService restorauntService,
+            TouristAttractionService touristAttractionService,
             LocationService locationService,
             MapService mapService,
             ImageService imageService) : base(mapService)
         {
             _consts = consts;
             _navigationService = navigationService;
-            _restorauntService = restorauntService;
+            _touristAttractionService = touristAttractionService;
             _locationService = locationService;
             _imageService = imageService;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
             OpenLocationPickerCommand = new RelayCommand(OnOpenLocationPicker, o => true);
-            CreateRestorauntCommand = new RelayCommand(OnCreateRestoraunt, CanCreateRestoraunt);
-            SelectStarsCommand = new RelayCommand(OnSelectStars, o => true);
+            CreateTouristAttractionCommand = new RelayCommand(OnCreateAccommodation, CanCreateTouristAttraction);
             ClosePopupCommand = new RelayCommand(o => _pickLocationPopup?.Close(), o => _pickLocationPopup != null);
 
         }
 
-        private void OnSelectStars(object o)
-        {
-            int star;
-            if (int.TryParse(o.ToString(), out star))
-            {
-                Stars = star;
-            }
-        }
-
-        private async void OnCreateRestoraunt(object o)
+        private async void OnCreateAccommodation(object o)
         {
             if (!Modifying)
             {
                 LocationModel location = await _locationService.Create(Location);
 
-                RestorauntModel newRestoraunt = new RestorauntModel()
+                TouristAttractionModel newTouristAttraction = new TouristAttractionModel()
                 {
                     Name = Name,
-                    Stars = Stars,
                     Location = location,
                     Image = Image.UriSource.LocalPath
                 };
 
-                await _restorauntService.Create(newRestoraunt);
+                await _touristAttractionService.Create(newTouristAttraction);
 
-                MessageBox.Show("Restoraunt created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Tourist attraction created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 SetDefaultValues();
             }
             else
             {
-                LocationModel location = RestorauntForModification.Location;
-                if (Location.Id != RestorauntForModification.Location.Id)
+                LocationModel location = TouristAttractionForModification.Location;
+                if (Location.Id != TouristAttractionForModification.Location.Id)
                 {
                     location = await _locationService.Create(Location);
                 }
 
-                RestorauntModel modifiedRestoraunt = new RestorauntModel()
+                TouristAttractionModel modifiedTouristAttraction = new TouristAttractionModel()
                 {
                     Name = Name,
-                    Stars = Stars,
                     Location = location,
                     Image = Image.UriSource.LocalPath
                 };
 
-                await _restorauntService.Modify(RestorauntForModification.Id, modifiedRestoraunt);
-                MessageBox.Show("Restoraunt modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                _navigationService.NavigateTo<AllRestorauntsViewModel>();
+                await _touristAttractionService.Modify(TouristAttractionForModification.Id, modifiedTouristAttraction);
+                MessageBox.Show("Tourist attraction modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                _navigationService.NavigateTo<AllTouristAttractionsViewModel>();
             }
         }
 
-        private bool CanCreateRestoraunt(object o)
+        private bool CanCreateTouristAttraction(object o)
         {
             return !string.IsNullOrWhiteSpace(Name) &&
                 Location != null;
@@ -150,16 +129,14 @@ namespace TravelAgent.MVVM.ViewModel
             Address = string.Empty;
             Location = null;
             Name = string.Empty;
-            Stars = 1;
             Image = _imageService.GetFromLocalStorage($"{_consts.ProjectRootRelativePath}/Image/defaultimg.jpg");
         }
 
         private void SetValuesForModification()
         {
-            Location = RestorauntForModification.Location;
-            Name = RestorauntForModification.Name;
-            Stars = RestorauntForModification.Stars;
-            Image = _imageService.GetFromLocalStorage(RestorauntForModification.Image);
+            Location = TouristAttractionForModification.Location;
+            Name = TouristAttractionForModification.Name;
+            Image = _imageService.GetFromLocalStorage(TouristAttractionForModification.Image);
             Address = Location.Address;
         }
 
@@ -171,9 +148,9 @@ namespace TravelAgent.MVVM.ViewModel
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
             }
 
-            if (e.Extra is RestorauntModel restoraunt)
+            if (e.Extra is TouristAttractionModel touristAttraction)
             {
-                RestorauntForModification = restoraunt;
+                TouristAttractionForModification = touristAttraction;
                 Modifying = true;
                 SetValuesForModification();
             }
@@ -200,6 +177,5 @@ namespace TravelAgent.MVVM.ViewModel
             }
             _pickLocationPopup.Show();
         }
-
     }
 }
