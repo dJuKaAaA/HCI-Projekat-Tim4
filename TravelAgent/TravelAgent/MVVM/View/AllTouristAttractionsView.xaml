@@ -22,16 +22,19 @@
                     Padding="20 5"
                     Foreground="CadetBlue"
                     ToolTip="Add tourist attraction (Ctrl+N)"
+                    Command="{Binding OpenCreateTouristAttractionViewComand}"
                     FontWeight="Bold"
                     Margin="10 5"/>
             <Button Content="✏️"
                     Foreground="DarkGoldenrod"
                     Padding="20 5"
                     ToolTip="Modify tourist attraction (Ctrl+C)"
+                    Command="{Binding OpenModifyTouristAttractionViewComand}"
                     Margin="10 5"/>
             <Button Content="❌"
                     Foreground="DarkRed"
                     ToolTip="Delete tourist attraction (Ctrl+D)"
+                    Command="{Binding DeleteTouristAttractionCommand}"
                     Padding="20 5"
                     Margin="10 5"/>
         </ToolBar>
@@ -48,6 +51,7 @@
                       BorderThickness="2"
                       Background="Transparent"
                       Padding="30 0"
+                      SelectedItem="{Binding SelectedTouristAttraction}"
                       SelectionMode="Single"
                       KeyboardNavigation.TabIndex="0"
                       HorizontalAlignment="Stretch"
