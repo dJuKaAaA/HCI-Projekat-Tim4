@@ -31,10 +31,6 @@ namespace TravelAgent.MVVM.ViewModel
             set { _selectedAccommodation = value; OnPropertyChanged(); }
         }
 
-        private KeyBinding? _openCreateAccommodationViewKeyBinding;
-        private KeyBinding? _openModifyAccommodationViewKeyBinding;
-        private KeyBinding? _deleteAccommodationKeyBinding;
-
         private readonly Service.AccommodationService _accommodationService;
         private readonly Service.NavigationService _navigationService;
 
@@ -65,22 +61,22 @@ namespace TravelAgent.MVVM.ViewModel
         {
             if (e.ViewModelType != typeof(AllAccommodationsViewModel))
             {
-                Window window = Application.Current.MainWindow;
-                window.InputBindings.Remove(_openCreateAccommodationViewKeyBinding);
-                window.InputBindings.Remove(_openModifyAccommodationViewKeyBinding);
-                window.InputBindings.Remove(_deleteAccommodationKeyBinding);
+                if (MainViewModel.SignedUser?.Type == UserType.Agent)
+                {
+                    MainViewModel.RemoveCUDKeyBindings();
+                }
 
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
             }
             else
             {
-                Window window = Application.Current.MainWindow;
-                _openCreateAccommodationViewKeyBinding = new KeyBinding(OpenCreateAccommodationViewComand, Key.N, ModifierKeys.Control);
-                _openModifyAccommodationViewKeyBinding = new KeyBinding(OpenModifyAccommodationViewComand, Key.C, ModifierKeys.Control);
-                _deleteAccommodationKeyBinding = new KeyBinding(DeleteAccommodationCommand, Key.D, ModifierKeys.Control);
-                window.InputBindings.Add(_openCreateAccommodationViewKeyBinding);
-                window.InputBindings.Add(_openModifyAccommodationViewKeyBinding);
-                window.InputBindings.Add(_deleteAccommodationKeyBinding);
+                if (MainViewModel.SignedUser?.Type == UserType.Agent)
+                {
+                    MainViewModel.AddCUDKeyBindings(
+                        OpenCreateAccommodationViewComand,
+                        OpenModifyAccommodationViewComand,
+                        DeleteAccommodationCommand);
+                }
             }
 
         }

@@ -21,17 +21,17 @@
             <Button Content="+"
                     Padding="20 5"
                     Foreground="CadetBlue"
-                    ToolTip="Add tourist attraction"
+                    ToolTip="Add tourist attraction (Ctrl+N)"
                     FontWeight="Bold"
                     Margin="10 5"/>
             <Button Content="✏️"
                     Foreground="DarkGoldenrod"
                     Padding="20 5"
-                    ToolTip="Modify tourist attraction"
+                    ToolTip="Modify tourist attraction (Ctrl+C)"
                     Margin="10 5"/>
             <Button Content="❌"
                     Foreground="DarkRed"
-                    ToolTip="Delete tourist attraction"
+                    ToolTip="Delete tourist attraction (Ctrl+D)"
                     Padding="20 5"
                     Margin="10 5"/>
         </ToolBar>
@@ -45,7 +45,7 @@
 
         <Grid Grid.Row="2">
             <ListView ItemsSource="{Binding AllTouristAttractions}"
-                      BorderThickness="0"
+                      BorderThickness="2"
                       Background="Transparent"
                       Padding="30 0"
                       SelectionMode="Single"

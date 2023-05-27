@@ -20,18 +20,21 @@
                  Visibility="{Binding ToolbarVisibility}">
             <Button Content="+"
                     Padding="20 5"
-                    ToolTip="Add restoraunt"
+                    ToolTip="Add restoraunt (Ctrl+N)"
+                    Command="{Binding OpenCreateRestorauntViewComand}"
                     Foreground="CadetBlue"
                     FontWeight="Bold"
                     Margin="10 5"/>
             <Button Content="✏️"
-                    ToolTip="Modify restoraunt"
+                    ToolTip="Modify restoraunt (Ctrl+C)"
+                    Command="{Binding OpenModifyRestorauntViewComand}"
                     Foreground="DarkGoldenrod"
                     Padding="20 5"
                     Margin="10 5"/>
             <Button Content="❌"
-                    ToolTip="Delete restoraunt"
+                    ToolTip="Delete restoraunt (Ctrl+D)"
                     Foreground="DarkRed"
+                    Command="{Binding DeleteRestorauntCommand}"
                     Padding="20 5"
                     Margin="10 5"/>
         </ToolBar>
@@ -45,9 +48,10 @@
 
         <Grid Grid.Row="2">
             <ListView ItemsSource="{Binding AllRestoraunts}"
-                      BorderThickness="0"
+                      BorderThickness="2"
                       Background="Transparent"
                       Padding="30 0"
+                      SelectedItem="{Binding SelectedRestoraunt}"
                       HorizontalAlignment="Stretch"
                       KeyboardNavigation.TabIndex="0"
                       ScrollViewer.CanContentScroll="False"
@@ -90,7 +94,7 @@
                                                         <Image.Style>
                                                             <Style TargetType="Image">
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="1">
+                                                                    <DataTrigger Binding="{Binding Stars, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=1}" Value="False">
                                                                         <Setter Property="Visibility" Value="Hidden"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -102,10 +106,7 @@
                                                         <Image.Style>
                                                             <Style TargetType="Image">
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="2">
-                                                                        <Setter Property="Visibility" Value="Hidden"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="1">
+                                                                    <DataTrigger Binding="{Binding Stars, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=2}" Value="False">
                                                                         <Setter Property="Visibility" Value="Hidden"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -117,13 +118,7 @@
                                                         <Image.Style>
                                                             <Style TargetType="Image">
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="3">
-                                                                        <Setter Property="Visibility" Value="Hidden"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="2">
-                                                                        <Setter Property="Visibility" Value="Hidden"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="1">
+                                                                    <DataTrigger Binding="{Binding Stars, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=3}" Value="False">
                                                                         <Setter Property="Visibility" Value="Hidden"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -135,16 +130,7 @@
                                                         <Image.Style>
                                                             <Style TargetType="Image">
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="4">
-                                                                        <Setter Property="Visibility" Value="Hidden"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="3">
-                                                                        <Setter Property="Visibility" Value="Hidden"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="2">
-                                                                        <Setter Property="Visibility" Value="Hidden"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding Stars}" Value="1">
+                                                                    <DataTrigger Binding="{Binding Stars, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=4}" Value="False">
                                                                         <Setter Property="Visibility" Value="Hidden"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>

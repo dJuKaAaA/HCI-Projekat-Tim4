@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <Style x:Key="WideUserTripsTheme" TargetType="ListView">
             <Style.Setters>
-                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderThickness" Value="2"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
                 <Setter Property="SelectionMode" Value="Single"/>
