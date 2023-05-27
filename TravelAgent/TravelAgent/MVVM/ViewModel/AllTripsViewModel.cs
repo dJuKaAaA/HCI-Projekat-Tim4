@@ -60,10 +60,6 @@ namespace TravelAgent.MVVM.ViewModel
 
         private SeeDealPopup? _seeDealPopup;
 
-        private KeyBinding? _openCreateTripViewKeyBinding;
-        private KeyBinding? _openModifyTripViewKeyBinding;
-        private KeyBinding? _deleteTripKeyBinding;
-
         public ICommand OpenSeeDealPopupCommand { get; }
         public ICommand OpenCreateTripViewCommand { get; }
         public ICommand OpenModifyTripViewCommand { get; } // this is just the CreateTripView with a TripModel passed as parameter
@@ -111,23 +107,23 @@ namespace TravelAgent.MVVM.ViewModel
         {
             if (e.ViewModelType != typeof(AllTripsViewModel))
             {
-                Window window = Application.Current.MainWindow;
-                window.InputBindings.Remove(_openCreateTripViewKeyBinding);
-                window.InputBindings.Remove(_openModifyTripViewKeyBinding);
-                window.InputBindings.Remove(_deleteTripKeyBinding);
+                if (MainViewModel.SignedUser?.Type == UserType.Agent)
+                {
+                    MainViewModel.RemoveCUDKeyBindings();
+                }
 
                 _seeDealPopup?.Close();
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
             }
             else
             {
-                Window window = Application.Current.MainWindow;
-                _openCreateTripViewKeyBinding = new KeyBinding(OpenCreateTripViewCommand, Key.N, ModifierKeys.Control);
-                _openModifyTripViewKeyBinding = new KeyBinding(OpenModifyTripViewCommand, Key.C, ModifierKeys.Control);
-                _deleteTripKeyBinding = new KeyBinding(DeleteTripCommand, Key.D, ModifierKeys.Control);
-                window.InputBindings.Add(_openCreateTripViewKeyBinding);
-                window.InputBindings.Add(_openModifyTripViewKeyBinding);
-                window.InputBindings.Add(_deleteTripKeyBinding);
+                if (MainViewModel.SignedUser?.Type == UserType.Agent)
+                {
+                    MainViewModel.AddCUDKeyBindings(
+                        OpenCreateTripViewCommand,
+                        OpenModifyTripViewCommand,
+                        DeleteTripCommand);
+                }
             }
 
         }
