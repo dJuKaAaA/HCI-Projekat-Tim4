@@ -469,57 +469,46 @@
                                      HorizontalAlignment="Center"/>
 
 
-        <ContentControl Grid.Row="2">
-            <ContentControl.Style>
-                <Style TargetType="ContentControl">
-                    <Setter Property="Content">
-                        <Setter.Value>
-                            <Grid>
+        <Grid Grid.Row="2">
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Setter Property="Content">
+                            <Setter.Value>
                                 <ListView Style="{StaticResource WideTripsListViewTheme}"
                                           ItemsSource="{Binding AllTrips}"
                                           SelectedItem="{Binding SelectedTrip}"/>
-                                    <Button HorizontalAlignment="Right"
-                                            VerticalAlignment="Bottom"
-                                            Style="{StaticResource SearchButtonTheme}"
-                                            Margin="50"/>
-                            </Grid>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=950}" Value="False">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Grid>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=950}" Value="False">
+                                <Setter Property="Content">
+                                    <Setter.Value>
                                         <ListView Style="{StaticResource NarrowTripsListViewTheme}"
                                                   ItemsSource="{Binding AllTrips}"
                                                   SelectedItem="{Binding SelectedTrip}"/>
-                                        <Button HorizontalAlignment="Right"
-                                                VerticalAlignment="Bottom"
-                                                Style="{StaticResource SearchButtonTheme}"
-                                                Margin="50"/>
-                                    </Grid>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="Maximized">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Grid>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="Maximized">
+                                <Setter Property="Content">
+                                    <Setter.Value>
                                         <ListView Style="{StaticResource WideTripsListViewTheme}"
                                                   ItemsSource="{Binding AllTrips}"
                                                   SelectedItem="{Binding SelectedTrip}"/>
-                                        <Button HorizontalAlignment="Right"
-                                                VerticalAlignment="Bottom"
-                                                Style="{StaticResource SearchButtonTheme}"
-                                                Margin="50"/>
-                                    </Grid>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ContentControl.Style>
-        </ContentControl>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Style="{StaticResource SearchButtonTheme}"
+                    Command="{Binding OpenSearchCommand}"
+                    Margin="50"/>
 
+        </Grid>
     </Grid>
 </UserControl>
