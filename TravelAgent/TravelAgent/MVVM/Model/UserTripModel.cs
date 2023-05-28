@@ -11,5 +11,6 @@ namespace TravelAgent.MVVM.Model
         public UserModel? User { get; set; }
         public TripModel? Trip { get; set; }
         public Core.TripInvoiceType Type { get; set; }
+        public DateTime PurchaseDate { get; set; }
     }
 }

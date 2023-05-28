@@ -12,6 +12,8 @@ namespace TravelAgent.Core
         public string PathToDatabase { get; }
 
         public string SqliteConnectionString { get; }
+        public string DateFormatString { get; }
+        public string TimeFormatString { get; }
         public string DateTimeFormatString { get; }
         public string BingMapsApiKey { get; }
 
@@ -43,7 +45,9 @@ namespace TravelAgent.Core
             ProjectRootRelativePath = "../../..";
             PathToDatabase = $"{ProjectRootRelativePath}/Database/database.db";
             SqliteConnectionString = $"Data Source={PathToDatabase}";
-            DateTimeFormatString  = "d.M.yyyy. H:m:s";
+            DateFormatString = "d.M.yyyy.";
+            TimeFormatString = "H:m:s";
+            DateTimeFormatString  = $"{DateFormatString} {TimeFormatString}";
             BingMapsApiKey  = "AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr";
 
             PathToIcons = $"{ProjectRootRelativePath}/Image/Icon";

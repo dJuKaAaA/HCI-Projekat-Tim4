@@ -28,16 +28,28 @@
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
 
                                                 <WrapPanel Margin="0 5"
                                                            HorizontalAlignment="Center"
+                                                           Grid.Row="0"
                                                            Visibility="{Binding DataContext.TravelerVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                                                    <component:ScalableTextBlock Text="Traveler: "
-                                                                                 FontSize="40"/>
-                                                    <component:ScalableTextBlock Text="{Binding User.Username}"
-                                                                                 FontWeight="SemiBold"
-                                                                                 FontSize="40"/>
+                                                    <WrapPanel Margin="0 0 30 0">
+                                                        <component:ScalableTextBlock Text="Trip ID: "
+                                                                                     FontSize="40"/>
+                                                        <component:ScalableTextBlock Text="{Binding Trip.Id}"
+                                                                                     FontWeight="SemiBold"
+                                                                                     FontSize="40"/>
+                                                    </WrapPanel>
+                                                    <WrapPanel Margin="30 0 0 0">
+                                                        <component:ScalableTextBlock Text="Traveler: "
+                                                                                     FontSize="40"/>
+                                                        <component:ScalableTextBlock Text="{Binding User.Username}"
+                                                                                     FontWeight="SemiBold"
+                                                                                     FontSize="40"/>
+                                                        
+                                                    </WrapPanel>
                                                 </WrapPanel>
 
                                                 <Border CornerRadius="50"
@@ -280,12 +292,23 @@
 
                                                 <WrapPanel Margin="0 5"
                                                            HorizontalAlignment="Center"
+                                                           Grid.Row="0"
                                                            Visibility="{Binding DataContext.TravelerVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                                                    <component:ScalableTextBlock Text="Traveler: "
-                                                                                 FontSize="70"/>
-                                                    <component:ScalableTextBlock Text="{Binding User.Username}"
-                                                                                 FontWeight="SemiBold"
-                                                                                 FontSize="70"/>
+                                                    <WrapPanel Margin="0 0 30 0">
+                                                        <component:ScalableTextBlock Text="Trip ID: "
+                                                                                     FontSize="70"/>
+                                                        <component:ScalableTextBlock Text="{Binding Trip.Id}"
+                                                                                     FontWeight="SemiBold"
+                                                                                     FontSize="70"/>
+                                                    </WrapPanel>
+                                                    <WrapPanel Margin="30 0 0 0">
+                                                        <component:ScalableTextBlock Text="Traveler: "
+                                                                                     FontSize="70"/>
+                                                        <component:ScalableTextBlock Text="{Binding User.Username}"
+                                                                                     FontWeight="SemiBold"
+                                                                                     FontSize="70"/>
+                                                        
+                                                    </WrapPanel>
                                                 </WrapPanel>
 
                                                 <Border CornerRadius="50"
@@ -519,54 +542,44 @@
                                      Margin="0 20"
                                      HorizontalAlignment="Center"/>
 
-        <ContentControl Grid.Row="1">
-            <ContentControl.Style>
-                <Style TargetType="ContentControl">
-                    <Setter Property="Content">
-                        <Setter.Value>
-                            <Grid>
+        <Grid Grid.Row="1">
+            <ContentControl>
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Setter Property="Content">
+                            <Setter.Value>
                                 <ListView Style="{StaticResource WideUserTripsTheme}"
                                           ItemsSource="{Binding UserTrips}"/>
-                                <Button HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        Style="{StaticResource SearchButtonTheme}"
-                                        Margin="50"/>
-                            </Grid>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=1120}" Value="False">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Grid>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=1120}" Value="False">
+                                <Setter Property="Content">
+                                    <Setter.Value>
                                         <ListView Style="{StaticResource NarrowUserTripsTheme}"
                                                   ItemsSource="{Binding UserTrips}"/>
-                                        <Button HorizontalAlignment="Right"
-                                                VerticalAlignment="Bottom"
-                                                Style="{StaticResource SearchButtonTheme}"
-                                                Margin="50"/>
-                                    </Grid>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="Maximized">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Grid>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="Maximized">
+                                <Setter Property="Content">
+                                    <Setter.Value>
                                         <ListView Style="{StaticResource WideUserTripsTheme}"
                                                   ItemsSource="{Binding UserTrips}"/>
-                                        <Button HorizontalAlignment="Right"
-                                                VerticalAlignment="Bottom"
-                                                Style="{StaticResource SearchButtonTheme}"
-                                                Margin="50"/>
-                                    </Grid>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ContentControl.Style>
-        </ContentControl>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding OpenSearchCommand}"
+                    Style="{StaticResource SearchButtonTheme}"
+                    Margin="50"/>
+            
+        </Grid>
 
 
     </Grid>
