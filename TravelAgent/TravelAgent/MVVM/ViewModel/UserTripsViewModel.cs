@@ -56,18 +56,13 @@ namespace TravelAgent.MVVM.ViewModel
             OpenSearchCommand = new RelayCommand(OnOpenSearch, o => true);
             CancelTripCommand = new RelayCommand(OnCancelTrip, o => true);
 
-            Load();
-        }
-
-        private async void Load()
-        {
             if (MainViewModel.SignedUser?.Type == UserType.Traveler)
             {
-                await LoadForUser();
+                Task.Run(async () => await LoadForUser());
             }
             else
             {
-                await LoadAll();
+                Task.Run(async () => await LoadAll());
             }
         }
 

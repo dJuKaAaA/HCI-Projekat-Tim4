@@ -49,8 +49,9 @@ namespace TravelAgent
             services.AddTransient<CreateTouristAttractionViewModel>();
             services.AddTransient<UserTripsViewModel>();
             services.AddTransient<MapViewModel>();
-            services.AddTransient<UserTripsSearchViewModel>();
             services.AddTransient<SeeDealViewModel>();
+            services.AddTransient<UserTripsSearchViewModel>();
+            services.AddTransient<AccommodationSearchViewModel>();
 
             // register Service classes for injection here (use AddSingleton)
             services.AddSingleton<Service.NavigationService>();
