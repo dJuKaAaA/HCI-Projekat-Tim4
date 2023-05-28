@@ -106,7 +106,7 @@ namespace TravelAgent.MVVM.ViewModel
             OpenCreateTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(), o => MainViewModel.SignedUser?.Type == UserType.Agent);
             OpenModifyTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(SelectedTrip), o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTrip != null);
             DeleteTripCommand = new Core.RelayCommand(OnDeleteTrip, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTrip != null);
-            OpenSearchCommand = new RelayCommand(OnOpenSearch, o => true);
+            OpenSearchCommand = new RelayCommand(OnOpenSearch, o => MainViewModel.SignedUser != null);
 
             Task.Run(async () => await LoadAll());
         }
@@ -129,6 +129,7 @@ namespace TravelAgent.MVVM.ViewModel
                 {
                     MainViewModel.RemoveCUDKeyBindings();
                 }
+                MainViewModel.RemoveOpenSearchKeyBinding();
 
                 _seeDealPopup?.Close();
                 _tripSearchPopup?.Close();
@@ -144,6 +145,7 @@ namespace TravelAgent.MVVM.ViewModel
                         OpenModifyTripViewCommand,
                         DeleteTripCommand);
                 }
+                MainViewModel.AddOpenSearchKeyBinding(OpenSearchCommand);
             }
 
         }
