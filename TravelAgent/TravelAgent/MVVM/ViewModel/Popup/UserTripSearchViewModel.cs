@@ -14,7 +14,7 @@ using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel.Popup
 {
-    public class UserTripsSearchViewModel : Core.ViewModel
+    public class UserTripSearchViewModel : Core.ViewModel
     {
         private HashSet<UserTripSearchType> _searchTypes;
 
@@ -257,6 +257,14 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             }
         }
 
+        private Visibility _criteriaForAgentVisibility;
+
+        public Visibility CriteriaForAgentVisibility
+        {
+            get { return _criteriaForAgentVisibility; }
+            set { _criteriaForAgentVisibility = value; OnPropertyChanged(); }
+        }
+
         private readonly UserTripService _userTripService;
 
         public UserTripsViewModel UserTripViewModel { get; set; }
@@ -264,10 +272,11 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         public ICommand SearchCommand { get; }
         public ICommand CloseCommand { get; }
 
-        public UserTripsSearchViewModel(
+        public UserTripSearchViewModel(
             UserTripService userTripService)
         {
             _searchTypes = new HashSet<UserTripSearchType>();
+            CriteriaForAgentVisibility = MainViewModel.SignedUser?.Type == UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
 
             _userTripService = userTripService;
 
@@ -333,13 +342,17 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             {
                 canSearch = canSearch && (UserTripSearchModel.SelectedArrivalDate != null);
             }
+            if (IsPurchaseMonthChecked)
+            {
+                canSearch = canSearch && (UserTripSearchModel.SelectedMonthIndex != null);
+            }
 
             return canSearch;
         }
 
         private void OnClose(object o)
         {
-            Window currentWindow = Application.Current.Windows.OfType<UserTripsSearchPopup>().SingleOrDefault(w => w.IsActive);
+            Window currentWindow = Application.Current.Windows.OfType<UserTripSearchPopup>().SingleOrDefault(w => w.IsActive);
             currentWindow?.Close();
 
             SetValuesToDefault();

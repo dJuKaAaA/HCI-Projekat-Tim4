@@ -16,7 +16,7 @@ namespace TravelAgent.MVVM.ViewModel
 {
     public class AllTouristAttractionsViewModel : Core.ViewModel
     {
-        public ObservableCollection<TouristAttractionModel> AllTouristAttractions { get; set; }
+        public ObservableCollection<TouristAttractionModel> TouristAttractions { get; set; }
 
         private Visibility _toolbarVisibility;
 
@@ -51,7 +51,7 @@ namespace TravelAgent.MVVM.ViewModel
             TouristAttractionSearchViewModel touristAttractionSearchViewModel)
         {
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
-            AllTouristAttractions = new ObservableCollection<TouristAttractionModel>();
+            TouristAttractions = new ObservableCollection<TouristAttractionModel>();
 
             _touristAttractionService = touristAttractionService;
             _navigationService = navigationService;
@@ -119,11 +119,11 @@ namespace TravelAgent.MVVM.ViewModel
 
         public async Task LoadAll()
         {
-            AllTouristAttractions.Clear();
+            TouristAttractions.Clear();
             IEnumerable<TouristAttractionModel> touristAttractions = await _touristAttractionService.GetAll();
             foreach (TouristAttractionModel touristAttraction in touristAttractions)
             {
-                AllTouristAttractions.Add(touristAttraction);
+                TouristAttractions.Add(touristAttraction);
             }
         }
 

@@ -49,7 +49,7 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.AccommodationService _accommodationService;
         private readonly Consts _consts;
 
-        public ObservableCollection<TripModel> AllTrips { get; set; }
+        public ObservableCollection<TripModel> Trips { get; set; }
 
         private TripModel? _selectedTrip;
 
@@ -87,7 +87,7 @@ namespace TravelAgent.MVVM.ViewModel
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ?
                 Visibility.Visible : Visibility.Collapsed;
 
-            AllTrips = new ObservableCollection<TripModel>();
+            Trips = new ObservableCollection<TripModel>();
 
             _navigationService = navigationService;
             _tripService = tripService;
@@ -155,7 +155,7 @@ namespace TravelAgent.MVVM.ViewModel
             if (o is Button seeDealButton)
             {
                 int tripId = int.Parse(seeDealButton.Tag.ToString());
-                TripModel trip = AllTrips.FirstOrDefault(f => f.Id == tripId);
+                TripModel trip = Trips.FirstOrDefault(f => f.Id == tripId);
 
                 _seeDealPopup?.Close();
                 _seeDealPopup = new SeeDealPopup(
@@ -172,11 +172,11 @@ namespace TravelAgent.MVVM.ViewModel
 
         public async Task LoadAll()
         {
-            AllTrips.Clear();
+            Trips.Clear();
             IEnumerable<TripModel> allTrip = await _tripService.GetAll();
             foreach (TripModel trip in allTrip)
             {
-                AllTrips.Add(trip);
+                Trips.Add(trip);
             }
         }
 

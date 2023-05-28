@@ -109,8 +109,59 @@ namespace TravelAgent.MVVM.Model
             }
         }
 
-        // TODO: Add property for purchase month 
+        private string? _selectedMonthIndex;
 
+        public string? SelectedMonthIndex
+        {
+            get { return _selectedMonthIndex; }
+            set { _selectedMonthIndex = value; OnPropertyChanged(); }
+        }
+
+        private string _year = "0";
+
+        public string Year
+        {
+            get { return _year; }
+            set
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        _year = "0";
+                    }
+
+                    int id = int.Parse(value);
+
+                    if (id < 0)
+                    {
+                        return;
+                    }
+
+                    if (_year == "0" && value.Length > 1)
+                    {
+                        if (value[0] == '0')
+                        {
+                            value = value[1..];
+                        }
+                        else if (value[1] == '0')
+                        {
+                            value = value[0] + value[2..];
+                        }
+                    }
+                    if (value.Length > 4)
+                    {
+                        return;
+                    }
+
+                    _year = value;
+                    OnPropertyChanged();
+                }
+                catch (FormatException) { }
+                catch (OverflowException) { }
+            }
+        }
+        
         private string _tripId = "0";
 
         public string TripId

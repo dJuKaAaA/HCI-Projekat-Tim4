@@ -47,7 +47,7 @@
                                      HorizontalAlignment="Center"/>
 
         <Grid Grid.Row="2">
-            <ListView ItemsSource="{Binding AllTouristAttractions}"
+            <ListView ItemsSource="{Binding TouristAttractions}"
                       BorderThickness="2"
                       Background="Transparent"
                       Padding="30 0"

@@ -50,7 +50,7 @@ namespace TravelAgent
             services.AddTransient<UserTripsViewModel>();
             services.AddTransient<MapViewModel>();
             services.AddTransient<SeeDealViewModel>();
-            services.AddTransient<UserTripsSearchViewModel>();
+            services.AddTransient<UserTripSearchViewModel>();
             services.AddTransient<AccommodationSearchViewModel>();
             services.AddTransient<RestorauntSearchViewModel>();
             services.AddTransient<TouristAttractionSearchViewModel>();

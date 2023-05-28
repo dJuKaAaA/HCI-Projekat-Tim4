@@ -27,8 +27,8 @@ namespace TravelAgent.MVVM.ViewModel
             set { _travelerVisibility = value; OnPropertyChanged(); }
         }
 
-        private UserTripsSearchPopup? _userTripsSearchPopup;
-        private readonly UserTripsSearchViewModel _userTripsSearchViewModel;
+        private UserTripSearchPopup? _userTripsSearchPopup;
+        private readonly UserTripSearchViewModel _userTripSearchViewModel;
 
         private readonly Service.UserTripService _userTripService;
         private readonly Service.NavigationService _navigationService;
@@ -40,15 +40,15 @@ namespace TravelAgent.MVVM.ViewModel
         public UserTripsViewModel(
             Service.UserTripService userTripService,
             Service.NavigationService navigationService,
-            UserTripsSearchViewModel userTripsSearchViewModel)
+            UserTripSearchViewModel userTripsSearchViewModel)
         {
             UserTrips = new ObservableCollection<UserTripModel>();
             TravelerVisibility = MainViewModel.SignedUser?.Type == UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
 
             _userTripService = userTripService;
             _navigationService = navigationService;
-            _userTripsSearchViewModel = userTripsSearchViewModel;
-            _userTripsSearchViewModel.UserTripViewModel = this;
+            _userTripSearchViewModel = userTripsSearchViewModel;
+            _userTripSearchViewModel.UserTripViewModel = this;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
@@ -69,9 +69,9 @@ namespace TravelAgent.MVVM.ViewModel
         private void OnOpenSearch(object o)
         {
             _userTripsSearchPopup?.Close();
-            _userTripsSearchPopup = new UserTripsSearchPopup()
+            _userTripsSearchPopup = new UserTripSearchPopup()
             {
-                DataContext = _userTripsSearchViewModel
+                DataContext = _userTripSearchViewModel
             };
             _userTripsSearchPopup.Show();
         }

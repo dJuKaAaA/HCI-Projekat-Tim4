@@ -223,10 +223,10 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             if (_searchTypes.Count > 0)
             {
                 IEnumerable<Model.TripModel> trips = await _tripService.Search(_searchTypes, TripSearchModel);
-                AllTripsViewModel.AllTrips.Clear();
+                AllTripsViewModel.Trips.Clear();
                 foreach (TripModel trip in trips)
                 {
-                    AllTripsViewModel.AllTrips.Add(trip);
+                    AllTripsViewModel.Trips.Add(trip);
                 }
             }
             else

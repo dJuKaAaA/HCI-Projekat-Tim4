@@ -154,10 +154,10 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             if (_searchTypes.Count > 0)
             {
                 IEnumerable<Model.AccommodationModel> accommodations = await _accommodationService.Search(_searchTypes, AccommodationSearchModel);
-                AllAccommodationsViewModel.AllAccommodations.Clear();
+                AllAccommodationsViewModel.Accommodations.Clear();
                 foreach (Model.AccommodationModel accommodation in accommodations)
                 {
-                    AllAccommodationsViewModel.AllAccommodations.Add(accommodation);
+                    AllAccommodationsViewModel.Accommodations.Add(accommodation);
                 }
             }
             else

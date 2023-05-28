@@ -120,10 +120,10 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             if (_searchTypes.Count > 0)
             {
                 IEnumerable<Model.TouristAttractionModel> touristAttractions = await _touristAttractionService.Search(_searchTypes, TouristAttractionSearchModel);
-                AllTouristAttractionsViewModel.AllTouristAttractions.Clear();
+                AllTouristAttractionsViewModel.TouristAttractions.Clear();
                 foreach (Model.TouristAttractionModel touristAttraction in touristAttractions)
                 {
-                    AllTouristAttractionsViewModel.AllTouristAttractions.Add(touristAttraction);
+                    AllTouristAttractionsViewModel.TouristAttractions.Add(touristAttraction);
                 }
             }
             else
