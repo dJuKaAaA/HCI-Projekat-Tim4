@@ -11,16 +11,16 @@ using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel.Popup
 {
-    public class AccommodationSearchViewModel : Core.ViewModel
+    public class RestorauntSearchViewModel : Core.ViewModel
     {
-        private HashSet<AccommodationSearchType> _searchTypes;
+        private HashSet<RestorauntSearchType> _searchTypes;
 
-        private Model.AccommodationSearchModel _accommodationSearchModel = new Model.AccommodationSearchModel();
+        private Model.RestorauntSearchModel _restorauntSearchModel = new Model.RestorauntSearchModel();
 
-        public Model.AccommodationSearchModel AccommodationSearchModel
+        public Model.RestorauntSearchModel RestorauntSearchModel
         {
-            get { return _accommodationSearchModel; }
-            set { _accommodationSearchModel = value; OnPropertyChanged(); }
+            get { return _restorauntSearchModel; }
+            set { _restorauntSearchModel = value; OnPropertyChanged(); }
         }
 
         private Visibility _nameVisibility = Visibility.Collapsed;
@@ -42,14 +42,14 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 OnPropertyChanged(); 
                 if (_isNameChecked)
                 {
-                    _searchTypes.Add(AccommodationSearchType.Name);
+                    _searchTypes.Add(RestorauntSearchType.Name);
                     NameVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    if (_searchTypes.Contains(AccommodationSearchType.Name))
+                    if (_searchTypes.Contains(RestorauntSearchType.Name))
                     {
-                        _searchTypes.Remove(AccommodationSearchType.Name);
+                        _searchTypes.Remove(RestorauntSearchType.Name);
                     }
                     NameVisibility = Visibility.Collapsed;
                 }
@@ -75,68 +75,70 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 OnPropertyChanged(); 
                 if (_isAddressChecked)
                 {
-                    _searchTypes.Add(AccommodationSearchType.Address);
+                    _searchTypes.Add(RestorauntSearchType.Address);
                     AddressVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    if (_searchTypes.Contains(AccommodationSearchType.Address))
+                    if (_searchTypes.Contains(RestorauntSearchType.Address))
                     {
-                        _searchTypes.Remove(AccommodationSearchType.Address);
+                        _searchTypes.Remove(RestorauntSearchType.Address);
                     }
                     AddressVisibility = Visibility.Collapsed;
                 }
             }
         }
 
-        private Visibility _ratingVisibility = Visibility.Collapsed;
+        private Visibility _starsVisibility = Visibility.Collapsed;
 
-        public Visibility RatingVisibility
+        public Visibility StarsVisibility
         {
-            get { return _ratingVisibility; }
-            set { _ratingVisibility = value; OnPropertyChanged(); }
+            get { return _starsVisibility; }
+            set { _starsVisibility = value; OnPropertyChanged(); }
         }
 
-        private bool _isRatingChecked;
+        private bool _isStarsChecked;
 
-        public bool IsRatingChecked
+        public bool IsStarsChecked
         {
-            get { return _isRatingChecked; }
+            get { return _isStarsChecked; }
             set 
             { 
-                _isRatingChecked = value; 
+                _isStarsChecked = value; 
                 OnPropertyChanged(); 
-                if (_isRatingChecked)
+                if (_isStarsChecked)
                 {
-                    _searchTypes.Add(AccommodationSearchType.Rating);
-                    RatingVisibility = Visibility.Visible;
+                    _searchTypes.Add(RestorauntSearchType.Stars);
+                    StarsVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    if (_searchTypes.Contains(AccommodationSearchType.Rating))
+                    if (_searchTypes.Contains(RestorauntSearchType.Stars))
                     {
-                        _searchTypes.Remove(AccommodationSearchType.Rating);
+                        _searchTypes.Remove(RestorauntSearchType.Stars);
                     }
-                    RatingVisibility = Visibility.Collapsed;
+                    StarsVisibility = Visibility.Collapsed;
                 }
             }
         }
 
-        private readonly AccommodationService _accommodationService;
+        private readonly RestorauntService _restorauntService;
 
-        public AllAccommodationsViewModel AllAccommodationsViewModel { get; set; }
+        public AllRestorauntsViewModel AllRestorauntsViewModel { get; set; }
 
         public ICommand SearchCommand { get; }
+        public ICommand SelectStarsCommand { get; }
         public ICommand CloseCommand { get; }
 
-        public AccommodationSearchViewModel(
-            AccommodationService accommodationService)
+        public RestorauntSearchViewModel(
+            RestorauntService restorauntService)
         {
-            _searchTypes = new HashSet<AccommodationSearchType>();
+            _searchTypes = new HashSet<RestorauntSearchType>();
 
-            _accommodationService = accommodationService;
+            _restorauntService = restorauntService;
 
             SearchCommand = new RelayCommand(OnSearch, CanSearch);
+            SelectStarsCommand = new RelayCommand(OnSelectStars, o => true);
             CloseCommand = new RelayCommand(OnClose, o => true);
         }
 
@@ -144,25 +146,34 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         {
             IsNameChecked = false;
             IsAddressChecked = false;
-            IsRatingChecked = false;
+            IsStarsChecked = false;
             _searchTypes.Clear();
-            AccommodationSearchModel = new Model.AccommodationSearchModel();
+            RestorauntSearchModel = new Model.RestorauntSearchModel();
+        }
+
+        private void OnSelectStars(object o)
+        {
+            int star;
+            if (int.TryParse(o.ToString(), out star))
+            {
+                RestorauntSearchModel.Stars = star;
+            }
         }
 
         private async void OnSearch(object o)
         {
             if (_searchTypes.Count > 0)
             {
-                IEnumerable<Model.AccommodationModel> accommodations = await _accommodationService.Search(_searchTypes, AccommodationSearchModel);
-                AllAccommodationsViewModel.AllAccommodations.Clear();
-                foreach (Model.AccommodationModel accommodation in accommodations)
+                IEnumerable<Model.RestorauntModel> restoraunts = await _restorauntService.Search(_searchTypes, RestorauntSearchModel);
+                AllRestorauntsViewModel.AllRestoraunts.Clear();
+                foreach (Model.RestorauntModel restoraunt in restoraunts)
                 {
-                    AllAccommodationsViewModel.AllAccommodations.Add(accommodation);
+                    AllRestorauntsViewModel.AllRestoraunts.Add(restoraunt);
                 }
             }
             else
             {
-                await AllAccommodationsViewModel.LoadAll();
+                await AllRestorauntsViewModel.LoadAll();
             }
 
             OnClose(this);
@@ -173,11 +184,11 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             bool canSearch = true;
             if (IsNameChecked)
             {
-                canSearch = canSearch && !string.IsNullOrWhiteSpace(AccommodationSearchModel.NameKeyword);
+                canSearch = canSearch && !string.IsNullOrWhiteSpace(RestorauntSearchModel.NameKeyword);
             }
             if (IsAddressChecked)
             {
-                canSearch = canSearch && !string.IsNullOrWhiteSpace(AccommodationSearchModel.AddressKeyword);
+                canSearch = canSearch && !string.IsNullOrWhiteSpace(RestorauntSearchModel.AddressKeyword);
             }
 
             return canSearch;
@@ -185,11 +196,10 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 
         private void OnClose(object o)
         {
-            Window currentWindow = Application.Current.Windows.OfType<AccommodationSearchPopup>().SingleOrDefault(w => w.IsActive);
+            Window currentWindow = Application.Current.Windows.OfType<RestorauntSearchPopup>().SingleOrDefault(w => w.IsActive);
             currentWindow?.Close();
 
             SetValuesToDefault();
         }
-
     }
 }

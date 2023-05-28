@@ -192,6 +192,7 @@
             <Button HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
                     Style="{StaticResource SearchButtonTheme}"
+                    Command="{Binding OpenSearchCommand}"
                     Margin="50"/>
             
         </Grid>

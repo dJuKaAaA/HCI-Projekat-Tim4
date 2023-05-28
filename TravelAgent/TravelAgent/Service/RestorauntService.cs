@@ -21,6 +21,57 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
+        public async Task<IEnumerable<RestorauntModel>> Search(HashSet<RestorauntSearchType> searchTypes, RestorauntSearchModel restorauntSearchModel)
+        {
+            string restourantsTableAlias = "restorauntsTable";
+            string locationsTableAlias = "locationsTable";
+            string command = $"SELECT {restourantsTableAlias}.id, {restourantsTableAlias}.name, {restourantsTableAlias}.stars, {restourantsTableAlias}.image, " +
+                $"{locationsTableAlias}.id, {locationsTableAlias}.address, {locationsTableAlias}.latitude, {locationsTableAlias}.longitude " +
+                $"FROM {_consts.RestorauntsTableName} {restourantsTableAlias}, " +
+                $"{_consts.LocationsTableName} {locationsTableAlias} " +
+                $"WHERE {locationsTableAlias}.id = {restourantsTableAlias}.location_id ";
+            
+            if (searchTypes.Contains(RestorauntSearchType.Name))
+            {
+                command += $"AND {restourantsTableAlias}.name LIKE '%{restorauntSearchModel.NameKeyword}%' ";
+            }
+            if (searchTypes.Contains(RestorauntSearchType.Address))
+            {
+                command += $"AND {locationsTableAlias}.address LIKE '%{restorauntSearchModel.AddressKeyword}%' ";
+            }
+            if (searchTypes.Contains(RestorauntSearchType.Stars))
+            {
+                command += $"AND {restourantsTableAlias}.stars = {restorauntSearchModel.Stars} ";
+            }
+
+            List<RestorauntModel> result = new List<RestorauntModel>();
+            await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, reader =>
+            {
+                while (reader.Read())
+                {
+                    LocationModel location = new LocationModel()
+                    {
+                        Id = reader.GetInt32(4),
+                        Address = reader.GetString(5),
+                        Latitude = reader.GetDouble(6),
+                        Longitude = reader.GetDouble(7)
+                    };
+                    RestorauntModel restoraunt = new RestorauntModel()
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Stars = reader.GetInt32(2),
+                        Image = reader.GetString(3),
+                        Location = location
+                    };
+                    result.Add(restoraunt);
+                }
+            });
+
+            return result;
+
+        }
+
         public async Task Delete(int id)
         {
             string command = $"DELETE FROM {_consts.TripsRestorauntsTableName} " +
