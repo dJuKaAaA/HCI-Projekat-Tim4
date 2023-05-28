@@ -130,6 +130,7 @@
             </ListView>
             <Button HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
+                    Command="{Binding OpenSearchCommand}"
                     Style="{StaticResource SearchButtonTheme}"
                     Margin="50"/>
             

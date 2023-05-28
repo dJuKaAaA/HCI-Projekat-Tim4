@@ -21,6 +21,51 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
+        public async Task<IEnumerable<TouristAttractionModel>> Search(HashSet<TouristAttractionSearchType> searchTypes, TouristAttractionSearchModel touristAttractionSearchModel)
+        {
+            string touristAttractionTableAlias = "touristAttractionsTable";
+            string locationsTableAlias = "locationsTable";
+            string command = $"SELECT {touristAttractionTableAlias}.id, {touristAttractionTableAlias}.name, {touristAttractionTableAlias}.image, " +
+                $"{locationsTableAlias}.id, {locationsTableAlias}.address, {locationsTableAlias}.latitude, {locationsTableAlias}.longitude " +
+                $"FROM {_consts.TouristAttractionsTableName} {touristAttractionTableAlias}, " +
+                $"{_consts.LocationsTableName} {locationsTableAlias} " +
+                $"WHERE {locationsTableAlias}.id = {touristAttractionTableAlias}.location_id ";
+
+            if (searchTypes.Contains(TouristAttractionSearchType.Name))
+            {
+                command += $"AND {touristAttractionTableAlias}.name LIKE '%{touristAttractionSearchModel.NameKeyword}%' ";
+            }
+            if (searchTypes.Contains(TouristAttractionSearchType.Address))
+            {
+                command += $"AND {locationsTableAlias}.address LIKE '%{touristAttractionSearchModel.AddressKeyword}%' ";
+            }
+
+            List<TouristAttractionModel> result = new List<TouristAttractionModel>();
+            await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, reader =>
+            {
+                while (reader.Read())
+                {
+                    LocationModel location = new LocationModel()
+                    {
+                        Id = reader.GetInt32(3),
+                        Address = reader.GetString(4),
+                        Latitude = reader.GetDouble(5),
+                        Longitude = reader.GetDouble(6),
+                    };
+                    TouristAttractionModel touristAttraction = new TouristAttractionModel()
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Image = reader.GetString(2),
+                        Location = location
+                    };
+                    result.Add(touristAttraction);
+                }
+            });
+
+            return result;
+        }
+
         public async Task Delete(int id)
         {
             string command = $"DELETE FROM {_consts.TripsTouristAttractionsTableName} " +
