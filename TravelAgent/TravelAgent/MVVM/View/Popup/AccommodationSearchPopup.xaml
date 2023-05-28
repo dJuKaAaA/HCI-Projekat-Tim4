@@ -1,0 +1,115 @@
+﻿<Window x:Class="TravelAgent.MVVM.View.Popup.AccommodationSearchPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:core="clr-namespace:TravelAgent.Core"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        xmlns:local="clr-namespace:TravelAgent.MVVM.View.Popup"
+        mc:Ignorable="d"
+        Title="AccommodationSearchPopup" Height="450" Width="800">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#fff"
+                CornerRadius="20"
+                BorderThickness="3"
+                BorderBrush="#999"
+                Grid.RowSpan="3"/>
+
+        <Button Style="{StaticResource CloseButtonTheme}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Command="{Binding CloseCommand}"
+                Margin="0 30 30 0"/>
+
+        <TextBlock Text="Search user trips"
+                   HorizontalAlignment="Center"
+                   FontSize="32"
+                   Grid.Row="1"
+                   Margin="0 10"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="2"
+                      Margin="20 10">
+            
+            <StackPanel Margin="30 10">
+                <WrapPanel Margin="20 10"
+                           HorizontalAlignment="Center">
+                    <CheckBox Content="{Binding Source={x:Static core:AccommodationSearchType.Name}}"
+                              IsChecked="{Binding IsNameChecked}"
+                              Margin="10"/>
+                    <CheckBox Content="{Binding Source={x:Static core:AccommodationSearchType.Address}}"
+                              IsChecked="{Binding IsAddressChecked}"
+                              Margin="10"/>
+                    <CheckBox Content="{Binding Source={x:Static core:AccommodationSearchType.Rating}}"
+                              IsChecked="{Binding IsRatingChecked}"
+                              Margin="10"/>
+
+                </WrapPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding NameVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:AccommodationSearchType.Name}}"
+                               FontSize="24"/>
+                    <TextBox Text="{Binding AccommodationSearchModel.NameKeyword, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding AddressVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:AccommodationSearchType.Address}}"
+                               FontSize="24"/>
+                    <TextBox Text="{Binding AccommodationSearchModel.AddressKeyword, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding RatingVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:AccommodationSearchType.Rating}}"
+                               FontSize="24"/>
+                    <Grid Margin="0 15">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0"
+                                    Margin="10 0">
+                            <TextBlock Text="Start range"
+                                       FontSize="24"/>
+                            <TextBox Style="{StaticResource FormTextBoxTheme}"
+                                     Text="{Binding AccommodationSearchModel.StartRatingRange, UpdateSourceTrigger=PropertyChanged}"/>
+                            
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    Margin="10 0">
+                            <TextBlock Text="End range"
+                                       FontSize="24"/>
+                            <TextBox Style="{StaticResource FormTextBoxTheme}"
+                                     Text="{Binding AccommodationSearchModel.EndRatingRange, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <Button Style="{StaticResource FormButtonTheme}"
+                        Content="Search"
+                        Command="{Binding SearchCommand}"
+                        Margin="0 20"
+                        HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+        </ScrollViewer>
+        
+    </Grid>
+</Window>

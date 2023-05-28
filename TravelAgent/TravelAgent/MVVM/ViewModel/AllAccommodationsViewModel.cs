@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Input;
 using TravelAgent.Core;
 using TravelAgent.MVVM.Model;
+using TravelAgent.MVVM.View.Popup;
+using TravelAgent.MVVM.ViewModel.Popup;
 
 namespace TravelAgent.MVVM.ViewModel
 {
@@ -31,16 +33,21 @@ namespace TravelAgent.MVVM.ViewModel
             set { _selectedAccommodation = value; OnPropertyChanged(); }
         }
 
+        private AccommodationSearchPopup? _accommodationSearchPopup;
+        private readonly AccommodationSearchViewModel _accommodationSearchViewModel;
+
         private readonly Service.AccommodationService _accommodationService;
         private readonly Service.NavigationService _navigationService;
 
         public ICommand OpenCreateAccommodationViewComand { get; }
         public ICommand OpenModifyAccommodationViewComand { get; }
         public ICommand DeleteAccommodationCommand { get; }
+        public ICommand OpenSearchCommand { get; }
 
         public AllAccommodationsViewModel(
             Service.AccommodationService acccommodationService, 
-            Service.NavigationService navigationService)
+            Service.NavigationService navigationService,
+            AccommodationSearchViewModel accommodationSearchViewModel)
         {
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
 
@@ -48,13 +55,27 @@ namespace TravelAgent.MVVM.ViewModel
 
             _accommodationService = acccommodationService;
             _navigationService = navigationService;
+            _accommodationSearchViewModel = accommodationSearchViewModel;
+            _accommodationSearchViewModel.AllAccommodationsViewModel = this;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
             OpenCreateAccommodationViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateAccommodationViewModel>(), o => MainViewModel.SignedUser?.Type == UserType.Agent);
             OpenModifyAccommodationViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateAccommodationViewModel>(SelectedAccommodation), o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedAccommodation != null);
             DeleteAccommodationCommand = new Core.RelayCommand(OnDeleteAccommodation, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedAccommodation != null);
-            LoadAll();
+            OpenSearchCommand = new RelayCommand(OnOpenSearch, o => true);
+
+            Task.Run(async () => await LoadAll());
+        }
+
+        private void OnOpenSearch(object o)
+        {
+            _accommodationSearchPopup?.Close();
+            _accommodationSearchPopup = new AccommodationSearchPopup()
+            {
+                DataContext = _accommodationSearchViewModel
+            };
+            _accommodationSearchPopup.Show();
         }
 
         private void OnNavigationCompleted(object? sender, NavigationEventArgs e)
@@ -65,6 +86,8 @@ namespace TravelAgent.MVVM.ViewModel
                 {
                     MainViewModel.RemoveCUDKeyBindings();
                 }
+
+                _accommodationSearchPopup?.Close();
 
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
             }
@@ -92,7 +115,7 @@ namespace TravelAgent.MVVM.ViewModel
             }
         }
 
-        private async void LoadAll()
+        public async Task LoadAll()
         {
             AllAccommodations.Clear();
             IEnumerable<AccommodationModel> accommodations = await _accommodationService.GetAll();
