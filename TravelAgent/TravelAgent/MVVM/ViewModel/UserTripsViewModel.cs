@@ -80,8 +80,13 @@ namespace TravelAgent.MVVM.ViewModel
         {
             if (e.ViewModelType != typeof(UserTripsViewModel))
             {
+                MainViewModel.RemoveOpenSearchKeyBinding();
                 _userTripsSearchPopup?.Close();
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
+            }
+            else
+            {
+                MainViewModel.AddOpenSearchKeyBinding(OpenSearchCommand);
             }
         }
 

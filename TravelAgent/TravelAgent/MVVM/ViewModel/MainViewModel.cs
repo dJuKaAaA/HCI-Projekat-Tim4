@@ -44,6 +44,7 @@ namespace TravelAgent.MVVM.ViewModel
         private static KeyBinding? _openCreateViewKeyBinding;
         private static KeyBinding? _openModifyViewKeyBinding;
         private static KeyBinding? _deleteEntityKeyBinding;
+        private static KeyBinding? _openSearchKeyBinding;
 
         public NavigationService NavigationService { get; }
 
@@ -114,6 +115,20 @@ namespace TravelAgent.MVVM.ViewModel
                 SignedUser = null;
                 NavigationService.NavigateTo<LoginViewModel>();
             }
+        }
+
+        public static void AddOpenSearchKeyBinding(ICommand openSearchCommand)
+        {
+            _openSearchKeyBinding = new KeyBinding(openSearchCommand, Key.S, ModifierKeys.Control);
+            Window window = Application.Current.MainWindow;
+            window.InputBindings.Add(_openSearchKeyBinding);
+        }
+
+        public static void RemoveOpenSearchKeyBinding()
+        {
+            Window window = Application.Current.MainWindow;
+            window.InputBindings.Remove(_openSearchKeyBinding);
+            _openSearchKeyBinding = null;
         }
 
         public static void AddCUDKeyBindings(

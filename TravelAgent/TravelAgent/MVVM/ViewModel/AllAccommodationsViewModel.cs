@@ -86,6 +86,7 @@ namespace TravelAgent.MVVM.ViewModel
                 {
                     MainViewModel.RemoveCUDKeyBindings();
                 }
+                MainViewModel.RemoveOpenSearchKeyBinding();
 
                 _accommodationSearchPopup?.Close();
 
@@ -100,6 +101,7 @@ namespace TravelAgent.MVVM.ViewModel
                         OpenModifyAccommodationViewComand,
                         DeleteAccommodationCommand);
                 }
+                MainViewModel.AddOpenSearchKeyBinding(OpenSearchCommand);
             }
 
         }
