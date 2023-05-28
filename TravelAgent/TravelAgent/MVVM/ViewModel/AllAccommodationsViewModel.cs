@@ -110,7 +110,7 @@ namespace TravelAgent.MVVM.ViewModel
             if (result == MessageBoxResult.Yes)
             {
                 await _accommodationService.Delete(SelectedAccommodation.Id);
-                LoadAll();
+                await LoadAll();
                 MessageBox.Show("Accommodation deleted successfully!");
             }
         }

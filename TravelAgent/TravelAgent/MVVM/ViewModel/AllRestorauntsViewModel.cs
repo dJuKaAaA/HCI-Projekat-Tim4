@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Input;
 using TravelAgent.Core;
 using TravelAgent.MVVM.Model;
+using TravelAgent.MVVM.View.Popup;
+using TravelAgent.MVVM.ViewModel.Popup;
 using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel
@@ -32,29 +34,48 @@ namespace TravelAgent.MVVM.ViewModel
             set { _selectedRestoraunt = value; OnPropertyChanged(); }
         }
 
+        private RestorauntSearchPopup? _restorauntSearchPopup;
+        private readonly RestorauntSearchViewModel _restorauntSearchViewModel;
+
         private readonly Service.RestorauntService _restorauntService;
         private readonly Service.NavigationService _navigationService;
 
         public ICommand OpenCreateRestorauntViewComand { get; }
         public ICommand OpenModifyRestorauntViewComand { get; }
         public ICommand DeleteRestorauntCommand { get; }
+        public ICommand OpenSearchCommand { get; }
 
         public AllRestorauntsViewModel(
             Service.RestorauntService restorauntService,
-            NavigationService navigationService)
+            NavigationService navigationService,
+            RestorauntSearchViewModel restorauntSearchViewModel)
         {
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
             AllRestoraunts = new ObservableCollection<RestorauntModel>();
 
             _restorauntService = restorauntService;
             _navigationService = navigationService;
+            _restorauntSearchViewModel = restorauntSearchViewModel;
+            _restorauntSearchViewModel.AllRestorauntsViewModel = this;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
             OpenCreateRestorauntViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateRestorauntViewModel>(), o => MainViewModel.SignedUser?.Type == UserType.Agent);
             OpenModifyRestorauntViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateRestorauntViewModel>(SelectedRestoraunt), o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedRestoraunt != null);
             DeleteRestorauntCommand = new Core.RelayCommand(OnDeleteRestoraunt, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedRestoraunt != null);
-            LoadAll();
+            OpenSearchCommand = new RelayCommand(OnOpenSearch, o => true);
+
+            Task.Run(async () => await LoadAll());
+        }
+
+        private void OnOpenSearch(object o)
+        {
+            _restorauntSearchPopup?.Close();
+            _restorauntSearchPopup = new RestorauntSearchPopup()
+            {
+                DataContext = _restorauntSearchViewModel
+            };
+            _restorauntSearchPopup.Show();
         }
 
         private void OnNavigationCompleted(object? sender, NavigationEventArgs e)
@@ -65,6 +86,8 @@ namespace TravelAgent.MVVM.ViewModel
                 {
                     MainViewModel.RemoveCUDKeyBindings();
                 }
+
+                _restorauntSearchPopup?.Close();
 
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
             }
@@ -88,13 +111,13 @@ namespace TravelAgent.MVVM.ViewModel
             if (result == MessageBoxResult.Yes)
             {
                 await _restorauntService.Delete(SelectedRestoraunt.Id);
-                LoadAll();
+                await LoadAll();
                 MessageBox.Show("Restoraunt deleted successfully!");
             }
 
         }
 
-        private async void LoadAll()
+        public async Task LoadAll()
         {
             AllRestoraunts.Clear();
             IEnumerable<RestorauntModel> restoraunts = await _restorauntService.GetAll();
