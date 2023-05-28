@@ -150,10 +150,10 @@ namespace TravelAgent.Service
             IEnumerable<AccommodationModel> accommodations,
             IEnumerable<TouristAttractionModel> touristAttractions)
         {
-            string departureDateFormat = trip.DepartureDateTime.ToString($"{_consts.DateTimeFormatString}");
-            string arrivalDateFormat = trip.ArrivalDateTime.ToString($"{_consts.DateTimeFormatString}");
+            string departureDateFormatted = trip.DepartureDateTime.ToString($"{_consts.DateTimeFormatString}");
+            string arrivalDateFormatted = trip.ArrivalDateTime.ToString($"{_consts.DateTimeFormatString}");
             string command = $"INSERT INTO {_consts.TripsTableName} (departure_id, destination_id, departure_date_time, arrival_date_time, price)" +
-                $"VALUES ({trip.Departure.Id}, {trip.Destination.Id}, '{departureDateFormat}', '{arrivalDateFormat}', {trip.Price})";
+                $"VALUES ({trip.Departure.Id}, {trip.Destination.Id}, '{departureDateFormatted}', '{arrivalDateFormatted}', {trip.Price})";
             await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
 
             command = $"SELECT MAX(id) FROM {_consts.TripsTableName}";

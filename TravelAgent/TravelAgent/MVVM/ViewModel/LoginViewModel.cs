@@ -61,7 +61,7 @@ namespace TravelAgent.MVVM.ViewModel
             }
             catch (DatabaseResponseException e)
 			{
-				MessageBox.Show(e.Message);
+				MessageBox.Show(e.Message, "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
 				Password = string.Empty;
 				return;
 			}
