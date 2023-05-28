@@ -10,6 +10,7 @@ using System.Windows.Input;
 using TravelAgent.Core;
 using TravelAgent.MVVM.Model;
 using TravelAgent.MVVM.View.Popup;
+using TravelAgent.MVVM.ViewModel.Popup;
 
 namespace TravelAgent.MVVM.ViewModel
 {
@@ -59,11 +60,14 @@ namespace TravelAgent.MVVM.ViewModel
         }
 
         private SeeDealPopup? _seeDealPopup;
+        private TripSearchPopup? _tripSearchPopup;
+        private readonly TripSearchViewModel _tripSearchViewModel;
 
         public ICommand OpenSeeDealPopupCommand { get; }
         public ICommand OpenCreateTripViewCommand { get; }
         public ICommand OpenModifyTripViewCommand { get; } // this is just the CreateTripView with a TripModel passed as parameter
         public ICommand DeleteTripCommand { get; }
+        public ICommand OpenSearchCommand { get; }
 
         public AllTripsViewModel(
             Service.NavigationService navigationService, 
@@ -73,7 +77,8 @@ namespace TravelAgent.MVVM.ViewModel
             Service.TouristAttractionService touristAttractionService,
             Service.RestorauntService restorauntService,
             Service.AccommodationService accommodationService,
-            Consts consts)
+            Consts consts,
+            TripSearchViewModel tripSearchViewModel)
         {
             SeeDealVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Traveler ?
                 Visibility.Visible : Visibility.Collapsed;
@@ -92,6 +97,8 @@ namespace TravelAgent.MVVM.ViewModel
             _restorauntService = restorauntService;
             _accommodationService = accommodationService;
             _consts = consts;
+            _tripSearchViewModel = tripSearchViewModel;
+            _tripSearchViewModel.AllTripsViewModel = this;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
@@ -99,8 +106,19 @@ namespace TravelAgent.MVVM.ViewModel
             OpenCreateTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(), o => MainViewModel.SignedUser?.Type == UserType.Agent);
             OpenModifyTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(SelectedTrip), o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTrip != null);
             DeleteTripCommand = new Core.RelayCommand(OnDeleteTrip, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTrip != null);
+            OpenSearchCommand = new RelayCommand(OnOpenSearch, o => true);
 
-            LoadAll();
+            Task.Run(async () => await LoadAll());
+        }
+
+        private void OnOpenSearch(object o)
+        {
+            _tripSearchPopup?.Close();
+            _tripSearchPopup = new TripSearchPopup()
+            {
+                DataContext = _tripSearchViewModel
+            };
+            _tripSearchPopup.Show();
         }
 
         private void OnNavigationCompleted(object? sender, Core.NavigationEventArgs e)
@@ -113,6 +131,8 @@ namespace TravelAgent.MVVM.ViewModel
                 }
 
                 _seeDealPopup?.Close();
+                _tripSearchPopup?.Close();
+
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
             }
             else
@@ -148,7 +168,7 @@ namespace TravelAgent.MVVM.ViewModel
             }
         }
 
-        private async void LoadAll()
+        public async Task LoadAll()
         {
             AllTrips.Clear();
             IEnumerable<TripModel> allTrip = await _tripService.GetAll();
@@ -164,7 +184,7 @@ namespace TravelAgent.MVVM.ViewModel
             if (result == MessageBoxResult.Yes)
             {
                 await _tripService.Delete(SelectedTrip.Id);
-                LoadAll();
+                await LoadAll();
                 MessageBox.Show("Trip deleted successfully!");
             }
         }

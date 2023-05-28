@@ -24,6 +24,74 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
+        public async Task<IEnumerable<TripModel>> Search(HashSet<TripSearchType> searchTypes, TripSearchModel tripSearchModel)
+        {
+            string command = $"SELECT tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +
+                $"departuresTable.id, departuresTable.address, departuresTable.longitude, departuresTable.latitude, " +
+                $"destinationsTable.id, destinationsTable.address, destinationsTable.longitude, destinationsTable.latitude " +
+                $"FROM {_consts.TripsTableName} tripsTable, {_consts.LocationsTableName} departuresTable, " +
+                $"{_consts.LocationsTableName} destinationsTable WHERE tripsTable.departure_id = departuresTable.id " +
+                $"AND tripsTable.destination_id = destinationsTable.id ";
+
+            if (searchTypes.Contains(TripSearchType.Departure))
+            {
+                command += $"AND departuresTable.address LIKE '%{tripSearchModel.DepartureSearchKeyword}%' ";
+            }
+            if (searchTypes.Contains(TripSearchType.Destination))
+            {
+                command += $"AND destinationsTable.address LIKE '%{tripSearchModel.DestinationSearchKeyword}%' ";
+            }
+            if (searchTypes.Contains(TripSearchType.DepartureDateTime))
+            {
+                string departureDateFormatted = tripSearchModel.SelectedDepartureDate?.ToString($"{_consts.DateFormatString}");
+                command += $"AND tripsTable.departure_date_time LIKE '{departureDateFormatted}%' ";
+            }
+            if (searchTypes.Contains(TripSearchType.ArrivalDateTime))
+            {
+                string arrivalDateFormatted = tripSearchModel.SelectedArrivalDate?.ToString($"{_consts.DateFormatString}");
+                command += $"AND tripsTable.arrival_date_time LIKE '{arrivalDateFormatted}%' ";
+            }
+            if (searchTypes.Contains(TripSearchType.Price))
+            {
+                command += $"AND tripsTable.Price BETWEEN {tripSearchModel.StartPriceRange} AND {tripSearchModel.EndPriceRange} ";
+            }
+
+            List<TripModel> results = new List<TripModel>();
+            await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
+            {
+                while (reader.Read())
+                {
+                    LocationModel departure = new LocationModel()
+                    {
+                        Id = reader.GetInt32(4),
+                        Address = reader.GetString(5),
+                        Longitude = reader.GetFloat(6),
+                        Latitude = reader.GetFloat(7),
+                    };
+                    LocationModel destination = new LocationModel()
+                    {
+                        Id = reader.GetInt32(8),
+                        Address = reader.GetString(9),
+                        Longitude = reader.GetFloat(10),
+                        Latitude = reader.GetFloat(11),
+                    };
+                    TripModel trip = new TripModel()
+                    {
+                        Id = reader.GetInt32(0),
+                        Departure = departure,
+                        Destination = destination,
+                        DepartureDateTime = DateTime.ParseExact(reader.GetString(1), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        ArrivalDateTime = DateTime.ParseExact(reader.GetString(2), _consts.DateTimeFormatString, CultureInfo.InvariantCulture),
+                        Price = reader.GetFloat(3),
+                    };
+                    results.Add(trip);
+                }
+            });
+
+            return results;
+
+        }
+
         public async Task<TripModel> GetById(int id)
         {
             string command = $"SELECT tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +

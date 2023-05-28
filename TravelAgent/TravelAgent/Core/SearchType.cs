@@ -11,7 +11,7 @@ namespace TravelAgent.Core
         Departure,
         Destination,
         DepartureDateTime,
-        DestinationDateTime,
+        ArrivalDateTime,
         Price
     }
 
