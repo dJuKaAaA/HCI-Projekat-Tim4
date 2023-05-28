@@ -15,7 +15,7 @@ namespace TravelAgent.MVVM.ViewModel
 {
     public class AllAccommodationsViewModel : Core.ViewModel
     {
-        public ObservableCollection<AccommodationModel> AllAccommodations { get; set; }
+        public ObservableCollection<AccommodationModel> Accommodations { get; set; }
 
         private Visibility _toolbarVisibility;
 
@@ -51,7 +51,7 @@ namespace TravelAgent.MVVM.ViewModel
         {
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
 
-            AllAccommodations = new ObservableCollection<AccommodationModel>();
+            Accommodations = new ObservableCollection<AccommodationModel>();
 
             _accommodationService = acccommodationService;
             _navigationService = navigationService;
@@ -119,11 +119,11 @@ namespace TravelAgent.MVVM.ViewModel
 
         public async Task LoadAll()
         {
-            AllAccommodations.Clear();
+            Accommodations.Clear();
             IEnumerable<AccommodationModel> accommodations = await _accommodationService.GetAll();
             foreach (AccommodationModel accommodation in accommodations)
             {
-                AllAccommodations.Add(accommodation);
+                Accommodations.Add(accommodation);
             }
         }
 

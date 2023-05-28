@@ -16,7 +16,7 @@ namespace TravelAgent.MVVM.ViewModel
 {
     public class AllRestorauntsViewModel : Core.ViewModel
     {
-        public ObservableCollection<RestorauntModel> AllRestoraunts { get; set; }
+        public ObservableCollection<RestorauntModel> Restoraunts { get; set; }
 
         private Visibility _toolbarVisibility;
 
@@ -51,7 +51,7 @@ namespace TravelAgent.MVVM.ViewModel
             RestorauntSearchViewModel restorauntSearchViewModel)
         {
             ToolbarVisibility = MainViewModel.SignedUser?.Type == Core.UserType.Agent ? Visibility.Visible : Visibility.Collapsed;
-            AllRestoraunts = new ObservableCollection<RestorauntModel>();
+            Restoraunts = new ObservableCollection<RestorauntModel>();
 
             _restorauntService = restorauntService;
             _navigationService = navigationService;
@@ -120,11 +120,11 @@ namespace TravelAgent.MVVM.ViewModel
 
         public async Task LoadAll()
         {
-            AllRestoraunts.Clear();
+            Restoraunts.Clear();
             IEnumerable<RestorauntModel> restoraunts = await _restorauntService.GetAll();
             foreach (RestorauntModel restoraunt in restoraunts)
             {
-                AllRestoraunts.Add(restoraunt);
+                Restoraunts.Add(restoraunt);
             }
         }
     }

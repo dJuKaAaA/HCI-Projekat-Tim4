@@ -476,7 +476,7 @@
                         <Setter Property="Content">
                             <Setter.Value>
                                 <ListView Style="{StaticResource WideTripsListViewTheme}"
-                                          ItemsSource="{Binding AllTrips}"
+                                          ItemsSource="{Binding Trips}"
                                           SelectedItem="{Binding SelectedTrip}"/>
                             </Setter.Value>
                         </Setter>
@@ -485,7 +485,7 @@
                                 <Setter Property="Content">
                                     <Setter.Value>
                                         <ListView Style="{StaticResource NarrowTripsListViewTheme}"
-                                                  ItemsSource="{Binding AllTrips}"
+                                                  ItemsSource="{Binding Trips}"
                                                   SelectedItem="{Binding SelectedTrip}"/>
                                     </Setter.Value>
                                 </Setter>
@@ -494,7 +494,7 @@
                                 <Setter Property="Content">
                                     <Setter.Value>
                                         <ListView Style="{StaticResource WideTripsListViewTheme}"
-                                                  ItemsSource="{Binding AllTrips}"
+                                                  ItemsSource="{Binding Trips}"
                                                   SelectedItem="{Binding SelectedTrip}"/>
                                     </Setter.Value>
                                 </Setter>

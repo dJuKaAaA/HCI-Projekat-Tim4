@@ -17,9 +17,9 @@ namespace TravelAgent.MVVM.View.Popup
     /// <summary>
     /// Interaction logic for UserTripsSearchPopup.xaml
     /// </summary>
-    public partial class UserTripsSearchPopup : Window
+    public partial class UserTripSearchPopup : Window
     {
-        public UserTripsSearchPopup()
+        public UserTripSearchPopup()
         {
             InitializeComponent();
         }

@@ -47,7 +47,7 @@
                                      HorizontalAlignment="Center"/>
 
         <Grid Grid.Row="2">
-            <ListView ItemsSource="{Binding AllAccommodations}"
+            <ListView ItemsSource="{Binding Accommodations}"
                       Padding="30 0"
                       BorderThickness="2"
                       SelectionMode="Single"

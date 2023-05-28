@@ -165,10 +165,10 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             if (_searchTypes.Count > 0)
             {
                 IEnumerable<Model.RestorauntModel> restoraunts = await _restorauntService.Search(_searchTypes, RestorauntSearchModel);
-                AllRestorauntsViewModel.AllRestoraunts.Clear();
+                AllRestorauntsViewModel.Restoraunts.Clear();
                 foreach (Model.RestorauntModel restoraunt in restoraunts)
                 {
-                    AllRestorauntsViewModel.AllRestoraunts.Add(restoraunt);
+                    AllRestorauntsViewModel.Restoraunts.Add(restoraunt);
                 }
             }
             else

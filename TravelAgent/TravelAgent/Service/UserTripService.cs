@@ -62,7 +62,7 @@ namespace TravelAgent.Service
             }
             if (searchTypes.Contains(UserTripSearchType.PurchaseMonth))
             {
-
+                command += $"AND usersTripsTable.purchase_date LIKE '%.{userTripSearchModel.SelectedMonthIndex}.{userTripSearchModel.Year}.%' ";
             }
             if (searchTypes.Contains(UserTripSearchType.Trip))
             {
