@@ -15,6 +15,8 @@ namespace TravelAgent.Core
 {
     public class CreationViewModel : Core.ViewModel
     {
+        public bool IsLocationChaned { get; private set; }
+
         private LocationModel? _location;
 
         public LocationModel? Location

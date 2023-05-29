@@ -71,7 +71,7 @@
                                             BorderBrush="{StaticResource NotHighlightedBrush}">
                                         <Grid>
                                             <StackPanel HorizontalAlignment="Stretch"
-                                                        MaxWidth="350">
+                                                        MaxWidth="400">
                                                 <TextBlock Text="{Binding Name}"
                                                            HorizontalAlignment="Center"
                                                            FontWeight="Bold"
