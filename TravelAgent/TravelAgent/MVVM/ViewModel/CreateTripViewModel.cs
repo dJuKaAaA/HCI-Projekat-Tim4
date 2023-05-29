@@ -432,7 +432,7 @@ namespace TravelAgent.MVVM.ViewModel
                 Price = double.Parse(Price),
             };
 
-            if (TripForModification == null)
+            if (!Modifying)
             {
                 LocationModel departure = await _locationService.Create(SelectedDepartureLocation);
                 LocationModel destination = await _locationService.Create(SelectedDestinationLocation);
@@ -448,22 +448,37 @@ namespace TravelAgent.MVVM.ViewModel
             }
             else
             {
+                int departureForDeletionId = 0;
                 if (_changedDeparture)
                 {
+                    departureForDeletionId = TripForModification.Departure.Id;
                     LocationModel departure = await _locationService.Create(SelectedDepartureLocation);
                     trip.Departure = departure;
                 }
+
+                int destinationForDeletionId = 0;
                 if (_changedDestination)
                 {
+                    destinationForDeletionId = TripForModification.Destination.Id;
                     LocationModel destination = await _locationService.Create(SelectedDestinationLocation);
                     trip.Destination = destination;
                 }
+
                 await _tripService.Modify(
                     TripForModification.Id,
                     trip,
                     RestorauntsForTrip,
                     AccommodationsForTrip,
                     TouristAttractionsForTrip);
+                if (departureForDeletionId != 0)
+                {
+                    await _locationService.Delete(departureForDeletionId);
+                }
+                if (destinationForDeletionId != 0)
+                {
+                    await _locationService.Delete(destinationForDeletionId);
+                }
+
                 MessageBox.Show("Trip modified successfully!");
                 _navigationService.NavigateTo<AllTripsViewModel>();
             }

@@ -145,9 +145,11 @@ namespace TravelAgent.MVVM.ViewModel
             }
             else
             {
+                int locationForDeletionId = 0;
                 LocationModel location = AccommodationForModification.Location;
                 if (Location.Id != AccommodationForModification.Location.Id)
                 {
+                    locationForDeletionId = AccommodationForModification.Location.Id;
                     location = await _locationService.Create(Location);
                 }
 
@@ -160,6 +162,11 @@ namespace TravelAgent.MVVM.ViewModel
                 };
 
                 await _accommodationService.Modify(AccommodationForModification.Id, modifiedAccommdation);
+                if (locationForDeletionId != 0)
+                {
+                    await _locationService.Delete(locationForDeletionId);
+                }
+
                 MessageBox.Show("Accommodation modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 _navigationService.NavigateTo<AllAccommodationsViewModel>();
             }

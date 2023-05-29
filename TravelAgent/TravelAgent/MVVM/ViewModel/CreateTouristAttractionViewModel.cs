@@ -30,14 +30,6 @@ namespace TravelAgent.MVVM.ViewModel
             set { _modifying = value; OnPropertyChanged(); }
         }
 
-        private bool _isLocationChanged;
-
-        public bool IsLocationChanged
-        {
-            get { return _isLocationChanged; }
-            set { _isLocationChanged = value; OnPropertyChanged(); }
-        }
-
         private string _name;
 
         public string Name
@@ -99,9 +91,11 @@ namespace TravelAgent.MVVM.ViewModel
             }
             else
             {
+                int locationForDeletionId = 0;
                 LocationModel location = TouristAttractionForModification.Location;
                 if (Location.Id != TouristAttractionForModification.Location.Id)
                 {
+                    locationForDeletionId = TouristAttractionForModification.Location.Id;
                     location = await _locationService.Create(Location);
                 }
 
@@ -113,6 +107,11 @@ namespace TravelAgent.MVVM.ViewModel
                 };
 
                 await _touristAttractionService.Modify(TouristAttractionForModification.Id, modifiedTouristAttraction);
+                if (locationForDeletionId != 0)
+                {
+                    await _locationService.Delete(locationForDeletionId);
+                }
+
                 MessageBox.Show("Tourist attraction modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 _navigationService.NavigateTo<AllTouristAttractionsViewModel>();
             }

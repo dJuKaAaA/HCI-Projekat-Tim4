@@ -22,6 +22,13 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
+        public async Task Delete(int id)
+        {
+            string command = $"DELETE FROM {_consts.LocationsTableName} " +
+                $"WHERE id = {id}";
+            await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
+        }
+
         public async Task<LocationModel> Create(LocationModel location)
         {
             string command = $"INSERT INTO {_consts.LocationsTableName} (latitude, longitude, address)" +

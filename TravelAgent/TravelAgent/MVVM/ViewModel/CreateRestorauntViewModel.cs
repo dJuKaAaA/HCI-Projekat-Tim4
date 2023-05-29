@@ -119,9 +119,11 @@ namespace TravelAgent.MVVM.ViewModel
             }
             else
             {
+                int locationForDeletionId = 0;
                 LocationModel location = RestorauntForModification.Location;
                 if (Location.Id != RestorauntForModification.Location.Id)
                 {
+                    locationForDeletionId = RestorauntForModification.Location.Id;
                     location = await _locationService.Create(Location);
                 }
 
@@ -134,6 +136,11 @@ namespace TravelAgent.MVVM.ViewModel
                 };
 
                 await _restorauntService.Modify(RestorauntForModification.Id, modifiedRestoraunt);
+                if (locationForDeletionId != 0)
+                {
+                    await _locationService.Delete(locationForDeletionId);
+                }
+
                 MessageBox.Show("Restoraunt modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 _navigationService.NavigateTo<AllRestorauntsViewModel>();
             }
