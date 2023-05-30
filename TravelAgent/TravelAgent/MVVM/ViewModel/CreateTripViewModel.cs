@@ -204,6 +204,16 @@ namespace TravelAgent.MVVM.ViewModel
             set { _selectedTouristAttractionForTrip = value; OnPropertyChanged(); }
         }
 
+        private int _selectedTabIndex;
+
+        public int SelectedTabIndex
+        {
+            get { return _selectedTabIndex; }
+            set { _selectedTabIndex = value; OnPropertyChanged(); }
+        }
+
+        private readonly int _tabCount = 5;
+
         public EventHandler<LocationModel> DepartureAddressSearched;
         public EventHandler<LocationModel> DestinationAddressSearched;
 
@@ -220,6 +230,8 @@ namespace TravelAgent.MVVM.ViewModel
         private bool _searchDepartureFromAddressCommandRunning = false;
         private bool _searchDestinationFromAddressCommandRunning = false;
 
+        public ICommand ToNextTabCommand { get; }
+        public ICommand ToPreviousTabCommand { get; }
         public ICommand CreateTripCommand { get; }
         public ICommand SearchDepartureFromAddressCommand { get; }
         public ICommand SearchDestinationFromAddressCommand { get; }
@@ -262,6 +274,8 @@ namespace TravelAgent.MVVM.ViewModel
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
+            ToNextTabCommand = new RelayCommand(o => SelectedTabIndex = (SelectedTabIndex + 1) % _tabCount, o => true);
+            ToPreviousTabCommand = new RelayCommand(o => SelectedTabIndex = (SelectedTabIndex - 1) % _tabCount, o => true);
             CreateTripCommand = new RelayCommand(OnCreateTrip, CanCreateTrip);
             SearchDepartureFromAddressCommand = new RelayCommand(OnSearchDepartureFromAddress, o => !string.IsNullOrWhiteSpace(DepartureAddress) && !_searchDepartureFromAddressCommandRunning);
             SearchDestinationFromAddressCommand = new RelayCommand(OnSearchDestinationFromAddress, o => !string.IsNullOrWhiteSpace(DestinationAddress) && !_searchDestinationFromAddressCommandRunning);

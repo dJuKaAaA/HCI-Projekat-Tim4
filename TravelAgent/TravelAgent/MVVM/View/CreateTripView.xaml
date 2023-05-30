@@ -29,9 +29,11 @@
                                             BorderThickness="5"
                                             Width="Auto"
                                             MaxWidth="400"
+                                            MaxHeight="300"
                                             Margin="0 10"
                                             CornerRadius="3">
-                                        <Image Source="{Binding Image}"/>
+                                        <Image Source="{Binding Image}"
+                                               Stretch="UniformToFill"/>
 
                                     </Border>
                                     <TextBlock Text="{Binding Name}"
@@ -146,9 +148,11 @@
                                             BorderThickness="5"
                                             MaxWidth="500"
                                             Width="Auto"
+                                            MaxHeight="300"
                                             Margin="0 10"
                                             CornerRadius="3">
-                                        <Image Source="{Binding Image}"/>
+                                        <Image Source="{Binding Image}"
+                                               Stretch="UniformToFill"/>
 
                                     </Border>
                                     <TextBlock Text="{Binding Name}"
@@ -212,10 +216,12 @@
                                     <Border BorderBrush="{StaticResource ImageBorderBrush}"
                                             BorderThickness="5"
                                             MaxWidth="500"
+                                            MaxHeight="300"
                                             Width="Auto"
                                             Margin="0 10"
                                             CornerRadius="3">
-                                        <Image Source="{Binding Image}"/>
+                                        <Image Source="{Binding Image}"
+                                               Stretch="UniformToFill"/>
 
                                     </Border>
                                     <TextBlock Text="{Binding Name}"
@@ -256,19 +262,69 @@
 
     <Grid>
 
-        <TabControl IsTabStop="False">
-            <TabItem Header="Departure and destination"
+        <TabControl IsTabStop="False"
+                    SelectedIndex="{Binding SelectedTabIndex}">
+            <TabItem Header="1) Departure and destination"
                      IsTabStop="False"
                      Padding="10">
 
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
 
 
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Visibility="Hidden"
+                                    Margin="30 0 0 0"
+                                    Grid.Column="0">
+                            <Button Content="Back"
+                                    HorizontalAlignment="Center"
+                                    Style="{StaticResource BackButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Back"/>
+                        </StackPanel>
+
+                        <component:ScalableTextBlock Text="Choose the Departure and Destination"
+                                                     FontSize="44"
+                                                     Grid.Column="1"
+                                                     ScaleRate="2"
+                                                     FontWeight="SemiBold"
+                                                     VerticalAlignment="Center"
+                                                     TextWrapping="Wrap"
+                                                     HorizontalAlignment="Center"
+                                                     Margin="10 30"/>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Grid.Column="2"
+                                    Margin="0 0 30 0">
+                            <Button Content="Next"
+                                    Command="{Binding ToNextTabCommand}"
+                                    HorizontalAlignment="Center"
+                                    Style="{StaticResource NextButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Next"/>
+                        </StackPanel>
+                        
+                    </Grid>
+
                     <Border Width="Auto"
+                            Grid.Row="1"
                             BorderThickness="5"
                             Margin="20"
                             Grid.Column="0"
@@ -284,18 +340,13 @@
                     </Border>
 
                     <ScrollViewer Grid.Column="1"
+                                  Grid.Row="1"
                                   VerticalScrollBarVisibility="Auto">
 
 
                         <StackPanel Grid.Column="1"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center">
-                            <component:ScalableTextBlock Text="Choose the Departure and Destination"
-                                                         FontSize="44"
-                                                         ScaleRate="2"
-                                                         TextWrapping="Wrap"
-                                                         HorizontalAlignment="Center"
-                                                         Margin="10 30"/>
                             <StackPanel Margin="10 20">
                                 <component:ScalableTextBlock Text="Departure"
                                                              ScaleRate="2"
@@ -360,7 +411,7 @@
 
             </TabItem>
 
-            <TabItem Header="Restaurants"
+            <TabItem Header="2) Restaurants"
                      IsTabStop="False"
                      Padding="10">
 
@@ -375,13 +426,49 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <component:ScalableTextBlock Text="Add Restaurants to Trip"
-                                                 ScaleRate="2"
-                                                 Margin="20"
-                                                 FontSize="50"
-                                                 Grid.ColumnSpan="2"
-                                                 Grid.Row="0"
-                                                 HorizontalAlignment="Center"/>
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Margin="30 0 0 0"
+                                    Grid.Column="0">
+                            <Button Content="Back"
+                                    HorizontalAlignment="Center"
+                                    Command="{Binding ToPreviousTabCommand}"
+                                    Style="{StaticResource BackButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Back"/>
+                        </StackPanel>
+
+                        <component:ScalableTextBlock Text="Add restaurants to trip"
+                                                     FontSize="44"
+                                                     Grid.Column="1"
+                                                     FontWeight="SemiBold"
+                                                     ScaleRate="2"
+                                                     VerticalAlignment="Center"
+                                                     TextWrapping="Wrap"
+                                                     HorizontalAlignment="Center"
+                                                     Margin="10 30"/>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Grid.Column="2"
+                                    Margin="0 0 30 0">
+                            <Button Content="Next"
+                                    Command="{Binding ToNextTabCommand}"
+                                    HorizontalAlignment="Center"
+                                    Style="{StaticResource NextButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Next"/>
+                        </StackPanel>
+                        
+                    </Grid>
 
                     <ListView Grid.Column="0"
                               Grid.Row="1"
@@ -448,7 +535,8 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Tourist attractons"
+
+            <TabItem Header="3) Tourist attractons"
                      IsTabStop="False"
                      Padding="10">
 
@@ -463,13 +551,49 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <component:ScalableTextBlock Text="Add Tourist Attractions to Trip"
-                                                 ScaleRate="2"
-                                                 Margin="20"
-                                                 FontSize="50"
-                                                 Grid.ColumnSpan="2"
-                                                 Grid.Row="0"
-                                                 HorizontalAlignment="Center"/>
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Margin="30 0 0 0"
+                                    Grid.Column="0">
+                            <Button Content="Back"
+                                    HorizontalAlignment="Center"
+                                    Command="{Binding ToPreviousTabCommand}"
+                                    Style="{StaticResource BackButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Back"/>
+                        </StackPanel>
+
+                        <component:ScalableTextBlock Text="Add tourist attractions to trip"
+                                                     FontSize="44"
+                                                     Grid.Column="1"
+                                                     ScaleRate="2"
+                                                     FontWeight="SemiBold"
+                                                     VerticalAlignment="Center"
+                                                     TextWrapping="Wrap"
+                                                     HorizontalAlignment="Center"
+                                                     Margin="10 30"/>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Grid.Column="2"
+                                    Margin="0 0 30 0">
+                            <Button Content="Next"
+                                    Command="{Binding ToNextTabCommand}"
+                                    HorizontalAlignment="Center"
+                                    Style="{StaticResource NextButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Next"/>
+                        </StackPanel>
+                        
+                    </Grid>
 
                     <ListView Grid.Column="0"
                               Grid.Row="1"
@@ -536,7 +660,8 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Accommodations"
+
+            <TabItem Header="4) Accommodations"
                      IsTabStop="False"
                      Padding="10">
 
@@ -551,14 +676,49 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <component:ScalableTextBlock Text="Add Accommodations to Trip"
-                                                 ScaleRate="2"
-                                                 Margin="20"
-                                                 FontSize="50"
-                                                 Grid.ColumnSpan="2"
-                                                 Grid.Row="0"
-                                                 HorizontalAlignment="Center"/>
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2">
 
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Margin="30 0 0 0"
+                                    Grid.Column="0">
+                            <Button Content="Back"
+                                    HorizontalAlignment="Center"
+                                    Command="{Binding ToPreviousTabCommand}"
+                                    Style="{StaticResource BackButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Back"/>
+                        </StackPanel>
+
+                        <component:ScalableTextBlock Text="Add accommodations to trip"
+                                                     FontSize="44"
+                                                     Grid.Column="1"
+                                                     ScaleRate="2"
+                                                     FontWeight="SemiBold"
+                                                     VerticalAlignment="Center"
+                                                     TextWrapping="Wrap"
+                                                     HorizontalAlignment="Center"
+                                                     Margin="10 30"/>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Grid.Column="2"
+                                    Margin="0 0 30 0">
+                            <Button Content="Next"
+                                    HorizontalAlignment="Center"
+                                    Command="{Binding ToNextTabCommand}"
+                                    Style="{StaticResource NextButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Next"/>
+                        </StackPanel>
+                        
+                    </Grid>
                     <ListView Grid.Column="0"
                               Grid.Row="1"
                               Margin="20"
@@ -624,128 +784,149 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Finalize"
+
+            <TabItem Header="5) Finalize"
                      IsTabStop="False"
                      Padding="10">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                Margin="20 0"
-                                MaxWidth="700">
 
-                        <ContentControl Margin="0 25"
-                                        IsTabStop="False">
-                            <ContentControl.Style>
-                                <Style TargetType="ContentControl">
-                                    <Setter Property="Content">
-                                        <Setter.Value>
-                                            <component:ScalableTextBlock Text="Create trip"
-                                                                         VerticalAlignment="Center"
-                                                                         FontSize="54"
-                                                                         ScaleRate="2"
-                                                                         HorizontalAlignment="Center"
-                                                                         FontWeight="SemiBold"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.Modifying, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True">
-                                            <Setter Property="Content">
-                                                <Setter.Value>
-                                                    <component:ScalableTextBlock Text="Modify trip"
-                                                                                 VerticalAlignment="Center"
-                                                                                 Grid.Column="1"
-                                                                                 FontSize="54"
-                                                                                 ScaleRate="2"
-                                                                                 HorizontalAlignment="Center"
-                                                                                 FontWeight="SemiBold"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ContentControl.Style>
-                        </ContentControl>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-                        <StackPanel Margin="0 10">
-                            <component:ScalableTextBlock Text="Departure date and time"
-                                                         FontSize="32"
-                                                         ScaleRate="2"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2">
 
-                                <DatePicker Grid.Column="0"
-                                            Style="{StaticResource CustomDatePickerTheme}"
-                                            Margin="5 0"
-                                            SelectedDate="{Binding DepartureDate}"/>
-                                <ComboBox Grid.Column="1"
-                                          Margin="5 0"
-                                          ItemsSource="{Binding Hours}"
-                                          VerticalContentAlignment="Center"
-                                          HorizontalContentAlignment="Center"
-                                          SelectedItem="{Binding DepartureTimeHours}"/>
-                                <ComboBox Grid.Column="2"
-                                          Margin="5 0"
-                                          VerticalContentAlignment="Center"
-                                          HorizontalContentAlignment="Center"
-                                          ItemsSource="{Binding Minutes}"
-                                          SelectedValue="{Binding DepartureTimeMinutes}"/>
-                            </Grid>
-                        </StackPanel>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                        <StackPanel Margin="0 10">
-                            <component:ScalableTextBlock Text="Destination date and time"
-                                                         FontSize="32"
-                                                         ScaleRate="2"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <DatePicker Grid.Column="0"
-                                            Style="{StaticResource CustomDatePickerTheme}"
-                                            Margin="5 0"
-                                            SelectedDate="{Binding ArrivalDate}"/>
-                                <ComboBox Grid.Column="1"
-                                          Margin="5 0"
-                                          VerticalContentAlignment="Center"
-                                          HorizontalContentAlignment="Center"
-                                          ItemsSource="{Binding Hours}"
-                                          SelectedItem="{Binding ArrivalTimeHours}"/>
-                                <ComboBox Grid.Column="2"
-                                          Margin="5 0"
-                                          VerticalContentAlignment="Center"
-                                          HorizontalContentAlignment="Center"
-                                          ItemsSource="{Binding Minutes}"
-                                          SelectedItem="{Binding ArrivalTimeMinutes}"/>
-                            </Grid>
-                        </StackPanel>
-                        <StackPanel Margin="0 10">
-                            <component:ScalableTextBlock Text="Price"
-                                                         FontSize="32"
-                                                         ScaleRate="2"/>
-                            <TextBox Style="{StaticResource FormTextBoxTheme}"
-                                     Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
-
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal"
-                                    VerticalAlignment="Center"
+                        <StackPanel VerticalAlignment="Center"
+                                    Margin="30 0 0 0"
+                                    Grid.Column="0">
+                            <Button Content="Back"
+                                    Command="{Binding ToPreviousTabCommand}"
                                     HorizontalAlignment="Center"
-                                    Margin="0 20">
-                            <Button Margin="10 0"
-                                    Content="Finish"
-                                    Style="{StaticResource FormButtonTheme}"
-                                    Command="{Binding CreateTripCommand}"/>
+                                    Style="{StaticResource BackButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Back"/>
                         </StackPanel>
 
-                    </StackPanel>
-                </ScrollViewer>
+                        <component:ScalableTextBlock Text="Finishing touches"
+                                                     FontSize="44"
+                                                     Grid.Column="1"
+                                                     FontWeight="SemiBold"
+                                                     ScaleRate="2"
+                                                     VerticalAlignment="Center"
+                                                     TextWrapping="Wrap"
+                                                     HorizontalAlignment="Center"
+                                                     Margin="10 30"/>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Grid.Column="2"
+                                    Margin="0 0 30 0"
+                                    Visibility="Hidden">
+                            <Button Content="Next"
+                                    HorizontalAlignment="Center"
+                                    Style="{StaticResource NextButtonTheme}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Next"/>
+                        </StackPanel>
+                        
+                    </Grid>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  Grid.Row="1">
+                        <StackPanel HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Margin="20 0"
+                                    MaxWidth="700">
+
+                            <StackPanel Margin="0 10">
+                                <component:ScalableTextBlock Text="Departure date and time"
+                                                             FontSize="32"
+                                                             ScaleRate="2"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <DatePicker Grid.Column="0"
+                                                Style="{StaticResource CustomDatePickerTheme}"
+                                                Margin="5 0"
+                                                SelectedDate="{Binding DepartureDate}"/>
+                                    <ComboBox Grid.Column="1"
+                                              Margin="5 0"
+                                              ItemsSource="{Binding Hours}"
+                                              VerticalContentAlignment="Center"
+                                              HorizontalContentAlignment="Center"
+                                              SelectedItem="{Binding DepartureTimeHours}"/>
+                                    <ComboBox Grid.Column="2"
+                                              Margin="5 0"
+                                              VerticalContentAlignment="Center"
+                                              HorizontalContentAlignment="Center"
+                                              ItemsSource="{Binding Minutes}"
+                                              SelectedValue="{Binding DepartureTimeMinutes}"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <StackPanel Margin="0 10">
+                                <component:ScalableTextBlock Text="Destination date and time"
+                                                             FontSize="32"
+                                                             ScaleRate="2"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <DatePicker Grid.Column="0"
+                                                Style="{StaticResource CustomDatePickerTheme}"
+                                                Margin="5 0"
+                                                SelectedDate="{Binding ArrivalDate}"/>
+                                    <ComboBox Grid.Column="1"
+                                              Margin="5 0"
+                                              VerticalContentAlignment="Center"
+                                              HorizontalContentAlignment="Center"
+                                              ItemsSource="{Binding Hours}"
+                                              SelectedItem="{Binding ArrivalTimeHours}"/>
+                                    <ComboBox Grid.Column="2"
+                                              Margin="5 0"
+                                              VerticalContentAlignment="Center"
+                                              HorizontalContentAlignment="Center"
+                                              ItemsSource="{Binding Minutes}"
+                                              SelectedItem="{Binding ArrivalTimeMinutes}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Margin="0 10">
+                                <component:ScalableTextBlock Text="Price"
+                                                             FontSize="32"
+                                                             ScaleRate="2"/>
+                                <TextBox Style="{StaticResource FormTextBoxTheme}"
+                                         Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Margin="0 20">
+                                <Button Margin="10 0"
+                                        Content="Finish"
+                                        Style="{StaticResource FormButtonTheme}"
+                                        Command="{Binding CreateTripCommand}"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
 
             </TabItem>
         </TabControl>

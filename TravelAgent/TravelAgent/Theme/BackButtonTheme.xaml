@@ -10,10 +10,35 @@
                         <TextBlock VerticalAlignment="Center"
                                    HorizontalAlignment="Right"
                                    Foreground="#aaa"
-                                   FontSize="30"
+                                   FontSize="34"
                                    FontWeight="SemiBold"
                                    x:Name="CUSTOM_PART_CloseButtonContent"
-                                   Text="&#x2190;"/>
+                                   Text="←"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CUSTOM_PART_CloseButtonContent" Property="Foreground" Value="#777"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="NextButtonTheme">
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <TextBlock VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                   Foreground="#aaa"
+                                   FontSize="34"
+                                   FontWeight="SemiBold"
+                                   x:Name="CUSTOM_PART_CloseButtonContent"
+                                   Text="→"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
