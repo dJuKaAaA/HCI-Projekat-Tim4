@@ -41,18 +41,18 @@ namespace TravelAgent
             services.AddTransient<RegisterViewModel>();
             services.AddTransient<AllTripsViewModel>();
             services.AddTransient<AllTouristAttractionsViewModel>();
-            services.AddTransient<AllRestorauntsViewModel>();
+            services.AddTransient<AllRestaurantsViewModel>();
             services.AddTransient<AllAccommodationsViewModel>();
             services.AddTransient<CreateTripViewModel>();
             services.AddTransient<CreateAccommodationViewModel>();
-            services.AddTransient<CreateRestorauntViewModel>();
+            services.AddTransient<CreateRestaurantViewModel>();
             services.AddTransient<CreateTouristAttractionViewModel>();
             services.AddTransient<UserTripsViewModel>();
             services.AddTransient<MapViewModel>();
             services.AddTransient<SeeDealViewModel>();
             services.AddTransient<UserTripSearchViewModel>();
             services.AddTransient<AccommodationSearchViewModel>();
-            services.AddTransient<RestorauntSearchViewModel>();
+            services.AddTransient<RestaurantSearchViewModel>();
             services.AddTransient<TouristAttractionSearchViewModel>();
             services.AddTransient<TripSearchViewModel>();
 
@@ -63,7 +63,7 @@ namespace TravelAgent
             services.AddSingleton<Service.LocationService>();
             services.AddSingleton<Service.TouristAttractionService>();
             services.AddSingleton<Service.TripService>();
-            services.AddSingleton<Service.RestorauntService>();
+            services.AddSingleton<Service.RestaurantService>();
             services.AddSingleton<Service.AccommodationService>();
             services.AddSingleton<Service.UserTripService>();
             services.AddSingleton<Service.MapService>();

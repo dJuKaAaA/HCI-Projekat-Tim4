@@ -44,6 +44,7 @@
             
             <StackPanel Margin="30 10">
                 <WrapPanel Margin="20 10"
+                           Orientation="Vertical"
                            HorizontalAlignment="Center">
                     <CheckBox Content="{Binding Source={x:Static core:AccommodationSearchType.Name}}"
                               IsChecked="{Binding IsNameChecked}"

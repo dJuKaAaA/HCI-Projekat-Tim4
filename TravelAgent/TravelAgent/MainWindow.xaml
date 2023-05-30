@@ -16,7 +16,7 @@
     <Window.InputBindings>
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding OpenAllTripsViewCommand}" />
         <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding OpenAllTouristAttractionsViewCommand}" />
-        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestorauntsViewCommand}" />
+        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding OpenAllRestaurantsViewCommand}" />
         <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding OpenAllAccomodationsViewCommand}" />
         <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding OpenUserTripsViewCommand}" />
         <KeyBinding Key="M" Modifiers="Ctrl" Command="{Binding OpenMapsCommand}" />
@@ -44,9 +44,9 @@
                 <MenuItem Header="Tourist attractions"
                           InputGestureText="Ctrl+X"
                           Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
-                <MenuItem Header="Restoraunts"
+                <MenuItem Header="Restaurants"
                           InputGestureText="Ctrl+R"
-                          Command="{Binding OpenAllRestorauntsViewCommand}"/>
+                          Command="{Binding OpenAllRestaurantsViewCommand}"/>
                 <MenuItem Header="Accomodations"
                           InputGestureText="Ctrl+A"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
@@ -80,9 +80,9 @@
                 <MenuItem Header="Tourist attractions"
                           InputGestureText="Ctrl+X"
                           Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
-                <MenuItem Header="Restoraunts"
+                <MenuItem Header="Restaurants"
                           InputGestureText="Ctrl+R"
-                          Command="{Binding OpenAllRestorauntsViewCommand}"/>
+                          Command="{Binding OpenAllRestaurantsViewCommand}"/>
                 <MenuItem Header="Accomodations"
                           InputGestureText="Ctrl+A"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
@@ -116,9 +116,9 @@
                 <MenuItem Header="Tourist attractions"
                           InputGestureText="Ctrl+X"
                           Command="{Binding OpenAllTouristAttractionsViewCommand}"/>
-                <MenuItem Header="Restoraunts"
+                <MenuItem Header="Restaurants"
                           InputGestureText="Ctrl+R"
-                          Command="{Binding OpenAllRestorauntsViewCommand}"/>
+                          Command="{Binding OpenAllRestaurantsViewCommand}"/>
                 <MenuItem Header="Accomodations"
                           InputGestureText="Ctrl+A"
                           Command="{Binding OpenAllAccomodationsViewCommand}"/>
@@ -150,8 +150,8 @@
                     <view:AllTouristAttractionsView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type vm:AllRestorauntsViewModel}">
-                    <view:AllRestorauntsView/>
+                <DataTemplate DataType="{x:Type vm:AllRestaurantsViewModel}">
+                    <view:AllRestaurantsView/>
                 </DataTemplate>
 
                 <DataTemplate DataType="{x:Type vm:AllAccommodationsViewModel}">
@@ -174,8 +174,8 @@
                     <view:CreateAccommodationView/>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type vm:CreateRestorauntViewModel}">
-                    <view:CreateRestorauntView/>
+                <DataTemplate DataType="{x:Type vm:CreateRestaurantViewModel}">
+                    <view:CreateRestaurantView/>
                 </DataTemplate>
 
                 <DataTemplate DataType="{x:Type vm:CreateTouristAttractionViewModel}">

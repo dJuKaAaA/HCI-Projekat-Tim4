@@ -39,6 +39,8 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.AccommodationService _accommodationService;
         private readonly Service.NavigationService _navigationService;
 
+        private bool _deleteAccommodationCommandRunning = false;
+
         public ICommand OpenCreateAccommodationViewComand { get; }
         public ICommand OpenModifyAccommodationViewComand { get; }
         public ICommand DeleteAccommodationCommand { get; }
@@ -62,10 +64,10 @@ namespace TravelAgent.MVVM.ViewModel
 
             OpenCreateAccommodationViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateAccommodationViewModel>(), o => MainViewModel.SignedUser?.Type == UserType.Agent);
             OpenModifyAccommodationViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateAccommodationViewModel>(SelectedAccommodation), o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedAccommodation != null);
-            DeleteAccommodationCommand = new Core.RelayCommand(OnDeleteAccommodation, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedAccommodation != null);
+            DeleteAccommodationCommand = new Core.RelayCommand(OnDeleteAccommodation, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedAccommodation != null && !_deleteAccommodationCommandRunning);
             OpenSearchCommand = new RelayCommand(OnOpenSearch, o => true);
 
-            Task.Run(async () => await LoadAll());
+            _ = LoadAll();
         }
 
         private void OnOpenSearch(object o)
@@ -108,13 +110,17 @@ namespace TravelAgent.MVVM.ViewModel
 
         private async void OnDeleteAccommodation(object o)
         {
+            _deleteAccommodationCommandRunning = true;
+
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this accommodation?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 await _accommodationService.Delete(SelectedAccommodation.Id);
                 await LoadAll();
-                MessageBox.Show("Accommodation deleted successfully!");
+                MessageBox.Show("Accommodation deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
+            _deleteAccommodationCommandRunning = false;
         }
 
         public async Task LoadAll()

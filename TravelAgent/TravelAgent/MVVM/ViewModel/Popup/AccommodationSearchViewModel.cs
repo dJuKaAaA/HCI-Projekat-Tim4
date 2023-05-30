@@ -126,6 +126,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 
         public AllAccommodationsViewModel AllAccommodationsViewModel { get; set; }
 
+        private bool _searchCommandRunning = false;
+
         public ICommand SearchCommand { get; }
         public ICommand CloseCommand { get; }
 
@@ -151,6 +153,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 
         private async void OnSearch(object o)
         {
+            _searchCommandRunning = true;
+
             if (_searchTypes.Count > 0)
             {
                 IEnumerable<Model.AccommodationModel> accommodations = await _accommodationService.Search(_searchTypes, AccommodationSearchModel);
@@ -164,6 +168,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             {
                 await AllAccommodationsViewModel.LoadAll();
             }
+
+            _searchCommandRunning = false;
 
             OnClose(this);
         }
@@ -180,7 +186,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 canSearch = canSearch && !string.IsNullOrWhiteSpace(AccommodationSearchModel.AddressKeyword);
             }
 
-            return canSearch;
+            return canSearch && !_searchCommandRunning;
         }
 
         private void OnClose(object o)

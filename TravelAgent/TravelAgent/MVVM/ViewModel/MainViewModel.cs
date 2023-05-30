@@ -50,7 +50,7 @@ namespace TravelAgent.MVVM.ViewModel
 
         public ICommand OpenAllTripsViewCommand { get; }
         public ICommand OpenAllTouristAttractionsViewCommand { get; }
-        public ICommand OpenAllRestorauntsViewCommand { get; }
+        public ICommand OpenAllRestaurantsViewCommand { get; }
         public ICommand OpenAllAccomodationsViewCommand { get; }
         public ICommand OpenUserTripsViewCommand { get; }
         public ICommand OpenSoldTripsViewCommand { get; }
@@ -66,7 +66,7 @@ namespace TravelAgent.MVVM.ViewModel
 
             OpenAllTripsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllTripsViewModel>(), o => true);
             OpenAllTouristAttractionsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllTouristAttractionsViewModel>(), o => true);
-            OpenAllRestorauntsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllRestorauntsViewModel>(), o => true);
+            OpenAllRestaurantsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllRestaurantsViewModel>(), o => true);
             OpenAllAccomodationsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllAccommodationsViewModel>(), o => true);
             OpenUserTripsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<UserTripsViewModel>(), o => SignedUser != null);
             OpenMapsCommand = new RelayCommand(o => NavigationService.NavigateTo<MapViewModel>(), o => true);

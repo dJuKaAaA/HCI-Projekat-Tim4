@@ -57,6 +57,8 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.NavigationService _navigateService;
         private readonly UserService _userService;
 
+        private bool _registerCommandRunning = false;
+
         public ICommand NavigateToLoginViewCommand { get; }
         public ICommand RegisterCommand { get; }
 
@@ -87,14 +89,18 @@ namespace TravelAgent.MVVM.ViewModel
                 !string.IsNullOrWhiteSpace(Surname) &&
                 !string.IsNullOrWhiteSpace(Username) &&
                 !string.IsNullOrWhiteSpace(Password) &&
-                !string.IsNullOrWhiteSpace(ConfirmPassword);
+                !string.IsNullOrWhiteSpace(ConfirmPassword) &&
+                !_registerCommandRunning;
         }
 
         private async void OnRegister(object o)
         {
+            _registerCommandRunning = true;
+
             if (Password != ConfirmPassword)
             {
-                MessageBox.Show("Passwords not matching!");
+                MessageBox.Show("Passwords not matching!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _registerCommandRunning = false;
                 return;
             }
 
@@ -108,12 +114,16 @@ namespace TravelAgent.MVVM.ViewModel
             try
             {
                 await _userService.Create(newUser, Password);
-                MessageBox.Show("Registration successful!");
+                MessageBox.Show("Registration successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 _navigateService.NavigateTo<LoginViewModel>();
             }
             catch (DatabaseResponseException e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                _registerCommandRunning = false;
             }
         }
 

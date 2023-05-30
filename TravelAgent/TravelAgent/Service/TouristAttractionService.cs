@@ -21,7 +21,7 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
-        public async Task<IEnumerable<TouristAttractionModel>> Search(HashSet<TouristAttractionSearchType> searchTypes, TouristAttractionSearchModel touristAttractionSearchModel)
+        public async Task<IEnumerable<TouristAttractionModel>> Search(IEnumerable<TouristAttractionSearchType> searchTypes, TouristAttractionSearchModel touristAttractionSearchModel)
         {
             string touristAttractionTableAlias = "touristAttractionsTable";
             string locationsTableAlias = "locationsTable";

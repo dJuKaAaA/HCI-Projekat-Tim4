@@ -11,6 +11,7 @@ using TravelAgent.Core;
 using TravelAgent.Exception;
 using TravelAgent.MVVM.Model;
 using TravelAgent.MVVM.View.Popup;
+using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel.Popup
 {
@@ -25,7 +26,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         }
 
         public ObservableCollection<TouristAttractionModel> TouristAttractionsForTrip { get; set; }
-        public ObservableCollection<RestorauntModel> RestorauntsForTrip { get; set; }
+        public ObservableCollection<RestaurantModel> RestaurantsForTrip { get; set; }
         public ObservableCollection<AccommodationModel> AccommodationsForTrip { get; set; }
 
         private int _tripDuration;
@@ -52,28 +53,46 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             set { _cannotPurchaseTextVisibility = value; OnPropertyChanged(); }
         }
 
+        public AllTripsViewModel AllTripsViewModel { get; set; }
+
         public Service.UserTripService UserTripService { get; set; }
         public Service.TouristAttractionService TouristAttractionService { get; set; }
-        public Service.RestorauntService RestorauntService { get; set; }
+        public Service.RestaurantService RestaurantService { get; set; }
         public Service.AccommodationService AccommodationsService { get; set; }
         public Service.MapService MapService { get; set; }
         public Consts Consts { get; set; }
+
+        private bool _purchaseTripCommandRunning = false;
+        private bool _reserveTripCommandRunning = false;
 
         public ICommand PurchaseTripCommand { get; }
         public ICommand ReserveTripCommand { get; }
         public ICommand CloseCommand { get; }
 
-        public SeeDealViewModel()
+        public SeeDealViewModel(
+            UserTripService userTripService,
+            MapService mapService,
+            TouristAttractionService touristAttractionService,
+            RestaurantService restaurantService,
+            AccommodationService accommodationService,
+            Consts consts)
         {
             TouristAttractionsForTrip = new ObservableCollection<TouristAttractionModel>();
-            RestorauntsForTrip = new ObservableCollection<RestorauntModel>();
+            RestaurantsForTrip = new ObservableCollection<RestaurantModel>();
             AccommodationsForTrip = new ObservableCollection<AccommodationModel>();
 
             PurchaseButtonVisibility = MainViewModel.SignedUser?.Type == UserType.Traveler ? Visibility.Visible : Visibility.Collapsed;
             CannotPurchaseTextVisibility = MainViewModel.SignedUser?.Type == UserType.Traveler ? Visibility.Collapsed : Visibility.Visible;
 
-            PurchaseTripCommand = new RelayCommand(OnPurchaseTrip, o => true);
-            ReserveTripCommand = new RelayCommand(OnReserveTrip, o => true);
+            UserTripService = userTripService;
+            MapService = mapService;
+            TouristAttractionService = touristAttractionService;
+            RestaurantService = restaurantService;
+            AccommodationsService = accommodationService;
+            Consts = consts;
+
+            PurchaseTripCommand = new RelayCommand(OnPurchaseTrip, o => !_purchaseTripCommandRunning);
+            ReserveTripCommand = new RelayCommand(OnReserveTrip, o => !_reserveTripCommandRunning);
             CloseCommand = new RelayCommand(OnClose, o => true);
         }
 
@@ -87,13 +106,13 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             }
         }
 
-        public async Task LoadRestorauntsForTrip()
+        public async Task LoadRestaurantsForTrip()
         {
-            RestorauntsForTrip.Clear();
-            IEnumerable<RestorauntModel> restoraunts = await RestorauntService.GetForTrip(Trip.Id);
-            foreach (RestorauntModel restoraunt in restoraunts)
+            RestaurantsForTrip.Clear();
+            IEnumerable<RestaurantModel> restaurants = await RestaurantService.GetForTrip(Trip.Id);
+            foreach (RestaurantModel restauraunt in restaurants)
             {
-                RestorauntsForTrip.Add(restoraunt);
+                RestaurantsForTrip.Add(restauraunt);
             }
         }
 
@@ -109,12 +128,16 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 
         private async void OnPurchaseTrip(object o)
         {
+            _purchaseTripCommandRunning = true;
             await CreateUserTrip(TripInvoiceType.Purchased);
+            _purchaseTripCommandRunning = false;
         }
 
         private async void OnReserveTrip(object o)
         {
+            _reserveTripCommandRunning = true;
             await CreateUserTrip(TripInvoiceType.Reserved);
+            _reserveTripCommandRunning = false;
         }
 
         private async Task CreateUserTrip(TripInvoiceType type)
@@ -129,12 +152,12 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             {
                 await UserTripService.CreateNew(userTrip);
                 string action = type == TripInvoiceType.Purchased ? "purchase" : "reservation";
-                MessageBox.Show($"Successful {action}!");
+                MessageBox.Show($"Successful {action}!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 OnClose(this);
             }
             catch (DatabaseResponseException e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }

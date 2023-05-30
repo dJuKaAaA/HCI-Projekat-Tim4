@@ -15,10 +15,6 @@
         AllowsTransparency="True"
         Loaded="Popup_Loaded">
 
-    <Window.DataContext>
-        <popupvm:SeeDealViewModel/>
-    </Window.DataContext>
-
     <Grid>
 
         <Grid.ColumnDefinitions>

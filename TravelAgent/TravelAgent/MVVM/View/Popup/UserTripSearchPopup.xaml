@@ -64,33 +64,105 @@
                       Margin="20 10">
             
             <StackPanel Margin="30 10">
-                <WrapPanel Margin="20 10"
-                           HorizontalAlignment="Center">
-                    <CheckBox Content="{Binding Source={x:Static core:UserTripSearchType.Departure}, Converter={StaticResource UserTripSearchTypeValueConverter}}"
-                              IsChecked="{Binding IsDepartureChecked}"
-                              Margin="10"/>
-                    <CheckBox Content="{Binding Source={x:Static core:UserTripSearchType.Destination}, Converter={StaticResource UserTripSearchTypeValueConverter}}"
-                              IsChecked="{Binding IsDestinationChecked}"
-                              Margin="10"/>
-                    <CheckBox Content="{Binding Source={x:Static core:UserTripSearchType.DepartureDateTime}, Converter={StaticResource UserTripSearchTypeValueConverter}}"
-                              IsChecked="{Binding IsDepartureDateChecked}"
-                              Margin="10"/>
-                    <CheckBox Content="{Binding Source={x:Static core:UserTripSearchType.ArrivalDateTime}, Converter={StaticResource UserTripSearchTypeValueConverter}}"
-                              IsChecked="{Binding IsArrivalDateChecked}"
-                              Margin="10"/>
-                    <CheckBox Content="{Binding Source={x:Static core:UserTripSearchType.Price}, Converter={StaticResource UserTripSearchTypeValueConverter}}"
-                              IsChecked="{Binding IsPriceChecked}"
-                              Margin="10"/>
-                    <CheckBox Content="{Binding Source={x:Static core:UserTripSearchType.PurchaseMonth}, Converter={StaticResource UserTripSearchTypeValueConverter}}"
-                              IsChecked="{Binding IsPurchaseMonthChecked}"
-                              Margin="10"
-                              Visibility="{Binding CriteriaForAgentVisibility}"/>
-                    <CheckBox Content="{Binding Source={x:Static core:UserTripSearchType.Trip}, Converter={StaticResource UserTripSearchTypeValueConverter}}"
-                              IsChecked="{Binding IsTripChecked}"
-                              Margin="10"
-                              Visibility="{Binding CriteriaForAgentVisibility}"/>
 
-                </WrapPanel>
+                <Border CornerRadius="25"
+                        Padding="15 10"
+                        BorderBrush="{StaticResource DefaultBorderBrush}"
+                        BorderThickness="2">
+                    <StackPanel>
+                        <TextBlock Text="Selected search criteria" 
+                                   FontWeight="SemiBold"/>
+                        <ListView ItemsSource="{Binding SearchTypes}"
+                                  BorderThickness="0"
+                                  Margin="0 20 0 0"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Style.Setters>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <Border CornerRadius="25"
+                                                            BorderThickness="2"
+                                                            Padding="10"
+                                                            Margin="5"
+                                                            Background="Transparent"
+                                                            x:Name="CUSTOM_PART_Border"
+                                                            BorderBrush="{StaticResource NotHighlightedBrush}">
+                                                        <Button x:Name="CUSTOM_PART_Button"
+                                                                Command="{Binding DataContext.RemoveSearchTypeCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                CommandParameter="{Binding .}">
+                                                            <Button.Style>
+                                                                <Style TargetType="Button">
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="Button">
+                                                                                <Grid>
+                                                                                    <Grid.ColumnDefinitions>
+                                                                                        <ColumnDefinition/>
+                                                                                        <ColumnDefinition Width="Auto"/>
+                                                                                    </Grid.ColumnDefinitions>
+
+                                                                                    <TextBlock Text="{Binding ., Converter={StaticResource UserTripSearchTypeValueConverter}}"
+                                                                                               Grid.Column="0"
+                                                                                               VerticalAlignment="Center"
+                                                                                               Margin="0 0 5 0"/>
+                                                                                    <TextBlock Grid.Column="1"
+                                                                                               VerticalAlignment="Center"
+                                                                                               Text="✖"/>
+                                                                                </Grid>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="#a00"/>
+                                                            <Setter Property="Foreground" Value="#a00"/>
+                                                            <Setter TargetName="CUSTOM_PART_Button" Property="Foreground" Value="#a00"/>
+                                                            <Setter Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style.Setters>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </StackPanel>
+                </Border>
+
+                <Grid Margin="0 20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox Grid.Column="0"
+                              Margin="0 0 10 0"
+                              VerticalAlignment="Center"
+                              ItemsSource="{Binding AllSearchTypes}"
+                              SelectedItem="{Binding SelectedSearchType}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ., Converter={StaticResource UserTripSearchTypeValueConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Grid.Column="1"
+                            Content="Add filter"
+                            Command="{Binding AddSearchTypeCommand}"
+                            Style="{StaticResource FormButtonTheme}"/>
+                </Grid>
 
                 <StackPanel Margin="20 10"
                             Visibility="{Binding DepartureVisibility}">

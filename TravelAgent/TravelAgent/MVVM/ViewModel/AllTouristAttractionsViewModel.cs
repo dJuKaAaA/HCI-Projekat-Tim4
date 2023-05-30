@@ -40,6 +40,8 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.TouristAttractionService _touristAttractionService;
         private readonly Service.NavigationService _navigationService;
 
+        private bool _deleteTouristAttractionCommandRunning = false;
+
         public ICommand OpenCreateTouristAttractionViewComand { get; }
         public ICommand OpenModifyTouristAttractionViewComand { get; }
         public ICommand DeleteTouristAttractionCommand { get; }
@@ -62,10 +64,10 @@ namespace TravelAgent.MVVM.ViewModel
 
             OpenCreateTouristAttractionViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTouristAttractionViewModel>(), o => MainViewModel.SignedUser?.Type == UserType.Agent);
             OpenModifyTouristAttractionViewComand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTouristAttractionViewModel>(SelectedTouristAttraction), o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTouristAttraction != null);
-            DeleteTouristAttractionCommand = new Core.RelayCommand(OnDeleteRestoraunt, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTouristAttraction != null);
+            DeleteTouristAttractionCommand = new Core.RelayCommand(OnDeleteTouristAttraction, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTouristAttraction != null && !_deleteTouristAttractionCommandRunning);
             OpenSearchCommand = new RelayCommand(OnOpenSearch, o => true);
 
-            Task.Run(async () => await LoadAll());
+            _ = LoadAll();
         }
 
         private void OnOpenSearch(object o)
@@ -105,16 +107,19 @@ namespace TravelAgent.MVVM.ViewModel
             }
         }
 
-        private async void OnDeleteRestoraunt(object o)
+        private async void OnDeleteTouristAttraction(object o)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this restoraunt?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            _deleteTouristAttractionCommandRunning = true;
+            
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this tourist attraction?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 await _touristAttractionService.Delete(SelectedTouristAttraction.Id);
                 await LoadAll();
-                MessageBox.Show("Tourist attraction deleted successfully!");
+                MessageBox.Show("Tourist attraction deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
+            _deleteTouristAttractionCommandRunning = false;
         }
 
         public async Task LoadAll()

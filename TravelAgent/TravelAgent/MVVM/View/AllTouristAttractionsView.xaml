@@ -65,7 +65,7 @@
                                             Padding="30"
                                             Background="Transparent"
                                             CornerRadius="25"
-                                            VerticalAlignment="Top"
+                                            VerticalAlignment="Stretch"
                                             x:Name="CUSTOM_PART_Border"
                                             Margin="20"
                                             BorderBrush="{StaticResource NotHighlightedBrush}">
