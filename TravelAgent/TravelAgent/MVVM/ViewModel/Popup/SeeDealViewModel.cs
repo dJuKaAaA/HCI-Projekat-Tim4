@@ -146,7 +146,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             {
                 Trip = Trip,
                 User = MainViewModel.SignedUser,
-                Type = type
+                Type = type,
+                PurchaseDate = DateTime.Now,
             };
             try
             {

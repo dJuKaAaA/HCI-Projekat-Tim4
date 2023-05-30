@@ -176,8 +176,9 @@ namespace TravelAgent.Service
                 throw new DatabaseResponseException("Acquired trip not found or it is already purchased!");
             }
 
+            string purchaseDateFormatted = DateTime.Now.ToString($"{_consts.DateTimeFormatString}");
             command = $"UPDATE {_consts.UsersTripsTableName} " +
-                $"SET type = '{TripInvoiceType.Purchased.ToString()}' " +
+                $"SET type = '{TripInvoiceType.Purchased.ToString()}', purchase_date = '{purchaseDateFormatted}' " +
                 $"WHERE trip_id = {tripId} AND user_id = {userId}";
             await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
         }
