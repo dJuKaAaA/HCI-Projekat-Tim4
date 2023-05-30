@@ -46,6 +46,21 @@
                                      Grid.Row="1"
                                      HorizontalAlignment="Center"/>
 
+        <ListView>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Definisi svoj template za pojedinacne elemente odje -->
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                    <!-- Kazes mu da se ponasa kao WrapPanel -->
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+
+
         <Grid Grid.Row="2">
             <ListView ItemsSource="{Binding Accommodations}"
                       Padding="30 0"
@@ -64,7 +79,7 @@
                                     <Border BorderThickness="3"
                                             Padding="30"
                                             CornerRadius="25"
-                                            VerticalAlignment="Top"
+                                            VerticalAlignment="Stretch"
                                             x:Name="CUSTOM_PART_Border"
                                             Margin="20"
                                             Background="Transparent"
@@ -77,9 +92,10 @@
                                                            TextWrapping="Wrap"
                                                            FontWeight="Bold"
                                                            FontSize="40"
-                                                           Margin="20 0"/>
+                                                           Margin="20 10"/>
                                                 <Border BorderThickness="5"
                                                         CornerRadius="5"
+                                                        MaxHeight="400"
                                                         BorderBrush="{StaticResource ImageBorderBrush}"
                                                         Margin="0 0">
                                                     <Image Source="{Binding Image}"
