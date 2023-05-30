@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TravelAgent.MVVM.View.Popup
 {
     /// <summary>
-    /// Interaction logic for RestorauntSearchPopup.xaml
+    /// Interaction logic for RestaurantSearchPopup.xaml
     /// </summary>
-    public partial class RestorauntSearchPopup : Window
+    public partial class RestaurantSearchPopup : Window
     {
-        public RestorauntSearchPopup()
+        public RestaurantSearchPopup()
         {
             InitializeComponent();
         }

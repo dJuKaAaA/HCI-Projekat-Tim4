@@ -24,36 +24,16 @@ namespace TravelAgent.MVVM.View.Popup
     /// </summary>
     public partial class SeeDealPopup : Window
     {
-
         private SeeDealViewModel _viewModel;
 
-        public SeeDealPopup(
-            TripModel trip,
-            UserTripService userTripService,
-            MapService mapService,
-            TouristAttractionService touristAttractionService,
-            RestorauntService restorauntService,
-            AccommodationService accommodationService,
-            Consts consts)
+        public SeeDealPopup()
         {
             InitializeComponent();
-            _viewModel = ((SeeDealViewModel)DataContext);
-
-            _viewModel.Trip = trip;
-            _viewModel.UserTripService = userTripService;
-            _viewModel.MapService = mapService;
-            _viewModel.TouristAttractionService = touristAttractionService;
-            _viewModel.RestorauntService = restorauntService;
-            _viewModel.AccommodationsService = accommodationService;
-            _viewModel.Consts = consts;
-            DateTime takeoff = _viewModel.Trip.DepartureDateTime;
-            DateTime landing = _viewModel.Trip.ArrivalDateTime;
-            TimeSpan timeDiff = landing - takeoff;
-            _viewModel.TripDuration = (int)timeDiff.TotalMilliseconds;
         }
 
         private void Popup_Loaded(object sender, RoutedEventArgs e)
         {
+            _viewModel = (SeeDealViewModel)DataContext;
             DrawPointsOfInterestPushpins();
 
             MapService mapService = _viewModel.MapService;
@@ -98,17 +78,17 @@ namespace TravelAgent.MVVM.View.Popup
                 mapControl.Children.Add(touristAttractionPushpin);
             }
 
-            // Draw restoraunts
-            await _viewModel.LoadRestorauntsForTrip();
-            foreach (RestorauntModel restoraunt in _viewModel.RestorauntsForTrip)
+            // Draw restaurants
+            await _viewModel.LoadRestaurantsForTrip();
+            foreach (RestaurantModel restaurant in _viewModel.RestaurantsForTrip)
             {
-                Pushpin restorauntPushpin = mapService.CreatePushpin(
-                    restoraunt.Location.Latitude,
-                    restoraunt.Location.Longitude,
-                    restoraunt.Name,
-                    $"Restoraunt_{restoraunt.Id}",
-                    $"{consts.PathToIcons}/{consts.RestorauntPushpinIcon}");
-                mapControl.Children.Add(restorauntPushpin);
+                Pushpin restaurantPushpin = mapService.CreatePushpin(
+                    restaurant.Location.Latitude,
+                    restaurant.Location.Longitude,
+                    restaurant.Name,
+                    $"Restaurant_{restaurant.Id}",
+                    $"{consts.PathToIcons}/{consts.RestaurantPushpinIcon}");
+                mapControl.Children.Add(restaurantPushpin);
             }
 
             // Draw accommodations
@@ -119,7 +99,7 @@ namespace TravelAgent.MVVM.View.Popup
                     accommodation.Location.Latitude,
                     accommodation.Location.Longitude,
                     accommodation.Name,
-                    $"Restoraunt_{accommodation.Id}",
+                    $"Accommodation_{accommodation.Id}",
                     $"{consts.PathToIcons}/{consts.AccommodationPushpinIcon}");
                 mapControl.Children.Add(accommodationPushpin);
             }

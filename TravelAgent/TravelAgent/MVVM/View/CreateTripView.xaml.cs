@@ -112,25 +112,25 @@ namespace TravelAgent.MVVM.View
         private async void DrawPointsOfInterestPushpins()
         {
             await DrawAccomodationsPushpins();
-            await DrawRestorauntsPushpins();
+            await DrawRestaurantsPushpins();
             await DrawTouristAttractionPushpins();
         }
 
-        private async Task DrawRestorauntsPushpins()
+        private async Task DrawRestaurantsPushpins()
         {
             Service.MapService mapService = _viewModel.MapService;
             Consts consts = _viewModel.Consts;
 
-            await _viewModel.LoadAllRestoraunts();
+            await _viewModel.LoadAllRestaurants();
 
-            foreach (RestorauntModel restoraunt in _viewModel.AllRestoraunts)
+            foreach (RestaurantModel restaurant in _viewModel.AllRestaurants)
             {
                 Pushpin pushpin = mapService.CreatePushpin(
-                    restoraunt.Location.Latitude,
-                    restoraunt.Location.Longitude,
-                    restoraunt.Name,
-                    $"Restoraunt_{restoraunt.Id}",
-                    $"{consts.PathToIcons}/{consts.RestorauntPushpinIcon}");
+                    restaurant.Location.Latitude,
+                    restaurant.Location.Longitude,
+                    restaurant.Name,
+                    $"Restaurant_{restaurant.Id}",
+                    $"{consts.PathToIcons}/{consts.RestaurantPushpinIcon}");
                 mapControl.Children.Add(pushpin);
             }
 
@@ -303,18 +303,18 @@ namespace TravelAgent.MVVM.View
             public string? SourceListViewName { get; set; }
         }
 
-        // restoraunts
-        Point restorauntStartPoint = new Point();
+        // restaurants
+        Point restaurantStartPoint = new Point();
 
-        private void RestorauntListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void RestaurantListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            restorauntStartPoint = e.GetPosition(null);
+            restaurantStartPoint = e.GetPosition(null);
         }
 
-        private void RestorauntListView_MouseMove(object sender, MouseEventArgs e)
+        private void RestaurantListView_MouseMove(object sender, MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(null);
-            Vector diff = restorauntStartPoint - mousePos;
+            Vector diff = restaurantStartPoint - mousePos;
 
             if (e.LeftButton == MouseButtonState.Pressed &&
                 (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
@@ -331,13 +331,13 @@ namespace TravelAgent.MVVM.View
                 }
 
                 // Find the data behind the ListViewItem
-                RestorauntModel restoraunt = (RestorauntModel)listView.ItemContainerGenerator.
+                RestaurantModel restaurant = (RestaurantModel)listView.ItemContainerGenerator.
                     ItemFromContainer(listViewItem);
 
                 // Initialize the drag & drop operation
                 CustomDragObject dragObject = new CustomDragObject()
                 {
-                    Obj = restoraunt,
+                    Obj = restaurant,
                     SourceListViewName = $"{listView.Name}",
                 };
                 DataObject dragData = new DataObject("myFormat", dragObject);
@@ -345,7 +345,7 @@ namespace TravelAgent.MVVM.View
             }
         }
 
-        private void RestorauntListView_DragEnter(object sender, DragEventArgs e)
+        private void RestaurantListView_DragEnter(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent("myFormat") || sender == e.Source)
             {
@@ -353,38 +353,38 @@ namespace TravelAgent.MVVM.View
             }
         }
 
-        private void RestorauntListView_Drop(object sender, DragEventArgs e)
+        private void RestaurantListView_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent("myFormat"))
             {
                 CustomDragObject dragObject = e.Data.GetData("myFormat") as CustomDragObject;
-                RestorauntModel restoraunt = (RestorauntModel)dragObject.Obj;
-                if (dragObject.SourceListViewName != allRestorauntsListView.Name)
+                RestaurantModel restaurant = (RestaurantModel)dragObject.Obj;
+                if (dragObject.SourceListViewName != allRestaurantsListView.Name)
                 {
                     return;
                 }
 
-                if (!_viewModel.RestorauntsForTrip.Contains(restoraunt))
+                if (!_viewModel.RestaurantsForTrip.Contains(restaurant))
                 {
-                    _viewModel.RestorauntsForTrip.Add(restoraunt);
+                    _viewModel.RestaurantsForTrip.Add(restaurant);
                 }
             }
         }
 
-        private void RestorauntListView_DropRemove(object sender, DragEventArgs e)
+        private void RestaurantListView_DropRemove(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent("myFormat"))
             {
                 CustomDragObject dragObject = e.Data.GetData("myFormat") as CustomDragObject;
-                RestorauntModel restoraunt = (RestorauntModel)dragObject.Obj;
-                if (dragObject.SourceListViewName != restorauntsForTripListView.Name)
+                RestaurantModel restaurant = (RestaurantModel)dragObject.Obj;
+                if (dragObject.SourceListViewName != restaurantsForTripListView.Name)
                 {
                     return;
                 }
 
-                if (_viewModel.RestorauntsForTrip.Contains(restoraunt))
+                if (_viewModel.RestaurantsForTrip.Contains(restaurant))
                 {
-                    _viewModel.RestorauntsForTrip.Remove(restoraunt);
+                    _viewModel.RestaurantsForTrip.Remove(restaurant);
                 }
             }
         }

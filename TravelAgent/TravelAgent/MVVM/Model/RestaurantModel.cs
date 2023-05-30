@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TravelAgent.MVVM.Model
 {
-    public class RestorauntModel
+    public class RestaurantModel
     {
         public int Id { get; set; }
         public string? Name { get; set; }

@@ -7,7 +7,7 @@ using TravelAgent.Core;
 
 namespace TravelAgent.MVVM.Model
 {
-    public class RestorauntSearchModel : ObservableObject
+    public class RestaurantSearchModel : ObservableObject
     {
         private string _nameKeyword;
 

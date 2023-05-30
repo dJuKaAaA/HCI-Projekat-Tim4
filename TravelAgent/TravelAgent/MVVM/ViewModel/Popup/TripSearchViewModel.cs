@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,20 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 {
     public class TripSearchViewModel : Core.ViewModel
     {
-        private HashSet<TripSearchType> _searchTypes;
+        public ObservableCollection<TripSearchType> AllSearchTypes { get; set; }
+        public ObservableCollection<TripSearchType> SearchTypes { get; set; }
+
+        private TripSearchType _selectedSearchType;
+
+        public TripSearchType SelectedSearchType
+        {
+            get { return _selectedSearchType; }
+            set 
+            { 
+                _selectedSearchType = value; 
+                OnPropertyChanged(); 
+            }
+        }
 
         private Model.TripSearchModel _tripSearchModel = new Model.TripSearchModel();
 
@@ -32,62 +46,12 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             set { _departureVisibility = value; OnPropertyChanged(); }
         }
 
-        private bool _isDepartureChecked;
-
-        public bool IsDepartureChecked
-        {
-            get { return _isDepartureChecked; }
-            set 
-            { 
-                _isDepartureChecked = value; 
-                OnPropertyChanged(); 
-                if (_isDepartureChecked)
-                {
-                    _searchTypes.Add(TripSearchType.Departure);
-                    DepartureVisibility = Visibility.Visible;
-                }
-                else
-                {
-                    if (_searchTypes.Contains(TripSearchType.Departure))
-                    {
-                        _searchTypes.Remove(TripSearchType.Departure);
-                    }
-                    DepartureVisibility = Visibility.Collapsed;
-                }
-            }
-        }
-
         private Visibility _destinationVisibility = Visibility.Collapsed;
 
         public Visibility DestinationVisibility
         {
             get { return _destinationVisibility; }
             set { _destinationVisibility = value; OnPropertyChanged(); }
-        }
-
-        private bool _isDestinationChecked;
-
-        public bool IsDestinationChecked
-        {
-            get { return _isDestinationChecked; }
-            set 
-            {
-                _isDestinationChecked = value; 
-                OnPropertyChanged(); 
-                if (_isDestinationChecked)
-                {
-                    _searchTypes.Add(TripSearchType.Destination);
-                    DestinationVisibility = Visibility.Visible;
-                }
-                else
-                {
-                    if (_searchTypes.Contains(TripSearchType.Destination))
-                    {
-                        _searchTypes.Remove(TripSearchType.Destination);
-                    }
-                    DestinationVisibility = Visibility.Collapsed;
-                }
-            }
         }
 
         private Visibility _departureDateVisibility = Visibility.Collapsed;
@@ -98,62 +62,12 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             set { _departureDateVisibility = value; OnPropertyChanged(); }
         }
 
-        private bool _isDepartureDateChecked;
-
-        public bool IsDepartureDateChecked
-        {
-            get { return _isDepartureDateChecked; }
-            set 
-            { 
-                _isDepartureDateChecked = value; 
-                OnPropertyChanged(); 
-                if (_isDepartureDateChecked)
-                {
-                    _searchTypes.Add(TripSearchType.DepartureDateTime);
-                    DepartureDateVisibility = Visibility.Visible;
-                }
-                else
-                {
-                    if (_searchTypes.Contains(TripSearchType.DepartureDateTime))
-                    {
-                        _searchTypes.Remove(TripSearchType.DepartureDateTime);
-                    }
-                    DepartureDateVisibility = Visibility.Collapsed;
-                }
-            }
-        }
-
         private Visibility _arrivalDateVisibility = Visibility.Collapsed;
 
         public Visibility ArrivalDateVisibility
         {
             get { return _arrivalDateVisibility; }
             set { _arrivalDateVisibility = value; OnPropertyChanged(); }
-        }
-
-        private bool _isArrivalDateChecked;
-
-        public bool IsArrivalDateChecked
-        {
-            get { return _isArrivalDateChecked; }
-            set 
-            { 
-                _isArrivalDateChecked = value; 
-                OnPropertyChanged();
-                if (_isArrivalDateChecked)
-                {
-                    _searchTypes.Add(TripSearchType.ArrivalDateTime);
-                    ArrivalDateVisibility = Visibility.Visible;
-                }
-                else
-                {
-                    if (_searchTypes.Contains(TripSearchType.ArrivalDateTime))
-                    {
-                        _searchTypes.Remove(TripSearchType.ArrivalDateTime);
-                    }
-                    ArrivalDateVisibility = Visibility.Collapsed;
-                }
-            }
         }
 
         private Visibility _priceVisibility = Visibility.Collapsed;
@@ -163,66 +77,119 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             get { return _priceVisibility; }
             set { _priceVisibility = value; OnPropertyChanged(); }
         }
-        
-        private bool _isPriceChecked;
-
-        public bool IsPriceChecked
-        {
-            get { return _isPriceChecked; }
-            set 
-            { 
-                _isPriceChecked = value; 
-                OnPropertyChanged(); 
-                if (_isPriceChecked)
-                {
-                    _searchTypes.Add(TripSearchType.Price);
-                    PriceVisibility = Visibility.Visible;
-                }
-                else
-                {
-                    if (_searchTypes.Contains(TripSearchType.Price))
-                    {
-                        _searchTypes.Remove(TripSearchType.Price);
-                    }
-                    PriceVisibility = Visibility.Collapsed;
-                }
-            }
-        }
 
         private readonly TripService _tripService;
 
         public AllTripsViewModel AllTripsViewModel { get; set; }
 
+        private bool _searchCommandRunning = false;
+
         public ICommand SearchCommand { get; }
+        public ICommand AddSearchTypeCommand { get; }
+        public ICommand RemoveSearchTypeCommand { get; }
         public ICommand CloseCommand { get; }
 
         public TripSearchViewModel(
             TripService tripService)
         {
-            _searchTypes = new HashSet<TripSearchType>();
+            AllSearchTypes = new ObservableCollection<TripSearchType>()
+            {
+                TripSearchType.Departure,
+                TripSearchType.Destination,
+                TripSearchType.DepartureDateTime,
+                TripSearchType.ArrivalDateTime,
+                TripSearchType.Price,
+            };
+            SelectedSearchType = AllSearchTypes.FirstOrDefault();
+            SearchTypes = new ObservableCollection<TripSearchType>();
 
             _tripService = tripService;
 
             SearchCommand = new RelayCommand(OnSearch, CanSearch);
+            AddSearchTypeCommand = new RelayCommand(OnAddSearchType, o => !SearchTypes.Contains(SelectedSearchType));
+            RemoveSearchTypeCommand = new RelayCommand(OnRemoveSearchType, CanRemoveSearchType);
             CloseCommand = new RelayCommand(OnClose, o => true);
+        }
+
+        private void OnAddSearchType(object o)
+        {
+            SearchTypes.Add(SelectedSearchType);
+            switch (SelectedSearchType)
+            {
+                case TripSearchType.Departure:
+                    DepartureVisibility = Visibility.Visible;
+                    break;
+                case TripSearchType.Destination:
+                    DestinationVisibility = Visibility.Visible;
+                    break;
+                case TripSearchType.DepartureDateTime:
+                    DepartureDateVisibility = Visibility.Visible;
+                    break;
+                case TripSearchType.ArrivalDateTime:
+                    ArrivalDateVisibility = Visibility.Visible;
+                    break;
+                case TripSearchType.Price:
+                    PriceVisibility = Visibility.Visible;
+                    break;
+            }
+        }
+
+        private bool CanRemoveSearchType(object o)
+        {
+            if (o is TripSearchType searchType)
+            {
+                return SearchTypes.Contains(searchType);
+            }
+
+            return false;
+        }
+
+        private void OnRemoveSearchType(object o)
+        {
+
+            if (o is TripSearchType searchType)
+            {
+                SearchTypes.Remove(searchType);
+                switch (searchType)
+                {
+                    case TripSearchType.Departure:
+                        DepartureVisibility = Visibility.Collapsed;
+                        break;
+                    case TripSearchType.Destination:
+                        DestinationVisibility = Visibility.Collapsed;
+                        break;
+                    case TripSearchType.DepartureDateTime:
+                        DepartureDateVisibility = Visibility.Collapsed;
+                        break;
+                    case TripSearchType.ArrivalDateTime:
+                        ArrivalDateVisibility = Visibility.Collapsed;
+                        break;
+                    case TripSearchType.Price:
+                        PriceVisibility = Visibility.Collapsed;
+                        break;
+                }
+            }
         }
 
         private void SetValuesToDefault()
         {
-            IsDepartureChecked = false;
-            IsDestinationChecked = false;
-            IsDepartureDateChecked = false;
-            IsArrivalDateChecked = false;
-            IsPriceChecked = false;
-            _searchTypes.Clear();
+            SelectedSearchType = AllSearchTypes[0];
+            DepartureVisibility = Visibility.Collapsed;
+            DestinationVisibility = Visibility.Collapsed;
+            DepartureDateVisibility = Visibility.Collapsed;
+            ArrivalDateVisibility = Visibility.Collapsed;
+            PriceVisibility = Visibility.Collapsed;
+            SearchTypes.Clear();
             TripSearchModel = new Model.TripSearchModel();
         }
 
         private async void OnSearch(object o)
         {
-            if (_searchTypes.Count > 0)
+            _searchCommandRunning = true;
+
+            if (SearchTypes.Count > 0)
             {
-                IEnumerable<Model.TripModel> trips = await _tripService.Search(_searchTypes, TripSearchModel);
+                IEnumerable<Model.TripModel> trips = await _tripService.Search(SearchTypes, TripSearchModel);
                 AllTripsViewModel.Trips.Clear();
                 foreach (TripModel trip in trips)
                 {
@@ -233,30 +200,33 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             {
                 await AllTripsViewModel.LoadAll();
             }
+
+            _searchCommandRunning = false;
+
             OnClose(this);
         }
 
         private bool CanSearch(object o)
         {
             bool canSearch = true;
-            if (IsDepartureChecked)
+            if (SearchTypes.Contains(TripSearchType.Departure))
             {
                 canSearch = canSearch && !string.IsNullOrWhiteSpace(TripSearchModel.DepartureSearchKeyword);
             }
-            if (IsDestinationChecked)
+            if (SearchTypes.Contains(TripSearchType.Destination))
             {
                 canSearch = canSearch && !string.IsNullOrWhiteSpace(TripSearchModel.DestinationSearchKeyword);
             }
-            if (IsDepartureDateChecked)
+            if (SearchTypes.Contains(TripSearchType.DepartureDateTime))
             {
                 canSearch = canSearch && (TripSearchModel.SelectedDepartureDate != null);
             }
-            if (IsArrivalDateChecked)
+            if (SearchTypes.Contains(TripSearchType.ArrivalDateTime))
             {
                 canSearch = canSearch && (TripSearchModel.SelectedArrivalDate != null);
             }
 
-            return canSearch;
+            return canSearch && !_searchCommandRunning;
         }
 
         private void OnClose(object o)

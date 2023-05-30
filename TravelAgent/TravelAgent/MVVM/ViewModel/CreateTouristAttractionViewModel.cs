@@ -46,6 +46,8 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly LocationService _locationService;
         private readonly ImageService _imageService;
 
+        private bool _createTouristAttractionCommandRunning = false;
+
         public ICommand OpenLocationPickerCommand { get; }
         public ICommand CreateTouristAttractionCommand { get; }
 
@@ -66,13 +68,15 @@ namespace TravelAgent.MVVM.ViewModel
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
             OpenLocationPickerCommand = new RelayCommand(OnOpenLocationPicker, o => true);
-            CreateTouristAttractionCommand = new RelayCommand(OnCreateAccommodation, CanCreateTouristAttraction);
+            CreateTouristAttractionCommand = new RelayCommand(OnCreateTouristAttraction, CanCreateTouristAttraction);
             ClosePopupCommand = new RelayCommand(o => _pickLocationPopup?.Close(), o => _pickLocationPopup != null);
 
         }
 
-        private async void OnCreateAccommodation(object o)
+        private async void OnCreateTouristAttraction(object o)
         {
+            _createTouristAttractionCommandRunning = true;
+
             if (!Modifying)
             {
                 LocationModel location = await _locationService.Create(Location);
@@ -115,12 +119,15 @@ namespace TravelAgent.MVVM.ViewModel
                 MessageBox.Show("Tourist attraction modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 _navigationService.NavigateTo<AllTouristAttractionsViewModel>();
             }
+
+            _createTouristAttractionCommandRunning = false;
         }
 
         private bool CanCreateTouristAttraction(object o)
         {
             return !string.IsNullOrWhiteSpace(Name) &&
-                Location != null;
+                Location != null &&
+                !_createTouristAttractionCommandRunning;
         }
 
         private void SetDefaultValues()

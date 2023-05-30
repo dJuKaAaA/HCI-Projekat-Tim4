@@ -57,17 +57,17 @@ namespace TravelAgent.MVVM.View
                 mapControl.Children.Add(touristAttractionPushpin);
             }
 
-            // Draw restoraunts
-            await _viewModel.LoadRestoraunts();
-            foreach (RestorauntModel restoraunt in _viewModel.AllRestoraunts)
+            // Draw restaurants
+            await _viewModel.LoadRestaurants();
+            foreach (RestaurantModel restaurant in _viewModel.AllRestaurants)
             {
-                Pushpin restorauntPushpin = mapService.CreatePushpin(
-                    restoraunt.Location.Latitude,
-                    restoraunt.Location.Longitude,
-                    restoraunt.Name,
-                    $"Restoraunt_{restoraunt.Id}",
-                    $"{consts.PathToIcons}/{consts.RestorauntPushpinIcon}");
-                mapControl.Children.Add(restorauntPushpin);
+                Pushpin restaurantPushpin = mapService.CreatePushpin(
+                    restaurant.Location.Latitude,
+                    restaurant.Location.Longitude,
+                    restaurant.Name,
+                    $"Restaurant_{restaurant.Id}",
+                    $"{consts.PathToIcons}/{consts.RestaurantPushpinIcon}");
+                mapControl.Children.Add(restaurantPushpin);
             }
 
             // Draw accommodations
@@ -78,7 +78,7 @@ namespace TravelAgent.MVVM.View
                     accommodation.Location.Latitude,
                     accommodation.Location.Longitude,
                     accommodation.Name,
-                    $"Restoraunt_{accommodation.Id}",
+                    $"Accommodation_{accommodation.Id}",
                     $"{consts.PathToIcons}/{consts.AccommodationPushpinIcon}");
                 mapControl.Children.Add(accommodationPushpin);
             }

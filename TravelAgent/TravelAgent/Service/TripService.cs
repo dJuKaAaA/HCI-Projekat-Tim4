@@ -24,7 +24,7 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
-        public async Task<IEnumerable<TripModel>> Search(HashSet<TripSearchType> searchTypes, TripSearchModel tripSearchModel)
+        public async Task<IEnumerable<TripModel>> Search(IEnumerable<TripSearchType> searchTypes, TripSearchModel tripSearchModel)
         {
             string command = $"SELECT tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +
                 $"departuresTable.id, departuresTable.address, departuresTable.longitude, departuresTable.latitude, " +
@@ -167,7 +167,7 @@ namespace TravelAgent.Service
         public async Task Modify(
             int id, 
             TripModel trip, 
-            IEnumerable<RestorauntModel> restoraunts, 
+            IEnumerable<RestaurantModel> restaurants, 
             IEnumerable<AccommodationModel> accommodations,
             IEnumerable<TouristAttractionModel> touristAttractions)
         {
@@ -181,13 +181,13 @@ namespace TravelAgent.Service
             await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
 
 
-            command = $"DELETE FROM {_consts.TripsRestorauntsTableName} " +
+            command = $"DELETE FROM {_consts.TripsRestaurantsTableName} " +
                 $"WHERE trip_id = {id}";
             await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
-            foreach (RestorauntModel restoraunt in restoraunts)
+            foreach (RestaurantModel restaurant in restaurants)
             {
-                command = $"INSERT INTO {_consts.TripsRestorauntsTableName} (trip_id, restoraunt_id) " +
-                    $"VALUES ({id}, {restoraunt.Id})";
+                command = $"INSERT INTO {_consts.TripsRestaurantsTableName} (trip_id, restaurant_id) " +
+                    $"VALUES ({id}, {restaurant.Id})";
                 await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
             }
 
@@ -214,7 +214,7 @@ namespace TravelAgent.Service
 
         public async Task Create(
             TripModel trip, 
-            IEnumerable<RestorauntModel> restoraunts, 
+            IEnumerable<RestaurantModel> restaurants, 
             IEnumerable<AccommodationModel> accommodations,
             IEnumerable<TouristAttractionModel> touristAttractions)
         {
@@ -234,10 +234,10 @@ namespace TravelAgent.Service
                 }
             });
 
-            foreach (RestorauntModel restoraunt in restoraunts)
+            foreach (RestaurantModel restaurant in restaurants)
             {
-                command = $"INSERT INTO {_consts.TripsRestorauntsTableName} (trip_id, restoraunt_id) " +
-                    $"VALUES ({tripId}, {restoraunt.Id})";
+                command = $"INSERT INTO {_consts.TripsRestaurantsTableName} (trip_id, restaurant_id) " +
+                    $"VALUES ({tripId}, {restaurant.Id})";
                 await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
             }
 

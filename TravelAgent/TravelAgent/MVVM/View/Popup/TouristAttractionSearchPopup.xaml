@@ -32,7 +32,7 @@
                 Command="{Binding CloseCommand}"
                 Margin="0 30 30 0"/>
 
-        <TextBlock Text="Search restoraunts"
+        <TextBlock Text="Search restaurants"
                    HorizontalAlignment="Center"
                    FontSize="32"
                    Grid.Row="1"
@@ -44,6 +44,7 @@
             
             <StackPanel Margin="30 10">
                 <WrapPanel Margin="20 10"
+                           Orientation="Vertical"
                            HorizontalAlignment="Center">
                     <CheckBox Content="{Binding Source={x:Static core:TouristAttractionSearchType.Name}}"
                               IsChecked="{Binding IsNameChecked}"

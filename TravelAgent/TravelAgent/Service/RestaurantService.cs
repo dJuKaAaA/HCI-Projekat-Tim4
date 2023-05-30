@@ -8,12 +8,12 @@ using TravelAgent.MVVM.Model;
 
 namespace TravelAgent.Service
 {
-    public class RestorauntService
+    public class RestaurantService
     {
         private readonly Consts _consts;
         private readonly DatabaseExecutionService _databaseExecutionService;
 
-        public RestorauntService(
+        public RestaurantService(
             Consts consts,
             DatabaseExecutionService databaseExecutionService)
         {
@@ -21,30 +21,30 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
-        public async Task<IEnumerable<RestorauntModel>> Search(HashSet<RestorauntSearchType> searchTypes, RestorauntSearchModel restorauntSearchModel)
+        public async Task<IEnumerable<RestaurantModel>> Search(IEnumerable<RestaurantSearchType> searchTypes, RestaurantSearchModel restaurantSearchModel)
         {
-            string restourantsTableAlias = "restorauntsTable";
+            string restourantsTableAlias = "restaurantsTable";
             string locationsTableAlias = "locationsTable";
             string command = $"SELECT {restourantsTableAlias}.id, {restourantsTableAlias}.name, {restourantsTableAlias}.stars, {restourantsTableAlias}.image, " +
                 $"{locationsTableAlias}.id, {locationsTableAlias}.address, {locationsTableAlias}.latitude, {locationsTableAlias}.longitude " +
-                $"FROM {_consts.RestorauntsTableName} {restourantsTableAlias}, " +
+                $"FROM {_consts.RestaurantsTableName} {restourantsTableAlias}, " +
                 $"{_consts.LocationsTableName} {locationsTableAlias} " +
                 $"WHERE {locationsTableAlias}.id = {restourantsTableAlias}.location_id ";
             
-            if (searchTypes.Contains(RestorauntSearchType.Name))
+            if (searchTypes.Contains(RestaurantSearchType.Name))
             {
-                command += $"AND {restourantsTableAlias}.name LIKE '%{restorauntSearchModel.NameKeyword}%' ";
+                command += $"AND {restourantsTableAlias}.name LIKE '%{restaurantSearchModel.NameKeyword}%' ";
             }
-            if (searchTypes.Contains(RestorauntSearchType.Address))
+            if (searchTypes.Contains(RestaurantSearchType.Address))
             {
-                command += $"AND {locationsTableAlias}.address LIKE '%{restorauntSearchModel.AddressKeyword}%' ";
+                command += $"AND {locationsTableAlias}.address LIKE '%{restaurantSearchModel.AddressKeyword}%' ";
             }
-            if (searchTypes.Contains(RestorauntSearchType.Stars))
+            if (searchTypes.Contains(RestaurantSearchType.Stars))
             {
-                command += $"AND {restourantsTableAlias}.stars = {restorauntSearchModel.Stars} ";
+                command += $"AND {restourantsTableAlias}.stars = {restaurantSearchModel.Stars} ";
             }
 
-            List<RestorauntModel> result = new List<RestorauntModel>();
+            List<RestaurantModel> result = new List<RestaurantModel>();
             await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, reader =>
             {
                 while (reader.Read())
@@ -56,7 +56,7 @@ namespace TravelAgent.Service
                         Latitude = reader.GetDouble(6),
                         Longitude = reader.GetDouble(7)
                     };
-                    RestorauntModel restoraunt = new RestorauntModel()
+                    RestaurantModel restaurant = new RestaurantModel()
                     {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
@@ -64,7 +64,7 @@ namespace TravelAgent.Service
                         Image = reader.GetString(3),
                         Location = location
                     };
-                    result.Add(restoraunt);
+                    result.Add(restaurant);
                 }
             });
 
@@ -74,40 +74,40 @@ namespace TravelAgent.Service
 
         public async Task Delete(int id)
         {
-            string command = $"DELETE FROM {_consts.TripsRestorauntsTableName} " +
-                $"WHERE restoraunt_id = {id}";
+            string command = $"DELETE FROM {_consts.TripsRestaurantsTableName} " +
+                $"WHERE restaurant_id = {id}";
             await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
-            command = $"DELETE FROM {_consts.RestorauntsTableName} " +
+            command = $"DELETE FROM {_consts.RestaurantsTableName} " +
                 $"WHERE id = {id}";
             await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
         }
 
-        public async Task Modify(int id, RestorauntModel restoraunt)
+        public async Task Modify(int id, RestaurantModel restaurant)
         {
-            string command = $"UPDATE {_consts.RestorauntsTableName} " +
-                $"SET name = '{restoraunt.Name}', stars = {restoraunt.Stars}, location_id = {restoraunt.Location.Id}, " +
-                $"image = '{restoraunt.Image}' " +
+            string command = $"UPDATE {_consts.RestaurantsTableName} " +
+                $"SET name = '{restaurant.Name}', stars = {restaurant.Stars}, location_id = {restaurant.Location.Id}, " +
+                $"image = '{restaurant.Image}' " +
                 $"WHERE id = {id}";
             await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
         }
 
-        public async Task Create(RestorauntModel restoraunt)
+        public async Task Create(RestaurantModel restaurant)
         {
-            string command = $"INSERT INTO {_consts.RestorauntsTableName} (name, stars, location_id, image) " +
-                $"VALUES ('{restoraunt.Name}', {restoraunt.Stars}, {restoraunt.Location.Id}, '{restoraunt.Image}')";
+            string command = $"INSERT INTO {_consts.RestaurantsTableName} (name, stars, location_id, image) " +
+                $"VALUES ('{restaurant.Name}', {restaurant.Stars}, {restaurant.Location.Id}, '{restaurant.Image}')";
             await _databaseExecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
         }
 
-        public async Task<IEnumerable<RestorauntModel>> GetAll()
+        public async Task<IEnumerable<RestaurantModel>> GetAll()
         {
-            string restourantsTableAlias = "restorauntsTable";
+            string restourantsTableAlias = "restaurantsTable";
             string locationsTableAlias = "locationsTable";
             string command = $"SELECT {restourantsTableAlias}.id, {restourantsTableAlias}.name, {restourantsTableAlias}.stars, {restourantsTableAlias}.image, " +
                 $"{locationsTableAlias}.id, {locationsTableAlias}.address, {locationsTableAlias}.latitude, {locationsTableAlias}.longitude " +
-                $"FROM {_consts.RestorauntsTableName} {restourantsTableAlias}, " +
+                $"FROM {_consts.RestaurantsTableName} {restourantsTableAlias}, " +
                 $"{_consts.LocationsTableName} {locationsTableAlias} " +
                 $"WHERE {locationsTableAlias}.id = {restourantsTableAlias}.location_id";
-            List<RestorauntModel> result = new List<RestorauntModel>();
+            List<RestaurantModel> result = new List<RestaurantModel>();
             await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, reader =>
             {
                 while (reader.Read())
@@ -119,7 +119,7 @@ namespace TravelAgent.Service
                         Latitude = reader.GetDouble(6),
                         Longitude = reader.GetDouble(7)
                     };
-                    RestorauntModel restoraunt = new RestorauntModel()
+                    RestaurantModel restaurant = new RestaurantModel()
                     {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
@@ -127,7 +127,7 @@ namespace TravelAgent.Service
                         Image = reader.GetString(3),
                         Location = location
                     };
-                    result.Add(restoraunt);
+                    result.Add(restaurant);
                 }
             });
 
@@ -135,20 +135,20 @@ namespace TravelAgent.Service
 
         }
 
-        public async Task<IEnumerable<RestorauntModel>> GetForTrip(int tripId)
+        public async Task<IEnumerable<RestaurantModel>> GetForTrip(int tripId)
         {
-            string restourantsTableAlias = "restorauntsTable";
-            string tripsRestorauntsTableAlias = "tripsRestorauntsTable";
+            string restourantsTableAlias = "restaurantsTable";
+            string tripsRestaurantsTableAlias = "tripsRestaurantsTable";
             string locationsTableAlias = "locationsTable";
             string command = $"SELECT {restourantsTableAlias}.id, {restourantsTableAlias}.name, {restourantsTableAlias}.stars, {restourantsTableAlias}.image, " +
                 $"{locationsTableAlias}.id, {locationsTableAlias}.address, {locationsTableAlias}.latitude, {locationsTableAlias}.longitude " +
-                $"FROM {_consts.TripsRestorauntsTableName} {tripsRestorauntsTableAlias}, " +
-                $"{_consts.RestorauntsTableName} {restourantsTableAlias}, " +
+                $"FROM {_consts.TripsRestaurantsTableName} {tripsRestaurantsTableAlias}, " +
+                $"{_consts.RestaurantsTableName} {restourantsTableAlias}, " +
                 $"{_consts.LocationsTableName} {locationsTableAlias} " +
-                $"WHERE {tripId} = {tripsRestorauntsTableAlias}.trip_id AND " +
+                $"WHERE {tripId} = {tripsRestaurantsTableAlias}.trip_id AND " +
                 $"{locationsTableAlias}.id = {restourantsTableAlias}.location_id AND " +
-                $"{restourantsTableAlias}.id = {tripsRestorauntsTableAlias}.restoraunt_id";
-            List<RestorauntModel> result = new List<RestorauntModel>();
+                $"{restourantsTableAlias}.id = {tripsRestaurantsTableAlias}.restaurant_id";
+            List<RestaurantModel> result = new List<RestaurantModel>();
             await _databaseExecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, reader =>
             {
                 while (reader.Read())
@@ -160,7 +160,7 @@ namespace TravelAgent.Service
                         Latitude = reader.GetDouble(6),
                         Longitude = reader.GetDouble(7)
                     };
-                    RestorauntModel restoraunt = new RestorauntModel()
+                    RestaurantModel restaurant = new RestaurantModel()
                     {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
@@ -168,7 +168,7 @@ namespace TravelAgent.Service
                         Image = reader.GetString(3),
                         Location = location
                     };
-                    result.Add(restoraunt);
+                    result.Add(restaurant);
                 }
             });
 

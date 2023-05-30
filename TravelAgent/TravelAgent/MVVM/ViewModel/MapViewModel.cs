@@ -14,29 +14,29 @@ namespace TravelAgent.MVVM.ViewModel
     public class MapViewModel : Core.ViewModel
     {
         public ObservableCollection<TouristAttractionModel> AllTouristAttractions { get; set; }
-        public ObservableCollection<RestorauntModel> AllRestoraunts { get; set; }
+        public ObservableCollection<RestaurantModel> AllRestaurants { get; set; }
         public ObservableCollection<AccommodationModel> AllAccommodations { get; set; }
 
         private readonly Service.AccommodationService _accommodationService;
         private readonly Service.TouristAttractionService _touristAttractionService;
-        private readonly Service.RestorauntService _restorauntService;
+        private readonly Service.RestaurantService _restaurantService;
         public MapService MapService { get; }
         public Consts Consts { get; }
 
         public MapViewModel(
             Service.AccommodationService accommodationService,
             Service.TouristAttractionService touristAttractionService,
-            Service.RestorauntService restorauntService,
+            Service.RestaurantService restaurantService,
             MapService mapService,
             Core.Consts consts)
         {
             AllTouristAttractions = new ObservableCollection<TouristAttractionModel>();
-            AllRestoraunts = new ObservableCollection<RestorauntModel>();
+            AllRestaurants = new ObservableCollection<RestaurantModel>();
             AllAccommodations = new ObservableCollection<AccommodationModel>();
 
             _accommodationService = accommodationService;
             _touristAttractionService = touristAttractionService;
-            _restorauntService = restorauntService;
+            _restaurantService = restaurantService;
             MapService = mapService;
             Consts = consts;
 
@@ -52,13 +52,13 @@ namespace TravelAgent.MVVM.ViewModel
             }
         }
 
-        public async Task LoadRestoraunts()
+        public async Task LoadRestaurants()
         {
-            AllRestoraunts.Clear();
-            IEnumerable<RestorauntModel> restoraunts = await _restorauntService.GetAll();
-            foreach (RestorauntModel restoraunt in restoraunts)
+            AllRestaurants.Clear();
+            IEnumerable<RestaurantModel> restaurants = await _restaurantService.GetAll();
+            foreach (RestaurantModel restaurant in restaurants)
             {
-                AllRestoraunts.Add(restoraunt);
+                AllRestaurants.Add(restaurant);
             }
         }
 

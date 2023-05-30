@@ -12,14 +12,14 @@ using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel
 {
-    public class CreateRestorauntViewModel : Core.CreationViewModel
+    public class CreateRestaurantViewModel : Core.CreationViewModel
     {
-        private RestorauntModel? _restorauntForModification;
+        private RestaurantModel? _restaurantForModification;
 
-        public RestorauntModel? RestorauntForModification
+        public RestaurantModel? RestaurantForModification
         {
-            get { return _restorauntForModification; }
-            set { _restorauntForModification = value; OnPropertyChanged(); }
+            get { return _restaurantForModification; }
+            set { _restaurantForModification = value; OnPropertyChanged(); }
         }
 
         private bool _modifying;
@@ -58,32 +58,34 @@ namespace TravelAgent.MVVM.ViewModel
 
         private readonly Consts _consts;
         private readonly NavigationService _navigationService;
-        private readonly RestorauntService _restorauntService;
+        private readonly RestaurantService _restaurantService;
         private readonly LocationService _locationService;
         private readonly ImageService _imageService;
 
+        private bool _createRestaurantCommandRunning = false;
+
         public ICommand OpenLocationPickerCommand { get; }
-        public ICommand CreateRestorauntCommand { get; }
+        public ICommand CreateRestaurantCommand { get; }
         public ICommand SelectStarsCommand { get; }
 
-        public CreateRestorauntViewModel(
+        public CreateRestaurantViewModel(
             Consts consts,
             NavigationService navigationService,
-            RestorauntService restorauntService,
+            RestaurantService restaurantService,
             LocationService locationService,
             MapService mapService,
             ImageService imageService) : base(mapService)
         {
             _consts = consts;
             _navigationService = navigationService;
-            _restorauntService = restorauntService;
+            _restaurantService = restaurantService;
             _locationService = locationService;
             _imageService = imageService;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
             OpenLocationPickerCommand = new RelayCommand(OnOpenLocationPicker, o => true);
-            CreateRestorauntCommand = new RelayCommand(OnCreateRestoraunt, CanCreateRestoraunt);
+            CreateRestaurantCommand = new RelayCommand(OnCreateRestaurant, CanCreateRestaurant);
             SelectStarsCommand = new RelayCommand(OnSelectStars, o => true);
             ClosePopupCommand = new RelayCommand(o => _pickLocationPopup?.Close(), o => _pickLocationPopup != null);
 
@@ -98,13 +100,15 @@ namespace TravelAgent.MVVM.ViewModel
             }
         }
 
-        private async void OnCreateRestoraunt(object o)
+        private async void OnCreateRestaurant(object o)
         {
+            _createRestaurantCommandRunning = true;
+
             if (!Modifying)
             {
                 LocationModel location = await _locationService.Create(Location);
 
-                RestorauntModel newRestoraunt = new RestorauntModel()
+                RestaurantModel newRestaurant = new RestaurantModel()
                 {
                     Name = Name,
                     Stars = Stars,
@@ -112,22 +116,22 @@ namespace TravelAgent.MVVM.ViewModel
                     Image = Image.UriSource.LocalPath
                 };
 
-                await _restorauntService.Create(newRestoraunt);
+                await _restaurantService.Create(newRestaurant);
 
-                MessageBox.Show("Restoraunt created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Restaurant created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 SetDefaultValues();
             }
             else
             {
                 int locationForDeletionId = 0;
-                LocationModel location = RestorauntForModification.Location;
-                if (Location.Id != RestorauntForModification.Location.Id)
+                LocationModel location = RestaurantForModification.Location;
+                if (Location.Id != RestaurantForModification.Location.Id)
                 {
-                    locationForDeletionId = RestorauntForModification.Location.Id;
+                    locationForDeletionId = RestaurantForModification.Location.Id;
                     location = await _locationService.Create(Location);
                 }
 
-                RestorauntModel modifiedRestoraunt = new RestorauntModel()
+                RestaurantModel modifiedRestaurant = new RestaurantModel()
                 {
                     Name = Name,
                     Stars = Stars,
@@ -135,21 +139,24 @@ namespace TravelAgent.MVVM.ViewModel
                     Image = Image.UriSource.LocalPath
                 };
 
-                await _restorauntService.Modify(RestorauntForModification.Id, modifiedRestoraunt);
+                await _restaurantService.Modify(RestaurantForModification.Id, modifiedRestaurant);
                 if (locationForDeletionId != 0)
                 {
                     await _locationService.Delete(locationForDeletionId);
                 }
 
-                MessageBox.Show("Restoraunt modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                _navigationService.NavigateTo<AllRestorauntsViewModel>();
+                MessageBox.Show("Restaurant modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                _navigationService.NavigateTo<AllRestaurantsViewModel>();
             }
+
+            _createRestaurantCommandRunning = false;
         }
 
-        private bool CanCreateRestoraunt(object o)
+        private bool CanCreateRestaurant(object o)
         {
             return !string.IsNullOrWhiteSpace(Name) &&
-                Location != null;
+                Location != null &&
+                !_createRestaurantCommandRunning;
         }
 
         private void SetDefaultValues()
@@ -163,10 +170,10 @@ namespace TravelAgent.MVVM.ViewModel
 
         private void SetValuesForModification()
         {
-            Location = RestorauntForModification.Location;
-            Name = RestorauntForModification.Name;
-            Stars = RestorauntForModification.Stars;
-            Image = _imageService.GetFromLocalStorage(RestorauntForModification.Image);
+            Location = RestaurantForModification.Location;
+            Name = RestaurantForModification.Name;
+            Stars = RestaurantForModification.Stars;
+            Image = _imageService.GetFromLocalStorage(RestaurantForModification.Image);
             Address = Location.Address;
         }
 
@@ -178,9 +185,9 @@ namespace TravelAgent.MVVM.ViewModel
                 _navigationService.NavigationCompleted -= OnNavigationCompleted;
             }
 
-            if (e.Extra is RestorauntModel restoraunt)
+            if (e.Extra is RestaurantModel restaurant)
             {
-                RestorauntForModification = restoraunt;
+                RestaurantForModification = restaurant;
                 Modifying = true;
                 SetValuesForModification();
             }

@@ -11,16 +11,16 @@ using TravelAgent.Service;
 
 namespace TravelAgent.MVVM.ViewModel.Popup
 {
-    public class RestorauntSearchViewModel : Core.ViewModel
+    public class RestaurantSearchViewModel : Core.ViewModel
     {
-        private HashSet<RestorauntSearchType> _searchTypes;
+        private HashSet<RestaurantSearchType> _searchTypes;
 
-        private Model.RestorauntSearchModel _restorauntSearchModel = new Model.RestorauntSearchModel();
+        private Model.RestaurantSearchModel _restaurantSearchModel = new Model.RestaurantSearchModel();
 
-        public Model.RestorauntSearchModel RestorauntSearchModel
+        public Model.RestaurantSearchModel RestaurantSearchModel
         {
-            get { return _restorauntSearchModel; }
-            set { _restorauntSearchModel = value; OnPropertyChanged(); }
+            get { return _restaurantSearchModel; }
+            set { _restaurantSearchModel = value; OnPropertyChanged(); }
         }
 
         private Visibility _nameVisibility = Visibility.Collapsed;
@@ -42,14 +42,14 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 OnPropertyChanged(); 
                 if (_isNameChecked)
                 {
-                    _searchTypes.Add(RestorauntSearchType.Name);
+                    _searchTypes.Add(RestaurantSearchType.Name);
                     NameVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    if (_searchTypes.Contains(RestorauntSearchType.Name))
+                    if (_searchTypes.Contains(RestaurantSearchType.Name))
                     {
-                        _searchTypes.Remove(RestorauntSearchType.Name);
+                        _searchTypes.Remove(RestaurantSearchType.Name);
                     }
                     NameVisibility = Visibility.Collapsed;
                 }
@@ -75,14 +75,14 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 OnPropertyChanged(); 
                 if (_isAddressChecked)
                 {
-                    _searchTypes.Add(RestorauntSearchType.Address);
+                    _searchTypes.Add(RestaurantSearchType.Address);
                     AddressVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    if (_searchTypes.Contains(RestorauntSearchType.Address))
+                    if (_searchTypes.Contains(RestaurantSearchType.Address))
                     {
-                        _searchTypes.Remove(RestorauntSearchType.Address);
+                        _searchTypes.Remove(RestaurantSearchType.Address);
                     }
                     AddressVisibility = Visibility.Collapsed;
                 }
@@ -108,34 +108,36 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 OnPropertyChanged(); 
                 if (_isStarsChecked)
                 {
-                    _searchTypes.Add(RestorauntSearchType.Stars);
+                    _searchTypes.Add(RestaurantSearchType.Stars);
                     StarsVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    if (_searchTypes.Contains(RestorauntSearchType.Stars))
+                    if (_searchTypes.Contains(RestaurantSearchType.Stars))
                     {
-                        _searchTypes.Remove(RestorauntSearchType.Stars);
+                        _searchTypes.Remove(RestaurantSearchType.Stars);
                     }
                     StarsVisibility = Visibility.Collapsed;
                 }
             }
         }
 
-        private readonly RestorauntService _restorauntService;
+        private readonly RestaurantService _restaurantService;
 
-        public AllRestorauntsViewModel AllRestorauntsViewModel { get; set; }
+        public AllRestaurantsViewModel AllRestaurantsViewModel { get; set; }
+
+        private bool _searchCommandRunning = false;
 
         public ICommand SearchCommand { get; }
         public ICommand SelectStarsCommand { get; }
         public ICommand CloseCommand { get; }
 
-        public RestorauntSearchViewModel(
-            RestorauntService restorauntService)
+        public RestaurantSearchViewModel(
+            RestaurantService restaurantService)
         {
-            _searchTypes = new HashSet<RestorauntSearchType>();
+            _searchTypes = new HashSet<RestaurantSearchType>();
 
-            _restorauntService = restorauntService;
+            _restaurantService = restaurantService;
 
             SearchCommand = new RelayCommand(OnSearch, CanSearch);
             SelectStarsCommand = new RelayCommand(OnSelectStars, o => true);
@@ -148,7 +150,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             IsAddressChecked = false;
             IsStarsChecked = false;
             _searchTypes.Clear();
-            RestorauntSearchModel = new Model.RestorauntSearchModel();
+            RestaurantSearchModel = new Model.RestaurantSearchModel();
         }
 
         private void OnSelectStars(object o)
@@ -156,25 +158,29 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             int star;
             if (int.TryParse(o.ToString(), out star))
             {
-                RestorauntSearchModel.Stars = star;
+                RestaurantSearchModel.Stars = star;
             }
         }
 
         private async void OnSearch(object o)
         {
+            _searchCommandRunning = true;
+            
             if (_searchTypes.Count > 0)
             {
-                IEnumerable<Model.RestorauntModel> restoraunts = await _restorauntService.Search(_searchTypes, RestorauntSearchModel);
-                AllRestorauntsViewModel.Restoraunts.Clear();
-                foreach (Model.RestorauntModel restoraunt in restoraunts)
+                IEnumerable<Model.RestaurantModel> restaurants = await _restaurantService.Search(_searchTypes, RestaurantSearchModel);
+                AllRestaurantsViewModel.Restaurants.Clear();
+                foreach (Model.RestaurantModel restaurant in restaurants)
                 {
-                    AllRestorauntsViewModel.Restoraunts.Add(restoraunt);
+                    AllRestaurantsViewModel.Restaurants.Add(restaurant);
                 }
             }
             else
             {
-                await AllRestorauntsViewModel.LoadAll();
+                await AllRestaurantsViewModel.LoadAll();
             }
+
+            _searchCommandRunning = false;
 
             OnClose(this);
         }
@@ -184,19 +190,19 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             bool canSearch = true;
             if (IsNameChecked)
             {
-                canSearch = canSearch && !string.IsNullOrWhiteSpace(RestorauntSearchModel.NameKeyword);
+                canSearch = canSearch && !string.IsNullOrWhiteSpace(RestaurantSearchModel.NameKeyword);
             }
             if (IsAddressChecked)
             {
-                canSearch = canSearch && !string.IsNullOrWhiteSpace(RestorauntSearchModel.AddressKeyword);
+                canSearch = canSearch && !string.IsNullOrWhiteSpace(RestaurantSearchModel.AddressKeyword);
             }
 
-            return canSearch;
+            return canSearch && !_searchCommandRunning;
         }
 
         private void OnClose(object o)
         {
-            Window currentWindow = Application.Current.Windows.OfType<RestorauntSearchPopup>().SingleOrDefault(w => w.IsActive);
+            Window currentWindow = Application.Current.Windows.OfType<RestaurantSearchPopup>().SingleOrDefault(w => w.IsActive);
             currentWindow?.Close();
 
             SetValuesToDefault();

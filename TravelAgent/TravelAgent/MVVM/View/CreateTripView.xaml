@@ -11,8 +11,9 @@
              d:DesignHeight="720" d:DesignWidth="1280">
 
     <UserControl.Resources>
-        <Style TargetType="ListViewItem" x:Key="RestorauntItemTheme">
+        <Style TargetType="ListViewItem" x:Key="RestaurantItemTheme">
             <Style.Setters>
+                <Setter Property="MaxWidth" Value="400"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListViewItem">
@@ -33,18 +34,18 @@
                                         <Image Source="{Binding Image}"/>
 
                                     </Border>
-                                    <component:ScalableTextBlock Text="{Binding Name}"
+                                    <TextBlock Text="{Binding Name}"
                                                                  HorizontalAlignment="Center"
                                                                  Padding="10"
                                                                  FontWeight="SemiBold"
                                                                  TextWrapping="Wrap"
-                                                                 FontSize="50"
+                                                                 FontSize="30"
                                                                  Margin="10"/>
-                                    <component:ScalableTextBlock Text="{Binding Location.Address}"
+                                    <TextBlock Text="{Binding Location.Address}"
                                                                  HorizontalAlignment="Center"
                                                                  TextWrapping="Wrap"
                                                                  Padding="10"
-                                                                 FontSize="34"
+                                                                 FontSize="20"
                                                                  Margin="10"/>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -129,6 +130,7 @@
         </Style>
         <Style TargetType="ListViewItem" x:Key="AccommodationItemTheme">
             <Style.Setters>
+                <Setter Property="MaxWidth" Value="400"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListViewItem">
@@ -149,25 +151,25 @@
                                         <Image Source="{Binding Image}"/>
 
                                     </Border>
-                                    <component:ScalableTextBlock Text="{Binding Name}"
+                                    <TextBlock Text="{Binding Name}"
                                                                  HorizontalAlignment="Center"
                                                                  Padding="10"
                                                                  FontWeight="SemiBold"
                                                                  TextWrapping="Wrap"
-                                                                 FontSize="50"
+                                                                 FontSize="30"
                                                                  Margin="0"/>
-                                    <component:ScalableTextBlock Text="{Binding Location.Address}"
+                                    <TextBlock Text="{Binding Location.Address}"
                                                                  HorizontalAlignment="Center"
                                                                  TextWrapping="Wrap"
                                                                  Padding="10"
-                                                                 FontSize="34"
+                                                                 FontSize="20"
                                                                  Margin="0"/>
-                                    <component:ScalableTextBlock Text="{Binding Rating, Converter={StaticResource RatingValueConverter}}"
+                                    <TextBlock Text="{Binding Rating, Converter={StaticResource RatingValueConverter}}"
                                                                  HorizontalAlignment="Center"
                                                                  TextWrapping="Wrap"
                                                                  Padding="10"
                                                                  FontWeight="SemiBold"
-                                                                 FontSize="36"
+                                                                 FontSize="22"
                                                                  Margin="0"/>
 
                                 </StackPanel>
@@ -195,6 +197,7 @@
         <Style TargetType="ListViewItem" x:Key="TouristAttractionItemTheme">
 
             <Style.Setters>
+                <Setter Property="MaxWidth" Value="400"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListViewItem">
@@ -215,18 +218,18 @@
                                         <Image Source="{Binding Image}"/>
 
                                     </Border>
-                                    <component:ScalableTextBlock Text="{Binding Name}"
+                                    <TextBlock Text="{Binding Name}"
                                                                  HorizontalAlignment="Center"
                                                                  Padding="10"
                                                                  FontWeight="SemiBold"
                                                                  TextWrapping="Wrap"
-                                                                 FontSize="50"
+                                                                 FontSize="30"
                                                                  Margin="0"/>
-                                    <component:ScalableTextBlock Text="{Binding Location.Address}"
+                                    <TextBlock Text="{Binding Location.Address}"
                                                                  HorizontalAlignment="Center"
                                                                  TextWrapping="Wrap"
                                                                  Padding="10"
-                                                                 FontSize="34"
+                                                                 FontSize="20"
                                                                  Margin="0"/>
 
                                 </StackPanel>
@@ -357,7 +360,7 @@
 
             </TabItem>
 
-            <TabItem Header="Restoraunts"
+            <TabItem Header="Restaurants"
                      IsTabStop="False"
                      Padding="10">
 
@@ -372,7 +375,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <component:ScalableTextBlock Text="Add Restoraunts to Trip"
+                    <component:ScalableTextBlock Text="Add Restaurants to Trip"
                                                  ScaleRate="2"
                                                  Margin="20"
                                                  FontSize="50"
@@ -384,25 +387,31 @@
                               Grid.Row="1"
                               Margin="20"
                               Padding="20"
-                              SelectedItem="{Binding SelectedRestorauntForTrip}"
+                              SelectedItem="{Binding SelectedRestaurantForTrip}"
                               BorderThickness="3"
 
-                              x:Name="restorauntsForTripListView"
+                              x:Name="restaurantsForTripListView"
 
                               AllowDrop="True"
-                              DragEnter="RestorauntListView_DragEnter" 
-                              Drop="RestorauntListView_Drop"
+                              DragEnter="RestaurantListView_DragEnter" 
+                              Drop="RestaurantListView_Drop"
 
-                              PreviewMouseLeftButtonDown="RestorauntListView_PreviewMouseLeftButtonDown"
-                              MouseMove="RestorauntListView_MouseMove"
+                              PreviewMouseLeftButtonDown="RestaurantListView_PreviewMouseLeftButtonDown"
+                              MouseMove="RestaurantListView_MouseMove"
 
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.CanContentScroll="False"
-                              ItemContainerStyle="{StaticResource RestorauntItemTheme}"
-                              ItemsSource="{Binding RestorauntsForTrip}">
+                              ItemContainerStyle="{StaticResource RestaurantItemTheme}"
+                              ItemsSource="{Binding RestaurantsForTrip}">
                         <ListView.InputBindings>
-                            <KeyBinding Key="Right" Command="{Binding RemoveRestorauntCommand}"/>
+                            <KeyBinding Key="Right" Modifiers="Ctrl" Command="{Binding RemoveRestaurantCommand}"/>
                         </ListView.InputBindings>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" 
+                                           HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
                     </ListView>
 
                     <ListView Grid.Column="1"
@@ -410,24 +419,30 @@
                               Margin="20"
                               Padding="20"
                               BorderThickness="3"
-                              SelectedItem="{Binding SelectedRestorauntFromAll}"
+                              SelectedItem="{Binding SelectedRestaurantFromAll}"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.CanContentScroll="False"
 
-                              x:Name="allRestorauntsListView"
+                              x:Name="allRestaurantsListView"
 
                               AllowDrop="True"
-                              DragEnter="RestorauntListView_DragEnter" 
-                              Drop="RestorauntListView_DropRemove"
+                              DragEnter="RestaurantListView_DragEnter" 
+                              Drop="RestaurantListView_DropRemove"
 
-                              PreviewMouseLeftButtonDown="RestorauntListView_PreviewMouseLeftButtonDown"
-                              MouseMove="RestorauntListView_MouseMove"
+                              PreviewMouseLeftButtonDown="RestaurantListView_PreviewMouseLeftButtonDown"
+                              MouseMove="RestaurantListView_MouseMove"
 
-                              ItemContainerStyle="{StaticResource RestorauntItemTheme}"
-                              ItemsSource="{Binding AllRestoraunts}">
+                              ItemContainerStyle="{StaticResource RestaurantItemTheme}"
+                              ItemsSource="{Binding AllRestaurants}">
                         <ListView.InputBindings>
-                            <KeyBinding Key="Left" Command="{Binding AddRestorauntCommand}"/>
+                            <KeyBinding Key="Left" Modifiers="Ctrl" Command="{Binding AddRestaurantCommand}"/>
                         </ListView.InputBindings>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" 
+                                           HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
                     </ListView>
 
                 </Grid>
@@ -477,8 +492,14 @@
                               ItemContainerStyle="{StaticResource TouristAttractionItemTheme}"
                               ItemsSource="{Binding TouristAttractionsForTrip}">
                         <ListView.InputBindings>
-                            <KeyBinding Key="Right" Command="{Binding RemoveTouristAttractionCommand}"/>
+                            <KeyBinding Key="Right" Modifiers="Ctrl" Command="{Binding RemoveTouristAttractionCommand}"/>
                         </ListView.InputBindings>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" 
+                                           HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
                     </ListView>
 
                     <ListView Grid.Column="1"
@@ -502,14 +523,20 @@
                               ItemContainerStyle="{StaticResource TouristAttractionItemTheme}"
                               ItemsSource="{Binding AllTouristAttractions}">
                         <ListView.InputBindings>
-                            <KeyBinding Key="Left" Command="{Binding AddTouristAttractionCommand}"/>
+                            <KeyBinding Key="Left" Modifiers="Ctrl" Command="{Binding AddTouristAttractionCommand}"/>
                         </ListView.InputBindings>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" 
+                                           HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
                     </ListView>
 
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Accomodations"
+            <TabItem Header="Accommodations"
                      IsTabStop="False"
                      Padding="10">
 
@@ -553,8 +580,14 @@
                               ItemContainerStyle="{StaticResource AccommodationItemTheme}"
                               ItemsSource="{Binding AccommodationsForTrip}">
                         <ListView.InputBindings>
-                            <KeyBinding Key="Right" Command="{Binding RemoveAccommodationCommand}"/>
+                            <KeyBinding Key="Right" Modifiers="Ctrl" Command="{Binding RemoveAccommodationCommand}"/>
                         </ListView.InputBindings>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" 
+                                           HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
                     </ListView>
 
                     <ListView Grid.Column="1"
@@ -578,8 +611,14 @@
                               ItemContainerStyle="{StaticResource AccommodationItemTheme}"
                               ItemsSource="{Binding AllAccommodations}">
                         <ListView.InputBindings>
-                            <KeyBinding Key="Left" Command="{Binding AddAccommodationCommand}"/>
+                            <KeyBinding Key="Left" Modifiers="Ctrl" Command="{Binding AddAccommodationCommand}"/>
                         </ListView.InputBindings>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" 
+                                           HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
                     </ListView>
 
                 </Grid>

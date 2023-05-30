@@ -93,6 +93,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 
         public AllTouristAttractionsViewModel AllTouristAttractionsViewModel { get; set; }
 
+        private bool _searchCommandRunning = false;
+
         public ICommand SearchCommand { get; }
         public ICommand CloseCommand { get; }
 
@@ -117,6 +119,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
 
         private async void OnSearch(object o)
         {
+            _searchCommandRunning = true;
+            
             if (_searchTypes.Count > 0)
             {
                 IEnumerable<Model.TouristAttractionModel> touristAttractions = await _touristAttractionService.Search(_searchTypes, TouristAttractionSearchModel);
@@ -130,6 +134,8 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             {
                 await AllTouristAttractionsViewModel.LoadAll();
             }
+
+            _searchCommandRunning = false;
 
             OnClose(this);
         }
@@ -146,7 +152,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 canSearch = canSearch && !string.IsNullOrWhiteSpace(TouristAttractionSearchModel.AddressKeyword);
             }
 
-            return canSearch;
+            return canSearch && !_searchCommandRunning;
         }
 
         private void OnClose(object o)

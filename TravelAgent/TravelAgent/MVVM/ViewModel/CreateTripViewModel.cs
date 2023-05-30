@@ -31,11 +31,11 @@ namespace TravelAgent.MVVM.ViewModel
         private bool _changedDestination;
 
         public ObservableCollection<AccommodationModel> AllAccommodations { get; set; }
-        public ObservableCollection<RestorauntModel> AllRestoraunts { get; set; }
+        public ObservableCollection<RestaurantModel> AllRestaurants { get; set; }
         public ObservableCollection<TouristAttractionModel> AllTouristAttractions { get; set; }
 
         public ObservableCollection<AccommodationModel> AccommodationsForTrip { get; set; }
-        public ObservableCollection<RestorauntModel> RestorauntsForTrip { get; set; }
+        public ObservableCollection<RestaurantModel> RestaurantsForTrip { get; set; }
         public ObservableCollection<TouristAttractionModel> TouristAttractionsForTrip { get; set; }
 
         private string _departureAddress;
@@ -156,12 +156,12 @@ namespace TravelAgent.MVVM.ViewModel
             } 
         }
 
-        private RestorauntModel? _selectedRestorauntFromAll;
+        private RestaurantModel? _selectedRestaurantFromAll;
 
-        public RestorauntModel? SelectedRestorauntFromAll
+        public RestaurantModel? SelectedRestaurantFromAll
         {
-            get { return _selectedRestorauntFromAll; }
-            set { _selectedRestorauntFromAll = value; OnPropertyChanged(); }
+            get { return _selectedRestaurantFromAll; }
+            set { _selectedRestaurantFromAll = value; OnPropertyChanged(); }
         }
 
         private AccommodationModel? _selectedAccommodationFromAll;
@@ -180,12 +180,12 @@ namespace TravelAgent.MVVM.ViewModel
             set { _selectedTouristAttractionFromAll = value; OnPropertyChanged(); }
         }
 
-        private RestorauntModel? _selectedRestorauntForTrip;
+        private RestaurantModel? _selectedRestaurantForTrip;
 
-        public RestorauntModel? SelectedRestorauntForTrip
+        public RestaurantModel? SelectedRestaurantForTrip
         {
-            get { return _selectedRestorauntForTrip; }
-            set { _selectedRestorauntForTrip = value; OnPropertyChanged(); }
+            get { return _selectedRestaurantForTrip; }
+            set { _selectedRestaurantForTrip = value; OnPropertyChanged(); }
         }
 
         private AccommodationModel? _selectedAccommodationForTrip;
@@ -212,17 +212,21 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.NavigationService _navigationService;
         private readonly Service.AccommodationService _accommodationService;
         private readonly Service.TouristAttractionService _touristAttractionService;
-        private readonly Service.RestorauntService _restorauntService;
+        private readonly Service.RestaurantService _restaurantService;
         public Service.MapService MapService { get; }
         public Consts Consts { get; }
+
+        private bool _createTripCommandRunning = false;
+        private bool _searchDepartureFromAddressCommandRunning = false;
+        private bool _searchDestinationFromAddressCommandRunning = false;
 
         public ICommand CreateTripCommand { get; }
         public ICommand SearchDepartureFromAddressCommand { get; }
         public ICommand SearchDestinationFromAddressCommand { get; }
-        public ICommand AddRestorauntCommand { get; }
+        public ICommand AddRestaurantCommand { get; }
         public ICommand AddAccommodationCommand { get; }
         public ICommand AddTouristAttractionCommand { get; }
-        public ICommand RemoveRestorauntCommand { get; }
+        public ICommand RemoveRestaurantCommand { get; }
         public ICommand RemoveAccommodationCommand { get; }
         public ICommand RemoveTouristAttractionCommand { get; }
 
@@ -233,15 +237,15 @@ namespace TravelAgent.MVVM.ViewModel
             Service.MapService mapService,
             Service.AccommodationService accommodationService,
             Service.TouristAttractionService touristAttractionService,
-            Service.RestorauntService restorauntService,
+            Service.RestaurantService restaurantService,
             Consts consts)
         {
             AllAccommodations = new ObservableCollection<AccommodationModel>();
-            AllRestoraunts = new ObservableCollection<RestorauntModel>();
+            AllRestaurants = new ObservableCollection<RestaurantModel>();
             AllTouristAttractions = new ObservableCollection<TouristAttractionModel>();
 
             AccommodationsForTrip = new ObservableCollection<AccommodationModel>();
-            RestorauntsForTrip = new ObservableCollection<RestorauntModel>();
+            RestaurantsForTrip = new ObservableCollection<RestaurantModel>();
             TouristAttractionsForTrip = new ObservableCollection<TouristAttractionModel>();
 
             Hours = new ObservableCollection<string>();
@@ -252,30 +256,30 @@ namespace TravelAgent.MVVM.ViewModel
             _navigationService = navigationService;
             _accommodationService = accommodationService;
             _touristAttractionService = touristAttractionService;
-            _restorauntService = restorauntService;
+            _restaurantService = restaurantService;
             MapService = mapService;
             Consts = consts;
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
             CreateTripCommand = new RelayCommand(OnCreateTrip, CanCreateTrip);
-            SearchDepartureFromAddressCommand = new RelayCommand(OnSearchDepartureFromAddress, o => !string.IsNullOrWhiteSpace(DepartureAddress));
-            SearchDestinationFromAddressCommand = new RelayCommand(OnSearchDestinationFromAddress, o => !string.IsNullOrWhiteSpace(DestinationAddress));
-            AddRestorauntCommand = new RelayCommand(OnAddRestoraunt, o => SelectedRestorauntFromAll != null);
+            SearchDepartureFromAddressCommand = new RelayCommand(OnSearchDepartureFromAddress, o => !string.IsNullOrWhiteSpace(DepartureAddress) && !_searchDepartureFromAddressCommandRunning);
+            SearchDestinationFromAddressCommand = new RelayCommand(OnSearchDestinationFromAddress, o => !string.IsNullOrWhiteSpace(DestinationAddress) && !_searchDestinationFromAddressCommandRunning);
+            AddRestaurantCommand = new RelayCommand(OnAddRestaurant, o => SelectedRestaurantFromAll != null);
             AddAccommodationCommand = new RelayCommand(OnAddAccommodation, o => SelectedAccommodationFromAll != null);
             AddTouristAttractionCommand = new RelayCommand(OnAddTouristAttraction, o => SelectedTouristAttractionFromAll != null);
-            RemoveRestorauntCommand = new RelayCommand(OnRemoveRestoraunt, o => SelectedRestorauntForTrip != null);
+            RemoveRestaurantCommand = new RelayCommand(OnRemoveRestaurant, o => SelectedRestaurantForTrip != null);
             RemoveAccommodationCommand = new RelayCommand(OnRemoveAccommodation, o => SelectedAccommodationForTrip != null);
             RemoveTouristAttractionCommand = new RelayCommand(OnRemoveTouristAttraction, o => SelectedTouristAttractionForTrip != null);
 
             SetUpForCreation();
         }
 
-        private void OnRemoveRestoraunt(object o)
+        private void OnRemoveRestaurant(object o)
         {
-            if (RestorauntsForTrip.Contains(SelectedRestorauntForTrip))
+            if (RestaurantsForTrip.Contains(SelectedRestaurantForTrip))
             {
-                RestorauntsForTrip.Remove(SelectedRestorauntForTrip);
+                RestaurantsForTrip.Remove(SelectedRestaurantForTrip);
             }
         }
         private void OnRemoveAccommodation(object o)
@@ -294,11 +298,11 @@ namespace TravelAgent.MVVM.ViewModel
             }
         }
 
-        private void OnAddRestoraunt(object o)
+        private void OnAddRestaurant(object o)
         {
-            if (!RestorauntsForTrip.Contains(SelectedRestorauntFromAll))
+            if (!RestaurantsForTrip.Contains(SelectedRestaurantFromAll))
             {
-                RestorauntsForTrip.Add(SelectedRestorauntFromAll);
+                RestaurantsForTrip.Add(SelectedRestaurantFromAll);
             }
         }
 
@@ -319,13 +323,13 @@ namespace TravelAgent.MVVM.ViewModel
 
         }
 
-        public async Task LoadAllRestoraunts()
+        public async Task LoadAllRestaurants()
         {
-            AllRestoraunts.Clear();
-            IEnumerable<RestorauntModel> restoraunts = await _restorauntService.GetAll();
-            foreach (RestorauntModel restoraunt in restoraunts)
+            AllRestaurants.Clear();
+            IEnumerable<RestaurantModel> restaurants = await _restaurantService.GetAll();
+            foreach (RestaurantModel restaurant in restaurants)
             {
-                AllRestoraunts.Add(restoraunt);
+                AllRestaurants.Add(restaurant);
             }
         }
 
@@ -349,13 +353,13 @@ namespace TravelAgent.MVVM.ViewModel
             }
         }
 
-        public async Task LoadRestorauntsFromTrip()
+        public async Task LoadRestaurantsFromTrip()
         {
-            RestorauntsForTrip.Clear();
-            IEnumerable<RestorauntModel> restoraunts = await _restorauntService.GetForTrip(TripForModification.Id);
-            foreach (RestorauntModel restoraunt in restoraunts)
+            RestaurantsForTrip.Clear();
+            IEnumerable<RestaurantModel> restaurants = await _restaurantService.GetForTrip(TripForModification.Id);
+            foreach (RestaurantModel restaurant in restaurants)
             {
-                RestorauntsForTrip.Add(restoraunt);
+                RestaurantsForTrip.Add(restaurant);
             }
         }
 
@@ -381,6 +385,8 @@ namespace TravelAgent.MVVM.ViewModel
 
         private async void OnSearchDepartureFromAddress(object o)
         {
+            _searchDepartureFromAddressCommandRunning = true;
+
             try
             {
                 LocationModel location = await MapService.Geocode(DepartureAddress);
@@ -390,10 +396,16 @@ namespace TravelAgent.MVVM.ViewModel
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            finally
+            {
+                _searchDepartureFromAddressCommandRunning = false;
+            }
         }
 
         private async void OnSearchDestinationFromAddress(object o)
         {
+            _searchDestinationFromAddressCommandRunning = true;
+
             try
             {
                 LocationModel location = await MapService.Geocode(DestinationAddress);
@@ -403,10 +415,16 @@ namespace TravelAgent.MVVM.ViewModel
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            finally
+            {
+                _searchDestinationFromAddressCommandRunning = false;
+            }
         }
 
         private async void OnCreateTrip(object o)
         {
+            _createTripCommandRunning = true;
+
             DateTime DepartureDateTime = new DateTime(DepartureDate.Value.Year, DepartureDate.Value.Month, DepartureDate.Value.Day,
                 int.Parse(DepartureTimeHours), int.Parse(DepartureTimeMinutes), 0);
             DateTime ArrivalDateTime = new DateTime(ArrivalDate.Value.Year, ArrivalDate.Value.Month, ArrivalDate.Value.Day,
@@ -414,12 +432,14 @@ namespace TravelAgent.MVVM.ViewModel
 
             if (DepartureDateTime < DateTime.Now || ArrivalDateTime < DateTime.Now)
             {
-                MessageBox.Show("Departure date or arrival date cannot be in the past!");
+                MessageBox.Show("Departure date or arrival date cannot be in the past!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _createTripCommandRunning = false;
                 return;
             }
             if (DepartureDateTime >= ArrivalDateTime)
             {
-                MessageBox.Show("Departure date must be before arrival date!");
+                MessageBox.Show("Departure date must be before arrival date!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _createTripCommandRunning = false;
                 return;
             }
 
@@ -440,10 +460,10 @@ namespace TravelAgent.MVVM.ViewModel
                 trip.Destination = destination;
                 await _tripService.Create(
                     trip,
-                    RestorauntsForTrip,
+                    RestaurantsForTrip,
                     AccommodationsForTrip,
                     TouristAttractionsForTrip);
-                MessageBox.Show("Trip created successfully!");
+                MessageBox.Show("Trip created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 SetValuesToDefault();
             }
             else
@@ -467,7 +487,7 @@ namespace TravelAgent.MVVM.ViewModel
                 await _tripService.Modify(
                     TripForModification.Id,
                     trip,
-                    RestorauntsForTrip,
+                    RestaurantsForTrip,
                     AccommodationsForTrip,
                     TouristAttractionsForTrip);
                 if (departureForDeletionId != 0)
@@ -479,10 +499,11 @@ namespace TravelAgent.MVVM.ViewModel
                     await _locationService.Delete(destinationForDeletionId);
                 }
 
-                MessageBox.Show("Trip modified successfully!");
+                MessageBox.Show("Trip modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 _navigationService.NavigateTo<AllTripsViewModel>();
             }
 
+            _createTripCommandRunning = false;
         }
 
         private bool CanCreateTrip(object o)
@@ -490,12 +511,13 @@ namespace TravelAgent.MVVM.ViewModel
             return DepartureDate != null 
                 && ArrivalDate != null
                 && SelectedDepartureLocation != null
-                && SelectedDestinationLocation != null;
+                && SelectedDestinationLocation != null
+                && !_createTripCommandRunning;
         }
 
         private void SetValuesToDefault()
         {
-            RestorauntsForTrip.Clear();
+            RestaurantsForTrip.Clear();
             AccommodationsForTrip.Clear();
             TouristAttractionsForTrip.Clear();
             DepartureDate = null;
@@ -516,7 +538,7 @@ namespace TravelAgent.MVVM.ViewModel
             ArrivalTimeHours = Hours.FirstOrDefault(h => int.Parse(h) == TripForModification.ArrivalDateTime.Hour);
             ArrivalTimeMinutes = Minutes.FirstOrDefault(m => int.Parse(m) == TripForModification.ArrivalDateTime.Minute);
             Price = TripForModification.Price.ToString();
-            await LoadRestorauntsFromTrip();
+            await LoadRestaurantsFromTrip();
             await LoadTouristAttractionsFromTrip();
             await LoadAccommodationsFromTrip();
         }

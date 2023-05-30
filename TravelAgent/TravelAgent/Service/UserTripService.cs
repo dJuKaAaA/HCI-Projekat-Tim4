@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace TravelAgent.Service
             _databaseExecutionService = databaseExecutionService;
         }
 
-        public async Task<IEnumerable<UserTripModel>> Search(HashSet<UserTripSearchType> searchTypes, UserTripSearchModel userTripSearchModel)
+        public async Task<IEnumerable<UserTripModel>> Search(IEnumerable<UserTripSearchType> searchTypes, UserTripSearchModel userTripSearchModel)
         {
             string command = $"SELECT usersTable.id, usersTable.name, usersTable.surname, usersTable.username, usersTable.type, " +
                 $"tripsTable.id, tripsTable.departure_date_time, tripsTable.arrival_date_time, tripsTable.price, " +

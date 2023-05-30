@@ -33,6 +33,9 @@ namespace TravelAgent.MVVM.ViewModel
         private readonly Service.UserTripService _userTripService;
         private readonly Service.NavigationService _navigationService;
 
+        private bool _purchaseTripCommandRunning = false;
+        private bool _cancelTripCommandRunning = false;
+
         public ICommand PurchaseTripCommand { get; }
         public ICommand OpenSearchCommand { get; }
         public ICommand CancelTripCommand { get; }
@@ -52,17 +55,17 @@ namespace TravelAgent.MVVM.ViewModel
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
-            PurchaseTripCommand = new RelayCommand(OnPurchaseTrip, o => true);
+            PurchaseTripCommand = new RelayCommand(OnPurchaseTrip, o => !_purchaseTripCommandRunning);
             OpenSearchCommand = new RelayCommand(OnOpenSearch, o => true);
-            CancelTripCommand = new RelayCommand(OnCancelTrip, o => true);
+            CancelTripCommand = new RelayCommand(OnCancelTrip, o => !_cancelTripCommandRunning);
 
             if (MainViewModel.SignedUser?.Type == UserType.Traveler)
             {
-                Task.Run(async () => await LoadForUser());
+                _ = LoadForUser();
             }
             else
             {
-                Task.Run(async () => await LoadAll());
+                _ = LoadAll();
             }
         }
 
@@ -114,13 +117,15 @@ namespace TravelAgent.MVVM.ViewModel
         {
             if (o is Button purchaseButton)
             {
+                _purchaseTripCommandRunning = true;
+
                 int tripId = int.Parse(purchaseButton.Tag.ToString());
                 UserTripModel userTrip = UserTrips.FirstOrDefault(userTrip => userTrip.Trip.Id == tripId);
 
                 try
                 {
                     await _userTripService.PurchaseReserved(userTrip.User.Id, userTrip.Trip.Id);
-                    MessageBox.Show("Successful purchase!");
+                    MessageBox.Show("Successful purchase!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     UserTrips.Clear();
                     IEnumerable<UserTripModel> userTrips = await _userTripService.GetForUser(MainViewModel.SignedUser.Id);
@@ -131,22 +136,29 @@ namespace TravelAgent.MVVM.ViewModel
                 }
                 catch (DatabaseResponseException e)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                finally 
+                { 
+                    _purchaseTripCommandRunning = false; 
                 }
             }
+
         }
 
         private async void OnCancelTrip(object o)
         {
             if (o is Button cancelButton)
             {
+                _cancelTripCommandRunning = true;
+
                 int tripId = int.Parse(cancelButton.Tag.ToString());
                 UserTripModel userTrip = UserTrips.FirstOrDefault(userTrip => userTrip.Trip.Id == tripId);
 
                 try
                 {
                     await _userTripService.Cancel(userTrip.User.Id, userTrip.Trip.Id);
-                    MessageBox.Show("Trip cancelled!");
+                    MessageBox.Show("Trip successfully cancelled!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     UserTrips.Clear();
                     IEnumerable<UserTripModel> userTrips = await _userTripService.GetForUser(MainViewModel.SignedUser.Id);
@@ -157,11 +169,13 @@ namespace TravelAgent.MVVM.ViewModel
                 }
                 catch (DatabaseResponseException e)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
+                finally
+                {
+                    _cancelTripCommandRunning = false;
+                }
             }
-
         }
     }
 }

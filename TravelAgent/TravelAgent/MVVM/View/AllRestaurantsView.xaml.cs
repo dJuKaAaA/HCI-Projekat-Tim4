@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace TravelAgent.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for AllRestorauntsView.xaml
+    /// Interaction logic for AllRestaurantsView.xaml
     /// </summary>
-    public partial class AllRestorauntsView : UserControl
+    public partial class AllRestaurantsView : UserControl
     {
-        public AllRestorauntsView()
+        public AllRestaurantsView()
         {
             InitializeComponent();
         }

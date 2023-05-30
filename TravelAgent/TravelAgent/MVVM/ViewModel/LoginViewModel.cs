@@ -33,6 +33,8 @@ namespace TravelAgent.MVVM.ViewModel
 		private readonly UserService _userService;
 		private readonly NavigationService _navigationService;
 
+		private bool _loginCommandRunning = false;
+
 		public ICommand LoginCommand { get; }
 		public ICommand NavigateToRegisterViewCommand { get; }
 
@@ -44,16 +46,20 @@ namespace TravelAgent.MVVM.ViewModel
 			_navigationService = navigationService;
 
 			LoginCommand = new RelayCommand(OnLogin, CanLogin);
-			NavigateToRegisterViewCommand = new RelayCommand(OnNavigateToRegisterView, CanNavigateToRegisterView);
+			NavigateToRegisterViewCommand = new RelayCommand(OnNavigateToRegisterView, o => true);
         }
 
 		private bool CanLogin(object o)
 		{
-			return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+			return !string.IsNullOrWhiteSpace(Username) && 
+				!string.IsNullOrWhiteSpace(Password) &&
+				!_loginCommandRunning;
 		}
 
 		private async void OnLogin(object o)
 		{
+			_loginCommandRunning = true;
+
 			try
 			{
                 MainViewModel.SignedUser = await _userService.Login(Username, Password);
@@ -65,11 +71,10 @@ namespace TravelAgent.MVVM.ViewModel
 				Password = string.Empty;
 				return;
 			}
-		}
-
-		private bool CanNavigateToRegisterView(object o)
-		{
-			return true;
+			finally
+			{
+				_loginCommandRunning = false;
+			}
 		}
 
 		private void OnNavigateToRegisterView(object o)

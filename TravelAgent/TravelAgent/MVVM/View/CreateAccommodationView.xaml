@@ -62,7 +62,7 @@
                                                  TextWrapping="Wrap"
                                                  Grid.Row="0"
                                                  HorizontalAlignment="Center"/>
-                    <Button MaxWidth="400"
+                    <Button MaxWidth="300"
                             Command="{Binding PickImageCommand}">
                         <Button.Style>
                             <Style TargetType="Button">

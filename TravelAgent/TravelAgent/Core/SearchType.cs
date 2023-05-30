@@ -15,7 +15,7 @@ namespace TravelAgent.Core
         Price
     }
 
-    public enum RestorauntSearchType
+    public enum RestaurantSearchType
     {
         Name,
         Stars,
