@@ -575,7 +575,7 @@
             </ContentControl>
             <Button HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
-                    ToolTip="Search (Ctrl+S)"
+                    ToolTip="Search (Ctrl+F)"
                     Command="{Binding OpenSearchCommand}"
                     Style="{StaticResource SearchButtonTheme}"
                     Margin="50"/>

@@ -94,7 +94,7 @@ namespace TravelAgent.MVVM.ViewModel
             OpenCreateTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(), o => MainViewModel.SignedUser?.Type == UserType.Agent);
             OpenModifyTripViewCommand = new Core.RelayCommand(o => _navigationService.NavigateTo<CreateTripViewModel>(SelectedTrip), o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTrip != null);
             DeleteTripCommand = new Core.RelayCommand(OnDeleteTrip, o => MainViewModel.SignedUser?.Type == UserType.Agent && SelectedTrip != null && !_deleteTripCommandRunning);
-            OpenSearchCommand = new RelayCommand(OnOpenSearch, o => MainViewModel.SignedUser != null);
+            OpenSearchCommand = new RelayCommand(OnOpenSearch, o => true);
 
             _ = LoadAll();
         }
