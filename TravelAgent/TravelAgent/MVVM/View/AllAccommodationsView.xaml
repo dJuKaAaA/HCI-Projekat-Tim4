@@ -157,7 +157,7 @@
                     VerticalAlignment="Bottom"
                     Style="{StaticResource SearchButtonTheme}"
                     Margin="50"
-                    ToolTip="Search (Ctrl+S)"
+                    ToolTip="Search (Ctrl+F)"
                     Command="{Binding OpenSearchCommand}"/>
             
         </Grid>

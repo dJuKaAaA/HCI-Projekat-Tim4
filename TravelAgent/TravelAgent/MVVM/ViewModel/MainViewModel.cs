@@ -119,7 +119,7 @@ namespace TravelAgent.MVVM.ViewModel
 
         public static void AddOpenSearchKeyBinding(ICommand openSearchCommand)
         {
-            _openSearchKeyBinding = new KeyBinding(openSearchCommand, Key.S, ModifierKeys.Control);
+            _openSearchKeyBinding = new KeyBinding(openSearchCommand, Key.F, ModifierKeys.Control);
             Window window = Application.Current.MainWindow;
             window.InputBindings.Add(_openSearchKeyBinding);
         }
