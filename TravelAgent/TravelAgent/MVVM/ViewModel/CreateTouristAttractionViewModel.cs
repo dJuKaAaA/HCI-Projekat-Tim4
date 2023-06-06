@@ -117,10 +117,10 @@ namespace TravelAgent.MVVM.ViewModel
                 }
 
                 MessageBox.Show("Tourist attraction modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                _navigationService.NavigateTo<AllTouristAttractionsViewModel>();
             }
 
             _createTouristAttractionCommandRunning = false;
+            _navigationService.NavigateTo<AllTouristAttractionsViewModel>();
         }
 
         private bool CanCreateTouristAttraction(object o)

@@ -122,6 +122,14 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             }
         }
 
+        private Visibility _resetSearchVisibility = Visibility.Collapsed;
+
+        public Visibility ResetSearchVisibility
+        {
+            get { return _resetSearchVisibility; }
+            set { _resetSearchVisibility = value; OnPropertyChanged(); }
+        }
+
         private readonly AccommodationService _accommodationService;
 
         public AllAccommodationsViewModel AllAccommodationsViewModel { get; set; }
@@ -129,6 +137,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         private bool _searchCommandRunning = false;
 
         public ICommand SearchCommand { get; }
+        public ICommand ResetSearchCommand { get; }
         public ICommand CloseCommand { get; }
 
         public AccommodationSearchViewModel(
@@ -139,6 +148,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             _accommodationService = accommodationService;
 
             SearchCommand = new RelayCommand(OnSearch, CanSearch);
+            ResetSearchCommand = new RelayCommand(OnResetSearch, o => true);
             CloseCommand = new RelayCommand(OnClose, o => true);
         }
 
@@ -149,6 +159,13 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             IsRatingChecked = false;
             _searchTypes.Clear();
             AccommodationSearchModel = new Model.AccommodationSearchModel();
+        }
+
+        private async void OnResetSearch(object o)
+        {
+            await AllAccommodationsViewModel.LoadAll();
+            ResetSearchVisibility = Visibility.Collapsed;
+            OnClose(this);
         }
 
         private async void OnSearch(object o)
@@ -163,10 +180,13 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 {
                     AllAccommodationsViewModel.Accommodations.Add(accommodation);
                 }
+                ResetSearchVisibility = Visibility.Visible;
             }
             else
             {
-                await AllAccommodationsViewModel.LoadAll();
+                MessageBox.Show("No criteria selected!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _searchCommandRunning = false;
+                return;
             }
 
             _searchCommandRunning = false;

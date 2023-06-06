@@ -180,7 +180,6 @@ namespace TravelAgent.Service
             Trigger mouseEnterTrigger = new Trigger { Property = UIElement.IsMouseOverProperty, Value = true };
             mouseEnterTrigger.Setters.Add(new Setter(FrameworkElement.RenderTransformProperty, new ScaleTransform(1.2, 1.2)));
             mouseEnterTrigger.Setters.Add(new Setter(Panel.ZIndexProperty, 1));
-            mouseEnterTrigger.Setters.Add(new Setter(Control.CursorProperty, Cursors.Hand));
 
             Trigger mouseLeaveTrigger = new Trigger { Property = UIElement.IsMouseOverProperty, Value = false };
             mouseLeaveTrigger.Setters.Add(new Setter(FrameworkElement.RenderTransformProperty, new ScaleTransform(1, 1)));

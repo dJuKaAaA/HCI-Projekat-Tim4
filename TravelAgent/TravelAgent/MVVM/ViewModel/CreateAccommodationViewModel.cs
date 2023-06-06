@@ -63,7 +63,11 @@ namespace TravelAgent.MVVM.ViewModel
                         _rating = "0";
                     }
 
-                    double.Parse(value);
+                    double doubleValue = double.Parse(value);
+                    if (value.Contains('-'))
+                    {
+                        return;
+                    }
 
                     if (_rating == "0" && value.Length > 1)
                     {
@@ -76,6 +80,12 @@ namespace TravelAgent.MVVM.ViewModel
                             value = value[0] + value[2..];
                         }
                     }
+
+                    if (double.Parse(value) > 5.0)
+                    {
+                        return;
+                    }
+
                     _rating = value; 
                     OnPropertyChanged(); 
                 }
@@ -173,10 +183,10 @@ namespace TravelAgent.MVVM.ViewModel
                 }
 
                 MessageBox.Show("Accommodation modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                _navigationService.NavigateTo<AllAccommodationsViewModel>();
             }
 
             _createAccommodationCommandRunning = false;
+            _navigationService.NavigateTo<AllAccommodationsViewModel>();
         }
 
         private bool CanCreateAccommodation(object o)

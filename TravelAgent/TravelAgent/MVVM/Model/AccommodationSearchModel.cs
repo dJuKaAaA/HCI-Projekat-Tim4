@@ -40,7 +40,11 @@ namespace TravelAgent.MVVM.Model
                         _startRatingRange = "0";
                     }
 
-                    double.Parse(value);
+                    double doubleValue = double.Parse(value);
+                    if (value.Contains('-'))
+                    {
+                        return;
+                    }
 
                     if (_startRatingRange == "0" && value.Length > 1)
                     {
@@ -53,6 +57,12 @@ namespace TravelAgent.MVVM.Model
                             value = value[0] + value[2..];
                         }
                     }
+
+                    if (double.Parse(value) > 5.0)
+                    {
+                        return;
+                    }
+
                     _startRatingRange = value; 
                     OnPropertyChanged(); 
                 }
@@ -74,7 +84,15 @@ namespace TravelAgent.MVVM.Model
                         _endRatingRange = "0";
                     }
 
-                    double.Parse(value);
+                    double doubleValue = double.Parse(value);
+                    if (doubleValue > 5.0)
+                    {
+                        return;
+                    }
+                    if (value.Contains('-'))
+                    {
+                        return;
+                    }
 
                     if (_endRatingRange == "0" && value.Length > 1)
                     {
@@ -87,6 +105,12 @@ namespace TravelAgent.MVVM.Model
                             value = value[0] + value[2..];
                         }
                     }
+
+                    if (double.Parse(value) > 5.0)
+                    {
+                        return;
+                    }
+
                     _endRatingRange = value; 
                     OnPropertyChanged(); 
                 }
