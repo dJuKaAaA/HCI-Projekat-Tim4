@@ -119,7 +119,7 @@
                                 BorderThickness="2"
                                 Padding="20 10"
                                 CornerRadius="30">
-                            <TextBlock Text="{Binding Address}"
+                            <TextBlock Text="{Binding Location.Address}"
                                        VerticalAlignment="Center"
                                        FontSize="24"
                                        TextWrapping="Wrap"

@@ -25,7 +25,7 @@
             </Style>
 
             <!-- Colors -->
-            <Color x:Key="NotHighlightedColor">#999</Color>
+            <Color x:Key="NotHighlightedColor">#aaa</Color>
             <Color x:Key="HoveredOverColor">#777</Color>
             <Color x:Key="HighlightedColor">#19d</Color>
             <Color x:Key="TextBoxFontColor">#111</Color>

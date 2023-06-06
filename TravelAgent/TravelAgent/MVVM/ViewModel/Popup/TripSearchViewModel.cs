@@ -78,6 +78,14 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             set { _priceVisibility = value; OnPropertyChanged(); }
         }
 
+        private Visibility _resetSearchVisibility = Visibility.Collapsed;
+
+        public Visibility ResetSearchVisibility
+        {
+            get { return _resetSearchVisibility; }
+            set { _resetSearchVisibility = value; OnPropertyChanged(); }
+        }
+
         private readonly TripService _tripService;
 
         public AllTripsViewModel AllTripsViewModel { get; set; }
@@ -85,6 +93,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         private bool _searchCommandRunning = false;
 
         public ICommand SearchCommand { get; }
+        public ICommand ResetSearchCommand { get; }
         public ICommand AddSearchTypeCommand { get; }
         public ICommand RemoveSearchTypeCommand { get; }
         public ICommand CloseCommand { get; }
@@ -106,6 +115,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             _tripService = tripService;
 
             SearchCommand = new RelayCommand(OnSearch, CanSearch);
+            ResetSearchCommand = new RelayCommand(OnResetSearch, o => true);
             AddSearchTypeCommand = new RelayCommand(OnAddSearchType, o => !SearchTypes.Contains(SelectedSearchType));
             RemoveSearchTypeCommand = new RelayCommand(OnRemoveSearchType, CanRemoveSearchType);
             CloseCommand = new RelayCommand(OnClose, o => true);
@@ -183,6 +193,13 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             TripSearchModel = new Model.TripSearchModel();
         }
 
+        private async void OnResetSearch(object o)
+        {
+            await AllTripsViewModel.LoadAll();
+            ResetSearchVisibility = Visibility.Collapsed;
+            OnClose(this);
+        }
+
         private async void OnSearch(object o)
         {
             _searchCommandRunning = true;
@@ -195,10 +212,13 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 {
                     AllTripsViewModel.Trips.Add(trip);
                 }
+                ResetSearchVisibility = Visibility.Visible;
             }
             else
             {
-                await AllTripsViewModel.LoadAll();
+                MessageBox.Show("No criteria selected!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _searchCommandRunning = false;
+                return;
             }
 
             _searchCommandRunning = false;

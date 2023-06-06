@@ -254,9 +254,25 @@
 
         <TabControl IsTabStop="False"
                     SelectedIndex="{Binding SelectedTabIndex}">
+
             <TabItem Header="1) Departure and destination"
                      IsTabStop="False"
                      Padding="10">
+                <TabItem.Style>
+                    <Style TargetType="TabItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.AreLocationsSelected, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="False">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" Background="Red"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabItem.Style>
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -337,7 +353,8 @@
                         <StackPanel Grid.Column="1"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center">
-                            <StackPanel Margin="10 20">
+                            <StackPanel Margin="10 30">
+
                                 <component:ScalableTextBlock Text="Departure"
                                                              ScaleRate="2"
                                                              FontSize="30"/>
@@ -365,8 +382,17 @@
                                             Style="{StaticResource ScalingFormButtonTheme}"/>
 
                                 </Grid>
+                                <component:ScalableTextBlock Text="Selected departure:"
+                                                             ScaleRate="2"
+                                                             FontSize="22"/>
+                                <component:ScalableTextBlock Text="{Binding SelectedDepartureLocation.Address}"
+                                                             FontSize="26"
+                                                             Margin="20 0 0 0"
+                                                             TextWrapping="Wrap"
+                                                             ScaleRate="2"
+                                                             FontWeight="SemiBold"/>
                             </StackPanel>
-                            <StackPanel Margin="10 20">
+                            <StackPanel Margin="10 30">
                                 <component:ScalableTextBlock Text="Destination"
                                                              ScaleRate="2"
                                                              FontSize="30"/>
@@ -393,6 +419,15 @@
                                             Command="{Binding SearchDestinationFromAddressCommand}"
                                             Style="{StaticResource ScalingFormButtonTheme}"/>
                                 </Grid>
+                                <component:ScalableTextBlock Text="Selected destination:"
+                                                             FontSize="22"
+                                                             ScaleRate="2"/>
+                                <component:ScalableTextBlock Text="{Binding SelectedDestinationLocation.Address}"
+                                                             FontSize="26"
+                                                             Margin="20 0 0 0"
+                                                             TextWrapping="Wrap"
+                                                             ScaleRate="2"
+                                                             FontWeight="SemiBold"/>
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
@@ -782,6 +817,7 @@
 
             <TabItem Header="4) Accommodations"
                      IsTabStop="False"
+                     
                      Padding="10">
 
                 <Grid>
@@ -1096,6 +1132,7 @@
                                                              FontSize="32"
                                                              ScaleRate="2"/>
                                 <TextBox Style="{StaticResource FormTextBoxTheme}"
+                                         TextWrapping="Wrap"
                                          Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
 
                             </StackPanel>

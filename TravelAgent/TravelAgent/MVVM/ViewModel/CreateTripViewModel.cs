@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -136,7 +137,15 @@ namespace TravelAgent.MVVM.ViewModel
                         _price = "0";
                     }
 
-                    double.Parse(value);
+                    double doubleValue = double.Parse(value);
+                    if (doubleValue > 1000000.0)
+                    {
+                        return;
+                    }
+                    if (value.Contains('-'))
+                    {
+                        return;
+                    }
 
                     if (_price == "0" && value.Length > 1)
                     {
@@ -204,13 +213,37 @@ namespace TravelAgent.MVVM.ViewModel
             set { _selectedTouristAttractionForTrip = value; OnPropertyChanged(); }
         }
 
-        private int _selectedTabIndex;
+        private int _selectedTabIndex = 0;
 
         public int SelectedTabIndex
         {
             get { return _selectedTabIndex; }
-            set { _selectedTabIndex = value; OnPropertyChanged(); }
+            set 
+            {
+                if (!CanNavigateFromLocationSelection())
+                {
+                    MessageBox.Show("You should select the departure and destination before proceeding!" +
+                        "\nClick on the search button or double click the map to select a location", "Warning", 
+                        MessageBoxButton.OK, 
+                        MessageBoxImage.Warning);
+
+                }
+                _selectedTabIndex = value; 
+                OnPropertyChanged(); 
+
+                AreLocationsSelected = (SelectedDepartureLocation != null &&
+                    SelectedDestinationLocation != null) || _selectedTabIndex == 0;
+            }
         }
+
+        private bool _areLocationsSelected = true;
+
+        public bool AreLocationsSelected
+        {
+            get { return _areLocationsSelected; }
+            set { _areLocationsSelected = value; OnPropertyChanged(); }
+        }
+
 
         private readonly int _tabCount = 5;
 
@@ -232,6 +265,8 @@ namespace TravelAgent.MVVM.ViewModel
 
         public ICommand ToNextTabCommand { get; }
         public ICommand ToPreviousTabCommand { get; }
+        public ICommand TabControlPreviewKeyDownCommand { get; }
+        public ICommand TabShiftControlPreviewKeyDownCommand { get; }
         public ICommand CreateTripCommand { get; }
         public ICommand SearchDepartureFromAddressCommand { get; }
         public ICommand SearchDestinationFromAddressCommand { get; }
@@ -274,8 +309,8 @@ namespace TravelAgent.MVVM.ViewModel
 
             _navigationService.NavigationCompleted += OnNavigationCompleted;
 
-            ToNextTabCommand = new RelayCommand(o => SelectedTabIndex = (SelectedTabIndex + 1) % _tabCount, o => true);
-            ToPreviousTabCommand = new RelayCommand(o => SelectedTabIndex = (SelectedTabIndex - 1) % _tabCount, o => true);
+            ToNextTabCommand = new RelayCommand(o => IncrementTabIndex(), o => true);
+            ToPreviousTabCommand = new RelayCommand(o => DecrementTabIndex(), o => true);
             CreateTripCommand = new RelayCommand(OnCreateTrip, CanCreateTrip);
             SearchDepartureFromAddressCommand = new RelayCommand(OnSearchDepartureFromAddress, o => !string.IsNullOrWhiteSpace(DepartureAddress) && !_searchDepartureFromAddressCommandRunning);
             SearchDestinationFromAddressCommand = new RelayCommand(OnSearchDestinationFromAddress, o => !string.IsNullOrWhiteSpace(DestinationAddress) && !_searchDestinationFromAddressCommandRunning);
@@ -287,6 +322,36 @@ namespace TravelAgent.MVVM.ViewModel
             RemoveTouristAttractionCommand = new RelayCommand(OnRemoveTouristAttraction, o => SelectedTouristAttractionForTrip != null);
 
             SetUpForCreation();
+        }
+
+        private void IncrementTabIndex()
+        {
+            SelectedTabIndex = (SelectedTabIndex + 1) % _tabCount;
+        }
+
+        private void DecrementTabIndex()
+        {
+            if (SelectedTabIndex == 0)
+            {
+                SelectedTabIndex = _tabCount - 1;
+            }
+            else
+            {
+                --SelectedTabIndex;
+            }
+        }
+
+        public bool CanNavigateFromLocationSelection()
+        {
+            if (SelectedDepartureLocation == null || SelectedDestinationLocation == null)
+            {
+                if (SelectedTabIndex == 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private void OnRemoveRestaurant(object o)
@@ -514,10 +579,10 @@ namespace TravelAgent.MVVM.ViewModel
                 }
 
                 MessageBox.Show("Trip modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                _navigationService.NavigateTo<AllTripsViewModel>();
             }
 
             _createTripCommandRunning = false;
+            _navigationService.NavigateTo<AllTripsViewModel>();
         }
 
         private bool CanCreateTrip(object o)
@@ -526,6 +591,7 @@ namespace TravelAgent.MVVM.ViewModel
                 && ArrivalDate != null
                 && SelectedDepartureLocation != null
                 && SelectedDestinationLocation != null
+                && Price != "0"
                 && !_createTripCommandRunning;
         }
 

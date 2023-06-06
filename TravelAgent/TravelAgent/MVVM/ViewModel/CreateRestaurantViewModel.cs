@@ -146,10 +146,10 @@ namespace TravelAgent.MVVM.ViewModel
                 }
 
                 MessageBox.Show("Restaurant modified successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                _navigationService.NavigateTo<AllRestaurantsViewModel>();
             }
 
             _createRestaurantCommandRunning = false;
+            _navigationService.NavigateTo<AllRestaurantsViewModel>();
         }
 
         private bool CanCreateRestaurant(object o)

@@ -122,6 +122,14 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             }
         }
 
+        private Visibility _resetSearchVisibility = Visibility.Collapsed;
+
+        public Visibility ResetSearchVisibility
+        {
+            get { return _resetSearchVisibility; }
+            set { _resetSearchVisibility = value; OnPropertyChanged(); }
+        }
+
         private readonly RestaurantService _restaurantService;
 
         public AllRestaurantsViewModel AllRestaurantsViewModel { get; set; }
@@ -129,6 +137,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
         private bool _searchCommandRunning = false;
 
         public ICommand SearchCommand { get; }
+        public ICommand ResetSearchCommand { get; }
         public ICommand SelectStarsCommand { get; }
         public ICommand CloseCommand { get; }
 
@@ -140,6 +149,7 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             _restaurantService = restaurantService;
 
             SearchCommand = new RelayCommand(OnSearch, CanSearch);
+            ResetSearchCommand = new RelayCommand(OnResetSearch, o => true);
             SelectStarsCommand = new RelayCommand(OnSelectStars, o => true);
             CloseCommand = new RelayCommand(OnClose, o => true);
         }
@@ -162,6 +172,13 @@ namespace TravelAgent.MVVM.ViewModel.Popup
             }
         }
 
+        private async void OnResetSearch(object o)
+        {
+            await AllRestaurantsViewModel.LoadAll();
+            ResetSearchVisibility = Visibility.Collapsed;
+            OnClose(this);
+        }
+
         private async void OnSearch(object o)
         {
             _searchCommandRunning = true;
@@ -174,10 +191,13 @@ namespace TravelAgent.MVVM.ViewModel.Popup
                 {
                     AllRestaurantsViewModel.Restaurants.Add(restaurant);
                 }
+                ResetSearchVisibility = Visibility.Visible;
             }
             else
             {
-                await AllRestaurantsViewModel.LoadAll();
+                MessageBox.Show("No criteria selected!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _searchCommandRunning = false;
+                return;
             }
 
             _searchCommandRunning = false;
