@@ -616,7 +616,6 @@ namespace TravelAgent.MVVM.ViewModel
                     AccommodationsForTrip,
                     TouristAttractionsForTrip);
                 MessageBox.Show("Trip created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                SetValuesToDefault();
             }
             else
             {

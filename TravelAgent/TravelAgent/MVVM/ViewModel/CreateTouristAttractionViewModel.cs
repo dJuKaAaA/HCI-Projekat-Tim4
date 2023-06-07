@@ -38,6 +38,14 @@ namespace TravelAgent.MVVM.ViewModel
             set { _name = value; OnPropertyChanged(); }
         }
 
+        private Visibility _finalizationWarningVisibility = Visibility.Visible;
+
+        public Visibility FinalizationWarningVisibility
+        {
+            get { return _finalizationWarningVisibility; }
+            set { _finalizationWarningVisibility = value; OnPropertyChanged(); }
+        }
+
         private PickLocationPopup? _pickLocationPopup;
 
         private readonly Consts _consts;
@@ -91,7 +99,6 @@ namespace TravelAgent.MVVM.ViewModel
                 await _touristAttractionService.Create(newTouristAttraction);
 
                 MessageBox.Show("Tourist attraction created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                SetDefaultValues();
             }
             else
             {
@@ -125,9 +132,18 @@ namespace TravelAgent.MVVM.ViewModel
 
         private bool CanCreateTouristAttraction(object o)
         {
-            return !string.IsNullOrWhiteSpace(Name) &&
+            bool canCreateTouristAttraction = !string.IsNullOrWhiteSpace(Name) &&
                 Location != null &&
                 !_createTouristAttractionCommandRunning;
+            if (canCreateTouristAttraction)
+            {
+                FinalizationWarningVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                FinalizationWarningVisibility = Visibility.Visible;
+            }
+            return canCreateTouristAttraction;
         }
 
         private void SetDefaultValues()

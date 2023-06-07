@@ -136,11 +136,20 @@
 
                 </StackPanel>
 
-                <Button Content="Finish"
-                        Margin="0 10"
-                        Command="{Binding CreateTouristAttractionCommand}"
-                        Style="{StaticResource ScalingFormButtonTheme}"
-                        HorizontalAlignment="Center"/>
+                <StackPanel Margin="0 10">
+                    <Button Content="Finish"
+                            Command="{Binding CreateTouristAttractionCommand}"
+                            Style="{StaticResource ScalingFormButtonTheme}"
+                            HorizontalAlignment="Center"/>
+                    <component:ScalableTextBlock Text="All forms need to be filled properly to finalize creation!"
+                                                 HorizontalAlignment="Center"
+                                                 FontSize="24"
+                                                 Margin="0 5"
+                                                 ScaleRate="2"
+                                                 FontWeight="SemiBold"
+                                                 Foreground="Goldenrod"
+                                                 Visibility="{Binding FinalizationWarningVisibility}"/>
+                </StackPanel>
 
             </StackPanel>
         </ScrollViewer>
