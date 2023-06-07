@@ -22,7 +22,39 @@ namespace TravelAgent.Core
         public LocationModel? Location
         {
             get { return _location; }
-            set { _location = value; OnPropertyChanged(); }
+            set 
+            { 
+                _location = value; 
+
+                if (_location != null)
+                {
+                    LocationLabelVisibility = Visibility.Visible;
+                    NALocationVisibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    LocationLabelVisibility = Visibility.Collapsed;
+                    NALocationVisibility = Visibility.Visible;
+                }
+
+                OnPropertyChanged(); 
+            }
+        }
+
+        private Visibility _naLocationVisibility = Visibility.Visible;
+
+        public Visibility NALocationVisibility
+        {
+            get { return _naLocationVisibility; }
+            set { _naLocationVisibility = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _locationLabelVisibility = Visibility.Collapsed;
+
+        public Visibility LocationLabelVisibility
+        {
+            get { return _locationLabelVisibility; }
+            set { _locationLabelVisibility = value; OnPropertyChanged(); }
         }
 
         private string _address;

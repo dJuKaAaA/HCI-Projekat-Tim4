@@ -384,11 +384,19 @@
                                 </Grid>
                                 <component:ScalableTextBlock Text="Selected departure:"
                                                              ScaleRate="2"
+                                                             Margin="0 10 0 0"
                                                              FontSize="22"/>
+                                <component:ScalableTextBlock Text="N/A"
+                                                             ScaleRate="2"
+                                                             FontSize="26"
+                                                             Visibility="{Binding NADepartureVisibility}"
+                                                             Margin="20 0 0 0"
+                                                             FontWeight="SemiBold"/>
                                 <component:ScalableTextBlock Text="{Binding SelectedDepartureLocation.Address}"
                                                              FontSize="26"
                                                              Margin="20 0 0 0"
                                                              TextWrapping="Wrap"
+                                                             Visibility="{Binding SelectedDepartureLabelVisibility}"
                                                              ScaleRate="2"
                                                              FontWeight="SemiBold"/>
                             </StackPanel>
@@ -421,11 +429,19 @@
                                 </Grid>
                                 <component:ScalableTextBlock Text="Selected destination:"
                                                              FontSize="22"
+                                                             Margin="0 10 0 0"
                                                              ScaleRate="2"/>
+                                <component:ScalableTextBlock Text="N/A"
+                                                             ScaleRate="2"
+                                                             FontSize="26"
+                                                             Visibility="{Binding NADestinationVisibility}"
+                                                             Margin="20 0 0 0"
+                                                             FontWeight="SemiBold"/>
                                 <component:ScalableTextBlock Text="{Binding SelectedDestinationLocation.Address}"
                                                              FontSize="26"
                                                              Margin="20 0 0 0"
                                                              TextWrapping="Wrap"
+                                                             Visibility="{Binding SelectedDestinationLabelVisibility}"
                                                              ScaleRate="2"
                                                              FontWeight="SemiBold"/>
                             </StackPanel>
@@ -1131,20 +1147,33 @@
                                 <component:ScalableTextBlock Text="Price"
                                                              FontSize="32"
                                                              ScaleRate="2"/>
+                                <component:ScalableTextBlock Text="(Must be greater than 0)"
+                                                             FontSize="22"
+                                                             Margin="0 0 0 5"
+                                                             ScaleRate="2"/>
                                 <TextBox Style="{StaticResource FormTextBoxTheme}"
                                          TextWrapping="Wrap"
                                          Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
 
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal"
-                                        VerticalAlignment="Center"
+                            <StackPanel VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         Margin="0 20">
                                 <Button Margin="10 0"
                                         Content="Finish"
+                                        HorizontalAlignment="Center"
                                         Style="{StaticResource FormButtonTheme}"
                                         Command="{Binding CreateTripCommand}"/>
+                                <component:ScalableTextBlock Text="All forms need to be filled properly to finalize creation!"
+                                                             HorizontalAlignment="Center"
+                                                             FontSize="24"
+                                                             Margin="0 5"
+                                                             ScaleRate="2"
+                                                             FontWeight="SemiBold"
+                                                             Foreground="Goldenrod"
+                                                             Visibility="{Binding FinalizationWarningVisibility}"/>
+
                             </StackPanel>
 
                         </StackPanel>

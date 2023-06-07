@@ -60,7 +60,24 @@ namespace TravelAgent.MVVM.ViewModel
         public LocationModel? SelectedDepartureLocation
         {
             get { return _selectedDepartureLocation; }
-            set { _selectedDepartureLocation = value; OnPropertyChanged(); _changedDeparture = true; }
+            set 
+            {
+                _selectedDepartureLocation = value; 
+
+                if (_selectedDepartureLocation != null)
+                {
+                    SelectedDepartureLabelVisibility = Visibility.Visible;
+                    NADepartureVisibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    SelectedDepartureLabelVisibility = Visibility.Collapsed;
+                    NADepartureVisibility = Visibility.Visible;
+                }
+
+                OnPropertyChanged(); 
+                _changedDeparture = true;
+            }
         }
 
         private LocationModel? _selectedDestinationLocation;
@@ -68,7 +85,24 @@ namespace TravelAgent.MVVM.ViewModel
         public LocationModel? SelectedDestinationLocation
         {
             get { return _selectedDestinationLocation; }
-            set { _selectedDestinationLocation = value; OnPropertyChanged(); _changedDestination = true; }
+            set 
+            {
+                _selectedDestinationLocation = value; 
+
+                if (_selectedDestinationLocation != null)
+                {
+                    SelectedDestinationLabelVisibility = Visibility.Visible;
+                    NADestinationVisibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    SelectedDestinationLabelVisibility= Visibility.Collapsed;
+                    NADestinationVisibility = Visibility.Visible;
+                }
+
+                OnPropertyChanged(); 
+                _changedDestination = true; 
+            }
         }
 
         public ObservableCollection<string> Hours { get; set; }
@@ -244,6 +278,45 @@ namespace TravelAgent.MVVM.ViewModel
             set { _areLocationsSelected = value; OnPropertyChanged(); }
         }
 
+        private Visibility _finalizationWarningVisibility = Visibility.Visible;
+
+        public Visibility FinalizationWarningVisibility
+        {
+            get { return _finalizationWarningVisibility; }
+            set { _finalizationWarningVisibility = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _naDepartureVisibility = Visibility.Visible;
+
+        public Visibility NADepartureVisibility
+        {
+            get { return _naDepartureVisibility; }
+            set { _naDepartureVisibility = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _naDestinationVisibility = Visibility.Visible;
+
+        public Visibility NADestinationVisibility
+        {
+            get { return _naDestinationVisibility; }
+            set { _naDestinationVisibility = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _selectedDepartureLabelVisibility = Visibility.Collapsed;
+
+        public Visibility SelectedDepartureLabelVisibility
+        {
+            get { return _selectedDepartureLabelVisibility; }
+            set { _selectedDepartureLabelVisibility = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _selectedDestinationLabelVisibility = Visibility.Collapsed;
+
+        public Visibility SelectedDestinationLabelVisibility
+        {
+            get { return _selectedDestinationLabelVisibility; }
+            set { _selectedDestinationLabelVisibility = value; OnPropertyChanged(); }
+        }
 
         private readonly int _tabCount = 5;
 
@@ -587,12 +660,21 @@ namespace TravelAgent.MVVM.ViewModel
 
         private bool CanCreateTrip(object o)
         {
-            return DepartureDate != null 
+            bool canCreateTrip = DepartureDate != null 
                 && ArrivalDate != null
                 && SelectedDepartureLocation != null
                 && SelectedDestinationLocation != null
                 && Price != "0"
                 && !_createTripCommandRunning;
+            if (canCreateTrip)
+            {
+                FinalizationWarningVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                FinalizationWarningVisibility = Visibility.Visible;
+            }
+            return canCreateTrip;
         }
 
         private void SetValuesToDefault()

@@ -13,9 +13,10 @@
         Background="Transparent"
         AllowsTransparency="True"
         Loaded="Window_Loaded"
-        Title="PickLocationPopup" Height="750" Width="800">
+        Title="PickLocationPopup" Height="800" Width="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -27,7 +28,7 @@
                 CornerRadius="20"
                 BorderThickness="3"
                 BorderBrush="#999"
-                Grid.RowSpan="5"
+                Grid.RowSpan="6"
                 Grid.ColumnSpan="2"/>
         <Button Grid.Row="0"
                 Style="{StaticResource CloseButtonTheme}"
@@ -75,9 +76,25 @@
 
         </Grid>
 
+        <StackPanel Grid.Row="4"
+                    Margin="35 5">
+            <TextBlock Text="Selected location:"
+                       FontSize="22"/>
+            <TextBlock Text="N/A"
+                       Margin="20 0 0 0"
+                       FontWeight="SemiBold"
+                       Visibility="{Binding NALocationVisibility}"
+                       FontSize="26"/>
+            <TextBlock Text="{Binding Location.Address}"
+                       Margin="20 0 0 0"
+                       Visibility="{Binding LocationLabelVisibility}"
+                       FontWeight="SemiBold"
+                       FontSize="26"/>
+        </StackPanel>
+
         <Border Width="Auto"
                 BorderThickness="5"
-                Grid.Row="4"
+                Grid.Row="5"
                 Margin="20"
                 Grid.Column="0"
                 CornerRadius="3"

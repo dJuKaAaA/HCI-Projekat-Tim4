@@ -42,7 +42,7 @@ namespace TravelAgent.MVVM.View.Popup
         private void OnAddressSearched(object? sender, LocationModel location)
         {
             DrawPushpin(location);
-            _viewModel.Address = _viewModel.Location.Address;
+            _viewModel.Address = string.Empty;
             mapControl.Center = new Location(_viewModel.Location.Latitude, _viewModel.Location.Longitude);
             mapControl.ZoomLevel = 12;
         }
@@ -71,7 +71,7 @@ namespace TravelAgent.MVVM.View.Popup
 
             _viewModel.Location = await _viewModel.MapService.ReverseGeocode(clickedLocation.Latitude, clickedLocation.Longitude);
 
-            _viewModel.Address = _viewModel.Location.Address;
+            _viewModel.Address = string.Empty;
 
             DrawPushpin(_viewModel.Location);
         }

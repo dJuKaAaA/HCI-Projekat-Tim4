@@ -48,7 +48,6 @@ namespace TravelAgent.MVVM.View
                     _viewModel.TripForModification.Departure.Address,
                     "Departure");
                 _viewModel.SelectedDepartureLocation = _viewModel.TripForModification.Departure;
-                _viewModel.DepartureAddress = _viewModel.TripForModification.Departure.Address;
 
                 // settings up destination attributes
                 _destinationPushpin = _viewModel.MapService.CreatePushpin(
@@ -57,7 +56,6 @@ namespace TravelAgent.MVVM.View
                     _viewModel.TripForModification.Destination.Address,
                     "Destination");
                 _viewModel.SelectedDestinationLocation = _viewModel.TripForModification.Destination;
-                _viewModel.DestinationAddress = _viewModel.TripForModification.Destination.Address;
 
                 // creating the line that connects departure and destination
                 _tripLine = _viewModel.MapService.CreatePushpinLine(_departurePushpin.Location, _destinationPushpin.Location);
@@ -100,7 +98,7 @@ namespace TravelAgent.MVVM.View
                     "Destination");
                 mapControl.Children.Add(_destinationPushpin);
                 _viewModel.SelectedDestinationLocation = location;
-                _viewModel.DestinationAddress = location.Address;
+                _viewModel.DestinationAddress = string.Empty;
 
                 _tripLine = mapService.CreatePushpinLine(_departurePushpin.Location, _destinationPushpin.Location);
                 mapControl.Children.Add(_tripLine);
@@ -190,7 +188,7 @@ namespace TravelAgent.MVVM.View
                     "Departure");
                 mapControl.Children.Add(_departurePushpin);
                 _viewModel.SelectedDepartureLocation = location;
-                _viewModel.DepartureAddress = location.Address;
+                _viewModel.DepartureAddress = string.Empty;
             }
             else
             {
@@ -208,7 +206,7 @@ namespace TravelAgent.MVVM.View
                     "Departure");
                 mapControl.Children.Add(_departurePushpin);
                 _viewModel.SelectedDepartureLocation = location;
-                _viewModel.DepartureAddress = location.Address;
+                _viewModel.DepartureAddress = string.Empty;
 
                 _tripLine = mapService.CreatePushpinLine(_departurePushpin.Location, _destinationPushpin.Location);
                 mapControl.Children.Add(_tripLine);
@@ -241,7 +239,7 @@ namespace TravelAgent.MVVM.View
                     "Departure");
                 mapControl.Children.Add(_departurePushpin);
                 _viewModel.SelectedDepartureLocation = location;
-                _viewModel.DepartureAddress = location.Address;
+                _viewModel.DepartureAddress = string.Empty;
             }
             else if (_destinationPushpin == null)
             {
@@ -252,7 +250,7 @@ namespace TravelAgent.MVVM.View
                     "Destination");
                 mapControl.Children.Add(_destinationPushpin);
                 _viewModel.SelectedDestinationLocation = location;
-                _viewModel.DestinationAddress = location.Address;
+                _viewModel.DestinationAddress = string.Empty;
 
                 _tripLine = mapService.CreatePushpinLine(_departurePushpin.Location, _destinationPushpin.Location);
                 mapControl.Children.Add(_tripLine);
@@ -273,7 +271,7 @@ namespace TravelAgent.MVVM.View
                 _viewModel.SelectedDepartureLocation = location;
                 _viewModel.SelectedDestinationLocation = null;
 
-                _viewModel.DepartureAddress = location.Address;
+                _viewModel.DepartureAddress = string.Empty;
                 _viewModel.DestinationAddress = string.Empty;
 
                 mapControl.Children.Add(_departurePushpin);
