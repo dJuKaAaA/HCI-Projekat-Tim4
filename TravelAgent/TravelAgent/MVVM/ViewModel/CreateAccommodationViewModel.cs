@@ -93,6 +93,14 @@ namespace TravelAgent.MVVM.ViewModel
             }
         }
 
+        private Visibility _finalizationWarningVisibility = Visibility.Visible;
+
+        public Visibility FinalizationWarningVisibility
+        {
+            get { return _finalizationWarningVisibility; }
+            set { _finalizationWarningVisibility = value; OnPropertyChanged(); }
+        }
+
         private PickLocationPopup? _pickLocationPopup;
 
         private readonly Consts _consts;
@@ -156,7 +164,6 @@ namespace TravelAgent.MVVM.ViewModel
                 await _accommodationService.Create(newAccommodation);
 
                 MessageBox.Show("Accommodation created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                SetDefaultValues();
             }
             else
             {
@@ -191,9 +198,18 @@ namespace TravelAgent.MVVM.ViewModel
 
         private bool CanCreateAccommodation(object o)
         {
-            return !string.IsNullOrWhiteSpace(Name) &&
+            bool canCreateAccommodation = !string.IsNullOrWhiteSpace(Name) &&
                 Location != null &&
                 !_createAccommodationCommandRunning;
+            if (canCreateAccommodation)
+            {
+                FinalizationWarningVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                FinalizationWarningVisibility = Visibility.Visible;
+            }
+            return canCreateAccommodation;
         }
 
         private void SetDefaultValues()
