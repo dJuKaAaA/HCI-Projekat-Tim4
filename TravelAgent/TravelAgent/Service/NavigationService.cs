@@ -24,14 +24,20 @@ namespace TravelAgent.Service
 
         private Func<Type, ViewModel> _viewModelFactory;
 
+        public event EventHandler<Core.NavigationEventArgs> NavigationCompleted;
+
         public NavigationService(Func<Type, ViewModel> viewModelFactory)
         {
             _viewModelFactory = viewModelFactory;
         }
 
-        public void NavigateTo<TViewModel>() where TViewModel : ViewModel
+        public void NavigateTo<TViewModel>(object? param = null) where TViewModel : ViewModel
         {
-            CurrentViewModel = _viewModelFactory.Invoke(typeof(TViewModel));
+            if (typeof(TViewModel) != CurrentViewModel?.GetType())
+            {
+                CurrentViewModel = _viewModelFactory.Invoke(typeof(TViewModel));
+                NavigationCompleted?.Invoke(this, new Core.NavigationEventArgs(typeof(TViewModel), param));
+            }
         }
     }
 }

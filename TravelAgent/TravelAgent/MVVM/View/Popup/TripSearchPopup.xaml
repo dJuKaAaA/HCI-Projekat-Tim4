@@ -1,0 +1,229 @@
+﻿<Window x:Class="TravelAgent.MVVM.View.Popup.TripSearchPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgent.MVVM.View.Popup"
+        mc:Ignorable="d"
+        xmlns:core="clr-namespace:TravelAgent.Core"
+        xmlns:converter="clr-namespace:TravelAgent.Converter"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="TripSearchPopup" Height="450" Width="800">
+
+    <Window.Resources>
+        <converter:TripSearchTypeValueConverter x:Key="TripSearchTypeValueConverter"/>
+    </Window.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#fff"
+                CornerRadius="20"
+                BorderThickness="3"
+                BorderBrush="#999"
+                Grid.RowSpan="3"/>
+
+        <Button Style="{StaticResource CloseButtonTheme}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Command="{Binding CloseCommand}"
+                Margin="0 30 30 0"/>
+
+        <TextBlock Text="Search user trips"
+                   HorizontalAlignment="Center"
+                   FontSize="32"
+                   Grid.Row="1"
+                   Margin="0 10"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="2"
+                      Margin="20 10">
+            
+            <StackPanel Margin="30 10">
+                <Border CornerRadius="25"
+                        Padding="15 10"
+                        BorderBrush="{StaticResource DefaultBorderBrush}"
+                        BorderThickness="2">
+                    <StackPanel>
+                        <TextBlock Text="Selected search criteria" 
+                                   FontWeight="SemiBold"/>
+                        <ListView ItemsSource="{Binding SearchTypes}"
+                                  BorderThickness="0"
+                                  Margin="0 20 0 0"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Style.Setters>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <Border CornerRadius="25"
+                                                            BorderThickness="2"
+                                                            Padding="10"
+                                                            Margin="5"
+                                                            Background="Transparent"
+                                                            x:Name="CUSTOM_PART_Border"
+                                                            BorderBrush="{StaticResource NotHighlightedBrush}">
+                                                        <Button x:Name="CUSTOM_PART_Button"
+                                                                Command="{Binding DataContext.RemoveSearchTypeCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                CommandParameter="{Binding .}">
+                                                            <Button.Style>
+                                                                <Style TargetType="Button">
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="Button">
+                                                                                <Grid>
+                                                                                    <Grid.ColumnDefinitions>
+                                                                                        <ColumnDefinition/>
+                                                                                        <ColumnDefinition Width="Auto"/>
+                                                                                    </Grid.ColumnDefinitions>
+
+                                                                                    <TextBlock Text="{Binding ., Converter={StaticResource TripSearchTypeValueConverter}}"
+                                                                                               Grid.Column="0"
+                                                                                               VerticalAlignment="Center"
+                                                                                               Margin="0 0 5 0"/>
+                                                                                    <TextBlock Grid.Column="1"
+                                                                                               VerticalAlignment="Center"
+                                                                                               Text="✖"/>
+                                                                                </Grid>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="CUSTOM_PART_Border" Property="BorderBrush" Value="#a00"/>
+                                                            <Setter Property="Foreground" Value="#a00"/>
+                                                            <Setter TargetName="CUSTOM_PART_Button" Property="Foreground" Value="#a00"/>
+                                                            <Setter Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style.Setters>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </StackPanel>
+                </Border>
+
+                <Grid Margin="0 20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox Grid.Column="0"
+                              Margin="0 0 10 0"
+                              VerticalAlignment="Center"
+                              ItemsSource="{Binding AllSearchTypes}"
+                              SelectedItem="{Binding SelectedSearchType}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ., Converter={StaticResource TripSearchTypeValueConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Grid.Column="1"
+                            Content="Add filter"
+                            Command="{Binding AddSearchTypeCommand}"
+                            Style="{StaticResource FormButtonTheme}"/>
+                </Grid>
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding DepartureVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:TripSearchType.Departure}, Converter={StaticResource TripSearchTypeValueConverter}}"
+                               FontSize="24"/>
+                    <TextBox Text="{Binding TripSearchModel.DepartureSearchKeyword, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding DestinationVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:TripSearchType.Destination}, Converter={StaticResource TripSearchTypeValueConverter}}"
+                               FontSize="24"/>
+                    <TextBox Text="{Binding TripSearchModel.DestinationSearchKeyword, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding DepartureDateVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:TripSearchType.DepartureDateTime}, Converter={StaticResource TripSearchTypeValueConverter}}"
+                               FontSize="24"/>
+                    <DatePicker SelectedDate="{Binding TripSearchModel.SelectedDepartureDate}"
+                                Style="{StaticResource CustomDatePickerTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding ArrivalDateVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:TripSearchType.ArrivalDateTime}, Converter={StaticResource TripSearchTypeValueConverter}}"
+                               FontSize="24"/>
+                    <DatePicker SelectedDate="{Binding TripSearchModel.SelectedArrivalDate}"
+                                Style="{StaticResource CustomDatePickerTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding PriceVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:TripSearchType.Price}, Converter={StaticResource TripSearchTypeValueConverter}}"
+                               FontSize="24"/>
+                    <Grid Margin="0 15">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0"
+                                    Margin="10 0">
+                            <TextBlock Text="Start range"
+                                       FontSize="24"/>
+                            <TextBox Style="{StaticResource FormTextBoxTheme}"
+                                     Text="{Binding TripSearchModel.StartPriceRange, UpdateSourceTrigger=PropertyChanged}"/>
+                            
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    Margin="10 0">
+                            <TextBlock Text="End range"
+                                       FontSize="24"/>
+                            <TextBox Style="{StaticResource FormTextBoxTheme}"
+                                     Text="{Binding TripSearchModel.EndPriceRange, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <WrapPanel HorizontalAlignment="Center"
+                           Margin="0 20">
+                    <Button Style="{StaticResource FormButtonTheme}"
+                            Content="Search"
+                            Margin="10 0"
+                            Command="{Binding SearchCommand}"/>
+                    <Button Style="{StaticResource FormButtonTheme}"
+                            Content="Reset"
+                            Margin="10 0"
+                            Visibility="{Binding ResetSearchVisibility}"
+                            Command="{Binding ResetSearchCommand}"/>
+
+                </WrapPanel>
+
+            </StackPanel>
+
+        </ScrollViewer>
+
+    </Grid>
+</Window>

@@ -1,0 +1,230 @@
+﻿<Window x:Class="TravelAgent.MVVM.View.Popup.RestaurantSearchPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgent.MVVM.View.Popup"
+        mc:Ignorable="d"
+        xmlns:core="clr-namespace:TravelAgent.Core"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="RestaurantSearchPopup" Height="450" Width="800">
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#fff"
+                CornerRadius="20"
+                BorderThickness="3"
+                BorderBrush="#999"
+                Grid.RowSpan="3"/>
+
+        <Button Style="{StaticResource CloseButtonTheme}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Command="{Binding CloseCommand}"
+                Margin="0 30 30 0"/>
+
+        <TextBlock Text="Search restaurants"
+                   HorizontalAlignment="Center"
+                   FontSize="32"
+                   Grid.Row="1"
+                   Margin="0 10"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="2"
+                      Margin="20 10">
+            
+            <StackPanel Margin="30 10">
+                <WrapPanel Margin="20 10"
+                           Orientation="Vertical"
+                           HorizontalAlignment="Center">
+                    <CheckBox Content="{Binding Source={x:Static core:RestaurantSearchType.Name}}"
+                              IsChecked="{Binding IsNameChecked}"
+                              Margin="10"/>
+                    <CheckBox Content="{Binding Source={x:Static core:RestaurantSearchType.Address}}"
+                              IsChecked="{Binding IsAddressChecked}"
+                              Margin="10"/>
+                    <CheckBox Content="{Binding Source={x:Static core:RestaurantSearchType.Stars}}"
+                              IsChecked="{Binding IsStarsChecked}"
+                              Margin="10"/>
+
+                </WrapPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding NameVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:RestaurantSearchType.Name}}"
+                               FontSize="24"/>
+                    <TextBox Text="{Binding RestaurantSearchModel.NameKeyword, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding AddressVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:RestaurantSearchType.Address}}"
+                               FontSize="24"/>
+                    <TextBox Text="{Binding RestaurantSearchModel.AddressKeyword, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding StarsVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:RestaurantSearchType.Stars}}"
+                               FontSize="24"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0"
+                                Command="{Binding SelectStarsCommand}"
+                                CommandParameter="1">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Image Source="../../../Image/Icon/star.png"/>
+
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding RestaurantSearchModel.Stars, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=0}" Value="False">
+                                                        <Setter Property="Opacity" Value="0.5"/>
+                                                    </DataTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Grid.Column="1"
+                                Command="{Binding SelectStarsCommand}"
+                                CommandParameter="2">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Image Source="../../../Image/Icon/star.png"/>
+
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding RestaurantSearchModel.Stars, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=1}" Value="False">
+                                                        <Setter Property="Opacity" Value="0.5"/>
+                                                    </DataTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Grid.Column="2"
+                                Command="{Binding SelectStarsCommand}"
+                                CommandParameter="3">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Image Source="../../../Image/Icon/star.png"/>
+
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding RestaurantSearchModel.Stars, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=2}" Value="False">
+                                                        <Setter Property="Opacity" Value="0.5"/>
+                                                    </DataTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Grid.Column="3"
+                                Command="{Binding SelectStarsCommand}"
+                                CommandParameter="4">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Image Source="../../../Image/Icon/star.png"/>
+
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding RestaurantSearchModel.Stars, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=3}" Value="False">
+                                                        <Setter Property="Opacity" Value="0.5"/>
+                                                    </DataTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Grid.Column="4"
+                                Command="{Binding SelectStarsCommand}"
+                                CommandParameter="5">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Image Source="../../../Image/Icon/star.png"/>
+
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding RestaurantSearchModel.Stars, Converter={StaticResource GreaterThanValueConverter}, ConverterParameter=4}" Value="False">
+                                                        <Setter Property="Opacity" Value="0.5"/>
+                                                    </DataTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <WrapPanel HorizontalAlignment="Center"
+                           Margin="0 20">
+                    <Button Style="{StaticResource FormButtonTheme}"
+                            Content="Search"
+                            Margin="10 0"
+                            Command="{Binding SearchCommand}"/>
+                    <Button Style="{StaticResource FormButtonTheme}"
+                            Content="Reset"
+                            Margin="10 0"
+                            Visibility="{Binding ResetSearchVisibility}"
+                            Command="{Binding ResetSearchCommand}"/>
+
+                </WrapPanel>
+
+            </StackPanel>
+
+        </ScrollViewer>
+    </Grid>
+</Window>

@@ -14,7 +14,6 @@ namespace TravelAgent.Service
     {
         private readonly Consts _consts;
         private readonly DatabaseExecutionService _databaseExcecutionService;
-        private readonly string _tableName = "users";
 
         public UserService(
             Consts consts,
@@ -24,52 +23,59 @@ namespace TravelAgent.Service
             _databaseExcecutionService = databaseExcecutionService;
         }
 
-        private UserModel ConvertToUser(SqliteDataReader reader)
-        {
-            return new UserModel()
-            {
-                Id = int.Parse(reader.GetString(0)),
-                Name = reader.GetString(1),
-                Surname = reader.GetString(2),
-                Username = reader.GetString(3),
-            };
-        }
-
         public async Task<IEnumerable<UserModel>> GetAll()
         {
-            string command = $"SELECT * FROM {_tableName}";
+            string command = $"SELECT * FROM {_consts.UsersTableName}";
             List<UserModel> collection = new List<UserModel>();
-            await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
+            await _databaseExcecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
             {
                 while (reader.Read())
                 {
-                    UserModel user = ConvertToUser(reader);
+                    UserModel user = new UserModel() 
+                    { 
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1), 
+                        Surname = reader.GetString(2), 
+                        Username = reader.GetString(3)
+                    };
                     collection.Add(user);
                 }
             });
             return collection;
         }
 
-        public async Task Login(string username, string password)
+        public async Task<UserModel> Login(string username, string password)
         {
-            string command = $"SELECT * FROM {_tableName} WHERE username = '{username}' AND password = '{password}'";
-            bool exists = true;
-            await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, command, (reader) =>
+            string command = $"SELECT * FROM {_consts.UsersTableName} WHERE username = '{username}' AND password = '{password}'";
+            UserModel? user = null;
+            await _databaseExcecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, command, (reader) =>
             {
-                exists = reader.Read();
+                while (reader.Read())
+                {
+                    user = new UserModel() 
+                    { 
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1), 
+                        Surname = reader.GetString(2), 
+                        Username = reader.GetString(3),
+                        Type = (UserType)Enum.Parse(typeof(UserType), reader.GetString(5))
+                    };
+                }
             });
 
-            if (!exists)
+            if (user == null)
             {
                 throw new DatabaseResponseException("Invalid credentials!");
             }
+
+            return user;
         }
 
         public async Task Create(UserModel user, string password)
         {
-            string validationQuery = $"SELECT * FROM {_tableName} WHERE username = '{user.Username}'";
+            string validationQuery = $"SELECT * FROM {_consts.UsersTableName} WHERE username = '{user.Username}'";
             bool taken = false;
-            await _databaseExcecutionService.ExecuteQueryCommand(_consts.ConnectionString, validationQuery, (reader) =>
+            await _databaseExcecutionService.ExecuteQueryCommand(_consts.SqliteConnectionString, validationQuery, (reader) =>
             {
                 taken = reader.Read();
             });
@@ -79,9 +85,9 @@ namespace TravelAgent.Service
                 throw new DatabaseResponseException("Username is taken!");
             }
             
-            string insertCommand = $"INSERT INTO {_tableName} (name, surname, username, password) " +
+            string command = $"INSERT INTO {_consts.UsersTableName} (name, surname, username, password) " +
                 $"VALUES ('{user.Name}', '{user.Surname}', '{user.Username}', '{password}')";
-            await _databaseExcecutionService.ExecuteNonQueryCommand(_consts.ConnectionString, insertCommand);
+            await _databaseExcecutionService.ExecuteNonQueryCommand(_consts.SqliteConnectionString, command);
 
         }
     }

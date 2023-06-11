@@ -1,0 +1,92 @@
+﻿<Window x:Class="TravelAgent.MVVM.View.Popup.TouristAttractionSearchPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgent.MVVM.View.Popup"
+        xmlns:core="clr-namespace:TravelAgent.Core"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        mc:Ignorable="d"
+        Title="TouristAttractionSearchPopup" Height="450" Width="800">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#fff"
+                CornerRadius="20"
+                BorderThickness="3"
+                BorderBrush="#999"
+                Grid.RowSpan="3"/>
+
+        <Button Style="{StaticResource CloseButtonTheme}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Command="{Binding CloseCommand}"
+                Margin="0 30 30 0"/>
+
+        <TextBlock Text="Search restaurants"
+                   HorizontalAlignment="Center"
+                   FontSize="32"
+                   Grid.Row="1"
+                   Margin="0 10"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="2"
+                      Margin="20 10">
+            
+            <StackPanel Margin="30 10">
+                <WrapPanel Margin="20 10"
+                           Orientation="Vertical"
+                           HorizontalAlignment="Center">
+                    <CheckBox Content="{Binding Source={x:Static core:TouristAttractionSearchType.Name}}"
+                              IsChecked="{Binding IsNameChecked}"
+                              Margin="10"/>
+                    <CheckBox Content="{Binding Source={x:Static core:TouristAttractionSearchType.Address}}"
+                              IsChecked="{Binding IsAddressChecked}"
+                              Margin="10"/>
+                </WrapPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding NameVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:TouristAttractionSearchType.Name}}"
+                               FontSize="24"/>
+                    <TextBox Text="{Binding TouristAttractionSearchModel.NameKeyword, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <StackPanel Margin="20 10"
+                            Visibility="{Binding AddressVisibility}">
+                    <TextBlock Text="{Binding Source={x:Static core:TouristAttractionSearchType.Address}}"
+                               FontSize="24"/>
+                    <TextBox Text="{Binding TouristAttractionSearchModel.AddressKeyword, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource FormTextBoxTheme}"/>
+                </StackPanel>
+
+                <WrapPanel HorizontalAlignment="Center"
+                           Margin="0 20">
+                    <Button Style="{StaticResource FormButtonTheme}"
+                            Content="Search"
+                            Margin="10 0"
+                            Command="{Binding SearchCommand}"/>
+                    <Button Style="{StaticResource FormButtonTheme}"
+                            Content="Reset"
+                            Margin="10 0"
+                            Visibility="{Binding ResetSearchVisibility}"
+                            Command="{Binding ResetSearchCommand}"/>
+
+                </WrapPanel>
+
+            </StackPanel>
+
+        </ScrollViewer>
+        
+    </Grid>
+</Window>

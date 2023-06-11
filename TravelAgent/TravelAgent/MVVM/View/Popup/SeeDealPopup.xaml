@@ -1,0 +1,137 @@
+﻿<Window x:Class="TravelAgent.MVVM.View.Popup.SeeDealPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgent.MVVM.View.Popup"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        xmlns:popupvm="clr-namespace:TravelAgent.MVVM.ViewModel.Popup"
+        mc:Ignorable="d"
+        Title="SeeDealPopup" Height="600" Width="1000"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Loaded="Popup_Loaded">
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#fff"
+                CornerRadius="20"
+                BorderThickness="3"
+                BorderBrush="#999"
+                Grid.Column="0"
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"/>
+
+        <Button Style="{StaticResource CloseButtonTheme}"
+                Margin="1 30 30 1"
+                Grid.Column="1"
+                Grid.Row="0"
+                Command="{Binding CloseCommand}"/>
+
+        <Border Width="Auto"
+                BorderThickness="5"
+                Margin="20"
+                Grid.RowSpan="2"
+                CornerRadius="3"
+                BorderBrush="{DynamicResource DefaultBorderBrush}">
+            <m:Map x:Name="mapControl" 
+                   CredentialsProvider="AlMtjm3qYzhPYIYWWq76wu7Be68h6ebShf43PYwn1RH8a05_Ksk_mz9_M5m71Rmr" 
+                   ZoomLevel="7"/>
+
+        </Border>
+
+        <StackPanel VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Margin="20"
+                    Grid.Row="1"
+                    Grid.Column="1">
+
+            <Border Margin="20 40"
+                    BorderBrush="{StaticResource DefaultBorderBrush}"
+                    BorderThickness="2"
+                    Padding="20"
+                    CornerRadius="25">
+                <StackPanel>
+                    <TextBlock Text="{Binding Trip.Departure.Address}"
+                               HorizontalAlignment="Center"
+                               FontSize="28"
+                               TextWrapping="Wrap"
+                               FontWeight="SemiBold"/>
+                    <TextBlock Text="↓"
+                               HorizontalAlignment="Center"
+                               FontSize="28"
+                               TextWrapping="Wrap"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Trip.Destination.Address}"
+                               HorizontalAlignment="Center"
+                               FontSize="28"
+                               TextWrapping="Wrap"
+                               FontWeight="SemiBold"/>
+                    
+                </StackPanel>
+                
+            </Border>
+            <Grid>
+                <TextBlock Text="Price  →"
+                           HorizontalAlignment="Left"
+                           FontWeight="SemiBold"
+                           FontSize="30"/>
+                <TextBlock Text=""
+                           FontSize="30"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Trip.Price, Converter={StaticResource DinarValueConverter}}"
+                           FontSize="30"
+                           HorizontalAlignment="Right"/>
+            </Grid>
+            <Grid>
+                <TextBlock Text="Duration →"
+                           FontSize="30"
+                           HorizontalAlignment="Left"
+                           FontWeight="SemiBold"
+                           FontStyle="Italic"/>
+                <TextBlock Text="{Binding TripDuration, Converter={StaticResource HoursValueConverter}}"
+                           FontSize="30"
+                           HorizontalAlignment="Right"
+                           FontStyle="Italic"/>
+            </Grid>
+            <TextBlock Text="Only travelers can purchase and reserve trips."
+                       TextWrapping="Wrap"
+                       Foreground="#888"
+                       FontStyle="Italic"
+                       Margin="10 40"
+                       Visibility="{Binding CannotPurchaseTextVisibility}"
+                       HorizontalAlignment="Center"
+                       FontSize="32"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0 20"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding PurchaseButtonVisibility}">
+                <Button Content="Purchase"
+                        FontWeight="SemiBold"
+                        Margin="10 20"
+                        Command="{Binding PurchaseTripCommand}"
+                        Style="{StaticResource FormButtonTheme}"/>
+                <Button Content="Reserve"
+                        FontWeight="SemiBold"
+                        Margin="10 20"
+                        Command="{Binding ReserveTripCommand}"
+                        Style="{StaticResource FormButtonTheme}"/>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Window>
