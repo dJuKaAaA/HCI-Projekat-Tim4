@@ -40,6 +40,18 @@ namespace TravelAgent.Core
         public string AccommodationPushpinIcon { get; }
         public string TouristAttractionPushpinIcon { get; }
 
+        // help documentation
+        public string PathToAccommodationsTravelerHelp { get; }
+        public string PathToAccommodationsAgentHelp { get; }
+        public string PathToRestaurantsTravelerHelp { get; }
+        public string PathToRestaurantsAgentHelp { get; }
+        public string PathToTouristAttractionsTravelerHelp { get; }
+        public string PathToTouristAttractionsAgentHelp { get; }
+        public string PathToTripsTravelerHelp { get; }
+        public string PathToTripsAgentHelp { get; }
+        public string PathToAcquiredTripsTravelerHelp { get; }
+        public string PathToAcquiredTripsAgentHelp { get; }
+
         public Consts()
         {
             ProjectRootRelativePath = "../../..";
@@ -69,6 +81,18 @@ namespace TravelAgent.Core
             RestaurantPushpinIcon = "restaurant-pushpin.png";
             AccommodationPushpinIcon = "accommodation-pushpin.png";
             TouristAttractionPushpinIcon = "tourist-attraction-pushpin.png";
+
+            PathToAccommodationsTravelerHelp = $"{ProjectRootRelativePath}/HelpDocumentation/Accommodation/Traveler/accommodations.html";
+            PathToAccommodationsAgentHelp = $"{ProjectRootRelativePath}/HelpDocumentation/Accommodation/Agent/accommodations.html";
+            PathToRestaurantsTravelerHelp = $"{ProjectRootRelativePath}/HelpDocumentation/Restaurant/Traveler/restaurants.html";
+            PathToRestaurantsAgentHelp = $"{ProjectRootRelativePath}/HelpDocumentation/Restaurant/Agent/restaurants.html";
+            PathToTouristAttractionsTravelerHelp = $"{ProjectRootRelativePath}/HelpDocumentation/TouristAttraction/Traveler/tourist_attractions.html";
+            PathToTouristAttractionsAgentHelp = $"{ProjectRootRelativePath}/HelpDocumentation/TouristAttraction/Agent/tourist_attractions.html";
+            PathToTripsTravelerHelp = $"{ProjectRootRelativePath}/HelpDocumentation/Trip/Traveler/trips.html";
+            PathToTripsAgentHelp = $"{ProjectRootRelativePath}/HelpDocumentation/Trip/Agent/trips.html";
+            PathToAcquiredTripsTravelerHelp = $"{ProjectRootRelativePath}/HelpDocumentation/AcquiredTrip/Traveler/acquired_trips.html";
+            PathToAcquiredTripsAgentHelp = $"{ProjectRootRelativePath}/HelpDocumentation/AcquiredTrip/Agent/acquired_trips.html";
+
         }
     }
 }
