@@ -1,6 +1,9 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +50,7 @@ namespace TravelAgent.MVVM.ViewModel
         private static KeyBinding? _openSearchKeyBinding;
 
         public NavigationService NavigationService { get; }
+        private readonly Consts _consts;
 
         public ICommand OpenAllTripsViewCommand { get; }
         public ICommand OpenAllTouristAttractionsViewCommand { get; }
@@ -60,9 +64,11 @@ namespace TravelAgent.MVVM.ViewModel
         public ICommand LogoutCommand { get; }
 
         public MainViewModel(
-            NavigationService navigationService)
+            NavigationService navigationService,
+            Consts consts)
         {
             NavigationService = navigationService;
+            _consts = consts;
 
             OpenAllTripsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllTripsViewModel>(), o => true);
             OpenAllTouristAttractionsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllTouristAttractionsViewModel>(), o => true);
@@ -70,7 +76,7 @@ namespace TravelAgent.MVVM.ViewModel
             OpenAllAccomodationsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<AllAccommodationsViewModel>(), o => true);
             OpenUserTripsViewCommand = new RelayCommand(o => NavigationService.NavigateTo<UserTripsViewModel>(), o => SignedUser != null);
             OpenMapsCommand = new RelayCommand(o => NavigationService.NavigateTo<MapViewModel>(), o => true);
-            OpenHelpCommand = new RelayCommand(o => MessageBox.Show("This is very helpful :)"), o => SignedUser != null);
+            OpenHelpCommand = new RelayCommand(OnOpenHelp, o => SignedUser != null);
             OpenLoginViewCommand = new RelayCommand(o => NavigationService.NavigateTo<LoginViewModel>(), o => SignedUser == null);
             LogoutCommand = new RelayCommand(OnLogout, o => SignedUser != null);
 
@@ -158,6 +164,74 @@ namespace TravelAgent.MVVM.ViewModel
                 _openCreateViewKeyBinding = null;
                 _openModifyViewKeyBinding = null;
                 _deleteEntityKeyBinding = null;
+            }
+        }
+
+        private void OnOpenHelp(object o)
+        {
+            // setting the default documentation to open
+            string helpDocPath = _consts.PathToAccommodationsTravelerHelp;
+            if (SignedUser?.Type == UserType.Agent)
+            {
+                helpDocPath = _consts.PathToAccommodationsAgentHelp;
+                if (NavigationService.CurrentViewModel.GetType() == typeof(AllTripsViewModel))
+                {
+                    helpDocPath = _consts.PathToTripsAgentHelp;
+                }
+                else if (NavigationService.CurrentViewModel.GetType() == typeof(AllRestaurantsViewModel))
+                {
+                    helpDocPath = _consts.PathToRestaurantsAgentHelp;
+                }
+                else if (NavigationService.CurrentViewModel.GetType() == typeof(AllAccommodationsViewModel))
+                {
+                    helpDocPath = _consts.PathToAccommodationsAgentHelp;
+                }
+                else if (NavigationService.CurrentViewModel.GetType() == typeof(AllTouristAttractionsViewModel))
+                {
+                    helpDocPath = _consts.PathToTouristAttractionsAgentHelp;
+                }
+                else if (NavigationService.CurrentViewModel.GetType() == typeof(UserTripsViewModel))
+                {
+                    helpDocPath = _consts.PathToAcquiredTripsAgentHelp;
+                }
+            }
+            else
+            {
+                helpDocPath = _consts.PathToAccommodationsTravelerHelp;
+                if (NavigationService.CurrentViewModel.GetType() == typeof(AllTripsViewModel))
+                {
+                    helpDocPath = _consts.PathToTripsTravelerHelp;
+                }
+                else if (NavigationService.CurrentViewModel.GetType() == typeof(AllRestaurantsViewModel))
+                {
+                    helpDocPath = _consts.PathToRestaurantsTravelerHelp;
+                }
+                else if (NavigationService.CurrentViewModel.GetType() == typeof(AllAccommodationsViewModel))
+                {
+                    helpDocPath = _consts.PathToAccommodationsTravelerHelp;
+                }
+                else if (NavigationService.CurrentViewModel.GetType() == typeof(AllTouristAttractionsViewModel))
+                {
+                    helpDocPath = _consts.PathToTouristAttractionsTravelerHelp;
+                }
+                else if (NavigationService.CurrentViewModel.GetType() == typeof(UserTripsViewModel))
+                {
+                    helpDocPath = _consts.PathToAcquiredTripsTravelerHelp;
+                }
+            }
+
+            helpDocPath = Path.GetFullPath(helpDocPath);
+            if (File.Exists(helpDocPath))
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = helpDocPath,
+                    UseShellExecute = true
+                });
+            }
+            else
+            {
+                MessageBox.Show("Help documentation file could not be found!", "Internal error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
